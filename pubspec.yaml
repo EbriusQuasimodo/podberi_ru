@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_riverpod: ^2.4.5 #стейт менеджер и управление темой
+  shared_preferences: ^2.2.2 #маленький кэш
+  go_router: ^12.1.1 #роутинг в приложении
 
 
   # The following adds the Cupertino Icons font to your application.
