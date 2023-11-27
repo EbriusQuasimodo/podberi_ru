@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/product_list/product_card_widget_with_buttons.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/widgets/product_list/sort_and_filter_buttons_widget.dart';
 import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
@@ -23,15 +24,27 @@ class CatalogPage extends ConsumerStatefulWidget {
 }
 
 class _CatalogPageState extends ConsumerState<CatalogPage> {
-  String sortType = 'По новизне';
-  var sortVariantsList = ['По популярности', 'По рейтингу', 'По новизне'];
   late String productType;
+  final List<String> bankProductsNamesList = [
+    'Дебетовые карты',
+    'Кредитные карты',
+    'РКО'
+  ];
+  List<String> selectedBankProducts = [];
 
   @override
   Widget build(BuildContext context) {
-    productType = widget.whereFrom == AppRoute.selectProductPage.name
-        ? ref.watch(productTypeFromCatalogStateProvider)
-        : ref.watch(productTypeFromHomeStateProvider);
+    switch (widget.whereFrom) {
+      case "selectProductPage":
+        productType = ref.watch(productTypeFromCatalogStateProvider);
+        break;
+      case "homePage":
+        productType = ref.watch(productTypeFromHomeStateProvider);
+        break;
+      case "allBanksPage":
+        productType = 'Каталог';
+        break;
+    }
     return Scaffold(
       body: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -43,119 +56,149 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
             title: Text(productType),
             leading: IconButton(
               onPressed: () {
+                // if (widget.whereFrom == AppRoute.allBanksPage.name) {
+                //   ref.read(goRouterProvider).pop();
+                // }
                 ref.read(goRouterProvider).pop();
               },
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
             ),
           ),
           SliverToBoxAdapter(
             child: Container(
               margin: const EdgeInsets.only(top: 2),
+              padding: EdgeInsets.only(
+                  top: widget.whereFrom == AppRoute.allBanksPage.name ? 15 : 0,
+                  bottom:
+                      widget.whereFrom == AppRoute.allBanksPage.name ? 15 : 0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(
+                    widget.whereFrom == AppRoute.allBanksPage.name ? 20 : 14),
                 color: ThemeApp.mainWhite,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MaterialButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {
-                      showModalBottomSheet(
-                          barrierColor: Colors.white.withOpacity(0),
-                          constraints:
-                              const BoxConstraints(minWidth: double.infinity),
-                          context: context,
-                          builder: (context) {
-                            return Container(
-                              decoration: BoxDecoration(
+              child: widget.whereFrom == AppRoute.allBanksPage.name
+                  ? Column(
+                      children: [
+                        Container(
+                          margin:
+                              const EdgeInsets.only(right: 15, left: 15, bottom: 15),
+                          padding: const EdgeInsets.only(
+                              top: 15, right: 20, left: 15, bottom: 15),
+                          //height: 80,
+                          decoration: BoxDecoration(
+                              color: ThemeApp.grey,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    top: 9, right: 7, left: 7, bottom: 9),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
                                   color: ThemeApp.mainWhite,
-                                  borderRadius: BorderRadius.circular(14)),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 15),
-                              child: ListView.builder(
-                                  itemCount: sortVariantsList.length,
-                                  scrollDirection: Axis.vertical,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                          color: ThemeApp.grey,
-                                          borderRadius:
-                                              BorderRadius.circular(14)),
-                                      margin: EdgeInsets.only(bottom: 6),
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        child: InkWell(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          onTap: () {
-                                            setState(() {
-                                              sortType =
-                                                  sortVariantsList[index];
-                                            });
-                                            ref.read(goRouterProvider).pop();
-                                          },
-                                          child: Padding(
+                                ),
+                                child: SvgPicture.asset(
+                                  'assets/icons/tinkoff_logo_icon.svg',
+                                  height: 32,
+                                  width: 36,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              const Text(
+                                'Тинькофф банк',
+                                style: TextStyle(
+                                    color: ThemeApp.backgroundBlack,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              const Spacer(),
+                              const Icon(
+                                Icons.star,
+                                color: ThemeApp.backgroundBlack,
+                                size: 20,
+                              ),
+                              const Text(
+                                '4.8',
+                                style: TextStyle(
+                                    color: ThemeApp.backgroundBlack,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 44,
+                          child: ListView.builder(
+                              padding: const EdgeInsets.only(left: 12, right: 12),
+                              itemCount: bankProductsNamesList.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 3, right: 3),
+                                    child: ChoiceChip(
+                                      label: Row(
+                                        children: [
+                                          Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 15,
-                                                right: 15,
-                                                top: 15,
-                                                bottom: 15),
+                                                right: 25),
                                             child: Text(
-                                              sortVariantsList[index],
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
+                                                bankProductsNamesList[index]),
                                           ),
-                                        ),
+                                          selectedBankProducts.contains(
+                                                  bankProductsNamesList[index])
+                                              ? SvgPicture.asset(
+                                                  'assets/icons/delete_icon.svg')
+                                              : const SizedBox.shrink(),
+                                        ],
                                       ),
-                                    );
-                                  }),
-                            );
-                          });
-                    },
-                    child: Row(
-                      children: [
-                        SvgPicture.asset('assets/icons/sort_icon.svg'),
-                        SizedBox(
-                          width: 12,
-                        ),
-                        Text(
-                          sortType,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                          ),
+                                      labelStyle: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: selectedBankProducts.contains(
+                                                  bankProductsNamesList[index])
+                                              ? ThemeApp.mainWhite
+                                              : ThemeApp.backgroundBlack),
+                                      selected: selectedBankProducts.contains(
+                                          bankProductsNamesList[index]),
+                                      selectedColor: ThemeApp.mainBlue,
+                                      backgroundColor: ThemeApp.grey,
+                                      shape: RoundedRectangleBorder(
+                                        side: const BorderSide(
+                                            width: 0,
+                                            color: Colors.transparent),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      showCheckmark: false,
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 10, left: 15),
+                                      onSelected: (bool value) {
+                                        setState(() {
+                                          if (value) {
+                                            if (!selectedBankProducts.contains(
+                                                bankProductsNamesList[index])) {
+                                              selectedBankProducts.clear();
+                                              selectedBankProducts.add(
+                                                  bankProductsNamesList[index]);
+                                            }
+                                          } else {
+                                            selectedBankProducts
+                                                .removeWhere((String name) {
+                                              return name ==
+                                                  bankProductsNamesList[index];
+                                            });
+                                          }
+                                        });
+                                      },
+                                    ));
+                              }),
                         ),
                       ],
-                    ),
-                  ),
-                  MaterialButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (BuildContext context){return FiltersPage();}));
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          'Фильтры',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 12,
-                        ),
-                        SvgPicture.asset('assets/icons/filter_icon.svg'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                    )
+                  : const SortAndfilterButtonsWidget(),
             ),
           ),
           SliverContainer(
@@ -165,25 +208,32 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                     borderRadius: BorderRadius.circular(20),
                     color: ThemeApp.mainWhite,
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 17),
-                    child: Text(
-                      'Найдено (132 шт.)',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: ThemeApp.darkestGrey,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  )),
+                  child: widget.whereFrom == AppRoute.allBanksPage.name
+                      ? const SizedBox.shrink()
+                      : const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 17),
+                          child: Text(
+                            'Найдено (132 шт.)',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ThemeApp.darkestGrey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        )),
               sliver: SliverPadding(
-                padding: const EdgeInsets.only(
-                    top: 47, right: 15, left: 15, bottom: 5),
+                padding: EdgeInsets.only(
+                    top: widget.whereFrom == AppRoute.allBanksPage.name
+                        ? 15
+                        : 47,
+                    right: 15,
+                    left: 15,
+                    bottom: 5),
                 sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                         childCount: 10,
-                        (context, index) => ProductCardWidgetWithButtons(
+                        (context, index) => const ProductCardWidgetWithButtons(
                             productName: 'Тинькофф Black',
                             productShortDescription:
                                 'На остаток - до 5%\nБесплатное обслуживание\nСнятие без % - 500 000 руб.\nДоставка 1-2 дня\nБез овердрафта',

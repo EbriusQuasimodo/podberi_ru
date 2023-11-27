@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/presentation/navigation_bar_icon.dart';
+import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/select_product_page.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
@@ -13,6 +14,7 @@ import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_p
 
 enum AppRoute {
   homePage,
+  allBanksPage,
   selectProductPage,
   catalogPage,
   favoritesPage,
@@ -51,6 +53,16 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   pageBuilder: (context, state) =>
                       NoTransitionPage(key: UniqueKey(), child: HomePage()),
                 ),
+                GoRoute(
+                  path: RouteConstants.allBanks,
+                  name: AppRoute.allBanksPage.name,
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(
+                      child: AllBanksPage(),
+                    );
+                  },
+                  routes: const [],
+                ),
               ],
             ),
             StatefulShellBranch(
@@ -71,10 +83,11 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   pageBuilder: (context, state) {
                     String whereFrom = state.extra as String;
                     return NoTransitionPage(
-                    child: CatalogPage(
-                      whereFrom: whereFrom,
-                    ),
-                  );},
+                      child: CatalogPage(
+                        whereFrom: whereFrom,
+                      ),
+                    );
+                  },
                   routes: const [],
                 ),
               ],
@@ -85,7 +98,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                 GoRoute(
                   path: RouteConstants.favorites,
                   name: AppRoute.favoritesPage.name,
-                  pageBuilder: (context, state) =>  NoTransitionPage(
+                  pageBuilder: (context, state) => NoTransitionPage(
                     key: UniqueKey(),
                     child: FavoritesPage(),
                   ),
@@ -99,7 +112,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                 GoRoute(
                   path: RouteConstants.promocodes,
                   name: AppRoute.promoCodesPage.name,
-                  pageBuilder: (context, state) =>NoTransitionPage(
+                  pageBuilder: (context, state) => NoTransitionPage(
                     key: UniqueKey(),
                     child: PromoCodesPage(),
                   ),
@@ -113,7 +126,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                 GoRoute(
                   path: RouteConstants.comparison,
                   name: AppRoute.comparisonPage.name,
-                  pageBuilder: (context, state) =>  NoTransitionPage(
+                  pageBuilder: (context, state) => NoTransitionPage(
                     key: UniqueKey(),
                     child: ComparisonPage(),
                   ),

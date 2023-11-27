@@ -32,7 +32,7 @@ class _BestOfferItemState extends State<BestOfferItem> {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        margin: const EdgeInsets.only(top: 2, bottom: 2),
+        margin: const EdgeInsets.only(top: 2),
         padding: const EdgeInsets.only(top: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),

@@ -2,6 +2,9 @@ class RouteConstants {
   ///главная страница
   static const String home = '/home';
 
+  ///страница со списокм всех банков
+  static const String allBanks = '/allBanks';
+
   ///страница выбора типа продукта (дебетовка, кредитка и т.д)
   static const String selectProduct = '/selectProduct';
 

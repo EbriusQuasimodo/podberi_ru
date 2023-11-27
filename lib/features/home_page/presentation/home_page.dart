@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/constants/route_constants.dart';
+import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/catalog_controller.dart';
+import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/product_card_widget_without_buttons.dart';
 import 'package:podberi_ru/core/presentation/custom_app_bar_with_search.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/promocodes_ads_item_widgets/promocodes_ads_item_widget.dart';
@@ -56,7 +61,12 @@ class _HomePageState extends ConsumerState<HomePage> {
               listHeight: 140,
               widgetName: 'Выберите банк',
               showMoreButtonName: 'Все банки',
-              onTapShowMoreButton: () {},
+              onTapShowMoreButton: () {
+                ref
+                    .watch(productTypeFromHomeStateProvider.notifier)
+                    .state = 'РКО';
+                ref.watch(goRouterProvider).push(RouteConstants.allBanks);
+              },
               childOfList: Material(
                color: Colors.transparent,
                 child: InkWell(

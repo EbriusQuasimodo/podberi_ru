@@ -43,9 +43,11 @@ class SelectProductPage extends ConsumerWidget {
                       imageAsset: 'assets/images/debet_card_image.png',
                       productName: 'Дебетовые карты',
                       onTap: () {
-                        ref.watch(productTypeFromCatalogStateProvider.notifier).state =
-                            'Дебетовые карты';
-                        ref.watch(goRouterProvider).push('/catalog', extra: AppRoute.selectProductPage.name);
+                        ref
+                            .watch(productTypeFromCatalogStateProvider.notifier)
+                            .state = 'Дебетовые карты';
+                        ref.watch(goRouterProvider).push('/catalog',
+                            extra: AppRoute.selectProductPage.name);
                       }),
                   const SizedBox(
                     height: 6,
@@ -54,9 +56,11 @@ class SelectProductPage extends ConsumerWidget {
                       imageAsset: 'assets/images/credit_card_image.png',
                       productName: 'Кредитные карты',
                       onTap: () {
-                        ref.watch(productTypeFromCatalogStateProvider.notifier).state =
-                            'Кредитные карты';
-                        ref.watch(goRouterProvider).push('/catalog', extra: AppRoute.selectProductPage.name);
+                        ref
+                            .watch(productTypeFromCatalogStateProvider.notifier)
+                            .state = 'Кредитные карты';
+                        ref.watch(goRouterProvider).push('/catalog',
+                            extra: AppRoute.selectProductPage.name);
                       }),
                   const SizedBox(
                     height: 6,
@@ -65,9 +69,11 @@ class SelectProductPage extends ConsumerWidget {
                       imageAsset: 'assets/images/micro_liases_image.png',
                       productName: 'Микрозаймы',
                       onTap: () {
-                        ref.watch(productTypeFromCatalogStateProvider.notifier).state =
-                            'Микрозаймы';
-                        ref.watch(goRouterProvider).push('/catalog', extra: AppRoute.selectProductPage.name);
+                        ref
+                            .watch(productTypeFromCatalogStateProvider.notifier)
+                            .state = 'Микрозаймы';
+                        ref.watch(goRouterProvider).push('/catalog',
+                            extra: AppRoute.selectProductPage.name);
                       }),
                   const SizedBox(
                     height: 6,
@@ -76,9 +82,11 @@ class SelectProductPage extends ConsumerWidget {
                       imageAsset: 'assets/images/rko_image.png',
                       productName: 'РКО',
                       onTap: () {
-                        ref.watch(productTypeFromCatalogStateProvider.notifier).state =
-                            'РКО';
-                        ref.watch(goRouterProvider).push('/catalog', extra: AppRoute.selectProductPage.name);
+                        ref
+                            .watch(productTypeFromCatalogStateProvider.notifier)
+                            .state = 'РКО';
+                        ref.watch(goRouterProvider).push('/catalog',
+                            extra: AppRoute.selectProductPage.name);
                       }),
                 ],
               ),
