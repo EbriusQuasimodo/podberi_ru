@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/constants/route_constants.dart';
+import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
-class ProductCardWidgetWithButtons extends StatelessWidget {
+class ProductCardWidgetWithButtons extends ConsumerWidget {
   final String productName;
   final String productShortDescription;
   final String productRating;
@@ -16,7 +19,7 @@ class ProductCardWidgetWithButtons extends StatelessWidget {
       required this.bankLogoIconPath});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -96,7 +99,10 @@ class ProductCardWidgetWithButtons extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () {},
+                onTap: () {
+                  ref.watch(goRouterProvider).push(RouteConstants.details,
+                      );
+                },
               ),
             ),
           ),

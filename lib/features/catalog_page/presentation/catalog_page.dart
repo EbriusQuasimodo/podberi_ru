@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/product_list/product_card_widget_with_buttons.dart';
+import 'package:podberi_ru/core/presentation/product_card_widget_with_buttons.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/product_list/sort_and_filter_buttons_widget.dart';
 import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';

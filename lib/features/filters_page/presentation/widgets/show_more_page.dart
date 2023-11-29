@@ -89,13 +89,14 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                                       padding: EdgeInsets.all(5),
                                       margin: const EdgeInsets.only(
                                           right: 15, top: 15, bottom: 15),
-                                      child: Icon(
-                                        Icons.done,
+                                      child: SvgPicture.asset(
+                                        'assets/icons/filer_check_icon.svg',
+                                          height: 16, width: 16,
                                         color: widget.filters.contains(
                                                 widget.itemsNames[index])
-                                            ? ThemeApp.backgroundBlack
-                                            : Colors.transparent,
-                                      ),
+                                            ? ThemeApp.mainBlue
+                                            : Colors.transparent,)
+
                                     ),
                                   ],
                                 ),

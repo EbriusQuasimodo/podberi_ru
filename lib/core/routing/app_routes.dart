@@ -7,6 +7,7 @@ import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.d
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/select_product_page.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
+import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.dart';
 import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page.dart';
@@ -17,6 +18,7 @@ enum AppRoute {
   allBanksPage,
   selectProductPage,
   catalogPage,
+  detailsPage,
   favoritesPage,
   promoCodesPage,
   comparisonPage
@@ -86,6 +88,16 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                       child: CatalogPage(
                         whereFrom: whereFrom,
                       ),
+                    );
+                  },
+                  routes: const [],
+                ),
+                GoRoute(
+                  path: RouteConstants.details,
+                  name: AppRoute.detailsPage.name,
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(
+                      child: DetailsPage(),
                     );
                   },
                   routes: const [],

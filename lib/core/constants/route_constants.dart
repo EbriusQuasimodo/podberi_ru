@@ -12,6 +12,10 @@ class RouteConstants {
   ///но на нее можно попасть через главну, выбор продукта и банки
   static const String catalog = '/catalog';
 
+  ///страница деталей (в нижнем баре ее нет,
+  ///но на нее можно попасть через каталог избранное и сравнение
+  static const String details = '/details';
+
   ///страница избранного
   static const String favorites = '/favorites';
 
