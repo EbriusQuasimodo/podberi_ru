@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/home_page/presentation/widgets/promocodes_ads_item_widgets/canvas_background.dart';
 
-class PromocodesAdsItem extends StatelessWidget {
-  const PromocodesAdsItem({super.key});
+import 'canvas_background.dart';
+
+class PromoCodesAdsWidget extends StatelessWidget {
+  const PromoCodesAdsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class PromocodesAdsItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           color: ThemeApp.mainWhite,
         ),
-        child: Column(
+        child: const Column(
           children: [
             Padding(
               padding: EdgeInsets.only(

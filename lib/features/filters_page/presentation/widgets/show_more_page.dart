@@ -31,7 +31,6 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
             title: Text('Фильтры'),
           ),
           SliverContainer(
-              //padding:EdgeInsets.only(bottom: MediaQuery.of(context).size.height - 15),
               margin: const EdgeInsets.only(top: 2, bottom: 82),
               background: Container(
                 decoration: BoxDecoration(
@@ -50,7 +49,7 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                             decoration: BoxDecoration(
                                 color: ThemeApp.grey,
                                 borderRadius: BorderRadius.circular(14)),
-                            margin: EdgeInsets.only(bottom: 6),
+                            margin: const EdgeInsets.only(bottom: 6),
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
@@ -86,7 +85,7 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                                           color: ThemeApp.mainWhite,
                                           borderRadius:
                                               BorderRadius.circular(5)),
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       margin: const EdgeInsets.only(
                                           right: 15, top: 15, bottom: 15),
                                       child: SvgPicture.asset(
@@ -105,18 +104,6 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                           )),
                 ),
               )),
-          // SliverFillRemaining(
-          //
-          //     hasScrollBody: false,
-          //   child: Container(
-          //     //height: double.infinity,
-          //     margin: const EdgeInsets.only(bottom: 82),
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20)),
-          //       color: ThemeApp.mainWhite,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -175,14 +162,6 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                   ),
                 ),
               ),
-              // MaterialButton(
-              //   height: 50,
-              //   onPressed: () {},
-              //   child: SvgPicture.asset('assets/icons/trash_icon.svg'),
-              //   color: ThemeApp.grey,
-              //   shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(14)),
-              // ),
             )
           ],
         ),

@@ -7,7 +7,8 @@ class BankProductCardWidgetWithoutButtons extends StatelessWidget {
   final String productShortDescription;
   final String productRating;
   final String bankLogoIconPath;
-  const BankProductCardWidgetWithoutButtons({super.key, required this.productName, required this.productShortDescription, required this.productRating, required this.bankLogoIconPath});
+  final VoidCallback onTap;
+  const BankProductCardWidgetWithoutButtons({super.key,required this.onTap, required this.productName, required this.productShortDescription, required this.productRating, required this.bankLogoIconPath});
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +85,9 @@ class BankProductCardWidgetWithoutButtons extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () {},
+                onTap: () {
+                  onTap();
+                },
               ),
             ),
           ),

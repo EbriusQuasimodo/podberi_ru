@@ -4,14 +4,14 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 
 import 'best_offers_card.dart';
 
-class BestOfferItem extends StatefulWidget {
-  const BestOfferItem({super.key});
+class BestOfferWidget extends StatefulWidget {
+  const BestOfferWidget({super.key});
 
   @override
-  State<BestOfferItem> createState() => _BestOfferItemState();
+  State<BestOfferWidget> createState() => _BestOfferWidgetState();
 }
 
-class _BestOfferItemState extends State<BestOfferItem> {
+class _BestOfferWidgetState extends State<BestOfferWidget> {
   final _controllerBestOffers = PageController(
     viewportFraction: 0.9,
   );

@@ -5,14 +5,14 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
 
-class SortAndfilterButtonsWidget extends ConsumerStatefulWidget {
-  const SortAndfilterButtonsWidget({super.key});
+class SortAndFilterWidget extends ConsumerStatefulWidget {
+  const SortAndFilterWidget({super.key});
 
   @override
-  ConsumerState<SortAndfilterButtonsWidget> createState() => _SortAndfilterButtonsWidgetState();
+  ConsumerState<SortAndFilterWidget> createState() => _SortAndfilterButtonsWidgetState();
 }
 
-class _SortAndfilterButtonsWidgetState extends ConsumerState<SortAndfilterButtonsWidget> {
+class _SortAndfilterButtonsWidgetState extends ConsumerState<SortAndFilterWidget> {
   String sortType = 'По новизне';
   var sortVariantsList = ['По популярности', 'По рейтингу', 'По новизне'];
   @override
@@ -46,7 +46,7 @@ class _SortAndfilterButtonsWidgetState extends ConsumerState<SortAndfilterButton
                                 color: ThemeApp.grey,
                                 borderRadius:
                                 BorderRadius.circular(14)),
-                            margin: EdgeInsets.only(bottom: 6),
+                            margin: const EdgeInsets.only(bottom: 6),
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
@@ -81,7 +81,7 @@ class _SortAndfilterButtonsWidgetState extends ConsumerState<SortAndfilterButton
           },
           child: Row(
             children: [
-              SvgPicture.asset('assets/icons/sort_icon.svg'),
+              SvgPicture.asset('assets/icons/sort_icon.svg', width: 20, height: 20,),
               SizedBox(
                 width: 12,
               ),
@@ -112,7 +112,7 @@ class _SortAndfilterButtonsWidgetState extends ConsumerState<SortAndfilterButton
               SizedBox(
                 width: 12,
               ),
-              SvgPicture.asset('assets/icons/filter_icon.svg'),
+              SvgPicture.asset('assets/icons/filter_icon.svg', width: 20, height: 20,),
             ],
           ),
         ),

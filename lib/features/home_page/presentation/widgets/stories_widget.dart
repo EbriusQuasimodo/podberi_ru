@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
-class StoriesItemWidget extends StatelessWidget {
-  const StoriesItemWidget({super.key});
+class StoriesWidget extends StatelessWidget {
+  const StoriesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

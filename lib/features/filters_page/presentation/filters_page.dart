@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/filters_page/presentation/widgets/choice_chip_item.dart';
+import 'package:podberi_ru/features/filters_page/presentation/widgets/save_button_widget.dart';
 import 'package:podberi_ru/features/filters_page/presentation/widgets/show_more_page.dart';
 
 class FiltersPage extends StatefulWidget {
@@ -101,8 +101,8 @@ class _FiltersPageState extends State<FiltersPage> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsets.only(top: 26, bottom: 15, right: 15),
+                        padding: const EdgeInsets.only(
+                            top: 26, bottom: 15, right: 15),
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
@@ -116,7 +116,7 @@ class _FiltersPageState extends State<FiltersPage> {
                                     itemsNames: bankNamesList);
                               }));
                             },
-                            child: Text(
+                            child: const Text(
                               'Показать все',
                               style: TextStyle(
                                   color: ThemeApp.darkestGrey,
@@ -129,8 +129,9 @@ class _FiltersPageState extends State<FiltersPage> {
                     ],
                   ),
                   ChoiceChipItem(
-                    length: 6,
-                      itemsNames: bankNamesList, filters: selectedBanks),
+                      length: 6,
+                      itemsNames: bankNamesList,
+                      filters: selectedBanks),
                   Container(
                     color: ThemeApp.darkestGrey,
                     height: 1,
@@ -147,8 +148,9 @@ class _FiltersPageState extends State<FiltersPage> {
                     ),
                   ),
                   ChoiceChipItem(
-                    length: cashBackNamesList.length,
-                      itemsNames: cashBackNamesList, filters: selectedCashBack),
+                      length: cashBackNamesList.length,
+                      itemsNames: cashBackNamesList,
+                      filters: selectedCashBack),
                   Container(
                     color: ThemeApp.darkestGrey,
                     height: 1,
@@ -165,8 +167,9 @@ class _FiltersPageState extends State<FiltersPage> {
                     ),
                   ),
                   ChoiceChipItem(
-                    length: deliveryNamesList.length,
-                      itemsNames: deliveryNamesList, filters: selectedDelivery),
+                      length: deliveryNamesList.length,
+                      itemsNames: deliveryNamesList,
+                      filters: selectedDelivery),
                   Container(
                     color: ThemeApp.darkestGrey,
                     height: 1,
@@ -183,7 +186,7 @@ class _FiltersPageState extends State<FiltersPage> {
                     ),
                   ),
                   ChoiceChipItem(
-                    length: paySystemNamesList.length,
+                      length: paySystemNamesList.length,
                       itemsNames: paySystemNamesList,
                       filters: selectedPaySystem),
                   Container(
@@ -202,7 +205,7 @@ class _FiltersPageState extends State<FiltersPage> {
                     ),
                   ),
                   ChoiceChipItem(
-                    length: additionalConditionsNamesList.length,
+                      length: additionalConditionsNamesList.length,
                       itemsNames: additionalConditionsNamesList,
                       filters: selectedAdditionalConditions),
                 ],
@@ -212,76 +215,16 @@ class _FiltersPageState extends State<FiltersPage> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-          color: ThemeApp.mainWhite,
-        ),
-        height: 80,
-        child: Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
-                child: MaterialButton(
-                  height: 50,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    'Применить',
-                    style: TextStyle(
-                        color: ThemeApp.mainWhite,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                  color: ThemeApp.mainBlue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14)),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 6,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 15, top: 15, bottom: 15),
-              child: Material(
-                borderRadius: BorderRadius.circular(14),
-                color: ThemeApp.grey,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(12),
-                  onTap: () {
-                    setState(() {
-                      selectedBanks.clear();
-                      selectedCashBack.clear();
-                      selectedDelivery.clear();
-                      selectedPaySystem.clear();
-                      selectedAdditionalConditions.clear();
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(13),
-                    child: SvgPicture.asset(
-                      'assets/icons/trash_icon.svg',
-                      height: 24,
-                      width: 24,
-                    ),
-                  ),
-                ),
-              ),
-              // MaterialButton(
-              //   height: 50,
-              //   onPressed: () {},
-              //   child: SvgPicture.asset('assets/icons/trash_icon.svg'),
-              //   color: ThemeApp.grey,
-              //   shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(14)),
-              // ),
-            )
-          ],
-        ),
+      floatingActionButton: SaveButtonWidget(
+        onTap: () {
+          setState(() {
+            selectedBanks.clear();
+            selectedCashBack.clear();
+            selectedDelivery.clear();
+            selectedPaySystem.clear();
+            selectedAdditionalConditions.clear();
+          });
+        },
       ),
     );
   }

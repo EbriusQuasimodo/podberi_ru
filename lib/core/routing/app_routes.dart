@@ -5,11 +5,10 @@ import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/presentation/navigation_bar_icon.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/select_product_page.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/select_product_type_page.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.dart';
-import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/select_category_promo_codes_page.dart';
@@ -79,7 +78,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   name: AppRoute.selectProductPage.name,
                   pageBuilder: (context, state) => NoTransitionPage(
                     key: UniqueKey(),
-                    child: SelectProductPage(),
+                    child: SelectProductTypePage(),
                   ),
                   routes: const [],
                 ),
