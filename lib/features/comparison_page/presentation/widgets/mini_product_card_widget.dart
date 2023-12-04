@@ -4,14 +4,15 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class MiniProductCardWidget extends StatelessWidget {
   final VoidCallback onDelete;
-  const MiniProductCardWidget({super.key, required this.onDelete});
+  final String bankName;
+  const MiniProductCardWidget({super.key, required this.onDelete,  required this.bankName});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           color: Color(0xffFFBE0B), borderRadius: BorderRadius.circular(14)),
-      margin: EdgeInsets.only(right: 3, left: 3),
+      margin: const EdgeInsets.only(right: 3, left: 3),
       child: Row(
         children: [
           Container(
@@ -34,7 +35,7 @@ class MiniProductCardWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 15, bottom: 6, right: 5, top: 24),
                 child: Text(
-                  'Тинькофф Black',
+                  bankName,
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
