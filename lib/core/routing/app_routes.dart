@@ -12,6 +12,8 @@ import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.d
 import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_page.dart';
+import 'package:podberi_ru/features/promo_codes_pages/presentation/select_category_promo_codes_page.dart';
+import 'package:podberi_ru/features/promo_codes_pages/presentation/widgets/promo_code_details_page.dart';
 
 enum AppRoute {
   homePage,
@@ -20,7 +22,9 @@ enum AppRoute {
   catalogPage,
   detailsPage,
   favoritesPage,
+  selectCategoryPromoCodesPage,
   promoCodesPage,
+  promoCodesDetailsPage,
   comparisonPage
 }
 
@@ -122,12 +126,32 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
               navigatorKey: _shellNavigatorCKey,
               routes: [
                 GoRoute(
-                  path: RouteConstants.promocodes,
-                  name: AppRoute.promoCodesPage.name,
+                  path: RouteConstants.selectCategoryPromocodes,
+                  name: AppRoute.selectCategoryPromoCodesPage.name,
                   pageBuilder: (context, state) => NoTransitionPage(
                     key: UniqueKey(),
-                    child: PromoCodesPage(),
+                    child: SelectCategoryPromoCodesPage(),
                   ),
+                  routes: const [],
+                ),
+                GoRoute(
+                  path: RouteConstants.promocodes,
+                  name: AppRoute.promoCodesPage.name,
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(
+                      child: PromoCodesPage(),
+                    );
+                  },
+                  routes: const [],
+                ),
+                GoRoute(
+                  path: RouteConstants.promocodesDetails,
+                  name: AppRoute.promoCodesDetailsPage.name,
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(
+                      child: PromoCodesDetailsPage(),
+                    );
+                  },
                   routes: const [],
                 ),
               ],

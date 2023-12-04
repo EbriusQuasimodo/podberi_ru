@@ -85,14 +85,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
             pinned: true,
             title: Text('Избранное'),
           ),
-          SliverPadding(padding: EdgeInsets.only(top: 2)),
           SliverStack(
             insetOnOverlap: true,
             children: [
               SliverPositioned.fill(
                 child: SliverFillRemaining(
+          fillOverscroll:true,
                   child: Container(
-                    //height: double.infinity,
+                    height: MediaQuery.of(context).size.height - 72,
                     margin: const EdgeInsets.only(top: 2, bottom: 72),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -102,6 +102,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 ),
               ),
               SliverContainer(
+                margin: const EdgeInsets.only(bottom: 72, top: 2),
                 background: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -120,7 +121,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
                 sliver: SliverPadding(
                   padding:
-                      EdgeInsets.only(top: 90, right: 15, left: 15, bottom: 15),
+                      const EdgeInsets.only(top: 90, right: 15, left: 15, bottom: 15),
                   sliver: SliverList(
                       delegate: SliverChildBuilderDelegate(
                           childCount: 2,
@@ -135,7 +136,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
               ),
             ],
           ),
-          SliverPadding(padding: EdgeInsets.only(top: 2)),
         ],
       ),
     );

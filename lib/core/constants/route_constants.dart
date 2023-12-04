@@ -20,7 +20,12 @@ class RouteConstants {
   static const String favorites = '/favorites';
 
   ///страница промокодов
+  static const String selectCategoryPromocodes = '/selectCategoryPromocodes';
+
+  ///страница сравнения
   static const String promocodes = '/promocodes';
+  ///страница сравнения
+  static const String promocodesDetails = '/promocodesDetails';
 
   ///страница сравнения
   static const String comparison = '/comparison';
