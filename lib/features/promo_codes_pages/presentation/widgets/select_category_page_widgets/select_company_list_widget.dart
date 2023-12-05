@@ -2,31 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/promo_codes_pages/domain/promocodes_company_filters_model.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_controller.dart';
-import 'package:podberi_ru/features/promo_codes_pages/presentation/select_category_promo_codes_page.dart';
 
-class SelectCompanyListWidget extends ConsumerStatefulWidget {
+class CompaniesFilterListWidget extends ConsumerStatefulWidget {
   final VoidCallback onTap;
-  final PromoCodesAllFilters promoCodesAllFilters;
+  final PromoCodesAllCompaniesFilters promoCodesAllFilters;
 
-  SelectCompanyListWidget({
+  CompaniesFilterListWidget({
     super.key,
     required this.promoCodesAllFilters,
     required this.onTap,
   });
 
   @override
-  ConsumerState<SelectCompanyListWidget> createState() =>
+  ConsumerState<CompaniesFilterListWidget> createState() =>
       _SelectCompanyListWidgetState();
 }
 
 class _SelectCompanyListWidgetState
-    extends ConsumerState<SelectCompanyListWidget> {
-  late List<String> selectedBankProducts;
+    extends ConsumerState<CompaniesFilterListWidget> {
+  late List<String> selectedCompanies;
 
   @override
   Widget build(BuildContext context) {
-    selectedBankProducts = ref.watch(selectedCompanyFilterStateProvider);
+    selectedCompanies = ref.watch(selectedCompanyFilterStateProvider);
     return Padding(
       padding: const EdgeInsets.only(right: 3, left: 3),
       child: RawMaterialButton(
@@ -38,7 +38,7 @@ class _SelectCompanyListWidgetState
         onPressed: () {
           setState(() {
             widget.onTap();
-            if (!selectedBankProducts
+            if (!selectedCompanies
                 .contains(widget.promoCodesAllFilters.companyName)) {
               ref
                   .watch(selectedCompanyFilterStateProvider.notifier)
@@ -59,22 +59,22 @@ class _SelectCompanyListWidgetState
               color: widget.promoCodesAllFilters.color,
               shape: BoxShape.circle,
               border: Border.all(
-                  color: selectedBankProducts
+                  color: selectedCompanies
                           .contains(widget.promoCodesAllFilters.companyName)
                       ? ThemeApp.mainBlue
                       : Colors.transparent,
-                  width: selectedBankProducts
+                  width: selectedCompanies
                           .contains(widget.promoCodesAllFilters.companyName)
                       ? 4
                       : 0)),
           child: ClipOval(
             child: SvgPicture.asset(
               widget.promoCodesAllFilters.imagePath,
-              height: selectedBankProducts
+              height: selectedCompanies
                       .contains(widget.promoCodesAllFilters.companyName)
                   ? 56
                   : 60,
-              width: selectedBankProducts
+              width: selectedCompanies
                       .contains(widget.promoCodesAllFilters.companyName)
                   ? 56
                   : 60,

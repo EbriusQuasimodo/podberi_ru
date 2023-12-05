@@ -12,7 +12,7 @@ import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.d
 import 'package:podberi_ru/features/home_page/presentation/home_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/select_category_promo_codes_page.dart';
-import 'package:podberi_ru/features/promo_codes_pages/presentation/widgets/promo_code_details_page.dart';
+import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_code_details_page.dart';
 
 enum AppRoute {
   homePage,

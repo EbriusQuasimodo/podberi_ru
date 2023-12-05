@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/presentation/product_card_widget_with_buttons.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
+///list of banks products. when press on card - go to [DetailsPage]
 class ProductListWidget extends StatelessWidget {
   final String whereFrom;
 
