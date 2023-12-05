@@ -25,6 +25,9 @@ class SaveButtonWidget extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+                color: ThemeApp.mainBlue,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14)),
                 child: const Text(
                   'Применить',
                   style: TextStyle(
@@ -32,9 +35,6 @@ class SaveButtonWidget extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                 ),
-                color: ThemeApp.mainBlue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14)),
               ),
             ),
           ),

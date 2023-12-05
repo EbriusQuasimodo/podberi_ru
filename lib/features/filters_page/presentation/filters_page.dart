@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/filters_page/presentation/widgets/choice_chip_item.dart';
 import 'package:podberi_ru/features/filters_page/presentation/widgets/save_button_widget.dart';
-import 'package:podberi_ru/features/filters_page/presentation/widgets/show_more_page.dart';
+import 'package:podberi_ru/features/filters_page/presentation/show_more_page.dart';
 
 class FiltersPage extends StatefulWidget {
   const FiltersPage({super.key});
