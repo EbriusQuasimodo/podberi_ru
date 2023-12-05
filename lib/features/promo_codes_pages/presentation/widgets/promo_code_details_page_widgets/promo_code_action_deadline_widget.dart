@@ -8,7 +8,7 @@ class PromoCodeActionDeadlineWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return       SliverToBoxAdapter(
       child: Container(
-        margin: EdgeInsets.only(top: 2),
+        margin: const EdgeInsets.only(top: 2),
         padding: const EdgeInsets.only(
             top: 30, bottom: 30, left: 12, right: 12),
         width: MediaQuery.of(context).size.width,
@@ -18,7 +18,7 @@ class PromoCodeActionDeadlineWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(bottom: 20, right: 3, left: 3),
               child: Text(
                 'До конца акции',
@@ -34,20 +34,20 @@ class PromoCodeActionDeadlineWidget extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xffFF5700),
+                      color: const Color(0xffFF5700),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       left: 3,
                       right: 3,
                     ),
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: 21,
                       bottom: 21,
                       right: 6,
                       left: 6,
                     ),
-                    child: Text(
+                    child: const Text(
                       '8 д.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -61,20 +61,20 @@ class PromoCodeActionDeadlineWidget extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xffFF5700),
+                      color: const Color(0xffFF5700),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       left: 3,
                       right: 3,
                     ),
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: 21,
                       bottom: 21,
                       right: 6,
                       left: 6,
                     ),
-                    child: Text(
+                    child: const Text(
                       '16 ч.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -88,20 +88,20 @@ class PromoCodeActionDeadlineWidget extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xffFF5700),
+                      color: const Color(0xffFF5700),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       left: 3,
                       right: 3,
                     ),
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: 21,
                       bottom: 21,
                       right: 6,
                       left: 6,
                     ),
-                    child: Text(
+                    child: const Text(
                       '32 мин.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -115,20 +115,20 @@ class PromoCodeActionDeadlineWidget extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xffFF5700),
+                      color: const Color(0xffFF5700),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       left: 3,
                       right: 3,
                     ),
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: 21,
                       bottom: 21,
                       right: 6,
                       left: 6,
                     ),
-                    child: Text(
+                    child: const Text(
                       '18 сек.',
                       textAlign: TextAlign.center,
                       style: TextStyle(

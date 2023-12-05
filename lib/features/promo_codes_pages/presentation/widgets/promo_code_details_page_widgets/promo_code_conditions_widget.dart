@@ -8,13 +8,13 @@ class PromoCodeConditionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return  SliverToBoxAdapter(
       child: Container(
-        margin: EdgeInsets.only(top: 2, bottom: 72),
+        margin: const EdgeInsets.only(top: 2, bottom: 72),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: ThemeApp.mainWhite,
         ),
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(

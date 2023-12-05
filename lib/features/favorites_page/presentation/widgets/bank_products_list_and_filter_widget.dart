@@ -1,8 +1,8 @@
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
-import 'package:podberi_ru/core/presentation/custom_choice_chip.dart';
 import 'package:podberi_ru/core/presentation/product_card_widget_with_buttons.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/favorites_page/presentation/widgets/bank_poduct_filter_choice_chip_widget.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class BankProductsListAndFilterWidget extends StatefulWidget {
@@ -30,14 +30,16 @@ class _BankProductsListAndFilterWidgetState
     ]; //sized box is a padding on start
 
     for (var element in bankProductsNamesList) {
-      list.add(CustomChoiceChip(
-        onTap: () {
-          setState(() {});
-        },
-        element: element,
-        selectedBankProducts: selectedBankProducts,
-        bankProductsNamesList: bankProductsNamesList,
-      ));
+      list.add(
+        BankProductFilterChoiceChipWidget(
+          element: element,
+          selectedBankProducts: selectedBankProducts,
+          bankProductsNamesList: bankProductsNamesList,
+          onTap: () {
+            setState(() {});
+          },
+        ),
+      );
     }
     list.add(const SizedBox(
       width: 15,
