@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:podberi_ru/features/catalog_page/domain/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/presentation/product_card_widget_with_buttons.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
 ///list of banks products. when press on card - go to [DetailsPage]
@@ -47,6 +47,7 @@ final List<ListProductModel> productInfo;
           delegate: SliverChildBuilderDelegate(
             childCount: productInfo.length,
             (BuildContext context,int index) =>  ProductCardWidgetWithButtons(
+              whereFrom: whereFrom,
               productInfo: productInfo[index],
                productRating: '4.8',
                ),

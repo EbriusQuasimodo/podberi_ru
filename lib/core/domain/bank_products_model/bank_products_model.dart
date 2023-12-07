@@ -33,14 +33,7 @@ class ListProductModel with _$ListProductModel {
     @Default('') dynamic cashback,
     @Default('') @JsonKey(name: 'currency_cards') dynamic currencyCard,
     @Default('') dynamic discounts,
-    @Default('') @JsonKey(name: 'feature_1') dynamic feature1,
-    @Default('') @JsonKey(name: 'feature_2') dynamic feature2,
-    @Default('') @JsonKey(name: 'feature_3') dynamic feature3,
-    @Default('') @JsonKey(name: 'feature_4')dynamic feature4,
-    @Default('') @JsonKey(name: 'feature_5') dynamic feature5,
-    @Default('') @JsonKey(name: 'feature_6') dynamic feature6,
-    @Default('') @JsonKey(name: 'feature_7') dynamic feature7,
-    @Default('') @JsonKey(name: 'feature_8') dynamic feature8,
+    @Default([]) @JsonKey(name: 'features') List<dynamic> features,
     @Default(false) @JsonKey(name: 'for_kids') dynamic forKids,
     @Default(false)
     @JsonKey(name: 'free_withdrawal_in_foreign_banks')

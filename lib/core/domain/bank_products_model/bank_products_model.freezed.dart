@@ -60,22 +60,8 @@ mixin _$ListProductModel {
   @JsonKey(name: 'currency_cards')
   dynamic get currencyCard => throw _privateConstructorUsedError;
   dynamic get discounts => throw _privateConstructorUsedError;
-  @JsonKey(name: 'feature_1')
-  dynamic get feature1 => throw _privateConstructorUsedError;
-  @JsonKey(name: 'feature_2')
-  dynamic get feature2 => throw _privateConstructorUsedError;
-  @JsonKey(name: 'feature_3')
-  dynamic get feature3 => throw _privateConstructorUsedError;
-  @JsonKey(name: 'feature_4')
-  dynamic get feature4 => throw _privateConstructorUsedError;
-  @JsonKey(name: 'feature_5')
-  dynamic get feature5 => throw _privateConstructorUsedError;
-  @JsonKey(name: 'feature_6')
-  dynamic get feature6 => throw _privateConstructorUsedError;
-  @JsonKey(name: 'feature_7')
-  dynamic get feature7 => throw _privateConstructorUsedError;
-  @JsonKey(name: 'feature_8')
-  dynamic get feature8 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'features')
+  List<dynamic> get features => throw _privateConstructorUsedError;
   @JsonKey(name: 'for_kids')
   dynamic get forKids => throw _privateConstructorUsedError;
   @JsonKey(name: 'free_withdrawal_in_foreign_banks')
@@ -156,14 +142,7 @@ abstract class $ListProductModelCopyWith<$Res> {
       dynamic cashback,
       @JsonKey(name: 'currency_cards') dynamic currencyCard,
       dynamic discounts,
-      @JsonKey(name: 'feature_1') dynamic feature1,
-      @JsonKey(name: 'feature_2') dynamic feature2,
-      @JsonKey(name: 'feature_3') dynamic feature3,
-      @JsonKey(name: 'feature_4') dynamic feature4,
-      @JsonKey(name: 'feature_5') dynamic feature5,
-      @JsonKey(name: 'feature_6') dynamic feature6,
-      @JsonKey(name: 'feature_7') dynamic feature7,
-      @JsonKey(name: 'feature_8') dynamic feature8,
+      @JsonKey(name: 'features') List<dynamic> features,
       @JsonKey(name: 'for_kids') dynamic forKids,
       @JsonKey(name: 'free_withdrawal_in_foreign_banks')
       dynamic freeWithdrawalInForeignBanks,
@@ -231,14 +210,7 @@ class _$ListProductModelCopyWithImpl<$Res, $Val extends ListProductModel>
     Object? cashback = freezed,
     Object? currencyCard = freezed,
     Object? discounts = freezed,
-    Object? feature1 = freezed,
-    Object? feature2 = freezed,
-    Object? feature3 = freezed,
-    Object? feature4 = freezed,
-    Object? feature5 = freezed,
-    Object? feature6 = freezed,
-    Object? feature7 = freezed,
-    Object? feature8 = freezed,
+    Object? features = null,
     Object? forKids = freezed,
     Object? freeWithdrawalInForeignBanks = freezed,
     Object? hit = freezed,
@@ -353,38 +325,10 @@ class _$ListProductModelCopyWithImpl<$Res, $Val extends ListProductModel>
           ? _value.discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      feature1: freezed == feature1
-          ? _value.feature1
-          : feature1 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature2: freezed == feature2
-          ? _value.feature2
-          : feature2 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature3: freezed == feature3
-          ? _value.feature3
-          : feature3 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature4: freezed == feature4
-          ? _value.feature4
-          : feature4 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature5: freezed == feature5
-          ? _value.feature5
-          : feature5 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature6: freezed == feature6
-          ? _value.feature6
-          : feature6 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature7: freezed == feature7
-          ? _value.feature7
-          : feature7 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature8: freezed == feature8
-          ? _value.feature8
-          : feature8 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      features: null == features
+          ? _value.features
+          : features // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
       forKids: freezed == forKids
           ? _value.forKids
           : forKids // ignore: cast_nullable_to_non_nullable
@@ -543,14 +487,7 @@ abstract class _$$ListProductModelImplCopyWith<$Res>
       dynamic cashback,
       @JsonKey(name: 'currency_cards') dynamic currencyCard,
       dynamic discounts,
-      @JsonKey(name: 'feature_1') dynamic feature1,
-      @JsonKey(name: 'feature_2') dynamic feature2,
-      @JsonKey(name: 'feature_3') dynamic feature3,
-      @JsonKey(name: 'feature_4') dynamic feature4,
-      @JsonKey(name: 'feature_5') dynamic feature5,
-      @JsonKey(name: 'feature_6') dynamic feature6,
-      @JsonKey(name: 'feature_7') dynamic feature7,
-      @JsonKey(name: 'feature_8') dynamic feature8,
+      @JsonKey(name: 'features') List<dynamic> features,
       @JsonKey(name: 'for_kids') dynamic forKids,
       @JsonKey(name: 'free_withdrawal_in_foreign_banks')
       dynamic freeWithdrawalInForeignBanks,
@@ -617,14 +554,7 @@ class __$$ListProductModelImplCopyWithImpl<$Res>
     Object? cashback = freezed,
     Object? currencyCard = freezed,
     Object? discounts = freezed,
-    Object? feature1 = freezed,
-    Object? feature2 = freezed,
-    Object? feature3 = freezed,
-    Object? feature4 = freezed,
-    Object? feature5 = freezed,
-    Object? feature6 = freezed,
-    Object? feature7 = freezed,
-    Object? feature8 = freezed,
+    Object? features = null,
     Object? forKids = freezed,
     Object? freeWithdrawalInForeignBanks = freezed,
     Object? hit = freezed,
@@ -739,38 +669,10 @@ class __$$ListProductModelImplCopyWithImpl<$Res>
           ? _value.discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      feature1: freezed == feature1
-          ? _value.feature1
-          : feature1 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature2: freezed == feature2
-          ? _value.feature2
-          : feature2 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature3: freezed == feature3
-          ? _value.feature3
-          : feature3 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature4: freezed == feature4
-          ? _value.feature4
-          : feature4 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature5: freezed == feature5
-          ? _value.feature5
-          : feature5 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature6: freezed == feature6
-          ? _value.feature6
-          : feature6 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature7: freezed == feature7
-          ? _value.feature7
-          : feature7 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      feature8: freezed == feature8
-          ? _value.feature8
-          : feature8 // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      features: null == features
+          ? _value._features
+          : features // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
       forKids: freezed == forKids
           ? _value.forKids
           : forKids // ignore: cast_nullable_to_non_nullable
@@ -913,14 +815,7 @@ class _$ListProductModelImpl implements _ListProductModel {
       this.cashback = '',
       @JsonKey(name: 'currency_cards') this.currencyCard = '',
       this.discounts = '',
-      @JsonKey(name: 'feature_1') this.feature1 = '',
-      @JsonKey(name: 'feature_2') this.feature2 = '',
-      @JsonKey(name: 'feature_3') this.feature3 = '',
-      @JsonKey(name: 'feature_4') this.feature4 = '',
-      @JsonKey(name: 'feature_5') this.feature5 = '',
-      @JsonKey(name: 'feature_6') this.feature6 = '',
-      @JsonKey(name: 'feature_7') this.feature7 = '',
-      @JsonKey(name: 'feature_8') this.feature8 = '',
+      @JsonKey(name: 'features') final List<dynamic> features = const [],
       @JsonKey(name: 'for_kids') this.forKids = false,
       @JsonKey(name: 'free_withdrawal_in_foreign_banks')
       this.freeWithdrawalInForeignBanks = false,
@@ -949,7 +844,8 @@ class _$ListProductModelImpl implements _ListProductModel {
       this.total = '',
       this.transfers = '',
       @JsonKey(name: 'under_18') this.under18 = false,
-      @JsonKey(name: 'way_to_get_card') this.wayToGetCard = ''});
+      @JsonKey(name: 'way_to_get_card') this.wayToGetCard = ''})
+      : _features = features;
 
   factory _$ListProductModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ListProductModelImplFromJson(json);
@@ -1017,30 +913,15 @@ class _$ListProductModelImpl implements _ListProductModel {
   @override
   @JsonKey()
   final dynamic discounts;
+  final List<dynamic> _features;
   @override
-  @JsonKey(name: 'feature_1')
-  final dynamic feature1;
-  @override
-  @JsonKey(name: 'feature_2')
-  final dynamic feature2;
-  @override
-  @JsonKey(name: 'feature_3')
-  final dynamic feature3;
-  @override
-  @JsonKey(name: 'feature_4')
-  final dynamic feature4;
-  @override
-  @JsonKey(name: 'feature_5')
-  final dynamic feature5;
-  @override
-  @JsonKey(name: 'feature_6')
-  final dynamic feature6;
-  @override
-  @JsonKey(name: 'feature_7')
-  final dynamic feature7;
-  @override
-  @JsonKey(name: 'feature_8')
-  final dynamic feature8;
+  @JsonKey(name: 'features')
+  List<dynamic> get features {
+    if (_features is EqualUnmodifiableListView) return _features;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_features);
+  }
+
   @override
   @JsonKey(name: 'for_kids')
   final dynamic forKids;
@@ -1128,7 +1009,7 @@ class _$ListProductModelImpl implements _ListProductModel {
 
   @override
   String toString() {
-    return 'ListProductModel(ogrn: $ogrn, smsMax: $smsMax, smsMin: $smsMin, id: $id, accrualOfBonuses: $accrualOfBonuses, ageMax: $ageMax, ageMin: $ageMin, bankDetails: $bankDetails, bestOffer: $bestOffer, bonusFormat: $bonusFormat, bonusProgram: $bonusProgram, canBePublished: $canBePublished, cardDelievery: $cardDelievery, cardIssuance: $cardIssuance, cardIssuerRequirements: $cardIssuerRequirements, cardName: $cardName, cashWithdrawal: $cashWithdrawal, cashWithdrawalLimit: $cashWithdrawalLimit, cashback: $cashback, currencyCard: $currencyCard, discounts: $discounts, feature1: $feature1, feature2: $feature2, feature3: $feature3, feature4: $feature4, feature5: $feature5, feature6: $feature6, feature7: $feature7, feature8: $feature8, forKids: $forKids, freeWithdrawalInForeignBanks: $freeWithdrawalInForeignBanks, hit: $hit, image: $image, juridicalAdress: $juridicalAdress, juridicalName: $juridicalName, license: $license, maxCashback: $maxCashback, minLink: $minLink, offerPayout: $offerPayout, overdraft: $overdraft, pauSystem: $pauSystem, payments: $payments, percentCalculation: $percentCalculation, percentOfRest: $percentOfRest, phone: $phone, picture: $picture, plugInOptions: $plugInOptions, service: $service, serviceMaxPerMonth: $serviceMaxPerMonth, serviceMin: $serviceMin, site: $site, support: $support, tariffDocument: $tariffDocument, total: $total, transfers: $transfers, under18: $under18, wayToGetCard: $wayToGetCard)';
+    return 'ListProductModel(ogrn: $ogrn, smsMax: $smsMax, smsMin: $smsMin, id: $id, accrualOfBonuses: $accrualOfBonuses, ageMax: $ageMax, ageMin: $ageMin, bankDetails: $bankDetails, bestOffer: $bestOffer, bonusFormat: $bonusFormat, bonusProgram: $bonusProgram, canBePublished: $canBePublished, cardDelievery: $cardDelievery, cardIssuance: $cardIssuance, cardIssuerRequirements: $cardIssuerRequirements, cardName: $cardName, cashWithdrawal: $cashWithdrawal, cashWithdrawalLimit: $cashWithdrawalLimit, cashback: $cashback, currencyCard: $currencyCard, discounts: $discounts, features: $features, forKids: $forKids, freeWithdrawalInForeignBanks: $freeWithdrawalInForeignBanks, hit: $hit, image: $image, juridicalAdress: $juridicalAdress, juridicalName: $juridicalName, license: $license, maxCashback: $maxCashback, minLink: $minLink, offerPayout: $offerPayout, overdraft: $overdraft, pauSystem: $pauSystem, payments: $payments, percentCalculation: $percentCalculation, percentOfRest: $percentOfRest, phone: $phone, picture: $picture, plugInOptions: $plugInOptions, service: $service, serviceMaxPerMonth: $serviceMaxPerMonth, serviceMin: $serviceMin, site: $site, support: $support, tariffDocument: $tariffDocument, total: $total, transfers: $transfers, under18: $under18, wayToGetCard: $wayToGetCard)';
   }
 
   @override
@@ -1168,14 +1049,7 @@ class _$ListProductModelImpl implements _ListProductModel {
             const DeepCollectionEquality()
                 .equals(other.currencyCard, currencyCard) &&
             const DeepCollectionEquality().equals(other.discounts, discounts) &&
-            const DeepCollectionEquality().equals(other.feature1, feature1) &&
-            const DeepCollectionEquality().equals(other.feature2, feature2) &&
-            const DeepCollectionEquality().equals(other.feature3, feature3) &&
-            const DeepCollectionEquality().equals(other.feature4, feature4) &&
-            const DeepCollectionEquality().equals(other.feature5, feature5) &&
-            const DeepCollectionEquality().equals(other.feature6, feature6) &&
-            const DeepCollectionEquality().equals(other.feature7, feature7) &&
-            const DeepCollectionEquality().equals(other.feature8, feature8) &&
+            const DeepCollectionEquality().equals(other._features, _features) &&
             const DeepCollectionEquality().equals(other.forKids, forKids) &&
             const DeepCollectionEquality().equals(
                 other.freeWithdrawalInForeignBanks,
@@ -1244,14 +1118,7 @@ class _$ListProductModelImpl implements _ListProductModel {
         const DeepCollectionEquality().hash(cashback),
         const DeepCollectionEquality().hash(currencyCard),
         const DeepCollectionEquality().hash(discounts),
-        const DeepCollectionEquality().hash(feature1),
-        const DeepCollectionEquality().hash(feature2),
-        const DeepCollectionEquality().hash(feature3),
-        const DeepCollectionEquality().hash(feature4),
-        const DeepCollectionEquality().hash(feature5),
-        const DeepCollectionEquality().hash(feature6),
-        const DeepCollectionEquality().hash(feature7),
-        const DeepCollectionEquality().hash(feature8),
+        const DeepCollectionEquality().hash(_features),
         const DeepCollectionEquality().hash(forKids),
         const DeepCollectionEquality().hash(freeWithdrawalInForeignBanks),
         const DeepCollectionEquality().hash(hit),
@@ -1321,14 +1188,7 @@ abstract class _ListProductModel implements ListProductModel {
       final dynamic cashback,
       @JsonKey(name: 'currency_cards') final dynamic currencyCard,
       final dynamic discounts,
-      @JsonKey(name: 'feature_1') final dynamic feature1,
-      @JsonKey(name: 'feature_2') final dynamic feature2,
-      @JsonKey(name: 'feature_3') final dynamic feature3,
-      @JsonKey(name: 'feature_4') final dynamic feature4,
-      @JsonKey(name: 'feature_5') final dynamic feature5,
-      @JsonKey(name: 'feature_6') final dynamic feature6,
-      @JsonKey(name: 'feature_7') final dynamic feature7,
-      @JsonKey(name: 'feature_8') final dynamic feature8,
+      @JsonKey(name: 'features') final List<dynamic> features,
       @JsonKey(name: 'for_kids') final dynamic forKids,
       @JsonKey(name: 'free_withdrawal_in_foreign_banks')
       final dynamic freeWithdrawalInForeignBanks,
@@ -1425,29 +1285,8 @@ abstract class _ListProductModel implements ListProductModel {
   @override
   dynamic get discounts;
   @override
-  @JsonKey(name: 'feature_1')
-  dynamic get feature1;
-  @override
-  @JsonKey(name: 'feature_2')
-  dynamic get feature2;
-  @override
-  @JsonKey(name: 'feature_3')
-  dynamic get feature3;
-  @override
-  @JsonKey(name: 'feature_4')
-  dynamic get feature4;
-  @override
-  @JsonKey(name: 'feature_5')
-  dynamic get feature5;
-  @override
-  @JsonKey(name: 'feature_6')
-  dynamic get feature6;
-  @override
-  @JsonKey(name: 'feature_7')
-  dynamic get feature7;
-  @override
-  @JsonKey(name: 'feature_8')
-  dynamic get feature8;
+  @JsonKey(name: 'features')
+  List<dynamic> get features;
   @override
   @JsonKey(name: 'for_kids')
   dynamic get forKids;

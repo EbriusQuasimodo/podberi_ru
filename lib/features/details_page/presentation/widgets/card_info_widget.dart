@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 import 'row_description_widget.dart';
 
 class CardInfoWidget extends StatelessWidget {
-  const CardInfoWidget({super.key});
+  final ListProductModel productInfo;
+  final String bankName;
+  final String bankLogoPath;
+  const CardInfoWidget({super.key, required this.productInfo, required this.bankName, required this.bankLogoPath});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +34,8 @@ class CardInfoWidget extends StatelessWidget {
                       top: 15, left: 15, right: 6, bottom: 30),
                   padding: const EdgeInsets.only(
                       top: 10.5, bottom: 11.5, right: 8.63, left: 9.16),
-                  child: SvgPicture.asset(
-                    'assets/icons/tinkoff_logo_icon.svg',
+                  child: Image.network(
+                    'http://62.109.21.134:8080/picture/$bankLogoPath',
                     height: 37.921,
                     width: 42.208,
                   ),
@@ -48,8 +51,8 @@ class CardInfoWidget extends StatelessWidget {
                       const EdgeInsets.only(top: 15, right: 15, bottom: 30),
                       padding: const EdgeInsets.only(
                           top: 22, bottom: 21, right: 15, left: 15),
-                      child: const Text(
-                        'Тинькофф Банк',
+                      child:  Text(
+                        bankName,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -59,22 +62,22 @@ class CardInfoWidget extends StatelessWidget {
                 ),
               ],
             ),
-            const RowDescriptionWidget(
-                rowDescription: 'Мир, MasterCard',
+             RowDescriptionWidget(
+                rowDescription: productInfo.pauSystem,
                 rowName: 'Платежная система'),
-            const RowDescriptionWidget(
+             RowDescriptionWidget(
                 rowDescription: 'Классическая', rowName: 'Тип карты'),
-            const RowDescriptionWidget(
+            RowDescriptionWidget(
                 rowDescription: 'Рубль, доллар, евро, +27',
                 rowName: 'Валюта карты'),
-            const RowDescriptionWidget(
+            RowDescriptionWidget(
                 rowDescription: '8 лет', rowName: 'Срок действия'),
-            const RowDescriptionWidget(
+           RowDescriptionWidget(
                 rowDescription: '1-2 дня', rowName: 'Доставка'),
-            const RowDescriptionWidget(
+            RowDescriptionWidget(
                 rowDescription: 'Курьером или почтой',
                 rowName: 'Способ доставки'),
-            const RowDescriptionWidget(
+             RowDescriptionWidget(
                 rowDescription: 'Есть, рассчитывается индивидуально',
                 rowName: 'Овердрафт'),
             Center(

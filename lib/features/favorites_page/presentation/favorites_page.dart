@@ -22,7 +22,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             pinned: true,
             title: Text('Избранное'),
           ),
-          BankProductsListAndFilterWidget(),
+         // BankProductsListAndFilterWidget(),
         ],
       ),
     );

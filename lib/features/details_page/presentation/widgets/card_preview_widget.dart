@@ -1,10 +1,13 @@
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class CardPreviewWidget extends StatefulWidget {
-  const CardPreviewWidget({super.key});
+  final ListProductModel productInfo;
+  final String bankName;
+  const CardPreviewWidget({super.key, required this.productInfo, required this.bankName});
 
   @override
   State<CardPreviewWidget> createState() => _CardPreviewWidgetState();
@@ -40,11 +43,11 @@ class _CardPreviewWidgetState extends State<CardPreviewWidget> {
         ),
         child: Column(
           children: [
-            const Padding(
+        Padding(
               padding:
               EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: Text(
-                'Тинькофф Black Super Premium Ultra Gaming 3000',
+                '${widget.bankName} ${widget.productInfo.cardName}',
                 textAlign: TextAlign.center,
                 style:
                 TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
@@ -54,10 +57,8 @@ class _CardPreviewWidgetState extends State<CardPreviewWidget> {
                 physics: const BouncingScrollPhysics(),
                 controller: _controllerBestOffers,
                 children: [
-                  Image.asset('assets/images/product_photo.png'),
-                  Image.asset('assets/images/product_photo.png'),
-                  Image.asset('assets/images/product_photo.png'),
-                  Image.asset('assets/images/product_photo.png'),
+                  Image.network('http://62.109.21.134:8080/picture/${widget.productInfo.picture}'),
+
                 ]),
             Padding(
               padding: const EdgeInsets.only(top: 15, bottom: 30),

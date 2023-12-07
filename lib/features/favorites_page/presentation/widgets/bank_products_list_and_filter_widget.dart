@@ -91,6 +91,7 @@ class _BankProductsListAndFilterWidgetState
               delegate: SliverChildBuilderDelegate(
                 childCount: 2,
                 (context, index) => const ProductCardWidgetWithButtons(
+                  whereFrom: '',
                   productRating: '4.8',
                 ),
               ),

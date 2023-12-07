@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class ConditionsWidget extends StatelessWidget {
-  const ConditionsWidget({super.key});
+  final ListProductModel productInfo;
+  const ConditionsWidget({super.key, required this.productInfo,});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +16,13 @@ class ConditionsWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           color: ThemeApp.mainWhite,
         ),
-        child: const Column(
+        child: Column(
           children: [
             Padding(
               padding: EdgeInsets.only(
                   top: 30, bottom: 20, left: 15, right: 15),
               child: Text(
-                'Условия по карте в 2023 году',
+                'Условия',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: ThemeApp.backgroundBlack,
@@ -32,8 +34,8 @@ class ConditionsWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(bottom: 30, left: 15, right: 15),
               child: Text(
-                'Банк Тинькофф позволяет зарабатывать на своей дебетовой карточке. Если у вас на карте будет 300 000 рублей, то за год вы получите до 15 000 руб., которые возвращаются на карту ежемесячными платежами.\n\nКонечно мы понимаем, что подобный остаток может быть только у весьма зажиточных граждан, и по большей части проживающих в центральных развитых регионах (Москва, Санкт-Петербург). Возьмем более приземленный для россиян пример расчета — 30 000 рублей. При таком остатке вы сможете рассчитывать на бонус до 1500 рублей каждый год. В этом есть главное преимущество и ключевое достоинство карты Tinkoff Black платежной системы МИР.',
-                textAlign: TextAlign.justify,
+                productInfo.total,
+                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   color: ThemeApp.backgroundBlack,
                   fontSize: 12,

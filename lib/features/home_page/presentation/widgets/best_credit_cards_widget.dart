@@ -21,6 +21,7 @@ class BestCreditCardsWidget extends ConsumerWidget {
           onTapShowMoreButton: () {},
           childOfList: BankProductCardWidgetWithoutButtons(
               onTap: () {
+                ///todo: add api
                 ref.watch(goRouterProvider).push(
                   RouteConstants.details,
                 );

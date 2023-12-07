@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/features/catalog_page/data/bank_products_repository.dart';
-import 'package:podberi_ru/features/catalog_page/domain/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/select_product_type_page.dart';
 
