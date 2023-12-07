@@ -91,11 +91,8 @@ class _BankProductsListAndFilterWidgetState
               delegate: SliverChildBuilderDelegate(
                 childCount: 2,
                 (context, index) => const ProductCardWidgetWithButtons(
-                    productName: 'Тинькофф Black',
-                    productShortDescription:
-                        'На остаток - до 5%\nБесплатное обслуживание\nСнятие без % - 500 000 руб.\nДоставка 1-2 дня\nБез овердрафта',
-                    productRating: '4.8',
-                    bankLogoIconPath: 'assets/icons/tinkoff_logo_icon.svg'),
+                  productRating: '4.8',
+                ),
               ),
             ),
           ),

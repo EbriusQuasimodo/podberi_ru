@@ -4,27 +4,26 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/bank_products_model.dart';
 
+///кастомный виджет с карточкой банковсвкого продукта (отличительные особенности - есть кнопки добавить в избранное и сравнение)
 class ProductCardWidgetWithButtons extends ConsumerWidget {
-  final String productName;
-  final String productShortDescription;
   final String productRating;
-  final String bankLogoIconPath;
+  final ListProductModel? productInfo;
 
   const ProductCardWidgetWithButtons(
       {super.key,
-      required this.productName,
-      required this.productShortDescription,
       required this.productRating,
-      required this.bankLogoIconPath});
+      this.productInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color(0xffFFBE0B),
-      ),
+          borderRadius: BorderRadius.circular(10), color: Colors.green
+          // color: Color(int.parse(
+          //     '0xff${productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
+          ),
       width: 280,
       height: 190,
       margin: const EdgeInsets.only(
@@ -39,9 +38,11 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
               padding:
                   const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12), color: ThemeApp.mainWhite,),
-              child: SvgPicture.asset(
-                bankLogoIconPath,
+                borderRadius: BorderRadius.circular(12),
+                color: ThemeApp.mainWhite,
+              ),
+              child: Image.network(
+                'http://62.109.21.134:8080/picture/${productInfo?.bankDetails?.picture}',
                 height: 32,
                 width: 36,
               ),
@@ -52,9 +53,9 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
             top: 16,
             right: 86,
             child: Text(
-              productName,
+              "${productInfo?.cardName}",
               maxLines: 3,
-              style: TextStyle(
+              style: const TextStyle(
                   color: ThemeApp.mainWhite,
                   fontWeight: FontWeight.w500,
                   fontSize: 14),
@@ -64,8 +65,8 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
             left: 16,
             bottom: 16,
             child: Text(
-              productShortDescription,
-              style: TextStyle(
+              "${productInfo?.feature1}\n${productInfo?.feature2}\n${productInfo?.feature3}\n${productInfo?.feature4}",
+              style: const TextStyle(
                   color: ThemeApp.mainWhite,
                   fontSize: 12,
                   fontWeight: FontWeight.w500),
@@ -76,14 +77,14 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
               bottom: 70,
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.star,
                     color: ThemeApp.mainWhite,
                     size: 20,
                   ),
                   Text(
                     productRating,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: ThemeApp.mainWhite,
                         fontWeight: FontWeight.w500,
                         fontSize: 20),
@@ -100,45 +101,47 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  ref.watch(goRouterProvider).push(RouteConstants.details,
+                  ref.watch(goRouterProvider).push(
+                        RouteConstants.details,
                       );
                 },
               ),
             ),
           ),
           Positioned(
-              right: 16,
-              bottom: 16,
-              child: Row(
-                children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: () {},
-                      child: SvgPicture.asset(
-                        'assets/icons/nav_bar_icons/comparison_page.svg',
-                        color: ThemeApp.mainWhite,
-                        height: 32,
-                        width: 32,
-                      ),
+            right: 16,
+            bottom: 16,
+            child: Row(
+              children: [
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () {},
+                    child: SvgPicture.asset(
+                      'assets/icons/nav_bar_icons/comparison_page.svg',
+                      color: ThemeApp.mainWhite,
+                      height: 32,
+                      width: 32,
                     ),
                   ),
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: () {},
-                      child: SvgPicture.asset(
-                        'assets/icons/nav_bar_icons/favorites_page.svg',
-                        color: ThemeApp.mainWhite,
-                        height: 32,
-                        width: 32,
-                      ),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () {},
+                    child: SvgPicture.asset(
+                      'assets/icons/nav_bar_icons/favorites_page.svg',
+                      color: ThemeApp.mainWhite,
+                      height: 32,
+                      width: 32,
                     ),
                   ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

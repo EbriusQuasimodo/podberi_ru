@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/presentation/product_card_widget_with_buttons.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/bank_products_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
 ///list of banks products. when press on card - go to [DetailsPage]
 class ProductListWidget extends StatelessWidget {
   final String whereFrom;
-
-  const ProductListWidget({super.key, required this.whereFrom});
+final List<ListProductModel> productInfo;
+  const ProductListWidget({super.key, required this.whereFrom, required this.productInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +23,12 @@ class ProductListWidget extends StatelessWidget {
         ),
         child: whereFrom == AppRoute.allBanksPage.name
             ? const SizedBox.shrink()
-            : const Padding(
-                padding: EdgeInsets.symmetric(vertical: 17),
+            :  Padding(
+                padding: const EdgeInsets.symmetric(vertical: 17),
                 child: Text(
-                  'Найдено (132 шт.)',
+                  'Найдено (${productInfo.length} шт.)',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: ThemeApp.darkestGrey,
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -44,13 +45,11 @@ class ProductListWidget extends StatelessWidget {
         ),
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: 10,
-            (context, index) => const ProductCardWidgetWithButtons(
-                productName: 'Тинькофф Black',
-                productShortDescription:
-                    'На остаток - до 5%\nБесплатное обслуживание\nСнятие без % - 500 000 руб.\nДоставка 1-2 дня\nБез овердрафта',
-                productRating: '4.8',
-                bankLogoIconPath: 'assets/icons/tinkoff_logo_icon.svg'),
+            childCount: productInfo.length,
+            (BuildContext context,int index) =>  ProductCardWidgetWithButtons(
+              productInfo: productInfo[index],
+               productRating: '4.8',
+               ),
           ),
         ),
       ),

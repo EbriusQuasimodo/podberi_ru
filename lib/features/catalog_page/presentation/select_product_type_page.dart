@@ -42,10 +42,13 @@ class SelectProductTypePage extends ConsumerWidget {
                       productName: 'Дебетовые карты',
                       onTap: () {
                         ref
-                            .watch(productTypeFromCatalogStateProvider.notifier)
+                            .watch(productTypeTitleFromCatalogStateProvider.notifier)
                             .state = 'Дебетовые карты';
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
                             extra: AppRoute.selectProductPage.name);
+                        ref
+                            .watch(productTypeUrlFromCatalogStateProvider.notifier)
+                            .state = 'debit_cards';
                       }),
                   const SizedBox(
                     height: 6,
@@ -55,10 +58,13 @@ class SelectProductTypePage extends ConsumerWidget {
                       productName: 'Кредитные карты',
                       onTap: () {
                         ref
-                            .watch(productTypeFromCatalogStateProvider.notifier)
+                            .watch(productTypeTitleFromCatalogStateProvider.notifier)
                             .state = 'Кредитные карты';
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
                             extra: AppRoute.selectProductPage.name);
+                        ref
+                            .watch(productTypeUrlFromCatalogStateProvider.notifier)
+                            .state = 'credit_cards';
                       }),
                   const SizedBox(
                     height: 6,
@@ -68,10 +74,13 @@ class SelectProductTypePage extends ConsumerWidget {
                       productName: 'Микрозаймы',
                       onTap: () {
                         ref
-                            .watch(productTypeFromCatalogStateProvider.notifier)
+                            .watch(productTypeTitleFromCatalogStateProvider.notifier)
                             .state = 'Микрозаймы';
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
                             extra: AppRoute.selectProductPage.name);
+                        ref
+                            .watch(productTypeUrlFromCatalogStateProvider.notifier)
+                            .state = 'zaimy';
                       }),
                   const SizedBox(
                     height: 6,
@@ -81,10 +90,13 @@ class SelectProductTypePage extends ConsumerWidget {
                       productName: 'РКО',
                       onTap: () {
                         ref
-                            .watch(productTypeFromCatalogStateProvider.notifier)
+                            .watch(productTypeTitleFromCatalogStateProvider.notifier)
                             .state = 'РКО';
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
                             extra: AppRoute.selectProductPage.name);
+                        ref
+                            .watch(productTypeUrlFromCatalogStateProvider.notifier)
+                            .state = 'rko';
                       }),
                   const SizedBox(
                     height: 6,
