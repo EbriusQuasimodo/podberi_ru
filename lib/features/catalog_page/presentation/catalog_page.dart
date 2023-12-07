@@ -20,20 +20,10 @@ class CatalogPage extends ConsumerStatefulWidget {
 
 class _CatalogPageState extends ConsumerState<CatalogPage> {
   late String productType;
-@override
-  void initState() {
 
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-   // ref.watch(debitCardControllerProvider.notifier).fetchEventData(widget.whereFrom);
-    super.didChangeDependencies();
-  }
   @override
   Widget build(BuildContext context) {
-    ///check product type
+    ///check product type title
     switch (widget.whereFrom) {
       case "selectProductPage":
         productType = ref.watch(productTypeTitleFromCatalogStateProvider);
@@ -49,7 +39,8 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
         break;
     }
 
-    return ref.watch(bankProductsControllerProvider(widget.whereFrom)).when(data: (debitCard) {
+    return ref.watch(bankProductsControllerProvider(widget.whereFrom)).when(
+        data: (debitCard) {
       return Scaffold(
         body: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -84,18 +75,44 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                     : const SortAndFilterWidget(),
               ),
             ),
-            ProductListWidget(whereFrom: widget.whereFrom, productInfo: debitCard,),
+            ProductListWidget(
+              whereFrom: widget.whereFrom,
+              productInfo: debitCard,
+            ),
           ],
         ),
       );
     }, error: (error, _) {
-      return Scaffold(
-        body: Center(
-          child: Text(error.toString()),
-        ),
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.toString())),
       );
+    });
+    return Scaffold(
+      body: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        slivers: [
+          SliverAppBar(
+            scrolledUnderElevation: 0,
+            backgroundColor: ThemeApp.mainWhite,
+            pinned: true,
+            title: Text(productType),
+            leading: IconButton(
+              onPressed: () {
+                ref.read(goRouterProvider).pop();
+              },
+              icon: const Icon(Icons.arrow_back_ios),
+            ),
+          ),
+          ProductListWidget(
+            whereFrom: widget.whereFrom,
+            productInfo: [],
+          ),
+        ],
+      ),
+    );
     }, loading: () {
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
