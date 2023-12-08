@@ -7,7 +7,7 @@ import 'package:podberi_ru/features/home_page/presentation/home_page_controller.
 
 import 'product_details_data_source.dart';
 
-///repository for fetch bank products
+///repository for fetch bank product details
 abstract class ProductDetailsRepositoryImpl {
   Future<void> fetch(DetailsParameters detailsParameters,AutoDisposeAsyncNotifierProviderRef ref);
 }

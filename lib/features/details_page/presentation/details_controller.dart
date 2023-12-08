@@ -4,7 +4,7 @@ import 'package:podberi_ru/features/details_page/data/product_details_repository
 import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-///bank products controller. used for fetch list of products. have required params (product type) which used in [BankProductsRepository]
+///bank products details controller. used for fetch product by id. have required params (product type, id) which used in [ProductDetailsRepository]
 class ProductDetailsController extends AutoDisposeFamilyAsyncNotifier<List<ListProductModel>, DetailsParameters> {
   ProductDetailsController();
   @override
