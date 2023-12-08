@@ -19,7 +19,7 @@ class ProductDetailsRepository implements ProductDetailsRepositoryImpl {
   Future<List<ListProductModel>> fetch(DetailsParameters detailsParameters, AutoDisposeAsyncNotifierProviderRef ref) async {
     ///select product type for instance in api (debit_card, credit_card, zaymi, rko)
     String productType ='';
-    switch (detailsParameters.productType) {
+    switch (detailsParameters.whereFrom) {
       case "selectProductPage":
         productType = ref.watch(productTypeUrlFromCatalogStateProvider);
 
@@ -32,9 +32,17 @@ class ProductDetailsRepository implements ProductDetailsRepositoryImpl {
         productType = 'debit_cards';
 
         break;
+      case "Дебетовые карты":
+        productType = 'debit_cards';
+
+        break;
+      case "Кредитные карты":
+        productType = 'credit_cards';
+
+        break;
     }
     final response = await GetIt.I<ProductDetailsGetDataSource>()
-        .fetch(productType, detailsParameters.id);
+        .fetch(productType, detailsParameters.id!);
     return response;
   }
 }

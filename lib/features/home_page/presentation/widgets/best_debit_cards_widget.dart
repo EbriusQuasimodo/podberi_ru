@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/constants/route_constants.dart';
+import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/controllers/debit_cards_controller.dart';
 
@@ -46,7 +49,15 @@ class BestDebitCardsWidget extends ConsumerWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return BankProductCardWidgetWithoutButtons(
                           productInfo: debitCards[index],
-                          onTap: () {},
+                          onTap: () {
+                            ref.watch(goRouterProvider).push(RouteConstants.details,
+                                extra: DetailsParameters(
+                                    id: debitCards[index].id,
+                                    whereFrom: 'Дебетовые карты',
+                                    productType: 'debit_cards',
+                                    bankName: debitCards[index].bankDetails?.bankName,
+                                    bankLogoPath: debitCards[index].bankDetails?.picture));
+                          },
                           productRating: '4.8'
                       );
                     }),
@@ -61,7 +72,8 @@ class BestDebitCardsWidget extends ConsumerWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () {
-
+                      ref.watch(goRouterProvider).push(RouteConstants.catalog,
+                          extra: 'Дебетовые карты',);
                     },
                     child: const Text(
                       'Показать все',

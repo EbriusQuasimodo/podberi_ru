@@ -37,6 +37,14 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
         productType = 'Каталог';
 
         break;
+      case "Дебетовые карты":
+        productType = 'Дебетовые карты';
+
+        break;
+      case "Кредитные карты":
+        productType = 'Кредитные карты';
+
+        break;
     }
 
     return ref.watch(bankProductsControllerProvider(widget.whereFrom)).when(

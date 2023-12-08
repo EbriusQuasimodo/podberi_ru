@@ -30,6 +30,14 @@ class BankProductsRepository implements BankProductsRepositoryImpl {
         productType = 'debit_cards';
 
         break;
+      case "Дебетовые карты":
+        productType = 'debit_cards';
+
+        break;
+      case "Кредитные карты":
+        productType = 'credit_cards';
+
+        break;
     }
     final response = await GetIt.I<BankProductsGetDataSource>().fetch(productType);
     return response;

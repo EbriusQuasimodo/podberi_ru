@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/constants/route_constants.dart';
+import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/controllers/credit_cards_controller.dart';
 
@@ -44,7 +47,15 @@ class BestCreditCardsWidget extends ConsumerWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return BankProductCardWidgetWithoutButtons(
                             productInfo: creditCards[index],
-                            onTap: () {},
+                            onTap: () {
+                              ref.watch(goRouterProvider).push(RouteConstants.details,
+                                  extra: DetailsParameters(
+                                      id: creditCards[index].id,
+                                      whereFrom: 'Кредитные карты',
+                                      productType: 'credit_cards',
+                                      bankName: creditCards[index].bankDetails?.bankName,
+                                      bankLogoPath: creditCards[index].bankDetails?.picture));
+                            },
                             productRating: '4.8');
                       }),
                 )
@@ -57,7 +68,10 @@ class BestCreditCardsWidget extends ConsumerWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
-                      onTap: () {},
+                      onTap: () {
+                        ref.watch(goRouterProvider).push(RouteConstants.catalog,
+                            extra:  'Кредитные карты',);
+                      },
                       child: const Text(
                         'Показать все',
                         style: TextStyle(

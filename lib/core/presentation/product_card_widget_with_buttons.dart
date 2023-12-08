@@ -126,7 +126,7 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
                   ref.watch(goRouterProvider).push(RouteConstants.details,
                       extra: DetailsParameters(
                           id: productInfo?.id,
-                          productType: whereFrom,
+                          whereFrom: whereFrom,
                           bankName: productInfo?.bankDetails?.bankName,
                           bankLogoPath: productInfo?.bankDetails?.picture));
                 },

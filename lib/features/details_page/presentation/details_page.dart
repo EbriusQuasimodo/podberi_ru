@@ -88,7 +88,7 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
                 scrolledUnderElevation: 0,
                 backgroundColor: ThemeApp.mainWhite,
                 pinned: true,
-                title: Text(widget.detailsParameters.productType),
+                title: Text(widget.detailsParameters.whereFrom!),
                 leading: IconButton(
                   onPressed: () {
                     ref.read(goRouterProvider).pop();

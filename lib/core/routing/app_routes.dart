@@ -89,7 +89,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   path: RouteConstants.catalog,
                   name: AppRoute.catalogPage.name,
                   pageBuilder: (context, state) {
-                    String whereFrom = state.extra as String;
+                    String whereFrom = state.extra as  String;
                     return NoTransitionPage(
                       child: CatalogPage(
                         whereFrom: whereFrom,
