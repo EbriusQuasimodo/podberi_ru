@@ -1,19 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class BankProductsGetDataSource {
-  late final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: 'http://62.109.21.134:8080',
-      responseType: ResponseType.json,
-    ),
-  )..interceptors.add(PrettyDioLogger());
+  BankProductsGetDataSource({
+    required this.dio,
+  });
+  final Dio dio;
 
   Future<List<ListProductModel>> fetch(String productType) async {
     List<ListProductModel> _listOfProducts = [];
     try {
-      final re = await _dio.get(
+      final re = await dio.get(
         '/$productType',
       );
       re.data.forEach((e) {

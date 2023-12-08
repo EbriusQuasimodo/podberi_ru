@@ -1,5 +1,7 @@
+import 'package:alice/alice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/presentation/navigation_bar_icon.dart';
@@ -38,7 +40,7 @@ final _shellNavigatorFKey = GlobalKey<NavigatorState>(debugLabel: 'shellF');
 final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
   return GoRouter(
       initialLocation: RouteConstants.home,
-      navigatorKey: _rootNavigatorKey,
+      navigatorKey: GetIt.I<Alice>().getNavigatorKey(),
       routes: [
         // GoRoute(path: '/filters', name: 'filters',
         //   pageBuilder: (context, state) =>

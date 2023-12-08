@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/widgets/bank_products_list_and_filter_widget.dart';
-
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -22,7 +20,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             pinned: true,
             title: Text('Избранное'),
           ),
-         // BankProductsListAndFilterWidget(),
+          // BankProductsListAndFilterWidget(),
         ],
       ),
     );

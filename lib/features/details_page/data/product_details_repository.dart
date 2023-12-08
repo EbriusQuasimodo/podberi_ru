@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
+import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_controller.dart';
 import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
@@ -13,10 +13,7 @@ abstract class ProductDetailsRepositoryImpl {
 }
 
 class ProductDetailsRepository implements ProductDetailsRepositoryImpl {
-  ProductDetailsRepository(this.productDetailsDataSource, this.isar);
-
-  final ProductDetailsGetDataSource productDetailsDataSource;
-  final Isar? isar;
+  ProductDetailsRepository();
 
   @override
   Future<List<ListProductModel>> fetch(DetailsParameters detailsParameters, AutoDisposeAsyncNotifierProviderRef ref) async {
@@ -36,7 +33,7 @@ class ProductDetailsRepository implements ProductDetailsRepositoryImpl {
 
         break;
     }
-    final response = await productDetailsDataSource
+    final response = await GetIt.I<ProductDetailsGetDataSource>()
         .fetch(productType, detailsParameters.id);
     return response;
   }
@@ -44,11 +41,7 @@ class ProductDetailsRepository implements ProductDetailsRepositoryImpl {
 
 final productDetailsRepositoryProvider =
 Provider.autoDispose<ProductDetailsRepository>((ref) {
-  final productDetailsDataSource = ProductDetailsGetDataSource();
-  final isar = Isar.getInstance();
-  final fetch = ProductDetailsRepository(
-    productDetailsDataSource,
-    isar,
-  );
+
+  final fetch = ProductDetailsRepository();
   return fetch;
 });
