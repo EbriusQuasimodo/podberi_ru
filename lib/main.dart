@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_data_source.dart';
+import 'package:podberi_ru/features/home_page/data/credit_cards_data/credit_cards_data_source.dart';
+import 'package:podberi_ru/features/home_page/data/debit_cards_data/debit_cards_data_source.dart';
 
 import 'features/catalog_page/data/bank_products_data_source.dart';
 import 'features/details_page/data/product_details_data_source.dart';
@@ -29,5 +31,7 @@ void main() async {
   GetIt.I.registerLazySingleton(() => BankProductsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => ProductDetailsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => BestOfferGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => CreditCardsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => DebitCardsGetDataSource(dio: dio));
   runApp(const ProviderScope(child: App()));
 }

@@ -105,9 +105,15 @@ class _BestOfferWidgetState extends ConsumerState<BestOfferWidget> {
         ),
       );
     }, loading: () {
-      return const SliverToBoxAdapter(
-        child: Center(
-          child: CircularProgressIndicator(),
+      return SliverToBoxAdapter(
+        child: Container(
+          margin: const EdgeInsets.only(top: 2),
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: ThemeApp.mainWhite,
+          ),
+          child: Center(child: CircularProgressIndicator(),),
         ),
       );
     });

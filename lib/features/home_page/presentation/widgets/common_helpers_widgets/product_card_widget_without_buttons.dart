@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class BankProductCardWidgetWithoutButtons extends StatelessWidget {
-  final String productName;
-  final String productShortDescription;
   final String productRating;
-  final String bankLogoIconPath;
   final VoidCallback onTap;
-  const BankProductCardWidgetWithoutButtons({super.key,required this.onTap, required this.productName, required this.productShortDescription, required this.productRating, required this.bankLogoIconPath});
+  final ListProductModel productInfo;
+
+  const BankProductCardWidgetWithoutButtons({
+    super.key,
+    required this.productInfo,
+    required this.onTap,
+    required this.productRating,
+  });
+
+  List<Widget> list() {
+    var list = <Widget>[];
+
+    for (int i = 0; i < 4; i++) {
+      list.add(
+        Text(
+          "${productInfo.features[i]}",
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+              color: ThemeApp.mainWhite,
+              fontSize: 12,
+              fontWeight: FontWeight.w500),
+        ),
+      );
+    }
+
+    return list;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,58 +45,59 @@ class BankProductCardWidgetWithoutButtons extends StatelessWidget {
       margin: const EdgeInsets.only(right: 3, left: 3),
       child: Stack(
         children: [
-
           Positioned(
             top: 16,
             right: 16,
             child: Container(
-              padding: const EdgeInsets.only(
-                  top: 9, right: 7, left: 7, bottom: 9),
+              padding:
+                  const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: ThemeApp.mainWhite,),
-              child: SvgPicture.asset(
-                  bankLogoIconPath, height: 32,width: 36,),
+                borderRadius: BorderRadius.circular(12),
+                color: ThemeApp.mainWhite,
+              ),
+              child: Image.network(
+                'http://62.109.21.134:8080/picture/${productInfo.bankDetails?.picture}',
+                height: 32,
+                width: 36,
+              ),
             ),
           ),
-
           Positioned(
             left: 16,
             top: 16,
             right: 86,
             child: Text(
-              productName,
+              '${productInfo.bankDetails?.bankName}\n${productInfo.cardName}',
               maxLines: 3,
-              style: TextStyle(
+              style: const TextStyle(
                   color: ThemeApp.mainWhite,
                   fontWeight: FontWeight.w500,
                   fontSize: 14),
             ),
           ),
-           Positioned(
-            left: 16,
-            bottom: 16,
-            child: Text(
-              productShortDescription,
-              style: TextStyle(
-                  color: ThemeApp.mainWhite,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500),
-            ),
-          ),
+          productInfo.features.isNotEmpty
+              ? Positioned(
+                  left: 16,
+                  bottom: 16,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: list(),
+                  ),
+                )
+              : const SizedBox.shrink(),
           Positioned(
               right: 16,
               bottom: 16,
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.star,
                     color: ThemeApp.mainWhite,
                     size: 20,
                   ),
                   Text(
                     productRating,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: ThemeApp.mainWhite,
                         fontWeight: FontWeight.w500,
                         fontSize: 20),
