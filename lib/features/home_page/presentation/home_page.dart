@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
+import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
+import 'package:podberi_ru/features/home_page/presentation/controllers/banks_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_credit_cards_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_debit_cards_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/blog_widget.dart';
@@ -8,6 +11,9 @@ import 'package:podberi_ru/features/home_page/presentation/widgets/mini_list_of_
 import 'package:podberi_ru/features/home_page/presentation/widgets/promocodes_ads_widgets/promocodes_ads_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/stories_widget.dart';
 
+import 'controllers/best_offer_controller.dart';
+import 'controllers/credit_cards_controller.dart';
+import 'controllers/debit_cards_controller.dart';
 import 'widgets/best_offer_widgets/best_offer_widget.dart';
 import 'widgets/select_product_type_widgets/select_product_type_widget.dart';
 
@@ -37,11 +43,62 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ),
           const StoriesWidget(),
-          const BestOfferWidget(),
+          ref.watch(bestOfferControllerProvider).when(
+            data: (bestOffer) {
+              return BestOfferWidget(
+                bestOffer: bestOffer,
+              );
+            },
+            error: (error, _) {
+              return const CustomErrorCardWidget();
+            },
+            loading: () {
+              return const CustomLoadingCardWidget();
+            },
+          ),
+
           const SelectProductTypeWidget(),
-          const BestCreditCardsWidget(),
-          const MiniListOfBanksWidget(),
-          const BestDebitCardsWidget(),
+
+          ref.watch(creditCardsControllerProvider).when(
+            data: (creditCards) {
+              return BestCreditCardsWidget(
+                creditCards: creditCards,
+              );
+            },
+            error: (error, _) {
+              return const CustomErrorCardWidget();
+            },
+            loading: () {
+              return const CustomLoadingCardWidget();
+            },
+          ),
+          ref.watch(banksControllerProvider).when(
+            data: (banksModel) {
+              return MiniListOfBanksWidget(
+                banksModel: banksModel,
+              );
+            },
+            error: (error, _) {
+              return const CustomErrorCardWidget();
+            },
+            loading: () {
+              return const CustomLoadingCardWidget();
+            },
+          ),
+
+          ref.watch(debitCardsControllerProvider).when(
+            data: (debitCards) {
+              return BestDebitCardsWidget(
+                debitCards: debitCards,
+              );
+            },
+            error: (error, _) {
+              return const CustomErrorCardWidget();
+            },
+            loading: () {
+              return const CustomLoadingCardWidget();
+            },
+          ),
           const PromoCodesAdsWidget(),
           const BlogWidget(),
         ],

@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
-import 'package:podberi_ru/features/home_page/presentation/controllers/credit_cards_controller.dart';
 
 import 'common_helpers_widgets/product_card_widget_without_buttons.dart';
 
 class BestCreditCardsWidget extends ConsumerWidget {
-  const BestCreditCardsWidget({super.key});
+  final List<ListProductModel> creditCards;
+  const BestCreditCardsWidget({super.key, required this.creditCards});
 
   ///best credit cards widget when pressed go to [DetailsPage]
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(creditCardsControllerProvider).when(
-      data: (creditCards) {
         return SliverToBoxAdapter(
           child: Container(
             margin: const EdgeInsets.only(top: 2),
@@ -84,43 +83,5 @@ class BestCreditCardsWidget extends ConsumerWidget {
             ),
           ),
         );
-      },
-      error: (error, _) {
-        return SliverToBoxAdapter(
-          child: Container(
-            margin: const EdgeInsets.only(
-              top: 2,
-            ),
-            padding: const EdgeInsets.only(top: 30, bottom: 21),
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: ThemeApp.mainWhite,
-            ),
-            child: const Center(
-              child: Text('произошла ошибка'),
-            ),
-          ),
-        );
-      },
-      loading: () {
-        return SliverToBoxAdapter(
-          child: Container(
-            margin: const EdgeInsets.only(
-              top: 2,
-            ),
-            padding: const EdgeInsets.only(top: 30, bottom: 21),
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: ThemeApp.mainWhite,
-            ),
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-        );
-      },
-    );
   }
 }
