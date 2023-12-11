@@ -13,7 +13,7 @@ class ComparisonPage extends StatefulWidget {
 }
 
 class _ComparisonPageState extends State<ComparisonPage> {
-  final List<String> bankProductsNamesList = [
+  final List<String> bankProductsNamesListFilter = [
     'Дебетовые карты',
     'Кредитные карты',
     'Микрозаймы',
@@ -21,11 +21,11 @@ class _ComparisonPageState extends State<ComparisonPage> {
   ];
   List<String> comparisonList = ['Тинькофф', 'Сбербанк', 'ВТБ', 'Газпромбанк'];
 
-  List<String> selectedBankProducts = [];
-  final _controllerBestOffers = PageController(
+  List<String> selectedBankProductsFilter = [];
+  final controllerBestOffers = PageController(
     viewportFraction: 0.9,
   );
-  final _controllerSecondPageView = PageController(
+  final controllerSecondPageView = PageController(
     viewportFraction: 0.9,
   );
 
@@ -36,22 +36,32 @@ class _ComparisonPageState extends State<ComparisonPage> {
   void initState() {
     secondProductDescription = comparisonList[0];
     firstProductDescription = comparisonList[0];
-    _controllerSecondPageView.addListener(() {
+    controllerSecondPageView.addListener(() {
       setState(() {
-        currentPageOnSecondPageView =
-            _controllerSecondPageView.page!.toDouble();
+        currentPageOnSecondPageView = controllerSecondPageView.page!.toDouble();
         secondProductDescription =
             comparisonList[currentPageOnSecondPageView.toInt()];
       });
+      print(currentPageOnSecondPageView);
     });
-    _controllerBestOffers.addListener(() {
+
+    controllerBestOffers.addListener(() {
+
       setState(() {
-        currentPageOnFirstPageView = _controllerBestOffers.page!.toDouble();
+        currentPageOnFirstPageView = controllerBestOffers.page!.toDouble();
         firstProductDescription =
             comparisonList[currentPageOnFirstPageView.toInt()];
       });
+      print(currentPageOnFirstPageView);
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controllerSecondPageView.dispose();
+    controllerBestOffers.dispose();
+    super.dispose();
   }
 
   String firstProductDescription = '';
@@ -63,14 +73,14 @@ class _ComparisonPageState extends State<ComparisonPage> {
       const SizedBox(width: 15)
     ]; //sized box is a padding on start
 
-    for (var element in bankProductsNamesList) {
+    for (var element in bankProductsNamesListFilter) {
       list.add(CustomChoiceChip(
         onTap: () {
           setState(() {});
         },
         element: element,
-        selectedBankProducts: selectedBankProducts,
-        bankProductsNamesList: bankProductsNamesList,
+        selectedBankProducts: selectedBankProductsFilter,
+        bankProductsNamesList: bankProductsNamesListFilter,
       ));
     }
     list.add(const SizedBox(
@@ -91,39 +101,96 @@ class _ComparisonPageState extends State<ComparisonPage> {
             pinned: true,
             title: Text('Сравнение'),
           ),
-          SliverToBoxAdapter(
-            child: Container(
-              margin: const EdgeInsets.only(top: 2),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: ThemeApp.mainWhite,
-              ),
-              child: Container(
-                alignment: Alignment.topCenter,
-                padding: const EdgeInsets.only(top: 18, bottom: 18),
-                child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: list(),
-                    )),
-              ),
-            ),
-          ),
-          ProductComparisonWidget(
-              onDeleteInFirstList: () {
-                setState(() {});
-              },
-              comparisonList: comparisonList,
-              controllerBestOffers: _controllerBestOffers,
-              controllerSecondPageView: _controllerSecondPageView,
-              currentPageOnFirstPageView: currentPageOnFirstPageView,
-              currentPageOnSecondPageView: currentPageOnSecondPageView,
-              onDeleteInSecondList: () {
-                setState(() {});
-              }),
-          ComparisonDataTableWidget(
-              firstProductDescription: firstProductDescription,
-              secondProductDescription: secondProductDescription),
+          comparisonList.isNotEmpty
+              ? SliverToBoxAdapter(
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: ThemeApp.mainWhite,
+                    ),
+                    child: Container(
+                      alignment: Alignment.topCenter,
+                      padding: const EdgeInsets.only(top: 18, bottom: 18),
+                      child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: list(),
+                          )),
+                    ),
+                  ),
+                )
+              : const SliverToBoxAdapter(child: SizedBox()),
+          comparisonList.isNotEmpty
+              ? ProductComparisonWidget(
+                  onDeleteInFirstList: () {
+                    setState(() {
+                      if(comparisonList.length ==1){
+                      secondProductDescription='';}
+                    });
+                  },
+                  comparisonList: comparisonList,
+                  controllerBestOffers: controllerBestOffers,
+                  controllerSecondPageView: controllerSecondPageView,
+                  currentPageOnFirstPageView: currentPageOnFirstPageView,
+                  currentPageOnSecondPageView: currentPageOnSecondPageView,
+                  onDeleteInSecondList: () {
+                    setState(() { if(comparisonList.length ==1){
+                      secondProductDescription='';}});
+                  })
+              : SliverFillRemaining(
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 2, bottom: 72),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: ThemeApp.mainWhite,
+                    ),
+                    child: Column(
+                      children: [
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.only(right: 15, left: 15),
+                          child: Text(
+                            'У вас пока нет продуктов в сравнении',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: ThemeApp.backgroundBlack),
+                          ),
+                        ),
+                        const Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 17,
+                          ),
+                          child: MaterialButton(
+                            minWidth: MediaQuery.of(context).size.width - 30,
+                            height: 50,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14)),
+                            padding: const EdgeInsets.only(
+                                top: 17, bottom: 16, left: 75, right: 75),
+                            onPressed: () {},
+                            color: ThemeApp.mainBlue,
+                            child: const Text(
+                              'В каталог',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: ThemeApp.mainWhite,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+          comparisonList.isNotEmpty
+              ? ComparisonDataTableWidget(
+                  firstProductDescription: firstProductDescription,
+                  secondProductDescription: secondProductDescription)
+              : const SliverToBoxAdapter(child: SizedBox.shrink()),
         ],
       ),
     );

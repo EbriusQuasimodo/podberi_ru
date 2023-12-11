@@ -3,7 +3,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 
 import 'comparison_row_item.dart';
 
-class ComparisonDataTableWidget extends StatelessWidget {
+class ComparisonDataTableWidget extends StatefulWidget {
   final String firstProductDescription;
   final String secondProductDescription;
 
@@ -13,6 +13,11 @@ class ComparisonDataTableWidget extends StatelessWidget {
     required this.secondProductDescription,
   });
 
+  @override
+  State<ComparisonDataTableWidget> createState() => _ComparisonDataTableWidgetState();
+}
+
+class _ComparisonDataTableWidgetState extends State<ComparisonDataTableWidget> {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -27,96 +32,96 @@ class ComparisonDataTableWidget extends StatelessWidget {
           children: [
             ComparisonRowItemWidget(
               rowName: 'Банк',
-              firstProductDescription: firstProductDescription,
-              secondProductDescription: secondProductDescription,
+              firstProductDescription: widget.firstProductDescription,
+              secondProductDescription: widget.secondProductDescription,
             ),
-            const ComparisonRowItemWidget(
+            ComparisonRowItemWidget(
               rowName: 'Платежная система',
               firstProductDescription: 'Мир, MasterCard',
-              secondProductDescription: 'UnionPay',
+              secondProductDescription: widget.secondProductDescription != '' ?'UnionPay' :'',
             ),
-            const ComparisonRowItemWidget(
+            ComparisonRowItemWidget(
               rowName: 'Тип карты',
               firstProductDescription: 'Классическая',
-              secondProductDescription: 'Classic / Gold / Platinum',
+              secondProductDescription: widget.secondProductDescription != '' ?'Classic / Gold / Platinum':'',
             ),
-            const ComparisonRowItemWidget(
+           ComparisonRowItemWidget(
               rowName: 'Валюта карты',
               firstProductDescription: 'Рубль, доллар, евро +27',
-              secondProductDescription: 'Рубль, доллар, евро',
+              secondProductDescription: widget.secondProductDescription != '' ?'Рубль, доллар, евро':'',
             ),
-            const ComparisonRowItemWidget(
+           ComparisonRowItemWidget(
               rowName: 'Срок действия',
               firstProductDescription: '8 лет',
-              secondProductDescription: '5 лет',
+              secondProductDescription: widget.secondProductDescription != '' ?'5 лет':'',
             ),
-            const ComparisonRowItemWidget(
+            ComparisonRowItemWidget(
               rowName: 'Кэшбек',
               firstProductDescription:
                   '2% или 5% на отдельные категории расходов',
               secondProductDescription:
-                  'От 1% до 15% на четыре выбранные категории\nОт 3% до 30% на предложения партнеров',
+              widget.secondProductDescription != '' ? 'От 1% до 15% на четыре выбранные категории\nОт 3% до 30% на предложения партнеров':'',
             ),
-            const ComparisonRowItemWidget(
+            ComparisonRowItemWidget(
               rowName: 'Стоимость обслуживания',
               firstProductDescription:
                   '0 руб. при наличии на вкладах или счетах от 50 000 ₽\n0 руб. при наличии кредита\n99 руб. в мес. в прочих случаях',
               secondProductDescription:
-                  'Бесплатно\nВыпуск карты - 5000 руб. Эту плату можно вернуть полностью или частично:- 5000 рублей, если в течение трех месяцев подряд (в период первых 4 месяцев) после получения карты тратить на покупки от 50 000 в месяц;- 3000 рублей, если в течение первых трех месяцев тратить на покупки от 10 000 в месяц',
+              widget.secondProductDescription != '' ? 'Бесплатно\nВыпуск карты - 5000 руб. Эту плату можно вернуть полностью или частично:- 5000 рублей, если в течение трех месяцев подряд (в период первых 4 месяцев) после получения карты тратить на покупки от 50 000 в месяц;- 3000 рублей, если в течение первых трех месяцев тратить на покупки от 10 000 в месяц':'',
             ),
-            const ComparisonRowItemWidget(
+            ComparisonRowItemWidget(
               rowName: 'Снятие наличных',
               firstProductDescription:
                   '0 руб. при снятии в банкоматах Тинькофф (до 500 000 ₽ в месяц)\n0 руб. при снятии от 3000 до 100 000 руб. за расч. период в сторонних банкоматах\n90 руб. при снятии до 3000 руб.2% мин\n90 руб. при снятии от 100 000 руб. в сторонних банкоматах за расч. период',
               secondProductDescription:
-                  'Бесплатно в банкоматах Газпромбанка до 1 млн рублей в месяц\n- Бесплатно через сторонние банкоматы до 200 000 рублей в месяц \n- 1%, мин. 300 руб. - в прочих случаях',
+              widget.secondProductDescription != '' ?  'Бесплатно в банкоматах Газпромбанка до 1 млн рублей в месяц\n- Бесплатно через сторонние банкоматы до 200 000 рублей в месяц \n- 1%, мин. 300 руб. - в прочих случаях':'',
             ),
-            const ComparisonRowItemWidget(
+            ComparisonRowItemWidget(
               rowName: 'Перевод средств',
               firstProductDescription:
                   '0 руб. внутренний банковский перевод\n0 руб. перевод по системе СБП',
               secondProductDescription:
-                  '- 0 руб. внутри банка- 1,5%, мин.\n50 руб. по номеру карты в сторонние банки\nЧерез СБП: \n- 0 руб. в до 100 000 руб./мес. \n- 0,5%, максимум 1500 руб., если более 100 000 руб./мес.',
+              widget.secondProductDescription != '' ?   '- 0 руб. внутри банка- 1,5%, мин.\n50 руб. по номеру карты в сторонние банки\nЧерез СБП: \n- 0 руб. в до 100 000 руб./мес. \n- 0,5%, максимум 1500 руб., если более 100 000 руб./мес.':'',
             ),
-            const ComparisonRowItemWidget(
+             ComparisonRowItemWidget(
               rowName: 'Процент на остаток',
               firstProductDescription:
                   '5% годовых на остаток до 300 000 руб. при сумме покупок от 3000 руб. за расчетный период и при подключенном сервисе Tinkoff Pro/Premium/PrivateВ прочих случаях не начисляется',
               secondProductDescription:
-                  'До 13.5% годовых по накопительному счету',
+              widget.secondProductDescription != '' ?    'До 13.5% годовых по накопительному счету':'',
             ),
-            const ComparisonRowItemWidget(
+            ComparisonRowItemWidget(
               rowName: 'Доставка',
               firstProductDescription: 'Курьером или по почте',
               secondProductDescription:
-                  'Бесплатная доставка или получение в офисе в день обращения',
+              widget.secondProductDescription != '' ?   'Бесплатная доставка или получение в офисе в день обращения':'',
             ),
-            const ComparisonRowItemWidget(
+            ComparisonRowItemWidget(
               rowName: 'Срок доставки',
               firstProductDescription: '1-2 дня',
-              secondProductDescription: '1-2 дня',
+              secondProductDescription:widget.secondProductDescription != '' ? '1-2 дня':'',
             ),
-            const ComparisonRowItemWidget(
+             ComparisonRowItemWidget(
               rowName: 'Овердрафт',
               firstProductDescription: 'Есть, расчитывается индивидуально',
-              secondProductDescription: 'Бесплатно 7 дней\n0,1% в день далее',
+              secondProductDescription:widget.secondProductDescription != '' ? 'Бесплатно 7 дней\n0,1% в день далее':'',
             ),
-            const ComparisonRowItemWidget(
+             ComparisonRowItemWidget(
               rowName: 'Приложение',
               firstProductDescription: 'Бесплатно\niOS, Android',
-              secondProductDescription: 'Бесплатно\niOS, Android',
+              secondProductDescription: widget.secondProductDescription != '' ?'Бесплатно\niOS, Android':'',
             ),
-            const ComparisonRowItemWidget(
+            ComparisonRowItemWidget(
               rowName: 'Смс-информирование',
               firstProductDescription: '59 руб. в месяц',
               secondProductDescription:
-                  '99 руб./мес.\nБесплатно первые 2 месяца',
+              widget.secondProductDescription != '' ?'99 руб./мес.\nБесплатно первые 2 месяца':'',
             ),
-            const ComparisonRowItemWidget(
+             ComparisonRowItemWidget(
               rowName: 'Дополнительно',
               firstProductDescription:
                   'Условия дебетовой карты Tinkoff Black с подпиской Tinkoff Pro становятся выгоднее.',
-              secondProductDescription: '-',
+              secondProductDescription: widget.secondProductDescription != '' ?'-' :'',
             ),
             Row(
               children: [
@@ -140,6 +145,7 @@ class ComparisonDataTableWidget extends StatelessWidget {
                     ),
                   ),
                 ),
+                widget.secondProductDescription != '' ?
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 15, left: 3),
@@ -159,7 +165,8 @@ class ComparisonDataTableWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                )
+                    :SizedBox.shrink(),
               ],
             ),
           ],
