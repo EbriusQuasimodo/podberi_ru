@@ -28,11 +28,11 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
         return Scaffold(
           body: CustomScrollView(
             slivers: [
-              const SliverAppBar(
+           SliverAppBar(
                 scrolledUnderElevation: 0,
                 backgroundColor: ThemeApp.mainWhite,
                 pinned: true,
-                title: Text('Детали'),
+                title: Text(widget.detailsParameters.whereFrom!),
               ),
               CardPreviewWidget(
                 productInfo: detailsInfo[0],

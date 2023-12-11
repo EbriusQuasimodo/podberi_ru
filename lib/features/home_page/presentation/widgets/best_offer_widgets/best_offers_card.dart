@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
@@ -26,7 +27,7 @@ height: 220,
               turns: const AlwaysStoppedAnimation(15/360),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.network('http://62.109.21.134:8080/picture/${bestOffer.picture}', width: 261, height: 165,),
+                child: Image.network('${Urls.api.files}/${bestOffer.picture}', width: 261, height: 165,),
               ),
             ),
           ),

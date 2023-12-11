@@ -7,6 +7,7 @@ import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_da
 import 'package:podberi_ru/features/home_page/data/credit_cards_data/credit_cards_data_source.dart';
 import 'package:podberi_ru/features/home_page/data/debit_cards_data/debit_cards_data_source.dart';
 
+import 'core/constants/urls.dart';
 import 'features/catalog_page/data/bank_products_data_source.dart';
 import 'features/details_page/data/product_details_data_source.dart';
 import 'internal/app.dart';
@@ -22,7 +23,7 @@ void main() async {
   late Dio dio;
   dio = Dio(
     BaseOptions(
-      baseUrl: 'http://62.109.21.134:8080',
+      baseUrl: Urls.srv,
       responseType: ResponseType.json,
     ),
   )

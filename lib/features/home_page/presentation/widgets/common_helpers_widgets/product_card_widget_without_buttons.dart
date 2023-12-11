@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
@@ -56,7 +57,7 @@ class BankProductCardWidgetWithoutButtons extends StatelessWidget {
                 color: ThemeApp.mainWhite,
               ),
               child: Image.network(
-                'http://62.109.21.134:8080/picture/${productInfo.bankDetails?.picture}',
+                '${Urls.api.files}/${productInfo.bankDetails?.picture}',
                 height: 32,
                 width: 36,
               ),

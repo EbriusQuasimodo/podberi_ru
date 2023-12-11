@@ -1,6 +1,7 @@
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
@@ -57,7 +58,7 @@ class _CardPreviewWidgetState extends State<CardPreviewWidget> {
                 physics: const BouncingScrollPhysics(),
                 controller: _controllerBestOffers,
                 children: [
-                  Image.network('http://62.109.21.134:8080/picture/${widget.productInfo.picture}'),
+                  Image.network('${Urls.api.files}/${widget.productInfo.picture}'),
 
                 ]),
             Padding(

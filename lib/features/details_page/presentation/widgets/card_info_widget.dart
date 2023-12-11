@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
@@ -35,7 +36,7 @@ class CardInfoWidget extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       top: 10.5, bottom: 11.5, right: 8.63, left: 9.16),
                   child: Image.network(
-                    'http://62.109.21.134:8080/picture/$bankLogoPath',
+                    '${Urls.api.files}/$bankLogoPath',
                     height: 37.921,
                     width: 42.208,
                   ),

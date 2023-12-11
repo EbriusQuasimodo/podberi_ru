@@ -18,7 +18,7 @@ class ConditionsWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(
                   top: 30, bottom: 20, left: 15, right: 15),
               child: Text(
@@ -32,11 +32,11 @@ class ConditionsWidget extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 30, left: 15, right: 15),
+              padding: const EdgeInsets.only(bottom: 30, left: 15, right: 15),
               child: Text(
                 productInfo.total,
                  textAlign: TextAlign.justify,
-                style: TextStyle(
+                style: const TextStyle(
                   color: ThemeApp.backgroundBlack,
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
