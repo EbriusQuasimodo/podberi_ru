@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/routing/app_routes.dart';
+import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
+import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/widgets/card_info_widget.dart';
@@ -75,52 +76,20 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
         );
       },
       error: (error, _) {
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(error.toString())),
-          );
-        });
         return Scaffold(
-          body: CustomScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                scrolledUnderElevation: 0,
-                backgroundColor: ThemeApp.mainWhite,
-                pinned: true,
-                title: Text(widget.detailsParameters.whereFrom!),
-                leading: IconButton(
-                  onPressed: () {
-                    ref.read(goRouterProvider).pop();
-                  },
-                  icon: const Icon(Icons.arrow_back_ios),
-                ),
-              ),
+            body: CustomScrollView(slivers: [
               SliverFillRemaining(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 2, bottom: 72),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ThemeApp.mainWhite,
-                  ),
-                  child: const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 15, left: 15),
-                      child: Text('Произошла какая-то ошибка(((('),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
+                  child: CustomErrorPageWidget(
+                    error: error.toString(),
+                    bottomPadding: 72,
+                  ))
+            ]));
       },
       loading: () {
         return const Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
+            body: CustomScrollView(slivers: [
+              SliverFillRemaining(child: CustomLoadingCardWidget(bottomPadding: 72,)),
+            ],)
         );
       },
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/controllers/banks_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_credit_cards_widget.dart';
@@ -9,7 +8,6 @@ import 'package:podberi_ru/features/home_page/presentation/widgets/blog_widget.d
 import 'package:podberi_ru/core/presentation/custom_app_bar_with_search.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/mini_list_of_banks_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/promocodes_ads_widgets/promocodes_ads_widget.dart';
-import 'package:podberi_ru/features/home_page/presentation/widgets/stories_widget.dart';
 
 import 'controllers/best_offer_controller.dart';
 import 'controllers/credit_cards_controller.dart';
@@ -42,7 +40,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               title: 'Доброго дня, дорогой гость!',
             ),
           ),
-          const StoriesWidget(),
+          //const StoriesWidget(),
           ref.watch(bestOfferControllerProvider).when(
             data: (bestOffer) {
               return BestOfferWidget(
@@ -50,10 +48,16 @@ class _HomePageState extends ConsumerState<HomePage> {
               );
             },
             error: (error, _) {
-              return const CustomErrorCardWidget();
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(error.toString())),
+                );
+              });
+              return SliverToBoxAdapter(child: SizedBox.shrink());
+              //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
             },
             loading: () {
-              return const CustomLoadingCardWidget();
+              return SliverToBoxAdapter(child: const CustomLoadingCardWidget(bottomPadding: 0,));
             },
           ),
 
@@ -66,10 +70,16 @@ class _HomePageState extends ConsumerState<HomePage> {
               );
             },
             error: (error, _) {
-              return const CustomErrorCardWidget();
+              // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              //   ScaffoldMessenger.of(context).showSnackBar(
+              //     SnackBar(content: Text(error.toString())),
+              //   );
+              // });
+              return SliverToBoxAdapter(child: SizedBox.shrink());
+              //return SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
             },
             loading: () {
-              return const CustomLoadingCardWidget();
+              return const SliverToBoxAdapter(child:CustomLoadingCardWidget(bottomPadding: 0,));
             },
           ),
           ref.watch(banksControllerProvider).when(
@@ -79,10 +89,12 @@ class _HomePageState extends ConsumerState<HomePage> {
               );
             },
             error: (error, _) {
-              return const CustomErrorCardWidget();
+
+              return SliverToBoxAdapter(child: SizedBox.shrink());
+              //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
             },
             loading: () {
-              return const CustomLoadingCardWidget();
+              return const SliverToBoxAdapter(child:CustomLoadingCardWidget(bottomPadding: 0,));
             },
           ),
 
@@ -93,10 +105,12 @@ class _HomePageState extends ConsumerState<HomePage> {
               );
             },
             error: (error, _) {
-              return const CustomErrorCardWidget();
+
+              return SliverToBoxAdapter(child: SizedBox.shrink());
+              //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
             },
             loading: () {
-              return const CustomLoadingCardWidget();
+              return const SliverToBoxAdapter(child:CustomLoadingCardWidget(bottomPadding: 0,));
             },
           ),
           const PromoCodesAdsWidget(),

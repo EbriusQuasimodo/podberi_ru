@@ -20,8 +20,8 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
         await GetIt.I<BestOfferGetDataSource>().fetch('debit_cards');
     final responseCredit =
         await GetIt.I<BestOfferGetDataSource>().fetch('credit_cards');
-    final responseZaymi =
-        await GetIt.I<BestOfferGetDataSource>().fetch('zaymi');
+    final responseZaimy =
+        await GetIt.I<BestOfferGetDataSource>().fetch('zaimy');
     final responseRko = await GetIt.I<BestOfferGetDataSource>().fetch('rko');
     for (int i = 0; i < responseDebit.length; i++) {
       _listOfBestOffers.add(
@@ -46,15 +46,15 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
         id: responseCredit[i].id,
       ),);
     }
-    for (int i = 0; i < responseZaymi.length; i++) {
+    for (int i = 0; i < responseZaimy.length; i++) {
       _listOfBestOffers
           .add(ListProductModel(
-        cardName: responseZaymi[i].cardName,
-        picture: responseZaymi[i].picture,
+        cardName: responseZaimy[i].cardName,
+        picture: responseZaimy[i].picture,
         bankDetails: BankDetailsModel(
-            color: responseZaymi[i].bankDetails?.color,
-            bankName: responseZaymi[i].bankDetails?.bankName),
-        id: responseZaymi[i].id,
+            color: responseZaimy[i].bankDetails?.color,
+            bankName: responseZaimy[i].bankDetails?.bankName),
+        id: responseZaimy[i].id,
       ),);
     }
     for (int i = 0; i < responseRko.length; i++) {

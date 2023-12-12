@@ -1,3 +1,4 @@
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
@@ -39,8 +40,10 @@ class BankProductsRepository implements BankProductsRepositoryImpl {
 
         break;
     }
+
     final response = await GetIt.I<BankProductsGetDataSource>().fetch(productType);
     return response;
+
   }
 }
 
