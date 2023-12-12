@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class BankInfoCard extends StatelessWidget {
-  const BankInfoCard({super.key});
+  final String bankName;
+  final String bankPicture;
+  const BankInfoCard({super.key, required this.bankName, required this.bankPicture});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +26,8 @@ class BankInfoCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               color: ThemeApp.mainWhite,
             ),
-            child: SvgPicture.asset(
-              'assets/icons/tinkoff_logo_icon.svg',
+            child:Image.network(
+              '${Urls.api.files}/${bankPicture}',
               height: 32,
               width: 36,
             ),
@@ -33,8 +35,8 @@ class BankInfoCard extends StatelessWidget {
           const SizedBox(
             width: 15,
           ),
-          const Text(
-            'Тинькофф банк',
+         Text(
+            bankName,
             style: TextStyle(
                 color: ThemeApp.backgroundBlack,
                 fontSize: 14,

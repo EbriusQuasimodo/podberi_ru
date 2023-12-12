@@ -4,8 +4,15 @@ import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_p
 
 class BankAndProductTypeWidget extends StatefulWidget {
   final VoidCallback onTap;
+  final String bankName;
+  final String bankPicture;
 
-  const BankAndProductTypeWidget({super.key, required this.onTap});
+  const BankAndProductTypeWidget({
+    super.key,
+    required this.onTap,
+    required this.bankName,
+    required this.bankPicture,
+  });
 
   @override
   State<BankAndProductTypeWidget> createState() =>
@@ -48,7 +55,10 @@ class _BankAndProductTypeWidgetState extends State<BankAndProductTypeWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const BankInfoCard(),
+        BankInfoCard(
+          bankName: widget.bankName,
+          bankPicture: widget.bankPicture,
+        ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(

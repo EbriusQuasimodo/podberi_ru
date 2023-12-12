@@ -21,7 +21,8 @@ final List<ListProductModel> productInfo;
           borderRadius: BorderRadius.circular(20),
           color: ThemeApp.mainWhite,
         ),
-        child: whereFrom == AppRoute.allBanksPage.name
+        child: whereFrom == AppRoute.allBanksPage.name  ||
+            whereFrom == 'homePageBanks'
             ? const SizedBox.shrink()
             :  Padding(
                 padding: const EdgeInsets.symmetric(vertical: 17),
@@ -38,7 +39,8 @@ final List<ListProductModel> productInfo;
       ),
       sliver: SliverPadding(
         padding: EdgeInsets.only(
-          top: whereFrom == AppRoute.allBanksPage.name ? 15 : 47,
+          top: whereFrom == AppRoute.allBanksPage.name ||
+              whereFrom == 'homePageBanks' ? 15 : 47,
           right: 15,
           left: 15,
           bottom: 5,

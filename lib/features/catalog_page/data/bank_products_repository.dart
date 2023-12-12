@@ -39,6 +39,10 @@ class BankProductsRepository implements BankProductsRepositoryImpl {
         productType = 'credit_cards';
 
         break;
+      case 'homePageBanks':
+        productType = 'debit_cards';
+
+        break;
     }
 
     final response = await GetIt.I<BankProductsGetDataSource>().fetch(productType);

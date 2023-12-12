@@ -40,6 +40,10 @@ class ProductDetailsRepository implements ProductDetailsRepositoryImpl {
         productType = 'credit_cards';
 
         break;
+      case 'homePageBanks':
+        productType = 'debit_cards';
+
+        break;
     }
     final response = await GetIt.I<ProductDetailsGetDataSource>()
         .fetch(productType, detailsParameters.id!);

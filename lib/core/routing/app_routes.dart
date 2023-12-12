@@ -61,16 +61,6 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   pageBuilder: (context, state) =>
                       NoTransitionPage(key: UniqueKey(), child: HomePage()),
                 ),
-                GoRoute(
-                  path: RouteConstants.allBanks,
-                  name: AppRoute.allBanksPage.name,
-                  pageBuilder: (context, state) {
-                    return NoTransitionPage(
-                      child: AllBanksPage(),
-                    );
-                  },
-                  routes: const [],
-                ),
               ],
             ),
             StatefulShellBranch(
@@ -107,6 +97,16 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                       child: DetailsPage(
                         detailsParameters: detailsParameters,
                       ),
+                    );
+                  },
+                  routes: const [],
+                ),
+                GoRoute(
+                  path: RouteConstants.allBanks,
+                  name: AppRoute.allBanksPage.name,
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(
+                      child: AllBanksPage(),
                     );
                   },
                   routes: const [],

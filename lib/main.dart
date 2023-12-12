@@ -8,6 +8,7 @@ import 'package:podberi_ru/features/home_page/data/credit_cards_data/credit_card
 import 'package:podberi_ru/features/home_page/data/debit_cards_data/debit_cards_data_source.dart';
 
 import 'core/constants/urls.dart';
+import 'features/all_banks_page/data/all_banks_data_source.dart';
 import 'features/catalog_page/data/bank_products_data_source.dart';
 import 'features/details_page/data/product_details_data_source.dart';
 import 'features/home_page/data/banks_data/banks_data_source.dart';
@@ -36,5 +37,6 @@ void main() async {
   GetIt.I.registerLazySingleton(() => CreditCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => DebitCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => BanksGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => AllBanksGetDataSource(dio: dio));
   runApp(const ProviderScope(child: App()));
 }

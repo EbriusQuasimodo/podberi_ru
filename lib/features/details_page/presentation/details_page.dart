@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/catalog_controller.dart';
 import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/widgets/card_info_widget.dart';
 import 'package:podberi_ru/features/details_page/presentation/widgets/card_preview_widget.dart';
 import 'package:podberi_ru/features/details_page/presentation/widgets/conditions_widget.dart';
+import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 import 'details_controller.dart';
 
@@ -20,8 +22,35 @@ class DetailsPage extends ConsumerStatefulWidget {
 }
 
 class _DetailsPageState extends ConsumerState<DetailsPage> {
+  late String productType;
   @override
   Widget build(BuildContext context) {
+    ///check product type title
+    switch (widget.detailsParameters.whereFrom!) {
+      case "selectProductPage":
+        productType = ref.watch(productTypeTitleFromCatalogStateProvider);
+
+        break;
+      case "homePage":
+        productType = ref.watch(productTypeTitleFromHomeStateProvider);
+
+      case "allBanksPage":
+        productType = 'Каталог';
+
+        break;
+      case 'homePageBanks':
+        productType = 'Каталог';
+
+        break;
+      case "Дебетовые карты":
+        productType = 'Дебетовые карты';
+
+        break;
+      case "Кредитные карты":
+        productType = 'Кредитные карты';
+
+        break;
+    }
     return ref
         .watch(productDetailsControllerProvider(widget.detailsParameters))
         .when(
@@ -33,7 +62,7 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
                 scrolledUnderElevation: 0,
                 backgroundColor: ThemeApp.mainWhite,
                 pinned: true,
-                title: Text(widget.detailsParameters.whereFrom!),
+                title: Text(productType),
               ),
               CardPreviewWidget(
                 productInfo: detailsInfo[0],

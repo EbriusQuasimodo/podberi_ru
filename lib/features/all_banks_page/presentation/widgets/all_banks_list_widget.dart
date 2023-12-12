@@ -1,13 +1,19 @@
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 
 class AllBanksListWidget extends ConsumerWidget {
-  const AllBanksListWidget({super.key});
+  final List<BankDetailsModel> allBanks;
+
+  const AllBanksListWidget({
+    super.key,
+    required this.allBanks,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,8 +35,10 @@ class AllBanksListWidget extends ConsumerWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  ref.watch(bankFromAllBanksStateProvider.notifier).state =
-                      'Тинькофф Банк';
+                  ref.watch(bankNameFromAllBanksStateProvider.notifier).state =
+                      allBanks[index].bankName;
+                  ref.watch(bankPictureFromAllBanksStateProvider.notifier).state =
+                      allBanks[index].picture;
                   ref
                       .watch(goRouterProvider)
                       .push('/catalog', extra: AppRoute.allBanksPage.name);
@@ -53,8 +61,8 @@ class AllBanksListWidget extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           color: ThemeApp.mainWhite,
                         ),
-                        child: SvgPicture.asset(
-                          'assets/icons/tinkoff_logo_icon.svg',
+                        child: Image.network(
+                          '${Urls.api.files}/${allBanks[index].picture}',
                           height: 32,
                           width: 36,
                         ),
@@ -62,8 +70,8 @@ class AllBanksListWidget extends ConsumerWidget {
                       const SizedBox(
                         width: 15,
                       ),
-                      const Text(
-                        'Тинькофф банк',
+                      Text(
+                        allBanks[index].bankName,
                         style: TextStyle(
                             color: ThemeApp.mainWhite,
                             fontSize: 14,

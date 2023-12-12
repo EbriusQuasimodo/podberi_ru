@@ -5,9 +5,9 @@ import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
+import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 ///mini list of banks on card tap go to [CatalogPage] on showAllBanks tap go to [AllBanksPage]
 class MiniListOfBanksWidget extends ConsumerStatefulWidget {
@@ -34,10 +34,12 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
           child: MaterialButton(
             padding: EdgeInsets.zero,
             onPressed: () {
-              ref.watch(bankFromAllBanksStateProvider.notifier).state =
+              ref.watch(bankNameFromHomeStateProvider.notifier).state =
                   widget.banksModel[i].bankName;
+              ref.watch(bankPictureFromHomeStateProvider.notifier).state =
+                  widget.banksModel[i].picture;
               ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                  extra: AppRoute.allBanksPage.name);
+                  extra: 'homePageBanks');
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -126,7 +128,7 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
                   onTap: () {
-                    ref.watch(goRouterProvider).push(RouteConstants.allBanks);
+                    ref.watch(goRouterProvider).go(RouteConstants.allBanks);
                   },
                   child: const Text(
                     'Все банки',
