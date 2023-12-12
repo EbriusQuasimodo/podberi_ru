@@ -105,24 +105,30 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
       },
       error: (error, _) {
         return Scaffold(
-            body: CustomScrollView(slivers: [
-          SliverFillRemaining(
-              child: CustomErrorPageWidget(
-            error: error.toString(),
-            bottomPadding: 72,
-          ))
-        ]));
+          body: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                child: CustomErrorPageWidget(
+                  error: error.toString(),
+                  bottomPadding: 72,
+                ),
+              )
+            ],
+          ),
+        );
       },
       loading: () {
         return const Scaffold(
-            body: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
+          body: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
                 child: CustomLoadingCardWidget(
-              bottomPadding: 72,
-            )),
-          ],
-        ));
+                  bottomPadding: 72,
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
