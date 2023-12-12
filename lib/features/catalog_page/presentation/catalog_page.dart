@@ -122,9 +122,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
           body: CustomScrollView(
             slivers: [
               SliverFillRemaining(
-                child: CustomLoadingCardWidget(
-                  bottomPadding: 72,
-                ),
+                child: CustomLoadingCardWidget(bottomPadding: 72),
               ),
             ],
           ),
