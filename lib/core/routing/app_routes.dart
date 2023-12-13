@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/presentation/navigation_bar_icon.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
@@ -79,10 +80,11 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   path: RouteConstants.catalog,
                   name: AppRoute.catalogPage.name,
                   pageBuilder: (context, state) {
-                    String whereFrom = state.extra as  String;
+                    FiltersModel whereFrom = state.extra as  FiltersModel;
                     return NoTransitionPage(
+                      key: UniqueKey(),
                       child: CatalogPage(
-                        whereFrom: whereFrom,
+                        filtersModel: whereFrom,
                       ),
                     );
                   },

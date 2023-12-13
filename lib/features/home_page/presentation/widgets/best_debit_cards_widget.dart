@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
@@ -73,7 +74,7 @@ class BestDebitCardsWidget extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12),
                     onTap: () {
                       ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                          extra: 'Дебетовые карты',);
+                          extra: FiltersModel(productType: 'Кредитные карты', banks: [], paySystem: [],cashBack: []));
                     },
                     child: const Text(
                       'Показать все',

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
@@ -39,7 +40,7 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
               ref.watch(bankPictureFromHomeStateProvider.notifier).state =
                   widget.banksModel[i].picture;
               ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                  extra: 'homePageBanks');
+                  extra: FiltersModel(productType: 'homePageBanks', banks: [], paySystem: [],cashBack: []));
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

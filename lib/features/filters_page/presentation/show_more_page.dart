@@ -2,16 +2,20 @@ import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class ShowMorePage extends ConsumerStatefulWidget {
-  final List<String> itemsNames;
+  final List<BankDetailsModel> banksList;
+  final AutoDisposeStateProvider<List<String>> providerName;
   final List<String> filters;
-
-  const ShowMorePage({
+final VoidCallback onTapSetState;
+  ShowMorePage({
     super.key,
     required this.filters,
-    required this.itemsNames,
+    required this.banksList,
+    required this.onTapSetState,
+    required this.providerName,
   });
 
   @override
@@ -43,7 +47,7 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                   top: 15, right: 15, left: 15, bottom: 9),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  childCount: widget.itemsNames.length,
+                  childCount: widget.banksList.length,
                   (context, index) => Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -55,24 +59,26 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(12),
                         onTap: () {
+                          widget.onTapSetState();
                           setState(() {
-                            if (!widget.filters
-                                .contains(widget.itemsNames[index])) {
-                              widget.filters.clear();
-                              widget.filters.add(widget.itemsNames[index]);
+                            if (!widget.filters.contains(widget.banksList[index].bankName)) {
+                              //widget.filters.clear();
+                              widget.filters.add(widget.banksList[index].bankName);
                             } else {
-                              widget.filters.removeWhere((String name) {
-                                return name == widget.itemsNames[index];
+                             widget.filters.removeWhere((String name) {
+                                return name == widget.banksList[index].bankName;
                               });
                             }
+                            //ref.watch(widget.providerName.notifier).state = widget.filters;
                           });
+
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(15),
-                              child: Text(widget.itemsNames[index],
+                              child: Text(widget.banksList[index].bankName,
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
@@ -89,8 +95,7 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                                 'assets/icons/filer_check_icon.svg',
                                 height: 16,
                                 width: 16,
-                                color: widget.filters
-                                        .contains(widget.itemsNames[index])
+                                color: widget.filters.contains(widget.banksList[index].bankName)
                                     ? ThemeApp.mainBlue
                                     : Colors.transparent,
                               ),

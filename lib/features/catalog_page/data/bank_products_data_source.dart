@@ -20,7 +20,7 @@ class BankProductsGetDataSource {
         final re = await dio.get(
           '/$productType',
         );
-
+print(re.realUri);
         switch (re.statusCode) {
           case 200:
             re.data.forEach((e) {

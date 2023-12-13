@@ -1,8 +1,10 @@
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
@@ -41,7 +43,7 @@ class AllBanksListWidget extends ConsumerWidget {
                       allBanks[index].picture;
                   ref
                       .watch(goRouterProvider)
-                      .push('/catalog', extra: AppRoute.allBanksPage.name);
+                      .push(RouteConstants.catalog, extra: FiltersModel(productType: AppRoute.allBanksPage.name, banks: [], paySystem: [], cashBack: []));
                 },
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 6),

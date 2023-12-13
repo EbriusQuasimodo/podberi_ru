@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/presentation/custom_app_bar_with_search.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
@@ -45,7 +46,7 @@ class SelectProductTypePage extends ConsumerWidget {
                             .watch(productTypeTitleFromCatalogStateProvider.notifier)
                             .state = 'Дебетовые карты';
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                            extra: AppRoute.selectProductPage.name);
+                            extra: FiltersModel(productType: AppRoute.selectProductPage.name, banks: [], paySystem: [],cashBack: []));
                         ref
                             .watch(productTypeUrlFromCatalogStateProvider.notifier)
                             .state = 'debit_cards';
@@ -61,7 +62,7 @@ class SelectProductTypePage extends ConsumerWidget {
                             .watch(productTypeTitleFromCatalogStateProvider.notifier)
                             .state = 'Кредитные карты';
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                            extra: AppRoute.selectProductPage.name);
+                            extra:FiltersModel(productType: AppRoute.selectProductPage.name, banks: [], paySystem: [],cashBack: []));
                         ref
                             .watch(productTypeUrlFromCatalogStateProvider.notifier)
                             .state = 'credit_cards';
@@ -77,7 +78,7 @@ class SelectProductTypePage extends ConsumerWidget {
                             .watch(productTypeTitleFromCatalogStateProvider.notifier)
                             .state = 'Микрозаймы';
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                            extra: AppRoute.selectProductPage.name);
+                            extra: FiltersModel(productType: AppRoute.selectProductPage.name, banks: [], paySystem: [],cashBack: []));
                         ref
                             .watch(productTypeUrlFromCatalogStateProvider.notifier)
                             .state = 'zaimy';
@@ -93,7 +94,7 @@ class SelectProductTypePage extends ConsumerWidget {
                             .watch(productTypeTitleFromCatalogStateProvider.notifier)
                             .state = 'РКО';
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                            extra: AppRoute.selectProductPage.name);
+                            extra: FiltersModel(productType: AppRoute.selectProductPage.name, banks: [], paySystem: [],cashBack: []));
                         ref
                             .watch(productTypeUrlFromCatalogStateProvider.notifier)
                             .state = 'rko';

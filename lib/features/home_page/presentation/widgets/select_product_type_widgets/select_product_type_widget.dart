@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page.dart';
@@ -37,9 +38,12 @@ class SelectProductTypeWidget extends ConsumerWidget {
                 imageAsset: 'assets/icons/debet_card_icon.svg',
                 productName: 'Дебетовые карты',
                 onTap: () {
-                  ref.watch(productTypeTitleFromHomeStateProvider.notifier).state =
-                      'Дебетовые карты';
-                  ref.watch(goRouterProvider).push('/catalog', extra: AppRoute.homePage.name);
+                  ref
+                      .watch(productTypeTitleFromHomeStateProvider.notifier)
+                      .state = 'Дебетовые карты';
+                  ref.watch(goRouterProvider).push('/catalog',
+                      extra: FiltersModel(
+                          productType: AppRoute.homePage.name, banks: [], paySystem: [],cashBack: []));
                   ref
                       .watch(productTypeUrlFromHomeStateProvider.notifier)
                       .state = 'debit_cards';
@@ -51,9 +55,12 @@ class SelectProductTypeWidget extends ConsumerWidget {
                 imageAsset: 'assets/icons/credit_card_icon.svg',
                 productName: 'Кредитные карты',
                 onTap: () {
-                  ref.watch(productTypeTitleFromHomeStateProvider.notifier).state =
-                      'Кредитные карты';
-                  ref.watch(goRouterProvider).push('/catalog', extra: AppRoute.homePage.name);
+                  ref
+                      .watch(productTypeTitleFromHomeStateProvider.notifier)
+                      .state = 'Кредитные карты';
+                  ref.watch(goRouterProvider).push('/catalog',
+                      extra: FiltersModel(
+                          productType: AppRoute.homePage.name, banks: [], paySystem: [],cashBack: []));
                   ref
                       .watch(productTypeUrlFromHomeStateProvider.notifier)
                       .state = 'credit_cards';
@@ -65,9 +72,12 @@ class SelectProductTypeWidget extends ConsumerWidget {
                 imageAsset: 'assets/icons/micro_liases_icon.svg',
                 productName: 'Микрозаймы',
                 onTap: () {
-                  ref.watch(productTypeTitleFromHomeStateProvider.notifier).state =
-                      'Микрозаймы';
-                  ref.watch(goRouterProvider).push('/catalog', extra: AppRoute.homePage.name);
+                  ref
+                      .watch(productTypeTitleFromHomeStateProvider.notifier)
+                      .state = 'Микрозаймы';
+                  ref.watch(goRouterProvider).push('/catalog',
+                      extra: FiltersModel(
+                          productType: AppRoute.homePage.name, banks: [], paySystem: [],cashBack: []));
                   ref
                       .watch(productTypeUrlFromHomeStateProvider.notifier)
                       .state = 'zaimy';
@@ -79,8 +89,12 @@ class SelectProductTypeWidget extends ConsumerWidget {
                 imageAsset: 'assets/icons/for_business_icon.svg',
                 productName: 'РКО',
                 onTap: () {
-                  ref.watch(productTypeTitleFromHomeStateProvider.notifier).state = 'РКО';
-                  ref.watch(goRouterProvider).push('/catalog', extra: AppRoute.homePage.name);
+                  ref
+                      .watch(productTypeTitleFromHomeStateProvider.notifier)
+                      .state = 'РКО';
+                  ref.watch(goRouterProvider).push('/catalog',
+                      extra: FiltersModel(
+                          productType: AppRoute.homePage.name, banks: [], paySystem: [],cashBack: []));
                   ref
                       .watch(productTypeUrlFromHomeStateProvider.notifier)
                       .state = 'rko';

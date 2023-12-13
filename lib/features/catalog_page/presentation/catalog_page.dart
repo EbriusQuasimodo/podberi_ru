@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
@@ -7,15 +8,16 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_and_product_type_widget.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/products_list_widget.dart';
+import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 import 'catalog_controller.dart';
 import 'widgets/sort_and_filter_widget.dart';
 
 class CatalogPage extends ConsumerStatefulWidget {
-  final String whereFrom;
+  final FiltersModel filtersModel;
 
-  const CatalogPage({super.key, required this.whereFrom});
+  const CatalogPage({super.key, required this.filtersModel});
 
   @override
   ConsumerState<CatalogPage> createState() => _CatalogPageState();
@@ -25,11 +27,12 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
   late String productType;
   late String bankName;
   late String bankPicture;
+  List<String> filters = [];
 
   @override
   Widget build(BuildContext context) {
     ///check product type title
-    switch (widget.whereFrom) {
+    switch (widget.filtersModel.productType) {
       case "selectProductPage":
         productType = ref.watch(productTypeTitleFromCatalogStateProvider);
 
@@ -56,7 +59,8 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
 
         break;
     }
-    return ref.watch(bankProductsControllerProvider(widget.whereFrom)).when(
+    final bankProductsData = ref.watch(bankProductsControllerProvider(widget.filtersModel));
+    return bankProductsData.when(
       data: (debitCard) {
         return Scaffold(
           body: CustomScrollView(
@@ -83,8 +87,8 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                   ),
 
                   ///if came from all banks then show bank and product type widget else show sort and filter widget
-                  child: widget.whereFrom == AppRoute.allBanksPage.name ||
-                          widget.whereFrom == 'homePageBanks'
+                  child: widget.filtersModel.productType == AppRoute.allBanksPage.name ||
+                          widget.filtersModel.productType == 'homePageBanks'
                       ? BankAndProductTypeWidget(
                           bankName: bankName,
                           bankPicture: bankPicture,
@@ -92,11 +96,19 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                             setState(() {});
                           },
                         )
-                      : const SortAndFilterWidget(),
+                      : SortAndFilterWidget(
+                          onFiltersButtonTap: () {
+                            Navigator.of(context, rootNavigator: true).push(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                              return FiltersPage(whereFrom: widget.filtersModel.productType,);
+                            }));
+                          },
+                        ),
                 ),
               ),
               ProductListWidget(
-                whereFrom: widget.whereFrom,
+                whereFrom: widget.filtersModel.productType,
                 productInfo: debitCard,
               ),
             ],
@@ -122,7 +134,9 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
           body: CustomScrollView(
             slivers: [
               SliverFillRemaining(
-                child: CustomLoadingCardWidget(bottomPadding: 72,),
+                child: CustomLoadingCardWidget(
+                  bottomPadding: 72,
+                ),
               ),
             ],
           ),
