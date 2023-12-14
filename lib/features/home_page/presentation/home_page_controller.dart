@@ -24,3 +24,8 @@ final bankPictureFromHomeStateProvider =
 StateProvider.autoDispose<String>((ref) {
   return '';
 });
+
+final productTypeUrlFromHomeBanksStateProvider =
+StateProvider.autoDispose<String>((ref) {
+  return '';
+});

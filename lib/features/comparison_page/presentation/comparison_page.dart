@@ -21,7 +21,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
   ];
   List<String> comparisonList = ['Тинькофф', 'Сбербанк', 'ВТБ', 'Газпромбанк'];
 
-  List<String> selectedBankProductsFilter = [];
+  List<String> selectedBankProductsFilter = ['Дебетовые карты'];
   final controllerBestOffers = PageController(
     viewportFraction: 0.9,
   );
@@ -75,6 +75,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
 
     for (var element in bankProductsNamesListFilter) {
       list.add(CustomChoiceChip(
+        productType: '',
         onTap: () {
           setState(() {});
         },

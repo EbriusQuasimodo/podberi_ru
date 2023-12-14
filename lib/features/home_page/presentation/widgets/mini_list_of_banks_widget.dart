@@ -27,7 +27,6 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
     var list = <Widget>[
       const SizedBox(width: 12)
     ]; //sized box is a padding on start
-
     for (int i = 0; i < 6; i++) {
       list.add(
         Padding(
@@ -35,12 +34,13 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
           child: MaterialButton(
             padding: EdgeInsets.zero,
             onPressed: () {
+              ref.watch(productTypeUrlFromHomeBanksStateProvider.notifier).state = 'debit_cards';
               ref.watch(bankNameFromHomeStateProvider.notifier).state =
                   widget.banksModel[i].bankName;
               ref.watch(bankPictureFromHomeStateProvider.notifier).state =
                   widget.banksModel[i].picture;
               ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                  extra: FiltersModel(productType: 'homePageBanks', banks: [], paySystem: [],cashBack: []));
+                  extra: FiltersModel(productType: 'homePageBanks', banks:  [widget.banksModel[i].bankName], paySystem: [],cashBack: []));
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

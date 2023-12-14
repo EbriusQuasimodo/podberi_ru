@@ -37,14 +37,15 @@ class AllBanksListWidget extends ConsumerWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
+                  ref.watch(productTypeUrlFromAllBanksStateProvider.notifier).state = 'debit_cards';
                   ref.watch(bankNameFromAllBanksStateProvider.notifier).state =
                       allBanks[index].bankName;
                   ref.watch(bankPictureFromAllBanksStateProvider.notifier).state =
                       allBanks[index].picture;
                   ref
                       .watch(goRouterProvider)
-                      .push(RouteConstants.catalog, extra: FiltersModel(productType: AppRoute.allBanksPage.name, banks: [], paySystem: [], cashBack: []));
-                },
+                      .push(RouteConstants.catalog, extra: FiltersModel(productType: AppRoute.allBanksPage.name, banks: [allBanks[index].bankName], paySystem: [], cashBack: []));
+                  },
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 6),
                   padding: const EdgeInsets.only(

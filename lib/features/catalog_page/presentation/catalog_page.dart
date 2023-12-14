@@ -31,6 +31,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.filtersModel.productType);
     ///check product type title
     switch (widget.filtersModel.productType) {
       case "selectProductPage":
@@ -90,6 +91,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                   child: widget.filtersModel.productType == AppRoute.allBanksPage.name ||
                           widget.filtersModel.productType == 'homePageBanks'
                       ? BankAndProductTypeWidget(
+                    productType: widget.filtersModel.productType,
                           bankName: bankName,
                           bankPicture: bankPicture,
                           onTap: () {

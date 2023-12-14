@@ -10,6 +10,10 @@ final bankPictureFromAllBanksStateProvider = StateProvider.autoDispose<String>((
   return '';
 });
 
+final productTypeUrlFromAllBanksStateProvider = StateProvider.autoDispose<String>((ref) {
+  return '';
+});
+
 class AllBanksController extends AutoDisposeAsyncNotifier<List<BankDetailsModel>> {
   AllBanksController();
   @override

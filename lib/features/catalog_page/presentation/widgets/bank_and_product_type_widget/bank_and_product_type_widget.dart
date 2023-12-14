@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/presentation/custom_choice_chip.dart';
+import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_info_card.dart';
+import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
-class BankAndProductTypeWidget extends StatefulWidget {
+class BankAndProductTypeWidget extends ConsumerStatefulWidget {
   final VoidCallback onTap;
   final String bankName;
   final String bankPicture;
+  final String productType;
 
   const BankAndProductTypeWidget({
     super.key,
     required this.onTap,
     required this.bankName,
     required this.bankPicture,
+    required this.productType,
   });
 
   @override
-  State<BankAndProductTypeWidget> createState() =>
+  ConsumerState<BankAndProductTypeWidget> createState() =>
       _BankAndProductTypeWidgetState();
 }
 
-class _BankAndProductTypeWidgetState extends State<BankAndProductTypeWidget> {
+class _BankAndProductTypeWidgetState
+    extends ConsumerState<BankAndProductTypeWidget> {
   final List<String> bankProductsNamesList = [
     'Дебетовые карты',
     'Кредитные карты',
@@ -28,18 +34,53 @@ class _BankAndProductTypeWidgetState extends State<BankAndProductTypeWidget> {
 
   List<String> selectedBankProducts = [];
 
+  @override
+  void didChangeDependencies() {
+    print("where from ${widget.productType}");
+    setState(() {
+      if(widget.productType == 'allBanksPage'){
+        switch (ref.watch(productTypeUrlFromAllBanksStateProvider.notifier).state
+        ) {
+          case 'debit_cards':
+            selectedBankProducts.add('Дебетовые карты');
+            break;
+          case 'credit_cards':
+            selectedBankProducts.add('Кредитные карты');
+            break;
+          case 'rko':
+            selectedBankProducts.add('РКО');
+            break;
+        }} if(widget.productType == 'homePageBanks'){
+        switch (ref.watch(productTypeUrlFromHomeBanksStateProvider.notifier).state){
+          case 'debit_cards':
+            selectedBankProducts.add('Дебетовые карты');
+            break;
+          case 'credit_cards':
+            selectedBankProducts.add('Кредитные карты');
+            break;
+          case 'rko':
+            selectedBankProducts.add('РКО');
+            break;
+        }
+      }
+    });
+
+    super.didChangeDependencies();
+  }
+
   List<Widget> list() {
     ///creating list of product type (filter) with unknown height
     var list = <Widget>[
       const SizedBox(width: 15)
     ]; //sized box is a padding on start
 
-    for (var element in bankProductsNamesList) {
+    for (int i = 0; i < bankProductsNamesList.length; i++) {
       list.add(CustomChoiceChip(
+        productType: widget.productType,
         onTap: () {
           setState(() {});
         },
-        element: element,
+        element: bankProductsNamesList[i],
         selectedBankProducts: selectedBankProducts,
         bankProductsNamesList: bankProductsNamesList,
       ));

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_controller.dart';
 import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
@@ -29,7 +30,7 @@ class ProductDetailsRepository implements ProductDetailsRepositoryImpl {
 
         break;
       case "allBanksPage":
-        productType = 'debit_cards';
+        productType = ref.watch(productTypeUrlFromAllBanksStateProvider);
 
         break;
       case "Дебетовые карты":
@@ -41,7 +42,7 @@ class ProductDetailsRepository implements ProductDetailsRepositoryImpl {
 
         break;
       case 'homePageBanks':
-        productType = 'debit_cards';
+        productType = ref.watch(productTypeUrlFromHomeBanksStateProvider);
 
         break;
     }
