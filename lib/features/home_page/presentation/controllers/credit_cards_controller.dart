@@ -19,7 +19,7 @@ class CreditCardsController extends AutoDisposeAsyncNotifier<List<ListProductMod
     });
   }
 }
-
+///контроллер для получения кредитных карт
 final creditCardsControllerProvider =
 AutoDisposeAsyncNotifierProvider<CreditCardsController, List<ListProductModel>>(
   CreditCardsController.new,

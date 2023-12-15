@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/features/all_banks_page/data/all_banks_data_source.dart';
 import 'package:podberi_ru/features/all_banks_page/data/all_banks_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -21,16 +22,10 @@ class AllBanksController extends AutoDisposeAsyncNotifier<List<BankDetailsModel>
     final eventRepo = ref.read(allBanksRepositoryProvider);
     return await eventRepo.fetch(ref);
   }
-
-  fetchBanksData() async {
-    state = const AsyncLoading();
-    final eventRepo = ref.read(allBanksRepositoryProvider);
-    state = await AsyncValue.guard(() async {
-      return await eventRepo.fetch( ref);
-    });
-  }
 }
 
+///контроллер для страницы всех банков, вызывает получение данных о всех банках в [AllBanksGetDataSource]
+///используется в [MiniListOfBanksWidget], [AllBanksPage] и [FiltersPage]
 final allBanksControllerProvider =
 AutoDisposeAsyncNotifierProvider<AllBanksController, List<BankDetailsModel>>(
   AllBanksController.new,

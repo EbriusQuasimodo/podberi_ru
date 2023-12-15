@@ -6,6 +6,7 @@ import 'package:podberi_ru/features/comparison_page/presentation/widgets/product
 
 
 class ComparisonPage extends StatefulWidget {
+  ///страница сравнения банковских продуктов
   const ComparisonPage({super.key});
 
   @override
@@ -75,7 +76,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
 
     for (var element in bankProductsNamesListFilter) {
       list.add(CustomChoiceChip(
-        productType: '',
+        whereFrom: '',
         onTap: () {
           setState(() {});
         },

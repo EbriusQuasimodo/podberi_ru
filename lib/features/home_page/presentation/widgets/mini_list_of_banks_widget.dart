@@ -3,17 +3,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
+import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
-///mini list of banks on card tap go to [CatalogPage] on showAllBanks tap go to [AllBanksPage]
+
 class MiniListOfBanksWidget extends ConsumerStatefulWidget {
   final List<BankDetailsModel> banksModel;
-
+  ///mini list of banks on card tap go to [CatalogPage] on showAllBanks tap go to [AllBanksPage]
   const MiniListOfBanksWidget({super.key, required this.banksModel});
 
   @override
@@ -34,13 +36,24 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
           child: MaterialButton(
             padding: EdgeInsets.zero,
             onPressed: () {
-              ref.watch(productTypeUrlFromHomeBanksStateProvider.notifier).state = 'debit_cards';
-              ref.watch(bankNameFromHomeStateProvider.notifier).state =
-                  widget.banksModel[i].bankName;
-              ref.watch(bankPictureFromHomeStateProvider.notifier).state =
-                  widget.banksModel[i].picture;
-              ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                  extra: FiltersModel(productType: 'homePageBanks', banks:  [widget.banksModel[i].bankName], paySystem: [],cashBack: []));
+              ref
+                  .watch(productTypeUrlFromHomeBanksStateProvider.notifier)
+                  .state = 'debit_cards';
+
+              ref.watch(goRouterProvider).push(
+                    RouteConstants.catalog,
+                    extra: BasicApiPageSettingsModel(
+                      bankDetailsModel: BankDetailsModel(picture:  widget.banksModel[i].picture, bankName:  widget.banksModel[i].bankName),
+                      productTypeUrl: ProductTypeEnum.debit_cards.name,
+                      pageName: 'Каталог',
+                      whereFrom: 'homePageBanks',
+                      filtersModel: FiltersModel(
+                        banks: [widget.banksModel[i].bankName],
+                        paySystem: [],
+                        cashBack: [],
+                      ),
+                    ),
+                  );
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

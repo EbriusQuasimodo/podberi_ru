@@ -19,7 +19,7 @@ class BanksController extends AutoDisposeAsyncNotifier<List<BankDetailsModel>> {
     });
   }
 }
-
+///todo возможно стоит убрать и брать из апи [AllBanksGetDataSource]
 final banksControllerProvider =
 AutoDisposeAsyncNotifierProvider<BanksController, List<BankDetailsModel>>(
   BanksController.new,

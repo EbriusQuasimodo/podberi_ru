@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_choice_chip.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_info_card.dart';
@@ -7,16 +8,13 @@ import 'package:podberi_ru/features/home_page/presentation/home_page_controller.
 
 class BankAndProductTypeWidget extends ConsumerStatefulWidget {
   final VoidCallback onTap;
-  final String bankName;
-  final String bankPicture;
-  final String productType;
+  final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
+  /// виджет с информацией о выбранном банке и также небольшой фильтр по типу продукта
   const BankAndProductTypeWidget({
     super.key,
     required this.onTap,
-    required this.bankName,
-    required this.bankPicture,
-    required this.productType,
+    required this.basicApiPageSettingsModel,
   });
 
   @override
@@ -29,18 +27,17 @@ class _BankAndProductTypeWidgetState
   final List<String> bankProductsNamesList = [
     'Дебетовые карты',
     'Кредитные карты',
-    'РКО'
+    'РКО',
+    'Микрозаймы',
   ];
-
   List<String> selectedBankProducts = [];
 
   @override
   void didChangeDependencies() {
-    print("where from ${widget.productType}");
     setState(() {
-      if(widget.productType == 'allBanksPage'){
-        switch (ref.watch(productTypeUrlFromAllBanksStateProvider.notifier).state
-        ) {
+      if (widget.basicApiPageSettingsModel.whereFrom == 'allBanksPage') {
+        switch (
+            ref.watch(productTypeUrlFromAllBanksStateProvider.notifier).state) {
           case 'debit_cards':
             selectedBankProducts.add('Дебетовые карты');
             break;
@@ -50,8 +47,15 @@ class _BankAndProductTypeWidgetState
           case 'rko':
             selectedBankProducts.add('РКО');
             break;
-        }} if(widget.productType == 'homePageBanks'){
-        switch (ref.watch(productTypeUrlFromHomeBanksStateProvider.notifier).state){
+          case 'zaimy':
+            selectedBankProducts.add('Микрозаймы');
+            break;
+        }
+      }
+      if (widget.basicApiPageSettingsModel.whereFrom == 'homePageBanks') {
+        switch (ref
+            .watch(productTypeUrlFromHomeBanksStateProvider.notifier)
+            .state) {
           case 'debit_cards':
             selectedBankProducts.add('Дебетовые карты');
             break;
@@ -60,6 +64,9 @@ class _BankAndProductTypeWidgetState
             break;
           case 'rko':
             selectedBankProducts.add('РКО');
+            break;
+          case 'zaimy':
+            selectedBankProducts.add('Микрозаймы');
             break;
         }
       }
@@ -76,7 +83,7 @@ class _BankAndProductTypeWidgetState
 
     for (int i = 0; i < bankProductsNamesList.length; i++) {
       list.add(CustomChoiceChip(
-        productType: widget.productType,
+        whereFrom: widget.basicApiPageSettingsModel.whereFrom!,
         onTap: () {
           setState(() {});
         },
@@ -97,8 +104,9 @@ class _BankAndProductTypeWidgetState
     return Column(
       children: [
         BankInfoCard(
-          bankName: widget.bankName,
-          bankPicture: widget.bankPicture,
+          bankName: widget.basicApiPageSettingsModel.bankDetailsModel?.bankName,
+          bankPicture:
+              widget.basicApiPageSettingsModel.bankDetailsModel?.picture,
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,

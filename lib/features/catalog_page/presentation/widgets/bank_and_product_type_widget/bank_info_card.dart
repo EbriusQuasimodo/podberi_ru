@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_and_product_type_widget.dart';
 
 class BankInfoCard extends StatelessWidget {
   final String bankName;
   final String bankPicture;
-  const BankInfoCard({super.key, required this.bankName, required this.bankPicture});
+
+  ///виджет с информацией о банке, используется в [BankAndProductTypeWidget]
+  const BankInfoCard(
+      {super.key, required this.bankName, required this.bankPicture});
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      margin: const EdgeInsets.only(
-          right: 15, left: 15, bottom: 15, top: 15),
-      padding: const EdgeInsets.only(
-          top: 15, right: 20, left: 15, bottom: 15),
+    return Container(
+      margin: const EdgeInsets.only(right: 15, left: 15, bottom: 15, top: 15),
+      padding: const EdgeInsets.only(top: 15, right: 20, left: 15, bottom: 15),
       decoration: BoxDecoration(
-          color: ThemeApp.grey,
-          borderRadius: BorderRadius.circular(16)),
+          color: ThemeApp.grey, borderRadius: BorderRadius.circular(16)),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.only(
-                top: 9, right: 7, left: 7, bottom: 9),
+            padding:
+                const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: ThemeApp.mainWhite,
             ),
-            child:Image.network(
+            child: Image.network(
               '${Urls.api.files}/${bankPicture}',
               height: 32,
               width: 36,
@@ -35,7 +36,7 @@ class BankInfoCard extends StatelessWidget {
           const SizedBox(
             width: 15,
           ),
-         Text(
+          Text(
             bankName,
             style: TextStyle(
                 color: ThemeApp.backgroundBlack,

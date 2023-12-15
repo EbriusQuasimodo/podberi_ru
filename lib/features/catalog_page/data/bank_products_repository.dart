@@ -2,78 +2,62 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
-import 'package:podberi_ru/core/domain/filters_model.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 import 'bank_products_data_source.dart';
 
-///repository for fetch bank products
+
 abstract class BankProductsRepositoryImpl {
-  Future<void> fetch(FiltersModel arg, AutoDisposeAsyncNotifierProviderRef ref);
+  Future<void> fetch(BasicApiPageSettingsModel arg, AutoDisposeAsyncNotifierProviderRef ref);
 }
 
 class BankProductsRepository implements BankProductsRepositoryImpl {
   BankProductsRepository();
   @override
-  Future<List<ListProductModel>> fetch(FiltersModel arg, AutoDisposeAsyncNotifierProviderRef ref) async {
+  Future<List<ListProductModel>> fetch(BasicApiPageSettingsModel arg, AutoDisposeAsyncNotifierProviderRef ref) async {
     ///select product type for instance in api (debit_card, credit_card, zaymi, rko)
-    String productType ='';
-    switch (arg.productType) {
-      case "selectProductPage":
-        productType = ref.watch(productTypeUrlFromCatalogStateProvider);
-
-        break;
-      case "homePage":
-        productType = ref.watch(productTypeUrlFromHomeStateProvider);
-
-        break;
+    String productType =arg.productTypeUrl!;
+    switch (arg.whereFrom) {
       case "allBanksPage":
         productType = ref.watch(productTypeUrlFromAllBanksStateProvider);
-
-        break;
-      case "Дебетовые карты":
-        productType = 'debit_cards';
-
-        break;
-      case "Кредитные карты":
-        productType = 'credit_cards';
 
         break;
       case 'homePageBanks':
         productType = ref.watch(productTypeUrlFromHomeBanksStateProvider);
         break;
     }
-    print("aod40623=450 ${arg.banks}");
-    if(arg.banks!.isNotEmpty ||arg.cashBack!.isNotEmpty||arg.paySystem!.isNotEmpty) {
+    ///добваление фильтров в productType
+    if(arg.filtersModel!.banks!.isNotEmpty ||arg.filtersModel!.cashBack!.isNotEmpty||arg.filtersModel!.paySystem!.isNotEmpty) {
       productType += '?';
-      if (arg.banks!.isNotEmpty) {
-        for (int i = 0; i < arg.banks!.length; i++) {
-          productType += 'bank_details.bank_name=${arg.banks?[i]}&';
+      if (arg.filtersModel!.banks!.isNotEmpty) {
+        for (int i = 0; i < arg.filtersModel!.banks!.length; i++) {
+          productType += 'bank_details.bank_name=${arg.filtersModel?.banks?[i]}&';
         }
       }
-      if (arg.cashBack!.isNotEmpty) {
+      if (arg.filtersModel!.cashBack!.isNotEmpty) {
 
-        for (int i = 0; i < arg.cashBack!.length; i++) {
-          productType += 'bonus_format=${arg.cashBack?[i]}&';
+        for (int i = 0; i < arg.filtersModel!.cashBack!.length; i++) {
+          productType += 'bonus_format=${arg.filtersModel?.cashBack?[i]}&';
         }
       }
-      if (arg.paySystem!.isNotEmpty) {
+      if (arg.filtersModel!.paySystem!.isNotEmpty) {
 
-        for (int i = 0; i < arg.paySystem!.length; i++) {
-          productType += 'pay_system=${arg.paySystem?[i]}&';
+        for (int i = 0; i < arg.filtersModel!.paySystem!.length; i++) {
+          productType += 'pay_system=${arg.filtersModel?.paySystem?[i]}&';
         }
       }
-     // productType.substring(0, productType.length -1);
     }
-    print(productType);
     final response = await GetIt.I<BankProductsGetDataSource>().fetch(productType);
     return response;
 
   }
 }
-
+///репозиторий для получения всех банковских продуктов здесь формируется uri для запроса (productType),
+///он наполняется типом продукта и фильтрами
+///вызывается из [bankProductsControllerProvider]
 final bankProductsRepositoryProvider =
 Provider.autoDispose<BankProductsRepository>((ref) {
 

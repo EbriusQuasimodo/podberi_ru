@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
+import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
+import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 class CustomChoiceChip extends ConsumerStatefulWidget {
@@ -10,15 +13,17 @@ class CustomChoiceChip extends ConsumerStatefulWidget {
   final List<String> selectedBankProducts;
   final List<String> bankProductsNamesList;
   final VoidCallback onTap;
-  final String productType;
+  final String whereFrom;
 
+  ///кастомный виджет для выбора типа продукта на странице [CatalogPage] если мы перешли на нее из банка
+  ///также используется в [FavoritesPage] и [ComparisonPage]
   const CustomChoiceChip({
     super.key,
     required this.onTap,
     required this.element,
     required this.selectedBankProducts,
     required this.bankProductsNamesList,
-    required this.productType,
+    required this.whereFrom,
   });
 
   @override
@@ -64,7 +69,7 @@ class _CustomChoiceChipState extends ConsumerState<CustomChoiceChip> {
               if (!widget.selectedBankProducts.contains(widget.element)) {
                 widget.selectedBankProducts.clear();
                 widget.selectedBankProducts.add(widget.element);
-                if (widget.productType == 'allBanksPage') {
+                if (widget.whereFrom == 'allBanksPage') {
                   switch (widget.element) {
                     case 'Дебетовые карты':
                       ref
@@ -85,10 +90,18 @@ class _CustomChoiceChipState extends ConsumerState<CustomChoiceChip> {
                           .watch(
                               productTypeUrlFromAllBanksStateProvider.notifier)
                           .state = 'rko';
+
+                      break;
+                    case 'Микрозаймы':
+                      ref
+                          .watch(
+                              productTypeUrlFromAllBanksStateProvider.notifier)
+                          .state = 'zaimy';
 
                       break;
                   }
-                } if (widget.productType == 'homePageBanks') {
+                }
+                if (widget.whereFrom == 'homePageBanks') {
                   switch (widget.element) {
                     case 'Дебетовые карты':
                       ref
@@ -109,6 +122,13 @@ class _CustomChoiceChipState extends ConsumerState<CustomChoiceChip> {
                           .watch(
                               productTypeUrlFromHomeBanksStateProvider.notifier)
                           .state = 'rko';
+
+                      break;
+                    case 'Микрозаймы':
+                      ref
+                          .watch(
+                              productTypeUrlFromHomeBanksStateProvider.notifier)
+                          .state = 'zaimy';
 
                       break;
                   }

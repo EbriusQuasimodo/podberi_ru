@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
+///общая тема всего приложения
 class AppThemeData {
   ThemeData themeData(BuildContext context) {
     return ThemeData(
       fontFamily: 'Geologica',
       scaffoldBackgroundColor: ThemeApp.backgroundBlack,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         elevation: 0,
         centerTitle: true,
         shape: RoundedRectangleBorder(
@@ -16,7 +17,7 @@ class AppThemeData {
           ),
         ),
         color: ThemeApp.mainWhite,
-        titleTextStyle: const TextStyle(
+        titleTextStyle: TextStyle(
             fontWeight: FontWeight.w500, fontSize: 14, color: Colors.black),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class StoriesWidget extends StatelessWidget {
+  ///виджет сторис, для разнообразных интересных предложений (пока не отображается)
   const StoriesWidget({super.key});
 
   @override

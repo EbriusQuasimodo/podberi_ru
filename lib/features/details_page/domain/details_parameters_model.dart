@@ -1,3 +1,4 @@
+///модель для получения деталей выбранного продукта
 class DetailsParameters  {
   final String? id;
   final String? whereFrom;

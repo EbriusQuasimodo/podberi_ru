@@ -4,7 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:podberi_ru/core/domain/product_type_enum.dart';
+import 'package:podberi_ru/features/catalog_page/data/bank_products_repository.dart';
 
+///получение всех банковских продуктов [productType] содержит в себе не только enum [ProductTypeEnum]
+///но и фильтры, имя банка, сортировку и тд
+///вызывается из [bankProductsRepositoryProvider]
 class BankProductsGetDataSource {
   BankProductsGetDataSource({
     required this.dio,
@@ -20,7 +25,6 @@ class BankProductsGetDataSource {
         final re = await dio.get(
           '/$productType',
         );
-print(re.realUri);
         switch (re.statusCode) {
           case 200:
             re.data.forEach((e) {
@@ -31,9 +35,9 @@ print(re.realUri);
           case 404:
             throw PageNotFoundException().message;
           case 204:
-            throw PageNotFoundException().message;
+            throw NothingFoundException().message;
           default:
-            throw UnknownException().message;
+            throw UnknownServerException().message;
         }
       } on DioException catch (_) {
         throw TimeOutException().message;

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/presentation/expandable_page_view.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
 
 import 'mini_product_card_widget.dart';
+
 
 class ProductComparisonWidget extends StatefulWidget {
   final PageController controllerBestOffers;
@@ -12,7 +14,7 @@ class ProductComparisonWidget extends StatefulWidget {
   final VoidCallback onDeleteInSecondList;
   final double currentPageOnFirstPageView;
   final double currentPageOnSecondPageView;
-
+  ///виджет карточки с продуктами в сранении, используется в [ComparisonPage]
   const ProductComparisonWidget(
       {super.key,
       required this.onDeleteInFirstList,
@@ -52,7 +54,7 @@ class _ProductComparisonWidgetState extends State<ProductComparisonWidget> {
                     color: ThemeApp.backgroundBlack),
               ),
             ),
-            ExpandablePageView(
+            CustomExpandablePageView(
               pageController: widget.controllerBestOffers,
               children: List.generate(widget.comparisonList.length, (index) {
                 return MiniProductCardWidget(
@@ -113,7 +115,7 @@ class _ProductComparisonWidgetState extends State<ProductComparisonWidget> {
                   ),
             widget.comparisonList.length == 1
                 ? const SizedBox.shrink()
-                : ExpandablePageView(
+                : CustomExpandablePageView(
                     pageController: widget.controllerSecondPageView,
                     children:
                         List.generate(widget.comparisonList.length, (index) {

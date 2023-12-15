@@ -7,7 +7,7 @@ class BankProductCardWidgetWithoutButtons extends StatelessWidget {
   final String productRating;
   final VoidCallback onTap;
   final ListProductModel productInfo;
-
+///карточка продукта без кнопок добавления в избранное и сравнение
   const BankProductCardWidgetWithoutButtons({
     super.key,
     required this.productInfo,

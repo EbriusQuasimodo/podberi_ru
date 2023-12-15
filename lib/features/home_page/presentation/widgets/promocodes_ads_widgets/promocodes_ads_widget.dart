@@ -4,6 +4,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'canvas_background.dart';
 
 class PromoCodesAdsWidget extends StatelessWidget {
+  ///виджет с рекламой нашей страницы промокодов
   const PromoCodesAdsWidget({super.key});
 
   @override

@@ -3,8 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class SaveButtonWidget extends StatelessWidget {
-  final VoidCallback onTap;
-  const SaveButtonWidget({super.key, required this.onTap});
+  final VoidCallback onTapTrashButton;
+  final VoidCallback onTapSaveButton;
+  /// кнопка сохранения и удаления фильтров
+  const SaveButtonWidget({super.key, required this.onTapTrashButton, required this.onTapSaveButton,});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class SaveButtonWidget extends StatelessWidget {
               child: MaterialButton(
                 height: 50,
                 onPressed: () {
+                  onTapSaveButton();
                   Navigator.of(context).pop();
                 },
                 color: ThemeApp.mainBlue,
@@ -49,7 +52,7 @@ class SaveButtonWidget extends StatelessWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  onTap();
+                  onTapTrashButton();
 
                 },
                 child: Padding(

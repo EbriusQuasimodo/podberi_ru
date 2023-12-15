@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
-class ExpandablePageView extends StatefulWidget {
+class CustomExpandablePageView extends StatefulWidget {
   final List<Widget> children;
   PageController pageController;
 
-   ExpandablePageView({
+  ///кастомный виджет для page view если размер его дочернего виджета неизвестен, а также если длина списка меняется
+  CustomExpandablePageView({
     super.key,
     required this.children,
     required this.pageController,
   });
 
   @override
-  _ExpandablePageViewState createState() => _ExpandablePageViewState();
+  _CustomExpandablePageViewState createState() =>
+      _CustomExpandablePageViewState();
 }
 
-class _ExpandablePageViewState extends State<ExpandablePageView> with TickerProviderStateMixin {
-
+class _CustomExpandablePageViewState extends State<CustomExpandablePageView>
+    with TickerProviderStateMixin {
   List<double> _heights = [];
   int _currentPage = 0;
 
@@ -57,19 +59,20 @@ class _ExpandablePageViewState extends State<ExpandablePageView> with TickerProv
       .asMap() //
       .map(
         (index, child) => MapEntry(
-      index,
-      OverflowBox(
-        //needed, so that parent won't impose its constraints on the children, thus skewing the measurement results.
-        minHeight: 0,
-        maxHeight: double.infinity,
-        alignment: Alignment.topCenter,
-        child: SizeReportingWidget(
-          onSizeChange: (size) => setState(() => _heights[index] = size?.height ?? 0),
-          child: child,
+          index,
+          OverflowBox(
+            //needed, so that parent won't impose its constraints on the children, thus skewing the measurement results.
+            minHeight: 0,
+            maxHeight: double.infinity,
+            alignment: Alignment.topCenter,
+            child: SizeReportingWidget(
+              onSizeChange: (size) =>
+                  setState(() => _heights[index] = size?.height ?? 0),
+              child: child,
+            ),
+          ),
         ),
-      ),
-    ),
-  )
+      )
       .values
       .toList();
 }
@@ -79,7 +82,7 @@ class SizeReportingWidget extends StatefulWidget {
   final ValueChanged<Size> onSizeChange;
 
   const SizeReportingWidget({
-  super.key,
+    super.key,
     required this.child,
     required this.onSizeChange,
   });
@@ -99,10 +102,11 @@ class _SizeReportingWidgetState extends State<SizeReportingWidget> {
 
   void _notifySize() {
     if (mounted) {
-    final size = context.size;
-    if (_oldSize != size) {
-      _oldSize = size!;
-      widget.onSizeChange(size);
+      final size = context.size;
+      if (_oldSize != size) {
+        _oldSize = size!;
+        widget.onSizeChange(size);
+      }
     }
-  }}
+  }
 }

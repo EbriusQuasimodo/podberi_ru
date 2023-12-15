@@ -3,22 +3,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
-import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 
-///кастомный виджет с карточкой банковсвкого продукта (отличительные особенности - есть кнопки добавить в избранное и сравнение)
 class ProductCardWidgetWithButtons extends ConsumerWidget {
   final String productRating;
   final ListProductModel? productInfo;
-  final String whereFrom;
 
-  const ProductCardWidgetWithButtons(
-      {super.key,
-      required this.productRating,
-      this.productInfo,
-      required this.whereFrom});
+  final BasicApiPageSettingsModel basicApiPageSettingsModel;
+
+  ///кастомный виджет с карточкой банковсвкого продукта
+  ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
+  const ProductCardWidgetWithButtons({
+    super.key,
+    required this.productRating,
+    this.productInfo,
+    required this.basicApiPageSettingsModel,
+  });
 
   List<Widget> list() {
     var list = <Widget>[];
@@ -45,8 +48,8 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: productInfo != null ? Colors.green : ThemeApp.darkestGrey,
-         //color: Color(int.parse(
-         //   '0xff${productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
+        //color: Color(int.parse(
+        //   '0xff${productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
       ),
       width: 280,
       height: 190,
@@ -125,11 +128,14 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
                   ref.watch(goRouterProvider).push(RouteConstants.details,
-                      extra: DetailsParameters(
-                          id: productInfo?.id,
-                          whereFrom: whereFrom,
-                          bankName: productInfo?.bankDetails?.bankName,
-                          bankLogoPath: productInfo?.bankDetails?.picture));
+                      extra: BasicApiPageSettingsModel(
+                          productTypeUrl:
+                              basicApiPageSettingsModel.productTypeUrl,
+                          pageName: basicApiPageSettingsModel.pageName,
+                          productId: productInfo?.id,
+                          bankDetailsModel: BankDetailsModel(
+                              bankName: productInfo?.bankDetails?.bankName,
+                              picture: productInfo?.bankDetails?.picture)));
                 },
               ),
             ),

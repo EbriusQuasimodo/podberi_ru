@@ -19,7 +19,7 @@ class DebitCardsController extends AutoDisposeAsyncNotifier<List<ListProductMode
     });
   }
 }
-
+///контроллер для получения дебетовых карт
 final debitCardsControllerProvider =
 AutoDisposeAsyncNotifierProvider<DebitCardsController, List<ListProductModel>>(
   DebitCardsController.new,

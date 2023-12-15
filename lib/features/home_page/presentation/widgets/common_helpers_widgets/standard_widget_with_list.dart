@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/home_page/presentation/widgets/blog_widget.dart';
 
 class StandardItemWithListWidget extends StatelessWidget {
   final String widgetName;
@@ -9,6 +10,10 @@ class StandardItemWithListWidget extends StatelessWidget {
   final double listHeight;
   final double? bottomPadding;
 
+  ///кастомный виджет со списком
+  ///используется в [BlogWidget]
+  ///раньше использовался во всех списках с банковскими продуктами на главной странице, потом поменяла
+  ///возможно уберу вообще
   const StandardItemWithListWidget(
       {super.key,
       required this.widgetName,

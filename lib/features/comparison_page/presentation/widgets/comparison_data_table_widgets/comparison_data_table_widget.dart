@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
 
 import 'comparison_row_item.dart';
+
 
 class ComparisonDataTableWidget extends StatefulWidget {
   final String firstProductDescription;
   final String secondProductDescription;
-
+  ///таблица сравнения двух банковских продуктов, используется в [ComparisonPage]
   const ComparisonDataTableWidget({
     super.key,
     required this.firstProductDescription,

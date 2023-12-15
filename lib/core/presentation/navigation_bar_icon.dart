@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
+///иконка для нижнего бара навигации
 BottomNavigationBarItem bottomNavigationItem(
   String icon,
   String label,

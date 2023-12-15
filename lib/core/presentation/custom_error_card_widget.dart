@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
-class CustomErrorPageWidget extends StatelessWidget {
+class CustomErrorPageWidget extends ConsumerWidget {
   final String error;
   final double bottomPadding;
-  const CustomErrorPageWidget({super.key, required this.error, required this.bottomPadding});
+  final VoidCallback onTap;
+  final String buttonName;
+
+  ///кастомный виджет с ошибкой
+  const CustomErrorPageWidget({
+    super.key,
+    required this.error,
+    required this.bottomPadding,
+    required this.onTap,
+    required this.buttonName,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Container(
-        margin:  EdgeInsets.only(
-          top: 2, bottom: bottomPadding,
+        margin: EdgeInsets.only(
+          top: 2,
+          bottom: bottomPadding,
         ),
-
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -21,7 +32,7 @@ class CustomErrorPageWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 57, left: 57),
               child: Text(error),
@@ -38,11 +49,13 @@ class CustomErrorPageWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14)),
                 padding: const EdgeInsets.only(
                     top: 17, bottom: 16, left: 75, right: 75),
-                onPressed: () {},
+                onPressed: () {
+                  onTap();
+                },
                 color: ThemeApp.mainBlue,
-                child: const Text(
-                  'Перезагрузить',
-                  style: TextStyle(
+                child: Text(
+                  buttonName,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: ThemeApp.mainWhite,

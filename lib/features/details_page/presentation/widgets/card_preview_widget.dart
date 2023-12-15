@@ -8,14 +8,16 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 class CardPreviewWidget extends StatefulWidget {
   final ListProductModel productInfo;
   final String bankName;
-  const CardPreviewWidget({super.key, required this.productInfo, required this.bankName});
+
+  ///виджет с превью банковского продукта (фото, название, кнопка Заказать), используется в [DetailsPage]
+  const CardPreviewWidget(
+      {super.key, required this.productInfo, required this.bankName});
 
   @override
   State<CardPreviewWidget> createState() => _CardPreviewWidgetState();
 }
 
 class _CardPreviewWidgetState extends State<CardPreviewWidget> {
-
   final _controllerBestOffers = PageController(
     viewportFraction: 0.9,
   );
@@ -31,9 +33,10 @@ class _CardPreviewWidgetState extends State<CardPreviewWidget> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return       SliverToBoxAdapter(
+    return SliverToBoxAdapter(
       child: Container(
         margin: const EdgeInsets.only(top: 2),
         padding: const EdgeInsets.only(top: 30, bottom: 15),
@@ -44,22 +47,20 @@ class _CardPreviewWidgetState extends State<CardPreviewWidget> {
         ),
         child: Column(
           children: [
-        Padding(
-              padding:
-              EdgeInsets.only(bottom: 15, left: 15, right: 15),
+            Padding(
+              padding: EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: Text(
                 '${widget.bankName} ${widget.productInfo.cardName}',
                 textAlign: TextAlign.center,
-                style:
-                TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
               ),
             ),
             ExpandablePageView(
                 physics: const BouncingScrollPhysics(),
                 controller: _controllerBestOffers,
                 children: [
-                  Image.network('${Urls.api.files}/${widget.productInfo.picture}'),
-
+                  Image.network(
+                      '${Urls.api.files}/${widget.productInfo.picture}'),
                 ]),
             Padding(
               padding: const EdgeInsets.only(top: 15, bottom: 30),
@@ -67,7 +68,7 @@ class _CardPreviewWidgetState extends State<CardPreviewWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   4,
-                      (index) {
+                  (index) {
                     return Container(
                       margin: const EdgeInsets.only(right: 4),
                       alignment: Alignment.centerLeft,

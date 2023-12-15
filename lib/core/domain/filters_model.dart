@@ -1,13 +1,12 @@
 class FiltersModel {
-  final String productType;
   final List<String>? banks;
   final List<String>? cashBack;
   final List<String>? paySystem;
 
+  ///модель для передачи фильтров
   FiltersModel({
-    required this.productType,
-  this.banks,
-   this.cashBack,
-     this.paySystem,
+    this.banks,
+    this.cashBack,
+    this.paySystem,
   });
 }

@@ -8,6 +8,7 @@ import 'best_offers_card.dart';
 
 class BestOfferWidget extends ConsumerStatefulWidget {
   final List<ListProductModel> bestOffer;
+  ///виджет с лучшими банковскими предложениями
   const BestOfferWidget({super.key, required this.bestOffer});
 
   @override
@@ -63,7 +64,7 @@ class _BestOfferWidgetState extends ConsumerState<BestOfferWidget> {
                   );
                 }),
               )
-              : Text('не удалось загрузить('),
+              : const Text('не удалось загрузить('),
               widget.bestOffer.isNotEmpty ? Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
                 child: Row(
@@ -87,7 +88,7 @@ class _BestOfferWidgetState extends ConsumerState<BestOfferWidget> {
                   ),
                 ),
               )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
             ],
           ),
         ),

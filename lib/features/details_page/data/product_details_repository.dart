@@ -1,60 +1,33 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
-import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/catalog_controller.dart';
-import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
-import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/features/details_page/presentation/details_controller.dart';
 
 import 'product_details_data_source.dart';
 
-///repository for fetch bank product details
+
 abstract class ProductDetailsRepositoryImpl {
-  Future<void> fetch(DetailsParameters detailsParameters,AutoDisposeAsyncNotifierProviderRef ref);
+  Future<void> fetch(BasicApiPageSettingsModel detailsParameters,
+      AutoDisposeAsyncNotifierProviderRef ref);
 }
 
 class ProductDetailsRepository implements ProductDetailsRepositoryImpl {
   ProductDetailsRepository();
 
   @override
-  Future<List<ListProductModel>> fetch(DetailsParameters detailsParameters, AutoDisposeAsyncNotifierProviderRef ref) async {
-    ///select product type for instance in api (debit_card, credit_card, zaymi, rko)
-    String productType ='';
-    switch (detailsParameters.whereFrom) {
-      case "selectProductPage":
-        productType = ref.watch(productTypeUrlFromCatalogStateProvider);
-
-        break;
-      case "homePage":
-        productType = ref.watch(productTypeUrlFromHomeStateProvider);
-
-        break;
-      case "allBanksPage":
-        productType = ref.watch(productTypeUrlFromAllBanksStateProvider);
-
-        break;
-      case "Дебетовые карты":
-        productType = 'debit_cards';
-
-        break;
-      case "Кредитные карты":
-        productType = 'credit_cards';
-
-        break;
-      case 'homePageBanks':
-        productType = ref.watch(productTypeUrlFromHomeBanksStateProvider);
-
-        break;
-    }
+  Future<List<ListProductModel>> fetch(
+      BasicApiPageSettingsModel detailsParameters,
+      AutoDisposeAsyncNotifierProviderRef ref) async {
     final response = await GetIt.I<ProductDetailsGetDataSource>()
-        .fetch(productType, detailsParameters.id!);
+        .fetch(detailsParameters.productTypeUrl!, detailsParameters.productId!);
     return response;
   }
 }
-
+///репозиторий для получения деталей о выбранном банковском продукте
+///вызывается из [productDetailsControllerProvider]
 final productDetailsRepositoryProvider =
-Provider.autoDispose<ProductDetailsRepository>((ref) {
-
+    Provider.autoDispose<ProductDetailsRepository>((ref) {
   final fetch = ProductDetailsRepository();
   return fetch;
 });

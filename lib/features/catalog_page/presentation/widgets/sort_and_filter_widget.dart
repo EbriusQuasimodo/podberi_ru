@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 
 class SortAndFilterWidget extends ConsumerStatefulWidget {
   final VoidCallback onFiltersButtonTap;
+  ///виджет с сортировкой и фильтрами, используется на странице [CatalogPage]
   const SortAndFilterWidget({super.key, required this.onFiltersButtonTap});
 
   @override

@@ -4,13 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
-import 'package:podberi_ru/core/domain/filters_model.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/navigation_bar_icon.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/select_product_type_page.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
-import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page.dart';
@@ -18,6 +17,7 @@ import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_p
 import 'package:podberi_ru/features/promo_codes_pages/presentation/select_category_promo_codes_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_code_details_page.dart';
 
+///энум со всеми маршрутами в приложении
 enum AppRoute {
   homePage,
   allBanksPage,
@@ -37,15 +37,13 @@ final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
 final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
 final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 final _shellNavigatorFKey = GlobalKey<NavigatorState>(debugLabel: 'shellF');
-
+final _shellNavigatorJKey = GlobalKey<NavigatorState>(debugLabel: 'shellJ');
+///навигатор по приложению
 final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
   return GoRouter(
       initialLocation: RouteConstants.home,
       navigatorKey: GetIt.I<Alice>().getNavigatorKey(),
       routes: [
-        // GoRoute(path: '/filters', name: 'filters',
-        //   pageBuilder: (context, state) =>
-        //       NoTransitionPage( child: FiltersPage()),),
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
             return ScaffoldWithNestedNavigation(
@@ -59,8 +57,8 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                 GoRoute(
                   path: RouteConstants.home,
                   name: AppRoute.homePage.name,
-                  pageBuilder: (context, state) =>
-                      NoTransitionPage(key: UniqueKey(), child: HomePage()),
+                  pageBuilder: (context, state) => const NoTransitionPage(
+                     child: HomePage()),
                 ),
               ],
             ),
@@ -71,7 +69,6 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   path: RouteConstants.selectProduct,
                   name: AppRoute.selectProductPage.name,
                   pageBuilder: (context, state) => NoTransitionPage(
-                    key: UniqueKey(),
                     child: SelectProductTypePage(),
                   ),
                   routes: const [],
@@ -80,24 +77,28 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   path: RouteConstants.catalog,
                   name: AppRoute.catalogPage.name,
                   pageBuilder: (context, state) {
-                    FiltersModel whereFrom = state.extra as  FiltersModel;
+                    BasicApiPageSettingsModel basicApiPageSettingsModel =
+                        state.extra as BasicApiPageSettingsModel;
                     return NoTransitionPage(
-                      key: UniqueKey(),
                       child: CatalogPage(
-                        filtersModel: whereFrom,
+                        basicApiPageSettingsModel: basicApiPageSettingsModel,
                       ),
                     );
                   },
-                  routes: const [],
+                  routes: [
+
+                  ],
                 ),
+
                 GoRoute(
                   path: RouteConstants.details,
                   name: AppRoute.detailsPage.name,
                   pageBuilder: (context, state) {
-                    DetailsParameters detailsParameters = state.extra as DetailsParameters;
+                    BasicApiPageSettingsModel basicApiPageSettingsModel =
+                        state.extra as BasicApiPageSettingsModel;
                     return NoTransitionPage(
                       child: DetailsPage(
-                        detailsParameters: detailsParameters,
+                        basicApiPageSettingsModel: basicApiPageSettingsModel,
                       ),
                     );
                   },
@@ -107,7 +108,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   path: RouteConstants.allBanks,
                   name: AppRoute.allBanksPage.name,
                   pageBuilder: (context, state) {
-                    return NoTransitionPage(
+                    return const NoTransitionPage(
                       child: AllBanksPage(),
                     );
                   },
@@ -121,8 +122,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                 GoRoute(
                   path: RouteConstants.favorites,
                   name: AppRoute.favoritesPage.name,
-                  pageBuilder: (context, state) => NoTransitionPage(
-                    key: UniqueKey(),
+                  pageBuilder: (context, state) => const NoTransitionPage(
                     child: FavoritesPage(),
                   ),
                   routes: const [],
@@ -135,8 +135,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                 GoRoute(
                   path: RouteConstants.selectCategoryPromocodes,
                   name: AppRoute.selectCategoryPromoCodesPage.name,
-                  pageBuilder: (context, state) => NoTransitionPage(
-                    key: UniqueKey(),
+                  pageBuilder: (context, state) => const NoTransitionPage(
                     child: SelectCategoryPromoCodesPage(),
                   ),
                   routes: const [],
@@ -145,7 +144,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                   path: RouteConstants.promocodes,
                   name: AppRoute.promoCodesPage.name,
                   pageBuilder: (context, state) {
-                    return NoTransitionPage(
+                    return const NoTransitionPage(
                       child: PromoCodesPage(),
                     );
                   },
@@ -169,8 +168,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                 GoRoute(
                   path: RouteConstants.comparison,
                   name: AppRoute.comparisonPage.name,
-                  pageBuilder: (context, state) => NoTransitionPage(
-                    key: UniqueKey(),
+                  pageBuilder: (context, state) => const NoTransitionPage(
                     child: ComparisonPage(),
                   ),
                   routes: const [],
@@ -202,7 +200,7 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
       extendBody: true,
       body: navigationShell,
       bottomNavigationBar: Container(
-        margin: EdgeInsets.only(top: 2),
+        margin: const EdgeInsets.only(top: 2),
         color: Colors.transparent,
         height: 70,
         child: ClipRRect(

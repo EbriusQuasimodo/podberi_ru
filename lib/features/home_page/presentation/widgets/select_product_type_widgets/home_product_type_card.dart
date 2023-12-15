@@ -6,6 +6,7 @@ class HomeProductTypeCardWidget extends StatelessWidget {
   final String productName;
   final String imageAsset;
   final VoidCallback onTap;
+  ///виджет кнопки с выбором категории или типа продуктка
   const HomeProductTypeCardWidget({super.key, required this.imageAsset, required this.productName, required this.onTap});
 
   @override

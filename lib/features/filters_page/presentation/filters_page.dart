@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
@@ -10,9 +11,10 @@ import 'package:podberi_ru/features/filters_page/presentation/widgets/save_butto
 import 'package:podberi_ru/features/filters_page/presentation/show_more_page.dart';
 
 class FiltersPage extends ConsumerStatefulWidget {
-  final String whereFrom;
+  final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
-  const FiltersPage({super.key, required this.whereFrom});
+  ///страница с фильтрами
+  const FiltersPage({super.key, required this.basicApiPageSettingsModel});
 
   @override
   ConsumerState<FiltersPage> createState() => _FiltersPageState();
@@ -43,7 +45,13 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
     'По почте',
     'В отделе'
   ];
-  final List<String> paySystemNamesList = ['Любая', 'МИР', 'MasterCard', 'VISA'];
+  final List<String> paySystemNamesList = [
+    'Любая',
+    'МИР',
+    'MasterCard',
+    'VISA',
+    'Union Pay',
+  ];
   final List<String> additionalConditionsNamesList = [
     'Бесплатное обслуживание',
     'С процентом на остаток',
@@ -55,37 +63,129 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
   List<String> selectedDelivery = [];
   List<String> selectedPaySystem = [];
   List<String> selectedAdditionalConditions = [];
+
   @override
   void didChangeDependencies() {
-    switch (widget.whereFrom){
+    switch (widget.basicApiPageSettingsModel.whereFrom) {
       case 'homePage':
-        if(ref.watch(filterBanksFromHomePageStateProvider.notifier).state.isNotEmpty){
-          for(int i = 0; i<ref.watch(filterBanksFromHomePageStateProvider.notifier).state.length; i++){
-            selectedBanks.add(ref.watch(filterBanksFromHomePageStateProvider.notifier).state[i]);
+        if (ref
+            .watch(filterBanksFromHomePageStateProvider.notifier)
+            .state
+            .isNotEmpty) {
+          for (int i = 0;
+              i <
+                  ref
+                      .watch(filterBanksFromHomePageStateProvider.notifier)
+                      .state
+                      .length;
+              i++) {
+            selectedBanks.add(ref
+                .watch(filterBanksFromHomePageStateProvider.notifier)
+                .state[i]);
           }
         }
-        if(ref.watch(filterCashBackFromHomePageStateProvider.notifier).state.isNotEmpty){
+        if (ref
+            .watch(filterCashBackFromHomePageStateProvider.notifier)
+            .state
+            .isNotEmpty) {
           selectedCashBack = ref.watch(filterCashBackFromHomePageStateProvider);
         }
-        if(ref.watch(filterPaySystemFromHomePageStateProvider.notifier).state.isNotEmpty){
-          selectedPaySystem = ref.watch(filterPaySystemFromHomePageStateProvider);
+        if (ref
+            .watch(filterPaySystemFromHomePageStateProvider.notifier)
+            .state
+            .isNotEmpty) {
+          selectedPaySystem =
+              ref.watch(filterPaySystemFromHomePageStateProvider);
         }
         break;
       case 'selectProductPage':
-        if(ref.watch(filterBanksFromSelectProductPageStateProvider.notifier).state.isNotEmpty){
-          for(int i = 0; i<ref.watch(filterBanksFromSelectProductPageStateProvider.notifier).state.length; i++){
-            selectedBanks.add(ref.watch(filterBanksFromSelectProductPageStateProvider.notifier).state[i]);
+        if (ref
+            .watch(filterBanksFromSelectProductPageStateProvider.notifier)
+            .state
+            .isNotEmpty) {
+          for (int i = 0;
+              i <
+                  ref
+                      .watch(filterBanksFromSelectProductPageStateProvider
+                          .notifier)
+                      .state
+                      .length;
+              i++) {
+            selectedBanks.add(ref
+                .watch(filterBanksFromSelectProductPageStateProvider.notifier)
+                .state[i]);
           }
         }
-        if(ref.watch(filterCashBackFromSelectProductPageStateProvider.notifier).state.isNotEmpty){
-          selectedCashBack = ref.watch(filterCashBackFromSelectProductPageStateProvider);
+        if (ref
+            .watch(filterCashBackFromSelectProductPageStateProvider.notifier)
+            .state
+            .isNotEmpty) {
+          selectedCashBack =
+              ref.watch(filterCashBackFromSelectProductPageStateProvider);
         }
-        if(ref.watch(filterPaySystemFromSelectProductPageStateProvider.notifier).state.isNotEmpty){
-          selectedPaySystem = ref.watch(filterPaySystemFromSelectProductPageStateProvider);
+        if (ref
+            .watch(filterPaySystemFromSelectProductPageStateProvider.notifier)
+            .state
+            .isNotEmpty) {
+          selectedPaySystem =
+              ref.watch(filterPaySystemFromSelectProductPageStateProvider);
         }
         break;
     }
     super.didChangeDependencies();
+  }
+
+  void saveFilters() {
+    setState(() {
+      if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
+        ref.watch(filterBanksFromHomePageStateProvider.notifier).state =
+            selectedBanks;
+        ref.watch(filterCashBackFromHomePageStateProvider.notifier).state =
+            selectedCashBack;
+
+        ref.watch(filterPaySystemFromHomePageStateProvider.notifier).state =
+            selectedPaySystem;
+      }
+      if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
+        ref
+            .watch(filterBanksFromSelectProductPageStateProvider.notifier)
+            .state = selectedBanks;
+
+        ref
+            .watch(filterCashBackFromSelectProductPageStateProvider.notifier)
+            .state = selectedCashBack;
+
+        ref
+            .watch(filterPaySystemFromSelectProductPageStateProvider.notifier)
+            .state = selectedPaySystem;
+      }
+    });
+  }
+
+  void clearFilters() {
+    setState(() {
+      if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
+        ref.watch(filterBanksFromHomePageStateProvider.notifier).state = [];
+        ref.watch(filterCashBackFromHomePageStateProvider.notifier).state = [];
+        ref.watch(filterPaySystemFromHomePageStateProvider.notifier).state = [];
+      }
+      if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
+        ref
+            .watch(filterBanksFromSelectProductPageStateProvider.notifier)
+            .state = [];
+        ref
+            .watch(filterCashBackFromSelectProductPageStateProvider.notifier)
+            .state = [];
+        ref
+            .watch(filterPaySystemFromSelectProductPageStateProvider.notifier)
+            .state = [];
+      }
+      selectedBanks.clear();
+      selectedCashBack.clear();
+      selectedDelivery.clear();
+      selectedPaySystem.clear();
+      selectedAdditionalConditions.clear();
+    });
   }
 
   @override
@@ -99,47 +199,13 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                 scrolledUnderElevation: 0,
                 backgroundColor: ThemeApp.mainWhite,
                 pinned: true,
-                title: Text('Фильтры'),
+                title: const Text('Фильтры'),
                 leading: IconButton(
                     onPressed: () {
-                      //setState(() {
-                        if (widget.whereFrom == "homePage") {
-                          ref
-                              .watch(
-                              filterBanksFromHomePageStateProvider.notifier)
-                              .state = selectedBanks;
-                          ref
-                              .watch(
-                              filterCashBackFromHomePageStateProvider.notifier)
-                              .state = selectedCashBack;
-
-                          ref
-                              .watch(filterPaySystemFromHomePageStateProvider
-                              .notifier)
-                              .state = selectedPaySystem;
-                        }
-                        if (widget.whereFrom == "selectProductPage") {
-                          ref
-                              .watch(filterBanksFromSelectProductPageStateProvider
-                              .notifier)
-                              .state = selectedBanks;
-
-                          ref
-                              .watch(filterCashBackFromSelectProductPageStateProvider
-                              .notifier)
-                              .state = selectedCashBack;
-
-                          ref
-                              .watch(filterPaySystemFromSelectProductPageStateProvider
-                              .notifier)
-                              .state = selectedPaySystem;
-                        }
-                    //  });
-
-
+                      saveFilters();
                       Navigator.of(context).pop();
                     },
-                    icon: Icon(Icons.arrow_back_ios_new)),
+                    icon: const Icon(Icons.arrow_back_ios_new)),
               ),
               SliverToBoxAdapter(
                 child: Container(
@@ -189,39 +255,49 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
-                                borderRadius: BorderRadius.circular(12),
-                                onTap: () {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .push(MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                    return ShowMorePage(
-                                      onTapSetState: (){
-                                        setState(() {
-
-                                        });
-                                      },
-                                       filters: selectedBanks,
-                                        providerName: widget.whereFrom == 'selectProductPage' ?filterBanksFromSelectProductPageStateProvider : filterBanksFromHomePageStateProvider,
-                                        banksList: allBanks);
-                                  }));
-                                },
-                                child: const Text(
-                                  'Показать все',
-                                  style: TextStyle(
-                                      color: ThemeApp.darkestGrey,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14),
-                                ),
-                              ),
+                                  borderRadius: BorderRadius.circular(12),
+                                  onTap: () {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                      return ShowMorePage(
+                                          onTapSaveButton: () {
+                                            saveFilters();
+                                          },
+                                          onTapTrashButton: () {
+                                            clearFilters();
+                                          },
+                                          filters: selectedBanks,
+                                          providerName: widget
+                                                      .basicApiPageSettingsModel
+                                                      .whereFrom ==
+                                                  'selectProductPage'
+                                              ? filterBanksFromSelectProductPageStateProvider
+                                              : filterBanksFromHomePageStateProvider,
+                                          banksList: allBanks);
+                                    }));
+                                  },
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(left: 40, top: 5),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: ThemeApp.backgroundBlack,
+                                      size: 14,
+                                    ),
+                                  )),
                             ),
                           ),
                         ],
                       ),
                       ChoiceChipItem(
-                          length: 6,
-                          banksList: allBanks,
+                        length: 6,
+                        banksList: allBanks,
                         filters: selectedBanks,
-                        providerName: widget.whereFrom == 'selectProductPage' ?filterBanksFromSelectProductPageStateProvider : filterBanksFromHomePageStateProvider,
+                        providerName:
+                            widget.basicApiPageSettingsModel.whereFrom ==
+                                    'selectProductPage'
+                                ? filterBanksFromSelectProductPageStateProvider
+                                : filterBanksFromHomePageStateProvider,
                       ),
                       Container(
                         color: ThemeApp.darkestGrey,
@@ -239,8 +315,11 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                         ),
                       ),
                       ChoiceChipItem(
-                          providerName: widget.whereFrom == 'selectProductPage' ?filterCashBackFromSelectProductPageStateProvider : filterCashBackFromHomePageStateProvider,
-
+                          providerName: widget
+                                      .basicApiPageSettingsModel.whereFrom ==
+                                  'selectProductPage'
+                              ? filterCashBackFromSelectProductPageStateProvider
+                              : filterCashBackFromHomePageStateProvider,
                           length: cashBackNamesList.length,
                           itemsNames: cashBackNamesList,
                           filters: selectedCashBack),
@@ -260,8 +339,11 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                         ),
                       ),
                       ChoiceChipItem(
-                          providerName: widget.whereFrom == 'selectProductPage' ?filterDeliveryFromSelectProductPageStateProvider : filterDeliveryFromHomePageStateProvider,
-
+                          providerName: widget
+                                      .basicApiPageSettingsModel.whereFrom ==
+                                  'selectProductPage'
+                              ? filterDeliveryFromSelectProductPageStateProvider
+                              : filterDeliveryFromHomePageStateProvider,
                           length: deliveryNamesList.length,
                           itemsNames: deliveryNamesList,
                           filters: selectedDelivery),
@@ -281,10 +363,14 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                         ),
                       ),
                       ChoiceChipItem(
-                          length: paySystemNamesList.length,
-                          itemsNames: paySystemNamesList,
-                          filters: selectedPaySystem,
-                        providerName: widget.whereFrom == 'selectProductPage' ?filterPaySystemFromSelectProductPageStateProvider : filterPaySystemFromHomePageStateProvider,
+                        length: paySystemNamesList.length,
+                        itemsNames: paySystemNamesList,
+                        filters: selectedPaySystem,
+                        providerName: widget
+                                    .basicApiPageSettingsModel.whereFrom ==
+                                'selectProductPage'
+                            ? filterPaySystemFromSelectProductPageStateProvider
+                            : filterPaySystemFromHomePageStateProvider,
                       ),
                       Container(
                         color: ThemeApp.darkestGrey,
@@ -302,10 +388,14 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                         ),
                       ),
                       ChoiceChipItem(
-                          length: additionalConditionsNamesList.length,
-                          itemsNames: additionalConditionsNamesList,
-                          filters: selectedAdditionalConditions,
-                        providerName: widget.whereFrom == 'selectProductPage' ?filterAdditionalConditionsFromSelectProductPageStateProvider : filterAdditionalConditionsFromHomePageStateProvider,
+                        length: additionalConditionsNamesList.length,
+                        itemsNames: additionalConditionsNamesList,
+                        filters: selectedAdditionalConditions,
+                        providerName: widget
+                                    .basicApiPageSettingsModel.whereFrom ==
+                                'selectProductPage'
+                            ? filterAdditionalConditionsFromSelectProductPageStateProvider
+                            : filterAdditionalConditionsFromHomePageStateProvider,
                       ),
                     ],
                   ),
@@ -316,26 +406,11 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: SaveButtonWidget(
-            onTap: () {
-              setState(() {
-                if (widget.whereFrom == "homePage") {
-                  ref
-                      .watch(
-                      filterBanksFromHomePageStateProvider.notifier)
-                      .state =[];
-                }
-                if (widget.whereFrom == "selectProductPage") {
-                  ref
-                      .watch(filterBanksFromSelectProductPageStateProvider
-                      .notifier)
-                      .state = [];
-                }
-                selectedBanks.clear();
-                selectedCashBack.clear();
-                selectedDelivery.clear();
-                selectedPaySystem.clear();
-                selectedAdditionalConditions.clear();
-              });
+            onTapSaveButton: () {
+              saveFilters();
+            },
+            onTapTrashButton: () {
+              clearFilters();
             },
           ),
         );
@@ -345,8 +420,12 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
             body: CustomScrollView(slivers: [
           SliverFillRemaining(
               child: CustomErrorPageWidget(
+            buttonName: 'Вернуться',
+            onTap: () {
+              Navigator.of(context).pop();
+            },
             error: error.toString(),
-            bottomPadding: 72,
+            bottomPadding: 2,
           ))
         ]));
       },

@@ -9,13 +9,13 @@ import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_contro
 import 'package:podberi_ru/features/all_banks_page/presentation/widgets/all_banks_list_widget.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 
-///all bank page. when press on bank card go to [CatalogPage] with selected bank name
+
 class AllBanksPage extends ConsumerWidget {
+  ///all bank page. when press on bank card go to [CatalogPage] with selected bank name
   const AllBanksPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return ref.watch(allBanksControllerProvider).when(
       data: (allBanks) {
         return Scaffold(
@@ -43,23 +43,27 @@ class AllBanksPage extends ConsumerWidget {
       error: (error, _) {
         return Scaffold(
             body: CustomScrollView(slivers: [
-          SliverFillRemaining(
-              child: CustomErrorPageWidget(
-            error: error.toString(),
-            bottomPadding: 72,
-          ))
-        ]));
+              SliverFillRemaining(
+                  child: CustomErrorPageWidget(
+                    buttonName: 'Вернуться',
+                    onTap: () {
+                      ref.watch(goRouterProvider).pop();
+                    },
+                    error: error.toString(),
+                    bottomPadding: 72,
+                  ))
+            ]));
       },
       loading: () {
         return const Scaffold(
             body: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
-                child: CustomLoadingCardWidget(
-              bottomPadding: 72,
-            )),
-          ],
-        ));
+              slivers: [
+                SliverFillRemaining(
+                    child: CustomLoadingCardWidget(
+                      bottomPadding: 72,
+                    )),
+              ],
+            ));
       },
     );
   }

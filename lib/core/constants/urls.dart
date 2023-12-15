@@ -20,10 +20,10 @@ class Urls {
 
   ModelApi listApi() {
     return ModelApi(
-      /// PING
+      /// files
       files: Uri.parse('$srv/files'),
 
-      /// Authorization
+      /// bank
       bank: Uri.parse('$srv/bank'),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///основные цвета в приложении
 class ThemeApp{
   static const Color mainBlue = Color(0xff0149FF);
   static const Color backgroundBlack = Color(0xff222222);

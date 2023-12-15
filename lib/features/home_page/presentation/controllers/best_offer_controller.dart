@@ -3,6 +3,7 @@ import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.d
 import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+
 class BestOfferController extends AutoDisposeAsyncNotifier<List<ListProductModel>> {
   BestOfferController();
   @override
@@ -19,7 +20,7 @@ class BestOfferController extends AutoDisposeAsyncNotifier<List<ListProductModel
     });
   }
 }
-
+///контроллер для получения лучших предложений
 final bestOfferControllerProvider =
 AutoDisposeAsyncNotifierProvider<BestOfferController, List<ListProductModel>>(
   BestOfferController.new,

@@ -6,6 +6,7 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class CanvasBackground extends ConsumerStatefulWidget {
+  ///канвас для рисования изогнутой линии в карточке промокодлов на главной странице
   const CanvasBackground({super.key});
 
   @override

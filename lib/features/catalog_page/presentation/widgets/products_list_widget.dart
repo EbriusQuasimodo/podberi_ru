@@ -1,16 +1,18 @@
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/product_card_widget_with_buttons.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
-///list of banks products. when press on card - go to [DetailsPage]
+
 class ProductListWidget extends StatelessWidget {
-  final String whereFrom;
+  final BasicApiPageSettingsModel basicApiPageSettingsModel;
 final List<ListProductModel> productInfo;
-  const ProductListWidget({super.key, required this.whereFrom, required this.productInfo});
+  ///list of banks products. when press on card - go to [DetailsPage]
+  const ProductListWidget({super.key, required this.basicApiPageSettingsModel, required this.productInfo, });
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,8 @@ final List<ListProductModel> productInfo;
           borderRadius: BorderRadius.circular(20),
           color: ThemeApp.mainWhite,
         ),
-        child: whereFrom == AppRoute.allBanksPage.name  ||
-            whereFrom == 'homePageBanks'
+        child: basicApiPageSettingsModel.whereFrom == AppRoute.allBanksPage.name  ||
+            basicApiPageSettingsModel.whereFrom == 'homePageBanks'
             ? const SizedBox.shrink()
             :  Padding(
                 padding: const EdgeInsets.symmetric(vertical: 17),
@@ -39,17 +41,18 @@ final List<ListProductModel> productInfo;
       ),
       sliver: SliverPadding(
         padding: EdgeInsets.only(
-          top: whereFrom == AppRoute.allBanksPage.name ||
-              whereFrom == 'homePageBanks' ? 15 : 47,
+          top: basicApiPageSettingsModel.whereFrom == AppRoute.allBanksPage.name ||
+              basicApiPageSettingsModel.whereFrom == 'homePageBanks' ? 15 : 47,
           right: 15,
           left: 15,
           bottom: 5,
         ),
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
+
             childCount: productInfo.length,
             (BuildContext context,int index) =>  ProductCardWidgetWithButtons(
-              whereFrom: whereFrom,
+             basicApiPageSettingsModel: basicApiPageSettingsModel,
               productInfo: productInfo[index],
                productRating: '4.8',
                ),

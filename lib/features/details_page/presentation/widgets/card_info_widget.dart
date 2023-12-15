@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
 import 'row_description_widget.dart';
+
 
 class CardInfoWidget extends StatelessWidget {
   final ListProductModel productInfo;
   final String bankName;
   final String bankLogoPath;
+  ///виджет с основной информацией о банковском продукте (подробное описание его фукнций и название банка)
+  ///используется в [DetailsPage]
   const CardInfoWidget({super.key, required this.productInfo, required this.bankName, required this.bankLogoPath});
 
   @override

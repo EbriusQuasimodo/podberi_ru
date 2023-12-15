@@ -9,7 +9,7 @@ class ChoiceChipItem extends ConsumerStatefulWidget {
   final List<String> filters;
   final int length;
   final List<BankDetailsModel>? banksList;
-
+///виджет для чойс чипов в фильтрах (чтобы переиспользовать его)
    ChoiceChipItem(
       {super.key, this.itemsNames, this.banksList, required this.filters, required this.length, required this.providerName,});
 

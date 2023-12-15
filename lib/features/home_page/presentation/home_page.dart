@@ -15,8 +15,9 @@ import 'controllers/debit_cards_controller.dart';
 import 'widgets/best_offer_widgets/best_offer_widget.dart';
 import 'widgets/select_product_type_widgets/select_product_type_widget.dart';
 
-/// all home page
+
 class HomePage extends ConsumerStatefulWidget {
+  /// all home page
   const HomePage({super.key});
 
   @override
@@ -25,11 +26,12 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   final TextEditingController searchController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: CustomScrollView(
+
         slivers: [
           ///custom app bar with search widget
           SliverToBoxAdapter(
@@ -57,7 +59,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
             },
             loading: () {
-              return SliverToBoxAdapter(child: const CustomLoadingCardWidget(bottomPadding: 0,));
+              return const SliverToBoxAdapter(child: CustomLoadingCardWidget(bottomPadding: 0,));
             },
           ),
 
@@ -118,5 +120,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         ],
       ),
     );
+
   }
 }

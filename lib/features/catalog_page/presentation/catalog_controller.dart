@@ -1,40 +1,28 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/domain/filters_model.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/features/catalog_page/data/bank_products_repository.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/select_product_type_page.dart';
 import 'package:podberi_ru/features/filters_page/presentation/filters_page_controller.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-///product type title which select on [SelectProductTypePage] used for title in [CatalogPage]
-final productTypeTitleFromCatalogStateProvider =
-    StateProvider.autoDispose<String>((ref) {
-  return '';
-});
-
-///product type url which select on [SelectProductTypePage] used for instance in api
-final productTypeUrlFromCatalogStateProvider =
-    StateProvider.autoDispose<String>((ref) {
-  return '';
-});
-
 ///bank products controller. used for fetch list of products. have required params (product type) which used in [BankProductsRepository]
 class BankProductsController extends AutoDisposeFamilyAsyncNotifier<
-    List<ListProductModel>, FiltersModel> {
+    List<ListProductModel>, BasicApiPageSettingsModel> {
   BankProductsController();
 
   String productType = '';
 
   @override
-  FutureOr<List<ListProductModel>> build(FiltersModel arg) async {
+  FutureOr<List<ListProductModel>> build(BasicApiPageSettingsModel arg) async {
     List<String> filterBanks = [];
     List<String> filterCashBack = [];
     List<String> filterPaySystem = [];
-    switch (arg.productType) {
+    ///выбираем какой провайдер слушать в зависимости от того с какой страницы открыли
+    ///(из выбора категории продука, с главной страницы или со страницы всех банков)
+    switch (arg.whereFrom) {
       case 'selectProductPage':
         filterBanks = ref.watch(filterBanksFromSelectProductPageStateProvider);
         filterPaySystem =
@@ -47,47 +35,59 @@ class BankProductsController extends AutoDisposeFamilyAsyncNotifier<
         filterPaySystem = ref.watch(filterPaySystemFromHomePageStateProvider);
         filterCashBack = ref.watch(filterCashBackFromHomePageStateProvider);
       case 'allBanksPage':
-        filterBanks = arg.banks ?? [];
+        filterBanks = arg.filtersModel?.banks ?? [];
     }
 
+
     final eventRepo = ref.read(bankProductsRepositoryProvider);
-    print("568465908 ${filterBanks}");
-    if (arg.productType != 'allBanksPage' && arg.productType != 'homePageBanks') {
+
+    ///проверяем откуда пришли
+    ///(фильтры когда мы приходим со страницы банков отличаются от тех когда приходим со страницы по какой-то категории
+    if (arg.whereFrom != 'allBanksPage' && arg.whereFrom != 'homePageBanks') {
+      ///если фильтр по банкам не пустой
       if (filterBanks.isNotEmpty) {
-        arg.banks?.clear();
+        ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
+        ///и добавляем в эту же модель новые фильтры из filterBanks
+        arg.filtersModel?.banks?.clear();
         for (int i = 0; i < filterBanks.length; i++) {
-          arg.banks?.add(filterBanks[i]);
+          arg.filtersModel?.banks?.add(filterBanks[i]);
         }
       } else {
-        arg.banks?.clear();
+        arg.filtersModel?.banks?.clear();
       }
     }
+    ///если фильтр по кэшбеку не пустой
     if (filterCashBack.isNotEmpty) {
-      arg.cashBack?.clear();
+      ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
+      ///и добавляем в эту же модель новые фильтры из filterCashBack
+      arg.filtersModel?.cashBack?.clear();
       for (int i = 0; i < filterCashBack.length; i++) {
         if (!filterCashBack.contains('Не важно')) {
-          arg.cashBack?.add(filterCashBack[i]);
+          arg.filtersModel?.cashBack?.add(filterCashBack[i]);
         }
       }
     } else {
-      arg.cashBack?.clear();
+      arg.filtersModel?.cashBack?.clear();
     }
+    ///если фильтр по платежной системе не пустой
     if (filterPaySystem.isNotEmpty) {
-      arg.paySystem?.clear();
+      ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
+      ///и добавляем в эту же модель новые фильтры из filterPaySystem
+      arg.filtersModel?.paySystem?.clear();
       for (int i = 0; i < filterPaySystem.length; i++) {
         if (!filterPaySystem.contains('Любая')) {
-          arg.paySystem?.add(filterPaySystem[i]);
+          arg.filtersModel?.paySystem?.add(filterPaySystem[i]);
         }
       }
     } else {
-      arg.paySystem?.clear();
+      arg.filtersModel?.paySystem?.clear();
     }
 
     return await eventRepo.fetch(arg, ref);
   }
 }
-
+///кататалог для получения всех банковских продуктов здесь формируются фильтры
 final bankProductsControllerProvider = AutoDisposeAsyncNotifierProvider.family<
-    BankProductsController, List<ListProductModel>, FiltersModel>(
+    BankProductsController, List<ListProductModel>, BasicApiPageSettingsModel>(
   BankProductsController.new,
 );

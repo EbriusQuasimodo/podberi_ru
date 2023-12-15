@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/details_page/presentation/widgets/card_info_widget.dart';
 
 class RowDescriptionWidget extends StatelessWidget {
   final String rowName;
   final String rowDescription;
-
+///виджет ряда в таблице с основной информацией о банковском продукте, используется в [CardInfoWidget]
   const RowDescriptionWidget({
     super.key,
     required this.rowDescription,

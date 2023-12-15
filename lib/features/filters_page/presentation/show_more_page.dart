@@ -9,12 +9,15 @@ class ShowMorePage extends ConsumerStatefulWidget {
   final List<BankDetailsModel> banksList;
   final AutoDisposeStateProvider<List<String>> providerName;
   final List<String> filters;
-final VoidCallback onTapSetState;
+  final VoidCallback onTapTrashButton;
+  final VoidCallback onTapSaveButton;
+  ///страница с полным списком всех банков в фильтрах
   ShowMorePage({
     super.key,
     required this.filters,
     required this.banksList,
-    required this.onTapSetState,
+    required this.onTapSaveButton,
+    required this.onTapTrashButton,
     required this.providerName,
   });
 
@@ -59,7 +62,6 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(12),
                         onTap: () {
-                          widget.onTapSetState();
                           setState(() {
                             if (!widget.filters.contains(widget.banksList[index].bankName)) {
                               //widget.filters.clear();
@@ -127,6 +129,7 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                 child: MaterialButton(
                   height: 50,
                   onPressed: () {
+                    widget.onTapSaveButton();
                     Navigator.of(context).pop();
                   },
                   color: ThemeApp.mainBlue,
@@ -153,9 +156,11 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
                   onTap: () {
+                    widget.onTapTrashButton();
                     setState(() {
                       widget.filters.clear();
                     });
+
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(13),

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/features/home_page/presentation/controllers/best_offer_controller.dart';
 
 import 'best_offer_data_source.dart';
 
@@ -15,6 +16,7 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
   @override
   Future<List<ListProductModel>> fetch(
       AutoDisposeAsyncNotifierProviderRef ref) async {
+    ///здесь поочереди вызываем каждый инстанс и записываем в список лучших банковских продуктов
      List<ListProductModel> _listOfBestOffers = [];
     final responseDebit =
         await GetIt.I<BestOfferGetDataSource>().fetch('debit_cards');
@@ -72,6 +74,8 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
   }
 }
 
+///репозиторий для получения списка лучших предложений
+///вызывается из [bestOfferControllerProvider]
 final bestOfferRepositoryProvider =
     Provider.autoDispose<BestOfferRepository>((ref) {
   final fetch = BestOfferRepository();

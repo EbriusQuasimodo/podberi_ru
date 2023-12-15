@@ -1,8 +1,11 @@
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/features/all_banks_page/data/all_banks_data_source.dart';
 
+///todo возможно стоит убрать и брать из апи [AllBanksGetDataSource]
 class BanksGetDataSource {
   BanksGetDataSource({required this.dio});
 
@@ -28,7 +31,7 @@ class BanksGetDataSource {
           case 204:
             throw PageNotFoundException().message;
           default:
-            throw UnknownException().message;
+            throw UnknownServerException().message;
         }
       } on DioException catch (_) {
         throw TimeOutException().message;

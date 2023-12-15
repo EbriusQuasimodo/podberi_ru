@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/common_helpers_widgets/standard_widget_with_list.dart';
 
-///blog with news widget
+
 class BlogWidget extends StatelessWidget {
+  ///blog with news widget
   const BlogWidget({super.key});
 
   @override

@@ -1,14 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/features/details_page/data/product_details_repository.dart';
-import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
+import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-///bank products details controller. used for fetch product by id. have required params (product type, id) which used in [ProductDetailsRepository]
-class ProductDetailsController extends AutoDisposeFamilyAsyncNotifier<List<ListProductModel>, DetailsParameters> {
+
+class ProductDetailsController extends AutoDisposeFamilyAsyncNotifier<List<ListProductModel>, BasicApiPageSettingsModel> {
   ProductDetailsController();
   @override
-  FutureOr<List<ListProductModel>> build(DetailsParameters arg) async {
+  FutureOr<List<ListProductModel>> build(BasicApiPageSettingsModel arg) async {
     final eventRepo = ref.read(productDetailsRepositoryProvider);
     return await eventRepo.fetch(arg, ref);
   }
@@ -22,8 +23,10 @@ class ProductDetailsController extends AutoDisposeFamilyAsyncNotifier<List<ListP
   }
 }
 
+///контроллер для получения данных о деталях банковского продукта,
+///используется в [DetailsPage]
 final productDetailsControllerProvider =
-AutoDisposeAsyncNotifierProvider.family<ProductDetailsController, List<ListProductModel>, DetailsParameters>(
+AutoDisposeAsyncNotifierProvider.family<ProductDetailsController, List<ListProductModel>, BasicApiPageSettingsModel>(
   ProductDetailsController.new,
 );
 

@@ -4,14 +4,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
+import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
+import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
 
 class AllBanksListWidget extends ConsumerWidget {
   final List<BankDetailsModel> allBanks;
 
+  ///виджет со списком банков, используется на странице [AllBanksPage]
   const AllBanksListWidget({
     super.key,
     required this.allBanks,
@@ -37,15 +41,22 @@ class AllBanksListWidget extends ConsumerWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  ref.watch(productTypeUrlFromAllBanksStateProvider.notifier).state = 'debit_cards';
-                  ref.watch(bankNameFromAllBanksStateProvider.notifier).state =
-                      allBanks[index].bankName;
-                  ref.watch(bankPictureFromAllBanksStateProvider.notifier).state =
-                      allBanks[index].picture;
                   ref
-                      .watch(goRouterProvider)
-                      .push(RouteConstants.catalog, extra: FiltersModel(productType: AppRoute.allBanksPage.name, banks: [allBanks[index].bankName], paySystem: [], cashBack: []));
-                  },
+                      .watch(productTypeUrlFromAllBanksStateProvider.notifier)
+                      .state = 'debit_cards';
+                  ref.watch(goRouterProvider).push(RouteConstants.catalog,
+                      extra: BasicApiPageSettingsModel(
+                          bankDetailsModel: BankDetailsModel(
+                              picture: allBanks[index].picture,
+                              bankName: allBanks[index].bankName),
+                          filtersModel: FiltersModel(
+                              banks: [allBanks[index].bankName],
+                              paySystem: [],
+                              cashBack: []),
+                          whereFrom: AppRoute.allBanksPage.name,
+                          productTypeUrl: ProductTypeEnum.debit_cards.name,
+                          pageName: 'Каталог'));
+                },
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 6),
                   padding: const EdgeInsets.only(

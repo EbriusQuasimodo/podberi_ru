@@ -6,6 +6,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class BestOffersCardWidget extends ConsumerWidget {
   final ListProductModel bestOffer;
+  ///карточка лучшего банковского предложения
   const BestOffersCardWidget({super.key, required this.bestOffer});
 
   @override

@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
+import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/details_page/domain/details_parameters_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
 import 'common_helpers_widgets/product_card_widget_without_buttons.dart';
 
 class BestCreditCardsWidget extends ConsumerWidget {
   final List<ListProductModel> creditCards;
+  ///best credit cards widget when pressed go to [DetailsPage]
   const BestCreditCardsWidget({super.key, required this.creditCards});
 
-  ///best credit cards widget when pressed go to [DetailsPage]
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
         return SliverToBoxAdapter(
@@ -49,12 +51,13 @@ class BestCreditCardsWidget extends ConsumerWidget {
                             productInfo: creditCards[index],
                             onTap: () {
                               ref.watch(goRouterProvider).push(RouteConstants.details,
-                                  extra: DetailsParameters(
-                                      id: creditCards[index].id,
-                                      whereFrom: 'Кредитные карты',
-                                      productType: 'credit_cards',
-                                      bankName: creditCards[index].bankDetails?.bankName,
-                                      bankLogoPath: creditCards[index].bankDetails?.picture));
+                                  extra:BasicApiPageSettingsModel(
+                                      productTypeUrl: 'credit_cards',
+                                      pageName: 'Кредитные карты',
+                                      productId: creditCards[index].id,
+                                      bankDetailsModel: BankDetailsModel(
+                                          bankName: creditCards[index].bankDetails?.bankName,
+                                          picture: creditCards[index].bankDetails?.picture)) );
                             },
                             productRating: '4.8');
                       }),
@@ -70,7 +73,16 @@ class BestCreditCardsWidget extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12),
                       onTap: () {
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                            extra:  FiltersModel(productType: 'Кредитные карты', banks: [], paySystem: [],cashBack: []));
+                            extra:BasicApiPageSettingsModel(
+                              productTypeUrl: ProductTypeEnum.credit_cards.name,
+                              pageName: 'Кредитные карты',
+                              whereFrom: AppRoute.homePage.name,
+                              filtersModel: FiltersModel(
+                                banks: [],
+                                paySystem: [],
+                                cashBack: [],
+                              ),
+                            ),);
                       },
                       child: const Text(
                         'Показать все',

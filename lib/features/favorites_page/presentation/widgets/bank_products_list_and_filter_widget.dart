@@ -1,5 +1,6 @@
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/product_card_widget_with_buttons.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/widgets/bank_poduct_filter_choice_chip_widget.dart';
@@ -90,8 +91,8 @@ class _BankProductsListAndFilterWidgetState
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: 2,
-                (context, index) => const ProductCardWidgetWithButtons(
-                  whereFrom: '',
+                (context, index) =>  ProductCardWidgetWithButtons(
+                  basicApiPageSettingsModel: BasicApiPageSettingsModel(),
                   productRating: '4.8',
                 ),
               ),
