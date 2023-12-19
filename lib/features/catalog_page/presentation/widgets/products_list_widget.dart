@@ -28,8 +28,10 @@ class _ProductListWidgetState extends State<ProductListWidget> {
   final isar = Isar.getInstance();
 
   Future<bool> isItemDuplicate(ListProductModel productInfo) async {
-    final count =
-    await isar?.favoritesDebitCardsDatas.filter().idContains(productInfo.id).count();
+    final count = await isar?.favoritesDebitCardsDatas
+        .filter()
+        .idContains(productInfo.id)
+        .count();
     return count! > 0;
   }
 
@@ -74,11 +76,14 @@ class _ProductListWidgetState extends State<ProductListWidget> {
           delegate:
               SliverChildBuilderDelegate(childCount: widget.productInfo.length,
                   (BuildContext context, int index) {
-                    return ProductCardWidgetWithButtons(
-                                    isFavorite: true,
-                                    basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-                                    productInfo: widget.productInfo[index],
-                                    productRating: '4.8');
+            return ProductCardWidgetWithButtons(
+                onTap: () {
+                  setState(() {});
+                },
+                isFavorite: true,
+                basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
+                productInfo: widget.productInfo[index],
+                productRating: '4.8');
             // return FutureBuilder(
             //     future: isItemDuplicate(widget.productInfo[index]),
             //   builder: (context, AsyncSnapshot snapshot) {

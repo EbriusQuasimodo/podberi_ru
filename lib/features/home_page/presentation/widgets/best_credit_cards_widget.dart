@@ -44,7 +44,7 @@ class BestCreditCardsWidget extends ConsumerWidget {
                   height: 190,
                   child: ListView.builder(
                       padding: const EdgeInsets.only(right: 15, left: 15),
-                      itemCount: 6,
+                      itemCount: creditCards.length > 6 ? 6 :creditCards.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
                         return BankProductCardWidgetWithoutButtons(

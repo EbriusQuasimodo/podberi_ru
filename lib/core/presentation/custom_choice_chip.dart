@@ -6,6 +6,7 @@ import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_contro
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.dart';
+import 'package:podberi_ru/features/favorites_page/presentation/favorites_page_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 class CustomChoiceChip extends ConsumerStatefulWidget {
@@ -132,6 +133,38 @@ class _CustomChoiceChipState extends ConsumerState<CustomChoiceChip> {
 
                       break;
                   }
+                }else{
+                  switch (widget.element) {
+                    case 'Дебетовые карты':
+                      ref
+                          .watch(
+                          filterProductUrlStateProvider.notifier)
+                          .state = 'debit_cards';
+
+                      break;
+                    case 'Кредитные карты':
+                      ref
+                          .watch(
+                          filterProductUrlStateProvider.notifier)
+                          .state = 'credit_cards';
+
+                      break;
+                    case 'РКО':
+                      ref
+                          .watch(
+                          filterProductUrlStateProvider.notifier)
+                          .state = 'rko';
+
+                      break;
+                    case 'Микрозаймы':
+                      ref
+                          .watch(
+                          filterProductUrlStateProvider.notifier)
+                          .state = 'zaimy';
+
+                      break;
+                  }
+
                 }
               }
             } else {

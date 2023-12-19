@@ -84,21 +84,21 @@ class _HomePageState extends ConsumerState<HomePage> {
               return const SliverToBoxAdapter(child:CustomLoadingCardWidget(bottomPadding: 0,));
             },
           ),
-          ref.watch(banksControllerProvider).when(
-            data: (banksModel) {
-              return MiniListOfBanksWidget(
-                banksModel: banksModel,
-              );
-            },
-            error: (error, _) {
-
-              return SliverToBoxAdapter(child: SizedBox.shrink());
-              //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
-            },
-            loading: () {
-              return const SliverToBoxAdapter(child:CustomLoadingCardWidget(bottomPadding: 0,));
-            },
-          ),
+          // ref.watch(banksControllerProvider).when(
+          //   data: (banksModel) {
+          //     return MiniListOfBanksWidget(
+          //       banksModel: banksModel,
+          //     );
+          //   },
+          //   error: (error, _) {
+          //
+          //     return SliverToBoxAdapter(child: SizedBox.shrink());
+          //     //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
+          //   },
+          //   loading: () {
+          //     return const SliverToBoxAdapter(child:CustomLoadingCardWidget(bottomPadding: 0,));
+          //   },
+          // ),
 
           ref.watch(debitCardsControllerProvider).when(
             data: (debitCards) {

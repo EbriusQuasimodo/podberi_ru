@@ -3,7 +3,7 @@ import 'filters_model.dart';
 
 class BasicApiPageSettingsModel {
   final BankDetailsModel? bankDetailsModel;
-  final String? productTypeUrl;
+  String? productTypeUrl;
   final String? pageName;
   final String? productId;
   final String? whereFrom;

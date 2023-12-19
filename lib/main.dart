@@ -10,6 +10,7 @@ import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_ca
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
+import 'package:podberi_ru/features/favorites_page/data/favorites_data_source.dart';
 import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_data_source.dart';
 import 'package:podberi_ru/features/home_page/data/credit_cards_data/credit_cards_data_source.dart';
 import 'package:podberi_ru/features/home_page/data/debit_cards_data/debit_cards_data_source.dart';
@@ -62,5 +63,6 @@ void main() async {
   GetIt.I.registerLazySingleton(() => DebitCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => BanksGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => AllBanksGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => FavoritesGetDataSource(dio: dio));
   runApp(const ProviderScope(child: App()));
 }

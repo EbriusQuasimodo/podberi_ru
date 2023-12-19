@@ -37,7 +37,6 @@ final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
 final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
 final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 final _shellNavigatorFKey = GlobalKey<NavigatorState>(debugLabel: 'shellF');
-final _shellNavigatorJKey = GlobalKey<NavigatorState>(debugLabel: 'shellJ');
 ///навигатор по приложению
 final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
   return GoRouter(

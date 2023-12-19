@@ -18,6 +18,7 @@ class ProductCardWidgetWithButtons extends ConsumerStatefulWidget {
   final ListProductModel? productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   final bool isFavorite;
+  final VoidCallback onTap;
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
@@ -27,6 +28,7 @@ class ProductCardWidgetWithButtons extends ConsumerStatefulWidget {
     this.productInfo,
     required this.basicApiPageSettingsModel,
     required this.isFavorite,
+    required this.onTap,
   });
 
   @override
@@ -258,7 +260,7 @@ class _ProductCardWidgetWithButtonsState
                                     : await isar?.favoritesRkoDatas
                                         .put(favoritesRkoData));
                         }
-                        setState(() {});
+                        widget.onTap();
                       },
                       child: FutureBuilder(
                           future: isItemDuplicate(widget.productInfo!),
