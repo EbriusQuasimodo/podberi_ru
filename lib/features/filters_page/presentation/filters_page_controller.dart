@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:isar/isar.dart';
 /// фильтр банков если мы зашли с главной страницы
 final filterBanksFromHomePageStateProvider = StateProvider.autoDispose<List<String>>((ref) {
   return [];
@@ -41,4 +43,10 @@ final filterAdditionalConditionsFromSelectProductPageStateProvider = StateProvid
 });
 
 
+final isFavoriteStateProviderController = ChangeNotifierProvider<IsFavoriteStateProviderController>((ref) {
+  return IsFavoriteStateProviderController();
+});
+class IsFavoriteStateProviderController extends ChangeNotifier{
+  final isar = Isar.getInstance();
 
+}

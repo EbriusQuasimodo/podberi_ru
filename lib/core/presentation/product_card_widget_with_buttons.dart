@@ -1,35 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
+import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
+import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
+import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 
-class ProductCardWidgetWithButtons extends ConsumerWidget {
+class ProductCardWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
   final ListProductModel? productInfo;
-
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
+  final bool isFavorite;
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
-  const ProductCardWidgetWithButtons({
+  ProductCardWidgetWithButtons({
     super.key,
     required this.productRating,
     this.productInfo,
     required this.basicApiPageSettingsModel,
+    required this.isFavorite,
   });
 
+  @override
+  ConsumerState<ProductCardWidgetWithButtons> createState() =>
+      _ProductCardWidgetWithButtonsState();
+}
+
+class _ProductCardWidgetWithButtonsState
+    extends ConsumerState<ProductCardWidgetWithButtons> {
   List<Widget> list() {
     var list = <Widget>[];
 
     for (int i = 0; i < 4; i++) {
       list.add(
         Text(
-          "${productInfo!.features[i]}",
+          "${widget.productInfo!.features[i]}",
           textAlign: TextAlign.left,
           style: const TextStyle(
               color: ThemeApp.mainWhite,
@@ -42,12 +55,41 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
     return list;
   }
 
+  final isar = Isar.getInstance();
+
+  Future<bool> isItemDuplicate(ListProductModel productInfo) async {
+    int? count;
+    switch (widget.basicApiPageSettingsModel.productTypeUrl) {
+      case 'debit_cards':
+        count = await isar?.favoritesDebitCardsDatas
+            .filter()
+            .idContains(productInfo.id)
+            .count();
+      case 'credit_cards':
+        count = await isar?.favoritesCreditCardsDatas
+            .filter()
+            .idContains(productInfo.id)
+            .count();
+      case 'zaimy':
+        count = await isar?.favoritesZaimyDatas
+            .filter()
+            .idContains(productInfo.id)
+            .count();
+      case 'rko':
+        count = await isar?.favoritesRkoDatas
+            .filter()
+            .idContains(productInfo.id)
+            .count();
+    }
+    return count! > 0;
+  }
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: productInfo != null ? Colors.green : ThemeApp.darkestGrey,
+        color: widget.productInfo != null ? Colors.green : ThemeApp.darkestGrey,
         //color: Color(int.parse(
         //   '0xff${productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
       ),
@@ -69,7 +111,7 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
                 color: ThemeApp.mainWhite,
               ),
               child: Image.network(
-                '${Urls.api.files}/${productInfo?.bankDetails?.picture}',
+                '${Urls.api.files}/${widget.productInfo?.bankDetails?.picture}',
                 height: 32,
                 width: 36,
               ),
@@ -80,7 +122,7 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
             top: 16,
             right: 86,
             child: Text(
-              "${productInfo?.cardName}",
+              "${widget.productInfo?.cardName}",
               maxLines: 3,
               style: const TextStyle(
                   color: ThemeApp.mainWhite,
@@ -88,7 +130,7 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
                   fontSize: 14),
             ),
           ),
-          productInfo!.features.isNotEmpty
+          widget.productInfo!.features.isNotEmpty
               ? Positioned(
                   left: 16,
                   bottom: 16,
@@ -109,7 +151,7 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
                     size: 20,
                   ),
                   Text(
-                    productRating,
+                    widget.productRating,
                     style: const TextStyle(
                         color: ThemeApp.mainWhite,
                         fontWeight: FontWeight.w500,
@@ -130,12 +172,14 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
                   ref.watch(goRouterProvider).push(RouteConstants.details,
                       extra: BasicApiPageSettingsModel(
                           productTypeUrl:
-                              basicApiPageSettingsModel.productTypeUrl,
-                          pageName: basicApiPageSettingsModel.pageName,
-                          productId: productInfo?.id,
+                              widget.basicApiPageSettingsModel.productTypeUrl,
+                          pageName: widget.basicApiPageSettingsModel.pageName,
+                          productId: widget.productInfo?.id,
                           bankDetailsModel: BankDetailsModel(
-                              bankName: productInfo?.bankDetails?.bankName,
-                              picture: productInfo?.bankDetails?.picture)));
+                              bankName:
+                                  widget.productInfo?.bankDetails?.bankName,
+                              picture:
+                                  widget.productInfo?.bankDetails?.picture)));
                 },
               ),
             ),
@@ -161,15 +205,86 @@ class ProductCardWidgetWithButtons extends ConsumerWidget {
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () {},
-                    child: SvgPicture.asset(
-                      'assets/icons/nav_bar_icons/favorites_page.svg',
-                      color: ThemeApp.mainWhite,
-                      height: 32,
-                      width: 32,
-                    ),
-                  ),
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () async {
+                        switch (
+                            widget.basicApiPageSettingsModel.productTypeUrl) {
+                          case 'debit_cards':
+                            FavoritesDebitCardsData favoritesDebitCardsData =
+                                FavoritesDebitCardsData()
+                                  ..id = widget.productInfo?.id;
+
+                            await isar?.writeTxn(() async =>
+                                await isItemDuplicate(widget.productInfo!)
+                                    ? await isar?.favoritesDebitCardsDatas
+                                        .filter()
+                                        .idEqualTo(widget.productInfo?.id)
+                                        .deleteAll()
+                                    : await isar?.favoritesDebitCardsDatas
+                                        .put(favoritesDebitCardsData));
+                          case 'credit_cards':
+                            FavoritesCreditCardsData favoritesCreditCardsData =
+                                FavoritesCreditCardsData()
+                                  ..id = widget.productInfo?.id;
+                            await isar?.writeTxn(() async =>
+                                await isItemDuplicate(widget.productInfo!)
+                                    ? await isar?.favoritesCreditCardsDatas
+                                        .filter()
+                                        .idEqualTo(widget.productInfo?.id)
+                                        .deleteAll()
+                                    : await isar?.favoritesCreditCardsDatas
+                                        .put(favoritesCreditCardsData));
+                          case 'zaimy':
+                            FavoritesZaimyData favoritesZaimyData =
+                                FavoritesZaimyData()
+                                  ..id = widget.productInfo?.id;
+                            await isar?.writeTxn(() async =>
+                                await isItemDuplicate(widget.productInfo!)
+                                    ? await isar?.favoritesZaimyDatas
+                                        .filter()
+                                        .idEqualTo(widget.productInfo?.id)
+                                        .deleteAll()
+                                    : await isar?.favoritesZaimyDatas
+                                        .put(favoritesZaimyData));
+                          case 'rko':
+                            FavoritesRkoData favoritesRkoData =
+                                FavoritesRkoData()..id = widget.productInfo?.id;
+                            await isar?.writeTxn(() async =>
+                                await isItemDuplicate(widget.productInfo!)
+                                    ? await isar?.favoritesRkoDatas
+                                        .filter()
+                                        .idEqualTo(widget.productInfo?.id)
+                                        .deleteAll()
+                                    : await isar?.favoritesRkoDatas
+                                        .put(favoritesRkoData));
+                        }
+                        setState(() {});
+                      },
+                      child: FutureBuilder(
+                          future: isItemDuplicate(widget.productInfo!),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (snapshot.data) {
+                                return SvgPicture.asset(
+                                  'assets/icons/favorites_select.svg',
+                                  color: ThemeApp.mainWhite,
+                                  height: 32,
+                                  width: 32,
+                                );
+                              } else {
+                                return SvgPicture.asset(
+                                  'assets/icons/nav_bar_icons/favorites_page.svg',
+                                  color: ThemeApp.mainWhite,
+                                  height: 32,
+                                  width: 32,
+                                );
+                              }
+                            }
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height - 72,
+                            );
+                          })),
                 ),
               ],
             ),

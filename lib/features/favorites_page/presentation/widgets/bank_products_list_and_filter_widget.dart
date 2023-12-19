@@ -92,6 +92,7 @@ class _BankProductsListAndFilterWidgetState
               delegate: SliverChildBuilderDelegate(
                 childCount: 2,
                 (context, index) =>  ProductCardWidgetWithButtons(
+                  isFavorite: false,
                   basicApiPageSettingsModel: BasicApiPageSettingsModel(),
                   productRating: '4.8',
                 ),
