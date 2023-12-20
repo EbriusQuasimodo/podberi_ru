@@ -1,36 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:isar/isar.dart';
+import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/presentation/expandable_page_view.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
+import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
+import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
+import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
+import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
+import 'package:podberi_ru/features/comparison_page/presentation/comparison_page_controller.dart';
 
 import 'mini_product_card_widget.dart';
 
-
-class ProductComparisonWidget extends StatefulWidget {
-  final PageController controllerBestOffers;
-  final PageController controllerSecondPageView;
-  final List<String> comparisonList;
+class ProductComparisonWidget extends ConsumerStatefulWidget {
+  final List<ListProductModel> comparisonList;
   final VoidCallback onDeleteInFirstList;
   final VoidCallback onDeleteInSecondList;
-  final double currentPageOnFirstPageView;
-  final double currentPageOnSecondPageView;
+  final VoidCallback onScrollPageViews;
+
   ///виджет карточки с продуктами в сранении, используется в [ComparisonPage]
-  const ProductComparisonWidget(
-      {super.key,
-      required this.onDeleteInFirstList,
-      required this.comparisonList,
-      required this.controllerBestOffers,
-      required this.controllerSecondPageView,
-      required this.currentPageOnFirstPageView,
-      required this.currentPageOnSecondPageView,
-      required this.onDeleteInSecondList});
+  ProductComparisonWidget({
+    super.key,
+    required this.onDeleteInFirstList,
+    required this.comparisonList,
+    required this.onDeleteInSecondList,
+    required this.onScrollPageViews,
+  });
 
   @override
-  State<ProductComparisonWidget> createState() =>
+  ConsumerState<ProductComparisonWidget> createState() =>
       _ProductComparisonWidgetState();
 }
 
-class _ProductComparisonWidgetState extends State<ProductComparisonWidget> {
+class _ProductComparisonWidgetState
+    extends ConsumerState<ProductComparisonWidget> {
+  final controllerBestOffers = PageController(
+    viewportFraction: 0.9,
+  );
+  final controllerSecondPageView = PageController(
+    viewportFraction: 0.9,
+  );
+
+  double currentPageOnFirstPageView = 0;
+  double currentPageOnSecondPageView = 0;
+
+  @override
+  void didChangeDependencies() {
+    controllerSecondPageView.addListener(() {
+      currentPageOnSecondPageView = controllerSecondPageView.page!.toDouble();
+      ref
+              .watch(comparisonSecondProductDescriptionStateController.notifier)
+              .state =
+          widget.comparisonList[currentPageOnSecondPageView.toInt()].cardName;
+      setState(() {});
+      widget.onScrollPageViews();
+    });
+
+    controllerBestOffers.addListener(() {
+      currentPageOnFirstPageView = controllerBestOffers.page!.toDouble();
+      ref.watch(comparisonFirstProductDescriptionStateProvider.notifier).state =
+          widget.comparisonList[currentPageOnFirstPageView.toInt()].cardName;
+      setState(() {});
+      widget.onScrollPageViews();
+    });
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    controllerSecondPageView.dispose();
+    controllerBestOffers.dispose();
+    super.dispose();
+  }
+
+  final isar = Isar.getInstance();
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -55,22 +101,96 @@ class _ProductComparisonWidgetState extends State<ProductComparisonWidget> {
               ),
             ),
             CustomExpandablePageView(
-              pageController: widget.controllerBestOffers,
+              pageController: controllerBestOffers,
               children: List.generate(widget.comparisonList.length, (index) {
                 return MiniProductCardWidget(
-                  bankName: widget.comparisonList[index],
-                  onDelete: () {
+                  comparisonList: widget.comparisonList[index],
+                  onDelete: () async {
+                    switch (ref.watch(comparisonProductUrlStateProvider)) {
+                      case 'debit_cards':
+                        ComparisonDebitCardsData comparisonDebitCardsData =
+                            ComparisonDebitCardsData()
+                              ..id = widget.comparisonList[index].id;
+
+                        await isar?.writeTxn(() async =>
+                            await ref
+                                .watch(isarNotifierProvider.notifier)
+                                .isItemDuplicateInComparison(
+                              widget.comparisonList[index],
+                              ref.watch(
+                                  comparisonProductUrlStateProvider),
+                            )
+                                ? await isar?.comparisonDebitCardsDatas
+                                    .filter()
+                                    .idEqualTo(widget.comparisonList[index].id)
+                                    .deleteAll()
+                                : await isar?.comparisonDebitCardsDatas
+                                    .put(comparisonDebitCardsData));
+                      case 'credit_cards':
+                        ComparisonCreditCardsData comparisonCreditCardsData =
+                            ComparisonCreditCardsData()
+                              ..id = widget.comparisonList[index].id;
+                        await isar?.writeTxn(() async =>
+                            await ref
+                                .watch(isarNotifierProvider.notifier)
+                                .isItemDuplicateInComparison(
+                              widget.comparisonList[index],
+                              ref.watch(
+                                  comparisonProductUrlStateProvider),
+                            )
+                                ? await isar?.comparisonCreditCardsDatas
+                                    .filter()
+                                    .idEqualTo(widget.comparisonList[index].id)
+                                    .deleteAll()
+                                : await isar?.comparisonCreditCardsDatas
+                                    .put(comparisonCreditCardsData));
+                      case 'zaimy':
+                        ComparisonZaimyData comparisonZaimyData =
+                            ComparisonZaimyData()
+                              ..id = widget.comparisonList[index].id;
+                        await isar?.writeTxn(() async =>
+                            await ref
+                                .watch(isarNotifierProvider.notifier)
+                                .isItemDuplicateInComparison(
+                              widget.comparisonList[index],
+                              ref.watch(
+                                  comparisonProductUrlStateProvider),
+                            )
+                                ? await isar?.comparisonZaimyDatas
+                                    .filter()
+                                    .idEqualTo(widget.comparisonList[index].id)
+                                    .deleteAll()
+                                : await isar?.comparisonZaimyDatas
+                                    .put(comparisonZaimyData));
+                      case 'rko':
+                        ComparisonRkoData comparisonRkoData =
+                            ComparisonRkoData()
+                              ..id = widget.comparisonList[index].id;
+                        await isar?.writeTxn(() async =>
+                            await ref
+                                .watch(isarNotifierProvider.notifier)
+                                .isItemDuplicateInComparison(
+                              widget.comparisonList[index],
+                              ref.watch(
+                                  comparisonProductUrlStateProvider),
+                            )
+                                ? await isar?.comparisonRkoDatas
+                                    .filter()
+                                    .idEqualTo(widget.comparisonList[index].id)
+                                    .deleteAll()
+                                : await isar?.comparisonRkoDatas
+                                    .put(comparisonRkoData));
+                    }
+                    ref.refresh(comparisonListControllerProvider);
                     setState(() {
-                      widget.comparisonList.removeAt(index);
-                      widget.controllerBestOffers.animateToPage( widget.controllerBestOffers.page == 1.0
-                          ? 1
-                          :index - 1,
+                      controllerBestOffers.animateToPage(
+                          controllerBestOffers.page == 1.0 ? 1 : index - 1,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.linear);
-                      if (widget.controllerBestOffers.page ==
-                          widget.controllerSecondPageView.page) {
-                        widget.controllerSecondPageView.animateToPage(
-                            widget.controllerSecondPageView.page == 1.0
+                      if (controllerBestOffers.page ==
+                          controllerSecondPageView.page) {
+                        controllerSecondPageView.animateToPage(
+                            controllerSecondPageView.page == 1.0
                                 ? 1
                                 : index - 1,
                             duration: const Duration(milliseconds: 300),
@@ -96,15 +216,12 @@ class _ProductComparisonWidgetState extends State<ProductComparisonWidget> {
                           return Container(
                             margin: const EdgeInsets.only(right: 4),
                             alignment: Alignment.centerLeft,
-                            height: widget.currentPageOnFirstPageView == index
-                                ? 10
-                                : 8,
-                            width: widget.currentPageOnFirstPageView == index
-                                ? 10
-                                : 8,
+                            height:
+                                currentPageOnFirstPageView == index ? 10 : 8,
+                            width: currentPageOnFirstPageView == index ? 10 : 8,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: widget.currentPageOnFirstPageView == index
+                              color: currentPageOnFirstPageView == index
                                   ? ThemeApp.backgroundBlack
                                   : ThemeApp.darkestGrey,
                             ),
@@ -116,26 +233,107 @@ class _ProductComparisonWidgetState extends State<ProductComparisonWidget> {
             widget.comparisonList.length == 1
                 ? const SizedBox.shrink()
                 : CustomExpandablePageView(
-                    pageController: widget.controllerSecondPageView,
+                    pageController: controllerSecondPageView,
                     children:
                         List.generate(widget.comparisonList.length, (index) {
                       return MiniProductCardWidget(
-                        bankName: widget.comparisonList[index],
-                        onDelete: () {
+                        comparisonList: widget.comparisonList[index],
+                        onDelete: () async {
+                          switch (
+                              ref.watch(comparisonProductUrlStateProvider)) {
+                            case 'debit_cards':
+                              ComparisonDebitCardsData
+                                  comparisonDebitCardsData =
+                                  ComparisonDebitCardsData()
+                                    ..id = widget.comparisonList[index].id;
+
+                              await isar?.writeTxn(() async => await ref
+                                      .watch(isarNotifierProvider.notifier)
+                                      .isItemDuplicateInComparison(
+                                        widget.comparisonList[index],
+                                        ref.watch(
+                                            comparisonProductUrlStateProvider),
+                                      )
+                                  ? await isar?.comparisonDebitCardsDatas
+                                      .filter()
+                                      .idEqualTo(
+                                          widget.comparisonList[index].id)
+                                      .deleteAll()
+                                  : await isar?.comparisonDebitCardsDatas
+                                      .put(comparisonDebitCardsData));
+                            case 'credit_cards':
+                              ComparisonCreditCardsData
+                                  comparisonCreditCardsData =
+                                  ComparisonCreditCardsData()
+                                    ..id = widget.comparisonList[index].id;
+                              await isar?.writeTxn(() async =>
+                                  await ref
+                                      .watch(isarNotifierProvider.notifier)
+                                      .isItemDuplicateInComparison(
+                                    widget.comparisonList[index],
+                                    ref.watch(
+                                        comparisonProductUrlStateProvider),
+                                  )
+                                      ? await isar?.comparisonCreditCardsDatas
+                                          .filter()
+                                          .idEqualTo(
+                                              widget.comparisonList[index].id)
+                                          .deleteAll()
+                                      : await isar?.comparisonCreditCardsDatas
+                                          .put(comparisonCreditCardsData));
+                            case 'zaimy':
+                              ComparisonZaimyData comparisonZaimyData =
+                                  ComparisonZaimyData()
+                                    ..id = widget.comparisonList[index].id;
+                              await isar?.writeTxn(() async =>
+                                  await ref
+                                      .watch(isarNotifierProvider.notifier)
+                                      .isItemDuplicateInComparison(
+                                    widget.comparisonList[index],
+                                    ref.watch(
+                                        comparisonProductUrlStateProvider),
+                                  )
+                                      ? await isar?.comparisonZaimyDatas
+                                          .filter()
+                                          .idEqualTo(
+                                              widget.comparisonList[index].id)
+                                          .deleteAll()
+                                      : await isar?.comparisonZaimyDatas
+                                          .put(comparisonZaimyData));
+                            case 'rko':
+                              ComparisonRkoData comparisonRkoData =
+                                  ComparisonRkoData()
+                                    ..id = widget.comparisonList[index].id;
+                              await isar?.writeTxn(() async =>
+                                  await ref
+                                      .watch(isarNotifierProvider.notifier)
+                                      .isItemDuplicateInComparison(
+                                    widget.comparisonList[index],
+                                    ref.watch(
+                                        comparisonProductUrlStateProvider),
+                                  )
+                                      ? await isar?.comparisonRkoDatas
+                                          .filter()
+                                          .idEqualTo(
+                                              widget.comparisonList[index].id)
+                                          .deleteAll()
+                                      : await isar?.comparisonRkoDatas
+                                          .put(comparisonRkoData));
+                          }
+                          ref.refresh(comparisonListControllerProvider);
                           setState(() {
-                            widget.comparisonList.removeAt(index);
-                            widget.controllerSecondPageView.animateToPage(
-                                widget.controllerSecondPageView.page == 1.0
+                            controllerSecondPageView.animateToPage(
+                                controllerSecondPageView.page == 1.0
                                     ? 1
-                                    :index - 1,
+                                    : index - 1,
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.linear);
-                            if (widget.controllerBestOffers.page ==
-                                widget.controllerSecondPageView.page) {
-                              widget.controllerBestOffers.animateToPage(
-                                  widget.controllerBestOffers.page == 1.0
+                            if (controllerBestOffers.page ==
+                                controllerSecondPageView.page) {
+                              controllerBestOffers.animateToPage(
+                                  controllerBestOffers.page == 1.0
                                       ? 1
-                                      :index - 1,
+                                      : index - 1,
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.linear);
                             }
@@ -157,15 +355,13 @@ class _ProductComparisonWidgetState extends State<ProductComparisonWidget> {
                           return Container(
                             margin: const EdgeInsets.only(right: 4),
                             alignment: Alignment.centerLeft,
-                            height: widget.currentPageOnSecondPageView == index
-                                ? 10
-                                : 8,
-                            width: widget.currentPageOnSecondPageView == index
-                                ? 10
-                                : 8,
+                            height:
+                                currentPageOnSecondPageView == index ? 10 : 8,
+                            width:
+                                currentPageOnSecondPageView == index ? 10 : 8,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: widget.currentPageOnSecondPageView == index
+                              color: currentPageOnSecondPageView == index
                                   ? ThemeApp.backgroundBlack
                                   : ThemeApp.darkestGrey,
                             ),

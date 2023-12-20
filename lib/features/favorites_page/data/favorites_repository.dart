@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
-import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/favorites_page_controller.dart';
 
 import 'favorites_data_source.dart';
@@ -30,8 +29,9 @@ class FavoritesRepository implements FavoritesRepositoryImpl {
   }
 }
 
-///репозиторий для получения всех банковских продуктов здесь формируется uri для запроса (productType),
-///он наполняется типом продукта и фильтрами
+///репозиторий для получения всех банковских продуктов которые находятся в избранном
+/// здесь формируется uri для запроса (productType),
+///он наполняется типом продукта и id
 ///вызывается из [favoritesListControllerProvider]
 final favoritesRepositoryProvider =
     Provider.autoDispose<FavoritesRepository>((ref) {

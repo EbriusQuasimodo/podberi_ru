@@ -4,20 +4,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
-import 'package:podberi_ru/core/presentation/custom_choice_chip.dart';
+import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_chip.dart';
 import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/product_card_widget_with_buttons.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/widgets/bank_products_list_and_filter_widget.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import '../../../core/domain/product_type_enum.dart';
 import 'favorites_page_controller.dart';
-import 'widgets/bank_poduct_filter_choice_chip_widget.dart';
 
 class FavoritesPage extends ConsumerStatefulWidget {
+  ///страница избранного
   const FavoritesPage({super.key});
 
   @override

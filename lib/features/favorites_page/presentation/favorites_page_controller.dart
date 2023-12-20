@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
-import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
@@ -65,13 +64,13 @@ class FavoritesListController extends AutoDisposeAsyncNotifier<
     }
 
 
-    final eventRepo = ref.read(favoritesRepositoryProvider);
+    final favoritesRepo = ref.read(favoritesRepositoryProvider);
 
-    return await eventRepo.fetch(productTypeUrl, ref);
+    return await favoritesRepo.fetch(productTypeUrl, ref);
   }
 }
 
-///кататалог для получения всех банковских продуктов здесь формируются фильтры
+///контроллер для получения всех избранных продуктов
 final favoritesListControllerProvider = AutoDisposeAsyncNotifierProvider<
     FavoritesListController, List<ListProductModel>>(
   FavoritesListController.new,

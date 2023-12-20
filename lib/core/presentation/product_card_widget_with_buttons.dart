@@ -8,10 +8,15 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
+import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
+import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
+import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
+import 'package:podberi_ru/core/utils/isar_controller.dart';
 
 class ProductCardWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
@@ -58,33 +63,6 @@ class _ProductCardWidgetWithButtonsState
   }
 
   final isar = Isar.getInstance();
-
-  Future<bool> isItemDuplicate(ListProductModel productInfo) async {
-    int? count;
-    switch (widget.basicApiPageSettingsModel.productTypeUrl) {
-      case 'debit_cards':
-        count = await isar?.favoritesDebitCardsDatas
-            .filter()
-            .idContains(productInfo.id)
-            .count();
-      case 'credit_cards':
-        count = await isar?.favoritesCreditCardsDatas
-            .filter()
-            .idContains(productInfo.id)
-            .count();
-      case 'zaimy':
-        count = await isar?.favoritesZaimyDatas
-            .filter()
-            .idContains(productInfo.id)
-            .count();
-      case 'rko':
-        count = await isar?.favoritesRkoDatas
-            .filter()
-            .idContains(productInfo.id)
-            .count();
-    }
-    return count! > 0;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -194,15 +172,112 @@ class _ProductCardWidgetWithButtonsState
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () {},
-                    child: SvgPicture.asset(
-                      'assets/icons/nav_bar_icons/comparison_page.svg',
-                      color: ThemeApp.mainWhite,
-                      height: 32,
-                      width: 32,
-                    ),
-                  ),
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () async {
+                        switch (
+                            widget.basicApiPageSettingsModel.productTypeUrl) {
+                          case 'debit_cards':
+                            ComparisonDebitCardsData comparisonDebitCardsData =
+                                ComparisonDebitCardsData()
+                                  ..id = widget.productInfo?.id;
+
+                            await isar?.writeTxn(() async => await ref
+                                    .watch(isarNotifierProvider.notifier)
+                                    .isItemDuplicateInComparison(
+                                        widget.productInfo!,
+                                        widget.basicApiPageSettingsModel
+                                            .productTypeUrl!)
+                                ? await isar?.comparisonDebitCardsDatas
+                                    .filter()
+                                    .idEqualTo(widget.productInfo?.id)
+                                    .deleteAll()
+                                : await isar?.comparisonDebitCardsDatas
+                                    .put(comparisonDebitCardsData));
+                          case 'credit_cards':
+                            ComparisonCreditCardsData
+                                comparisonCreditCardsData =
+                                ComparisonCreditCardsData()
+                                  ..id = widget.productInfo?.id;
+                            await isar?.writeTxn(() async => await ref
+                                    .watch(isarNotifierProvider.notifier)
+                                    .isItemDuplicateInComparison(
+                                        widget.productInfo!,
+                                        widget.basicApiPageSettingsModel
+                                            .productTypeUrl!)
+                                ? await isar?.comparisonCreditCardsDatas
+                                    .filter()
+                                    .idEqualTo(widget.productInfo?.id)
+                                    .deleteAll()
+                                : await isar?.comparisonCreditCardsDatas
+                                    .put(comparisonCreditCardsData));
+                          case 'zaimy':
+                            ComparisonZaimyData comparisonZaimyData =
+                                ComparisonZaimyData()
+                                  ..id = widget.productInfo?.id;
+                            await isar?.writeTxn(() async =>
+                                await ref
+                                    .watch(isarNotifierProvider.notifier)
+                                    .isItemDuplicateInComparison(
+                                    widget.productInfo!,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!)
+                                    ? await isar?.comparisonZaimyDatas
+                                        .filter()
+                                        .idEqualTo(widget.productInfo?.id)
+                                        .deleteAll()
+                                    : await isar?.comparisonZaimyDatas
+                                        .put(comparisonZaimyData));
+                          case 'rko':
+                            ComparisonRkoData comparisonRkoData =
+                                ComparisonRkoData()
+                                  ..id = widget.productInfo?.id;
+                            await isar?.writeTxn(() async =>
+                                await ref
+                                    .watch(isarNotifierProvider.notifier)
+                                    .isItemDuplicateInComparison(
+                                    widget.productInfo!,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!)
+                                    ? await isar?.comparisonRkoDatas
+                                        .filter()
+                                        .idEqualTo(widget.productInfo?.id)
+                                        .deleteAll()
+                                    : await isar?.comparisonRkoDatas
+                                        .put(comparisonRkoData));
+                        }
+                        widget.onTap();
+                      },
+                      child: FutureBuilder(
+                          future:
+                          ref
+                              .watch(isarNotifierProvider.notifier)
+                              .isItemDuplicateInComparison(
+                              widget.productInfo!,
+                              widget.basicApiPageSettingsModel
+                                  .productTypeUrl!),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (snapshot.data) {
+                                return SvgPicture.asset(
+                                  'assets/icons/comparison_select.svg',
+                                  color: ThemeApp.mainWhite,
+                                  height: 32,
+                                  width: 32,
+                                );
+                              } else {
+                                return SvgPicture.asset(
+                                  'assets/icons/nav_bar_icons/comparison_page.svg',
+                                  color: ThemeApp.mainWhite,
+                                  height: 32,
+                                  width: 32,
+                                );
+                              }
+                            }
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height - 72,
+                            );
+                          })),
                 ),
                 Material(
                   color: Colors.transparent,
@@ -217,7 +292,12 @@ class _ProductCardWidgetWithButtonsState
                                   ..id = widget.productInfo?.id;
 
                             await isar?.writeTxn(() async =>
-                                await isItemDuplicate(widget.productInfo!)
+                                await ref
+                                    .watch(isarNotifierProvider.notifier)
+                                    .isItemDuplicateInFavorites(
+                                    widget.productInfo!,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!)
                                     ? await isar?.favoritesDebitCardsDatas
                                         .filter()
                                         .idEqualTo(widget.productInfo?.id)
@@ -229,7 +309,12 @@ class _ProductCardWidgetWithButtonsState
                                 FavoritesCreditCardsData()
                                   ..id = widget.productInfo?.id;
                             await isar?.writeTxn(() async =>
-                                await isItemDuplicate(widget.productInfo!)
+                                await ref
+                                    .watch(isarNotifierProvider.notifier)
+                                    .isItemDuplicateInFavorites(
+                                    widget.productInfo!,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!)
                                     ? await isar?.favoritesCreditCardsDatas
                                         .filter()
                                         .idEqualTo(widget.productInfo?.id)
@@ -241,7 +326,12 @@ class _ProductCardWidgetWithButtonsState
                                 FavoritesZaimyData()
                                   ..id = widget.productInfo?.id;
                             await isar?.writeTxn(() async =>
-                                await isItemDuplicate(widget.productInfo!)
+                                await ref
+                                    .watch(isarNotifierProvider.notifier)
+                                    .isItemDuplicateInFavorites(
+                                    widget.productInfo!,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!)
                                     ? await isar?.favoritesZaimyDatas
                                         .filter()
                                         .idEqualTo(widget.productInfo?.id)
@@ -252,7 +342,12 @@ class _ProductCardWidgetWithButtonsState
                             FavoritesRkoData favoritesRkoData =
                                 FavoritesRkoData()..id = widget.productInfo?.id;
                             await isar?.writeTxn(() async =>
-                                await isItemDuplicate(widget.productInfo!)
+                                await ref
+                                    .watch(isarNotifierProvider.notifier)
+                                    .isItemDuplicateInFavorites(
+                                    widget.productInfo!,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!)
                                     ? await isar?.favoritesRkoDatas
                                         .filter()
                                         .idEqualTo(widget.productInfo?.id)
@@ -263,7 +358,13 @@ class _ProductCardWidgetWithButtonsState
                         widget.onTap();
                       },
                       child: FutureBuilder(
-                          future: isItemDuplicate(widget.productInfo!),
+                          future:
+                          ref
+                              .watch(isarNotifierProvider.notifier)
+                              .isItemDuplicateInFavorites(
+                              widget.productInfo!,
+                              widget.basicApiPageSettingsModel
+                                  .productTypeUrl!),
                           builder: (context, AsyncSnapshot snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.done) {

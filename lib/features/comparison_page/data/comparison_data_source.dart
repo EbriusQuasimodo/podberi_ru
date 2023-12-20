@@ -3,13 +3,13 @@ import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
-import 'package:podberi_ru/features/favorites_page/data/favorites_repository.dart';
+import 'package:podberi_ru/features/comparison_page/data/comparison_repository.dart';
 
-///получение всех избранных продуктов, [productType] содержит в себе не только enum [ProductTypeEnum]
-///но и id избранных продуктов
-///вызывается из [favoritesRepositoryProvider]
-class FavoritesGetDataSource {
-  FavoritesGetDataSource({
+///получение всех продуктов в сравнении, [productType] содержит в себе не только enum [ProductTypeEnum]
+///но и id продуктов в сравнении
+///вызывается из [comparisonRepositoryProvider]
+class ComparisonGetDataSource {
+  ComparisonGetDataSource({
     required this.dio,
   });
 
@@ -18,7 +18,7 @@ class FavoritesGetDataSource {
   Future<List<ListProductModel>> fetch(String productType) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
-      List<ListProductModel> _listOfFavorites = [];
+      List<ListProductModel> _listOfComparison = [];
 
       try {
         final re = await dio.get(
@@ -28,9 +28,9 @@ class FavoritesGetDataSource {
         switch (re.statusCode) {
           case 200:
             re.data.forEach((e) {
-              _listOfFavorites.add(ListProductModel.fromJson(e));
+              _listOfComparison.add(ListProductModel.fromJson(e));
             });
-            return _listOfFavorites;
+            return _listOfComparison;
 
           case 404:
             throw PageNotFoundException().message;

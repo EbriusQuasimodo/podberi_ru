@@ -6,6 +6,7 @@ class BankProductFilterChoiceChipWidget extends StatefulWidget {
   final List<String> selectedBankProducts;
   final List<String> bankProductsNamesList;
   final VoidCallback onTap;
+  ///надо удалить наверно
   const BankProductFilterChoiceChipWidget({super.key, required this.element, required this.selectedBankProducts, required this.bankProductsNamesList, required this.onTap});
 
   @override

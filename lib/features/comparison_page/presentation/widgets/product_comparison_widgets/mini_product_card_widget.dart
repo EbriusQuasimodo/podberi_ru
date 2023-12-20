@@ -3,12 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/widgets/product_comparison_widgets/product_comparison_widget.dart';
 
+import '../../../../../core/domain/bank_products_model/bank_products_model.dart';
+
 
 class MiniProductCardWidget extends StatelessWidget {
   final VoidCallback onDelete;
-  final String bankName;
+  final ListProductModel comparisonList;
   ///виджет с продуктов в сравнении, используется в [ProductComparisonWidget]
-  const MiniProductCardWidget({super.key, required this.onDelete,  required this.bankName});
+  const MiniProductCardWidget({super.key, required this.onDelete,  required this.comparisonList});
 
   @override
   Widget build(BuildContext context) {
@@ -35,21 +37,21 @@ class MiniProductCardWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15, bottom: 6, right: 5, top: 24),
+              const Padding(
+                padding: EdgeInsets.only(left: 15, bottom: 6, right: 5, top: 24),
                 child: Text(
-                  bankName,
-                  style: const TextStyle(
+                  'bank name',
+                  style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       color: ThemeApp.mainWhite),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 15, right: 5, bottom: 24),
+               Padding(
+                padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
                 child: Text(
-                  'Дебетовая карта',
-                  style: TextStyle(
+                  comparisonList.cardName,
+                  style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: ThemeApp.mainWhite),

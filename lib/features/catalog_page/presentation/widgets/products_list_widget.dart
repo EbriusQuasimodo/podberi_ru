@@ -84,29 +84,6 @@ class _ProductListWidgetState extends State<ProductListWidget> {
                 basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
                 productInfo: widget.productInfo[index],
                 productRating: '4.8');
-            // return FutureBuilder(
-            //     future: isItemDuplicate(widget.productInfo[index]),
-            //   builder: (context, AsyncSnapshot snapshot) {
-            //     if (snapshot.connectionState == ConnectionState.done) {
-            //       if (snapshot.data) {
-            //         return ProductCardWidgetWithButtons(
-            //             isFavorite: true,
-            //             basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-            //             productInfo: widget.productInfo[index],
-            //             productRating: '4.8');
-            //       } else {
-            //         return ProductCardWidgetWithButtons(
-            //             isFavorite: false,
-            //             basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-            //             productInfo: widget.productInfo[index],
-            //             productRating: '4.8');
-            //       }
-            //     }
-            //     return SizedBox(
-            //       height: MediaQuery.of(context).size.height -72,
-            //     );
-            //   }
-            // );
           }),
         ),
       ),
