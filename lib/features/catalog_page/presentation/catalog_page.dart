@@ -55,7 +55,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                     color: ThemeApp.mainWhite,
                   ),
 
-                  ///if  came from all banks then show bank and product type widget else show sort and filter widget
+                  ///if came from all banks then show bank and product type widget else show sort and filter widget
                   child: widget.basicApiPageSettingsModel.whereFrom ==
                               AppRoute.allBanksPage.name ||
                           widget.basicApiPageSettingsModel.whereFrom ==

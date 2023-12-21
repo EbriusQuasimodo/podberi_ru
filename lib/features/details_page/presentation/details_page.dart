@@ -9,12 +9,12 @@ import 'package:podberi_ru/features/details_page/presentation/widgets/card_info_
 import 'package:podberi_ru/features/details_page/presentation/widgets/card_preview_widget.dart';
 import 'package:podberi_ru/features/details_page/presentation/widgets/conditions_widget.dart';
 
-
 import 'details_controller.dart';
 
 class DetailsPage extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-///странциа деталей банковского продукта
+
+  ///странциа деталей банковского продукта
   const DetailsPage({super.key, required this.basicApiPageSettingsModel});
 
   @override
@@ -23,24 +23,29 @@ class DetailsPage extends ConsumerStatefulWidget {
 
 class _DetailsPageState extends ConsumerState<DetailsPage> {
   late String productType;
+
   @override
   Widget build(BuildContext context) {
     return ref
-        .watch(productDetailsControllerProvider(widget.basicApiPageSettingsModel))
+        .watch(
+            productDetailsControllerProvider(widget.basicApiPageSettingsModel))
         .when(
       data: (detailsInfo) {
         return Scaffold(
           body: CustomScrollView(
             slivers: [
-           SliverAppBar(
+              SliverAppBar(
                 scrolledUnderElevation: 0,
                 backgroundColor: ThemeApp.mainWhite,
                 pinned: true,
                 title: Text(widget.basicApiPageSettingsModel.pageName!),
               ),
               CardPreviewWidget(
+                onFavoritesOrComparisonTap: () {
+                  setState(() {});
+                },
+                basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
                 productInfo: detailsInfo[0],
-                bankName: widget.basicApiPageSettingsModel.bankDetailsModel?.bankName!,
               ),
 
               ///if bank card has custom designs - display widget with remainder of it
@@ -68,8 +73,10 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
               ),
               CardInfoWidget(
                 productInfo: detailsInfo[0],
-                bankLogoPath: widget.basicApiPageSettingsModel.bankDetailsModel?.picture!,
-                bankName: widget.basicApiPageSettingsModel.bankDetailsModel?.bankName!,
+                bankLogoPath:
+                    widget.basicApiPageSettingsModel.bankDetailsModel?.picture!,
+                bankName: widget
+                    .basicApiPageSettingsModel.bankDetailsModel?.bankName!,
               ),
               ConditionsWidget(
                 productInfo: detailsInfo[0],
@@ -81,22 +88,27 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
       error: (error, _) {
         return Scaffold(
             body: CustomScrollView(slivers: [
-              SliverFillRemaining(
-                  child: CustomErrorPageWidget(
-                    buttonName: 'Вернуться',
-                    onTap: (){ref.watch(goRouterProvider).pop();},
-                    error: error.toString(),
-                    bottomPadding: 72,
-                  ))
-            ]));
-
+          SliverFillRemaining(
+              child: CustomErrorPageWidget(
+            buttonName: 'Вернуться',
+            onTap: () {
+              ref.watch(goRouterProvider).pop();
+            },
+            error: error.toString(),
+            bottomPadding: 72,
+          ))
+        ]));
       },
       loading: () {
         return const Scaffold(
-            body: CustomScrollView(slivers: [
-              SliverFillRemaining(child: CustomLoadingCardWidget(bottomPadding: 72,)),
-            ],)
-        );
+            body: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+                child: CustomLoadingCardWidget(
+              bottomPadding: 72,
+            )),
+          ],
+        ));
       },
     );
   }

@@ -22,14 +22,15 @@ class SelectProductTypePage extends ConsumerWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: CustomAppBarWithSearch(
-              topPadding: 30,
-              bottomPadding: 15,
-              controller: searchController,
-              title: 'Каталог',
+          SliverAppBar(
+            title: const Text(
+              'Каталог',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           ),
+          CustomAppBarWithSearch(controller: searchController),
 
           ///todo: maybe change to sliver stack + sliver container
           SliverToBoxAdapter(
