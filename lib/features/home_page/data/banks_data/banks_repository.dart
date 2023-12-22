@@ -14,7 +14,7 @@ class BanksRepository implements BanksRepositoryImpl {
   BanksRepository();
 
   @override
-  Future<List<BankDetailsModel>> fetch(AutoDisposeAsyncNotifierProviderRef ref) async {
+  Future<ProductModel> fetch(AutoDisposeAsyncNotifierProviderRef ref) async {
     final response =
     await GetIt.I<BanksGetDataSource>().fetch();
     return response;

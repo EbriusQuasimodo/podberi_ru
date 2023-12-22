@@ -11,20 +11,16 @@ class DebitCardsGetDataSource {
 
   final Dio dio;
 
-  Future<List<ListProductModel>> fetch() async {
+  Future<ProductModel> fetch() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
-      List<ListProductModel> _listOfBestDebitCards = [];
       try {
         final re = await dio.get(
           '/debit_cards',
         );
         switch (re.statusCode) {
           case 200:
-            re.data.forEach((e) {
-              _listOfBestDebitCards.add(ListProductModel.fromJson(e));
-            });
-            return _listOfBestDebitCards;
+            return ProductModel.fromJson(re.data);
 
           case 404:
             throw PageNotFoundException().message;

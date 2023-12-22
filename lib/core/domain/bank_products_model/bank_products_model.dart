@@ -6,6 +6,17 @@ part 'bank_products_model.g.dart';
 part 'bank_products_model.freezed.dart';
 
 @freezed
+class ProductModel with _$ProductModel {
+  factory ProductModel({
+    @Default([]) @JsonKey(name: 'items') List<ListProductModel> items,
+    @Default(0) @JsonKey(name: 'items_count') int itemsCount,
+  }) = _ProductModel;
+
+  factory ProductModel.fromJson(Map<String, Object?> json) =>
+      _$ProductModelFromJson(json);
+}
+
+@freezed
 class ListProductModel with _$ListProductModel {
   factory ListProductModel({
     @Default('') @JsonKey(name: 'OGRN') dynamic ogrn,
@@ -25,8 +36,8 @@ class ListProductModel with _$ListProductModel {
     @Default('')
     @JsonKey(name: 'card_issuer_requirements')
     dynamic cardIssuerRequirements,
-    @Default('') @JsonKey(name: 'card_name')dynamic cardName,
-    @Default('') @JsonKey(name: 'cash_withdrawal')dynamic cashWithdrawal,
+    @Default('') @JsonKey(name: 'card_name') dynamic cardName,
+    @Default('') @JsonKey(name: 'cash_withdrawal') dynamic cashWithdrawal,
     @Default('')
     @JsonKey(name: 'cash_withdrawal_limit')
     dynamic cashWithdrawalLimit,
@@ -57,7 +68,9 @@ class ListProductModel with _$ListProductModel {
     @Default('') dynamic picture,
     @Default('') @JsonKey(name: 'plug-in_options ') dynamic plugInOptions,
     @Default('') dynamic service,
-    @Default(0) @JsonKey(name: 'service_max_per_month') dynamic serviceMaxPerMonth,
+    @Default(0)
+    @JsonKey(name: 'service_max_per_month')
+    dynamic serviceMaxPerMonth,
     @Default(0) @JsonKey(name: 'service_min') dynamic serviceMin,
     @Default('') dynamic site,
     @Default('') dynamic support,

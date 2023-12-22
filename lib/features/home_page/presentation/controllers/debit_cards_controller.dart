@@ -3,10 +3,10 @@ import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.d
 import 'package:podberi_ru/features/home_page/data/debit_cards_data/debit_cards_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class DebitCardsController extends AutoDisposeAsyncNotifier<List<ListProductModel>> {
+class DebitCardsController extends AutoDisposeAsyncNotifier<ProductModel> {
   DebitCardsController();
   @override
-  FutureOr<List<ListProductModel>> build() async {
+  FutureOr<ProductModel> build() async {
     final eventRepo = ref.read(debitCardsRepositoryProvider);
     return await eventRepo.fetch(ref);
   }
@@ -21,6 +21,6 @@ class DebitCardsController extends AutoDisposeAsyncNotifier<List<ListProductMode
 }
 ///контроллер для получения дебетовых карт
 final debitCardsControllerProvider =
-AutoDisposeAsyncNotifierProvider<DebitCardsController, List<ListProductModel>>(
+AutoDisposeAsyncNotifierProvider<DebitCardsController, ProductModel>(
   DebitCardsController.new,
 );

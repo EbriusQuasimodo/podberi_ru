@@ -1,4 +1,3 @@
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
@@ -11,20 +10,16 @@ class BanksGetDataSource {
 
   final Dio dio;
 
-  Future<List<BankDetailsModel>> fetch() async {
+  Future<ProductModel> fetch() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
-      List<BankDetailsModel> _listOfBanks = [];
       try {
         final re = await dio.get(
           '/banks',
         );
         switch (re.statusCode) {
           case 200:
-            re.data.forEach((e) {
-              _listOfBanks.add(BankDetailsModel.fromJson(e));
-            });
-            return _listOfBanks;
+            return ProductModel.fromJson(re.data);
 
           case 404:
             throw PageNotFoundException().message;

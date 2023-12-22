@@ -116,14 +116,14 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
                           top: 90, right: 15, left: 15, bottom: 15),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          childCount: favoritesData.length,
+                          childCount: favoritesData.items.length,
                               (context, index) =>
                               ProductCardWidgetWithButtons(
                                 onTap: () {
                                   ref.refresh(
                                       favoritesListControllerProvider);
                                 },
-                                productInfo: favoritesData[index],
+                                productInfo: favoritesData.items[index],
                                 isFavorite: false,
                                 basicApiPageSettingsModel:
                                 BasicApiPageSettingsModel(

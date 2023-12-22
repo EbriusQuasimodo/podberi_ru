@@ -3,10 +3,10 @@ import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.d
 import 'package:podberi_ru/features/home_page/data/banks_data/banks_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class BanksController extends AutoDisposeAsyncNotifier<List<BankDetailsModel>> {
+class BanksController extends AutoDisposeAsyncNotifier<ProductModel> {
   BanksController();
   @override
-  FutureOr<List<BankDetailsModel>> build() async {
+  FutureOr<ProductModel> build() async {
     final eventRepo = ref.read(banksRepositoryProvider);
     return await eventRepo.fetch(ref);
   }
@@ -21,6 +21,6 @@ class BanksController extends AutoDisposeAsyncNotifier<List<BankDetailsModel>> {
 }
 ///todo возможно стоит убрать и брать из апи [AllBanksGetDataSource]
 final banksControllerProvider =
-AutoDisposeAsyncNotifierProvider<BanksController, List<BankDetailsModel>>(
+AutoDisposeAsyncNotifierProvider<BanksController, ProductModel>(
   BanksController.new,
 );

@@ -83,7 +83,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
               ),
               ProductListWidget(
                 basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-                productInfo: debitCard,
+                productInfo: debitCard.items,
               ),
             ],
           ),

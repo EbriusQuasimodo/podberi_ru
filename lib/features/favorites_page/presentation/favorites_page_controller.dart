@@ -12,14 +12,14 @@ final filterProductUrlStateProvider = StateProvider.autoDispose<String>((ref) {
 });
 ///контроллер списка избранного
 class FavoritesListController extends AutoDisposeAsyncNotifier<
-    List<ListProductModel>> {
+    ProductModel> {
   FavoritesListController();
 
   String productTypeUrl = '';
   final isar = Isar.getInstance();
 
   @override
-  FutureOr<List<ListProductModel>> build() async {
+  FutureOr<ProductModel> build() async {
     List<FavoritesDebitCardsData> productIdListDebitCards = [];
     List<FavoritesCreditCardsData> productIdListCreditCards = [];
     List<FavoritesZaimyData> productIdListZaimy = [];
@@ -72,6 +72,6 @@ class FavoritesListController extends AutoDisposeAsyncNotifier<
 
 ///контроллер для получения всех избранных продуктов
 final favoritesListControllerProvider = AutoDisposeAsyncNotifierProvider<
-    FavoritesListController, List<ListProductModel>>(
+    FavoritesListController,ProductModel>(
   FavoritesListController.new,
 );

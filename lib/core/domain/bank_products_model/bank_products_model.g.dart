@@ -6,6 +6,21 @@ part of 'bank_products_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
+    _$ProductModelImpl(
+      items: (json['items'] as List<dynamic>?)
+              ?.map((e) => ListProductModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      itemsCount: json['items_count'] as int? ?? 0,
+    );
+
+Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
+    <String, dynamic>{
+      'items': instance.items,
+      'items_count': instance.itemsCount,
+    };
+
 _$ListProductModelImpl _$$ListProductModelImplFromJson(
         Map<String, dynamic> json) =>
     _$ListProductModelImpl(

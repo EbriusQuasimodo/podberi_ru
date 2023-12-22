@@ -15,10 +15,9 @@ class ComparisonGetDataSource {
 
   final Dio dio;
 
-  Future<List<ListProductModel>> fetch(String productType) async {
+  Future<ProductModel> fetch(String productType) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
-      List<ListProductModel> _listOfComparison = [];
 
       try {
         final re = await dio.get(
@@ -27,10 +26,7 @@ class ComparisonGetDataSource {
         print(re.realUri);
         switch (re.statusCode) {
           case 200:
-            re.data.forEach((e) {
-              _listOfComparison.add(ListProductModel.fromJson(e));
-            });
-            return _listOfComparison;
+            return ProductModel.fromJson(re.data);
 
           case 404:
             throw PageNotFoundException().message;

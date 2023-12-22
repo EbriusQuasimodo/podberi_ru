@@ -15,10 +15,9 @@ class FavoritesGetDataSource {
 
   final Dio dio;
 
-  Future<List<ListProductModel>> fetch(String productType) async {
+  Future<ProductModel> fetch(String productType) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
-      List<ListProductModel> _listOfFavorites = [];
 
       try {
         final re = await dio.get(
@@ -27,10 +26,7 @@ class FavoritesGetDataSource {
         print(re.realUri);
         switch (re.statusCode) {
           case 200:
-            re.data.forEach((e) {
-              _listOfFavorites.add(ListProductModel.fromJson(e));
-            });
-            return _listOfFavorites;
+            return ProductModel.fromJson(re.data);
 
           case 404:
             throw PageNotFoundException().message;

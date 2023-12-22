@@ -71,39 +71,45 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
               child: Text(
                 '${widget.basicApiPageSettingsModel.bankDetailsModel?.bankName} ${widget.productInfo.cardName}',
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                style:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
               ),
             ),
-            ExpandablePageView(
-                physics: const BouncingScrollPhysics(),
-                controller: _controllerBestOffers,
-                children: [
-                  Image.network(
-                      '${Urls.api.files}/${widget.productInfo.picture}'),
-                ]),
-            Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  4,
-                  (index) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 4),
-                      alignment: Alignment.centerLeft,
-                      height: currentPage == index ? 10 : 8,
-                      width: currentPage == index ? 10 : 8,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: currentPage == index
-                            ? ThemeApp.backgroundBlack
-                            : ThemeApp.darkestGrey,
+            widget.basicApiPageSettingsModel.productTypeUrl != 'rko'
+                ? ExpandablePageView(
+                    physics: const BouncingScrollPhysics(),
+                    controller: _controllerBestOffers,
+                    children: [
+                        Image.network(
+                            '${Urls.api.files}/${widget.productInfo.picture}'),
+                      ])
+                : Image.network(
+                    '${Urls.api.files}/${widget.productInfo.picture}'),
+            widget.basicApiPageSettingsModel.productTypeUrl != 'rko'
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 15, bottom: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        4,
+                        (index) {
+                          return Container(
+                            margin: const EdgeInsets.only(right: 4),
+                            alignment: Alignment.centerLeft,
+                            height: currentPage == index ? 10 : 8,
+                            width: currentPage == index ? 10 : 8,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: currentPage == index
+                                  ? ThemeApp.backgroundBlack
+                                  : ThemeApp.darkestGrey,
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              ),
-            ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
             Row(
               children: [
                 Expanded(
@@ -117,9 +123,11 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                       color: ThemeApp.mainBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
-                      child: const Text(
-                        'Заказать карту',
-                        style: TextStyle(
+                      child: Text(
+                        widget.basicApiPageSettingsModel.productTypeUrl != 'rko'
+                            ? 'Заказать карту'
+                            : 'Открыть счет',
+                        style: const TextStyle(
                             color: ThemeApp.mainWhite,
                             fontWeight: FontWeight.w600,
                             fontSize: 14),
@@ -215,7 +223,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                               if (snapshot.data) {
                                 return SvgPicture.asset(
                                   'assets/icons/favorites_select.svg',
-                                  color: ThemeApp.backgroundBlack,
+                                  color: ThemeApp.mainBlue,
                                   height: 32,
                                   width: 32,
                                 );
@@ -328,7 +336,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                                   if (snapshot.data) {
                                     return SvgPicture.asset(
                                       'assets/icons/comparison_select.svg',
-                                      color: ThemeApp.backgroundBlack,
+                                      color: ThemeApp.mainBlue,
                                       height: 32,
                                       width: 32,
                                     );

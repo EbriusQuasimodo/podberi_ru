@@ -89,7 +89,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                   ),
                 ),
               ),
-              comparisonData.isNotEmpty
+              comparisonData.items.isNotEmpty
                   ? ProductComparisonWidget(
                       onScrollPageViews: () {
                         setState(() {});
@@ -97,7 +97,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                       onDeleteInFirstList: () {
                         setState(() {});
                       },
-                      comparisonList: comparisonData,
+                      comparisonList: comparisonData.items,
                       onDeleteInSecondList: () {
                         setState(() {});
                       })
@@ -147,7 +147,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                         ),
                       ),
                     ),
-              comparisonData.isNotEmpty
+              comparisonData.items.isNotEmpty
                   ? ComparisonDataTableWidget()
                   : const SliverToBoxAdapter(child: SizedBox.shrink()),
             ],

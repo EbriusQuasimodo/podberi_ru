@@ -25,49 +25,49 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
     final responseZaimy =
         await GetIt.I<BestOfferGetDataSource>().fetch('zaimy');
     final responseRko = await GetIt.I<BestOfferGetDataSource>().fetch('rko');
-    for (int i = 0; i < responseDebit.length; i++) {
+    for (int i = 0; i < responseDebit.items.length; i++) {
       _listOfBestOffers.add(
         ListProductModel(
-          cardName: responseDebit[i].cardName,
-          picture: responseDebit[i].picture,
+          cardName: responseDebit.items[i].cardName,
+          picture: responseDebit.items[i].picture,
           bankDetails: BankDetailsModel(
-              color: responseDebit[i].bankDetails?.color,
-              bankName: responseDebit[i].bankDetails?.bankName),
-          id: responseDebit[i].id,
+              color: responseDebit.items[i].bankDetails?.color,
+              bankName: responseDebit.items[i].bankDetails?.bankName),
+          id: responseDebit.items[i].id,
         ),
       );
     }
-    for (int i = 0; i < responseCredit.length; i++) {
+    for (int i = 0; i < responseCredit.items.length; i++) {
       _listOfBestOffers
           .add(ListProductModel(
-        cardName: responseCredit[i].cardName,
-        picture: responseCredit[i].picture,
+        cardName: responseCredit.items[i].cardName,
+        picture: responseCredit.items[i].picture,
         bankDetails: BankDetailsModel(
-            color: responseCredit[i].bankDetails?.color,
-            bankName: responseCredit[i].bankDetails?.bankName),
-        id: responseCredit[i].id,
+            color: responseCredit.items[i].bankDetails?.color,
+            bankName: responseCredit.items[i].bankDetails?.bankName),
+        id: responseCredit.items[i].id,
       ),);
     }
-    for (int i = 0; i < responseZaimy.length; i++) {
+    for (int i = 0; i < responseZaimy.items.length; i++) {
       _listOfBestOffers
           .add(ListProductModel(
-        cardName: responseZaimy[i].cardName,
-        picture: responseZaimy[i].picture,
+        cardName: responseZaimy.items[i].cardName,
+        picture: responseZaimy.items[i].picture,
         bankDetails: BankDetailsModel(
-            color: responseZaimy[i].bankDetails?.color,
-            bankName: responseZaimy[i].bankDetails?.bankName),
-        id: responseZaimy[i].id,
+            color: responseZaimy.items[i].bankDetails?.color,
+            bankName: responseZaimy.items[i].bankDetails?.bankName),
+        id: responseZaimy.items[i].id,
       ),);
     }
-    for (int i = 0; i < responseRko.length; i++) {
+    for (int i = 0; i < responseRko.items.length; i++) {
       _listOfBestOffers
           .add(ListProductModel(
-        cardName: responseRko[i].cardName,
-        picture: responseRko[i].picture,
+        cardName: responseRko.items[i].cardName,
+        picture: responseRko.items[i].picture,
         bankDetails: BankDetailsModel(
-            color: responseRko[i].bankDetails?.color,
-            bankName: responseRko[i].bankDetails?.bankName),
-        id: responseRko[i].id,
+            color: responseRko.items[i].bankDetails?.color,
+            bankName: responseRko.items[i].bankDetails?.bankName),
+        id: responseRko.items[i].id,
       ),);
     }
     return _listOfBestOffers;

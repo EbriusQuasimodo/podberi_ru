@@ -14,12 +14,12 @@ class FavoritesRepository implements FavoritesRepositoryImpl {
   FavoritesRepository();
 
   @override
-  Future<List<ListProductModel>> fetch(String arg,
+  Future<ProductModel> fetch(String arg,
       AutoDisposeAsyncNotifierProviderRef ref) async {
 
     if(arg == 'debit_cards?' ||arg == 'credit_cards?'||arg == 'zaimy?'||arg == 'rko?'){
       List<ListProductModel> list = [];
-      return list;
+      return ProductModel(itemsCount: 0,items: list);
     }else{
       final response =
       await GetIt.I<FavoritesGetDataSource>().fetch(arg);

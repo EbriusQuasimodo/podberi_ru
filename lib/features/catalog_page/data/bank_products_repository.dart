@@ -17,7 +17,7 @@ abstract class BankProductsRepositoryImpl {
 class BankProductsRepository implements BankProductsRepositoryImpl {
   BankProductsRepository();
   @override
-  Future<List<ListProductModel>> fetch(BasicApiPageSettingsModel arg, AutoDisposeAsyncNotifierProviderRef ref) async {
+  Future<ProductModel> fetch(BasicApiPageSettingsModel arg, AutoDisposeAsyncNotifierProviderRef ref) async {
     ///select product type for instance in api (debit_card, credit_card, zaymi, rko)
     String productType =arg.productTypeUrl!;
     switch (arg.whereFrom) {

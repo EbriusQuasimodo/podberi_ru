@@ -15,7 +15,7 @@ class CreditCardsRepository implements CreditCardsRepositoryImpl {
   CreditCardsRepository();
 
   @override
-  Future<List<ListProductModel>> fetch(
+  Future<ProductModel> fetch(
       AutoDisposeAsyncNotifierProviderRef ref) async {
     final response =
     await GetIt.I<CreditCardsGetDataSource>().fetch();

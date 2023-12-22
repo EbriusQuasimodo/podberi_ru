@@ -13,30 +13,30 @@ class ComparisonRepository implements ComparisonRepositoryImpl {
   ComparisonRepository();
 
   @override
-  Future<List<ListProductModel>> fetch(
+  Future<ProductModel> fetch(
       String arg, AutoDisposeAsyncNotifierProviderRef ref) async {
     if (arg == 'debit_cards?' ||
         arg == 'credit_cards?' ||
         arg == 'zaimy?' ||
         arg == 'rko?') {
       List<ListProductModel> list = [];
-      return list;
+      return ProductModel(items: list, itemsCount: 0);
     } else {
       final response = await GetIt.I<ComparisonGetDataSource>().fetch(arg);
-      if (response.length == 1) {
+      if (response.items.length == 1) {
         ref
             .watch(comparisonSecondProductDescriptionStateController.notifier)
             .state = '';
         ref
             .watch(comparisonFirstProductDescriptionStateProvider.notifier)
-            .state = response[0].cardName;
+            .state = response.items[0].cardName;
       } else {
         ref
             .watch(comparisonFirstProductDescriptionStateProvider.notifier)
-            .state = response[0].cardName;
+            .state = response.items[0].cardName;
         ref
             .watch(comparisonSecondProductDescriptionStateController.notifier)
-            .state = response[0].cardName;
+            .state = response.items[0].cardName;
       }
       return response;
     }

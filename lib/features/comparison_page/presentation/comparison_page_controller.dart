@@ -19,14 +19,14 @@ final comparisonSecondProductDescriptionStateController = StateProvider.autoDisp
 });
 ///контроллер списка сравнения
 class ComparisonListController extends AutoDisposeAsyncNotifier<
-    List<ListProductModel>> {
+    ProductModel> {
   ComparisonListController();
 
   String productTypeUrl = '';
   final isar = Isar.getInstance();
 
   @override
-  FutureOr<List<ListProductModel>> build() async {
+  FutureOr<ProductModel> build() async {
     List<ComparisonDebitCardsData> productIdListDebitCards = [];
     List<ComparisonCreditCardsData> productIdListCreditCards = [];
     List<ComparisonZaimyData> productIdListZaimy = [];
@@ -79,6 +79,6 @@ class ComparisonListController extends AutoDisposeAsyncNotifier<
 
 ///контроллер для получения всех продуктов в сравнении
 final comparisonListControllerProvider = AutoDisposeAsyncNotifierProvider<
-    ComparisonListController, List<ListProductModel>>(
+    ComparisonListController, ProductModel>(
   ComparisonListController.new,
 );

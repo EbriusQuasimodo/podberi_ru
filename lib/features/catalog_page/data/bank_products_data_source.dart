@@ -17,20 +17,16 @@ class BankProductsGetDataSource {
 
   final Dio dio;
 
-  Future<List<ListProductModel>> fetch(String productType) async {
+  Future<ProductModel> fetch(String productType) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
-      List<ListProductModel> _listOfProducts = [];
       try {
         final re = await dio.get(
           '/$productType',
         );
         switch (re.statusCode) {
           case 200:
-            re.data.forEach((e) {
-              _listOfProducts.add(ListProductModel.fromJson(e));
-            });
-            return _listOfProducts;
+            return ProductModel.fromJson(re.data);
 
           case 404:
             throw PageNotFoundException().message;

@@ -47,11 +47,11 @@ class _HomePageState extends ConsumerState<HomePage> {
               );
             },
             error: (error, _) {
-              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(error.toString())),
-                );
-              });
+              // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              //   ScaffoldMessenger.of(context).showSnackBar(
+              //     SnackBar(content: Text(error.toString())),
+              //   );
+              // });
               return const SliverToBoxAdapter(child: SizedBox.shrink());
               //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
             },
@@ -68,7 +68,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ref.watch(creditCardsControllerProvider).when(
             data: (creditCards) {
               return BestCreditCardsWidget(
-                creditCards: creditCards,
+                creditCards: creditCards.items,
               );
             },
             error: (error, _) {
@@ -106,7 +106,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ref.watch(debitCardsControllerProvider).when(
             data: (debitCards) {
               return BestDebitCardsWidget(
-                debitCards: debitCards,
+                debitCards: debitCards.items,
               );
             },
             error: (error, _) {

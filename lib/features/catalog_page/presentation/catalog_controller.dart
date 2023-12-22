@@ -10,13 +10,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 ///bank products controller. used for fetch list of products. have required params (product type) which used in [BankProductsRepository]
 class BankProductsController extends AutoDisposeFamilyAsyncNotifier<
-    List<ListProductModel>, BasicApiPageSettingsModel> {
+    ProductModel, BasicApiPageSettingsModel> {
   BankProductsController();
 
   String productType = '';
 
   @override
-  FutureOr<List<ListProductModel>> build(BasicApiPageSettingsModel arg) async {
+  FutureOr<ProductModel> build(BasicApiPageSettingsModel arg) async {
     List<String> filterBanks = [];
     List<String> filterCashBack = [];
     List<String> filterPaySystem = [];
@@ -88,6 +88,6 @@ class BankProductsController extends AutoDisposeFamilyAsyncNotifier<
 }
 ///кататалог для получения всех банковских продуктов здесь формируются фильтры
 final bankProductsControllerProvider = AutoDisposeAsyncNotifierProvider.family<
-    BankProductsController, List<ListProductModel>, BasicApiPageSettingsModel>(
+    BankProductsController, ProductModel, BasicApiPageSettingsModel>(
   BankProductsController.new,
 );

@@ -13,14 +13,6 @@ class ProductDetailsController extends AutoDisposeFamilyAsyncNotifier<List<ListP
     final eventRepo = ref.read(productDetailsRepositoryProvider);
     return await eventRepo.fetch(arg, ref);
   }
-
-  fetchProductDetailsData() async {
-    state = const AsyncLoading();
-    final eventRepo = ref.read(productDetailsRepositoryProvider);
-    state = await AsyncValue.guard(() async {
-      return await eventRepo.fetch(arg, ref);
-    });
-  }
 }
 
 ///контроллер для получения данных о деталях банковского продукта,

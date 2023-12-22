@@ -14,6 +14,181 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
+  return _ProductModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ProductModel {
+  @JsonKey(name: 'items')
+  List<ListProductModel> get items => throw _privateConstructorUsedError;
+  @JsonKey(name: 'items_count')
+  int get itemsCount => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ProductModelCopyWith<ProductModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ProductModelCopyWith<$Res> {
+  factory $ProductModelCopyWith(
+          ProductModel value, $Res Function(ProductModel) then) =
+      _$ProductModelCopyWithImpl<$Res, ProductModel>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'items') List<ListProductModel> items,
+      @JsonKey(name: 'items_count') int itemsCount});
+}
+
+/// @nodoc
+class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
+    implements $ProductModelCopyWith<$Res> {
+  _$ProductModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? items = null,
+    Object? itemsCount = null,
+  }) {
+    return _then(_value.copyWith(
+      items: null == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<ListProductModel>,
+      itemsCount: null == itemsCount
+          ? _value.itemsCount
+          : itemsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ProductModelImplCopyWith<$Res>
+    implements $ProductModelCopyWith<$Res> {
+  factory _$$ProductModelImplCopyWith(
+          _$ProductModelImpl value, $Res Function(_$ProductModelImpl) then) =
+      __$$ProductModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'items') List<ListProductModel> items,
+      @JsonKey(name: 'items_count') int itemsCount});
+}
+
+/// @nodoc
+class __$$ProductModelImplCopyWithImpl<$Res>
+    extends _$ProductModelCopyWithImpl<$Res, _$ProductModelImpl>
+    implements _$$ProductModelImplCopyWith<$Res> {
+  __$$ProductModelImplCopyWithImpl(
+      _$ProductModelImpl _value, $Res Function(_$ProductModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? items = null,
+    Object? itemsCount = null,
+  }) {
+    return _then(_$ProductModelImpl(
+      items: null == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<ListProductModel>,
+      itemsCount: null == itemsCount
+          ? _value.itemsCount
+          : itemsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ProductModelImpl implements _ProductModel {
+  _$ProductModelImpl(
+      {@JsonKey(name: 'items') final List<ListProductModel> items = const [],
+      @JsonKey(name: 'items_count') this.itemsCount = 0})
+      : _items = items;
+
+  factory _$ProductModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProductModelImplFromJson(json);
+
+  final List<ListProductModel> _items;
+  @override
+  @JsonKey(name: 'items')
+  List<ListProductModel> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
+  }
+
+  @override
+  @JsonKey(name: 'items_count')
+  final int itemsCount;
+
+  @override
+  String toString() {
+    return 'ProductModel(items: $items, itemsCount: $itemsCount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ProductModelImpl &&
+            const DeepCollectionEquality().equals(other._items, _items) &&
+            (identical(other.itemsCount, itemsCount) ||
+                other.itemsCount == itemsCount));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_items), itemsCount);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ProductModelImplCopyWith<_$ProductModelImpl> get copyWith =>
+      __$$ProductModelImplCopyWithImpl<_$ProductModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ProductModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ProductModel implements ProductModel {
+  factory _ProductModel(
+      {@JsonKey(name: 'items') final List<ListProductModel> items,
+      @JsonKey(name: 'items_count') final int itemsCount}) = _$ProductModelImpl;
+
+  factory _ProductModel.fromJson(Map<String, dynamic> json) =
+      _$ProductModelImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'items')
+  List<ListProductModel> get items;
+  @override
+  @JsonKey(name: 'items_count')
+  int get itemsCount;
+  @override
+  @JsonKey(ignore: true)
+  _$$ProductModelImplCopyWith<_$ProductModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 ListProductModel _$ListProductModelFromJson(Map<String, dynamic> json) {
   return _ListProductModel.fromJson(json);
 }
