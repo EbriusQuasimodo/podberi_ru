@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 
-class BestOfferController extends AutoDisposeAsyncNotifier<List<ListProductModel>> {
+class BestOfferController extends AutoDisposeAsyncNotifier<List<ListDebitCardsModel>> {
   BestOfferController();
   @override
-  FutureOr<List<ListProductModel>> build() async {
+  FutureOr<List<ListDebitCardsModel>> build() async {
     final eventRepo = ref.read(bestOfferRepositoryProvider);
     return await eventRepo.fetch(ref);
   }
@@ -22,6 +22,6 @@ class BestOfferController extends AutoDisposeAsyncNotifier<List<ListProductModel
 }
 ///контроллер для получения лучших предложений
 final bestOfferControllerProvider =
-AutoDisposeAsyncNotifierProvider<BestOfferController, List<ListProductModel>>(
+AutoDisposeAsyncNotifierProvider<BestOfferController, List<ListDebitCardsModel>>(
   BestOfferController.new,
 );

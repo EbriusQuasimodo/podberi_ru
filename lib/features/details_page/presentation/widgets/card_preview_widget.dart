@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
@@ -16,9 +16,10 @@ import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_card
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class CardPreviewWidget extends ConsumerStatefulWidget {
-  final ListProductModel productInfo;
+  final ListDebitCardsModel productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   final VoidCallback onFavoritesOrComparisonTap;
 
@@ -69,23 +70,33 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
             Padding(
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: Text(
-                '${widget.basicApiPageSettingsModel.bankDetailsModel?.bankName} ${widget.productInfo.cardName}',
+                '${widget.basicApiPageSettingsModel.bankDetailsModel?.bankName} 34 ${widget.productInfo.name}',
                 textAlign: TextAlign.center,
                 style:
                     const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
               ),
             ),
-            widget.basicApiPageSettingsModel.productTypeUrl != 'rko'
+            widget.basicApiPageSettingsModel.productTypeUrl != ProductTypeEnum.rko.name
                 ? ExpandablePageView(
                     physics: const BouncingScrollPhysics(),
                     controller: _controllerBestOffers,
                     children: [
                         Image.network(
-                            '${Urls.api.files}/${widget.productInfo.picture}'),
+                            '${Urls.api.files}/${widget.productInfo.image}',
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            return const Icon(
+                              Icons.error,
+                              size: 51,
+                              color: ThemeApp.backgroundBlack,
+                            );
+                          },),
                       ])
                 : Image.network(
-                    '${Urls.api.files}/${widget.productInfo.picture}'),
-            widget.basicApiPageSettingsModel.productTypeUrl != 'rko'
+                    '${Urls.api.files}/${widget.productInfo.image}'),
+            widget.basicApiPageSettingsModel.productTypeUrl !=
+                ProductTypeEnum.rko.name && widget.basicApiPageSettingsModel.productTypeUrl !=
+                ProductTypeEnum.zaimy.name
                 ? Padding(
                     padding: const EdgeInsets.only(top: 15, bottom: 30),
                     child: Row(
@@ -109,7 +120,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                       ),
                     ),
                   )
-                : const SizedBox.shrink(),
+                : const SizedBox(height: 30,),
             Row(
               children: [
                 Expanded(
@@ -150,7 +161,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                           await isar?.writeTxn(() async => await ref
                                   .watch(isarNotifierProvider.notifier)
                                   .isItemDuplicateInFavorites(
-                                      widget.productInfo,
+                                      widget.productInfo.id,
                                       widget.basicApiPageSettingsModel
                                           .productTypeUrl!)
                               ? await isar?.favoritesDebitCardsDatas
@@ -166,7 +177,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                           await isar?.writeTxn(() async => await ref
                                   .watch(isarNotifierProvider.notifier)
                                   .isItemDuplicateInFavorites(
-                                      widget.productInfo,
+                                      widget.productInfo.id,
                                       widget.basicApiPageSettingsModel
                                           .productTypeUrl!)
                               ? await isar?.favoritesCreditCardsDatas
@@ -181,7 +192,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                           await isar?.writeTxn(() async => await ref
                                   .watch(isarNotifierProvider.notifier)
                                   .isItemDuplicateInFavorites(
-                                      widget.productInfo,
+                                      widget.productInfo.id,
                                       widget.basicApiPageSettingsModel
                                           .productTypeUrl!)
                               ? await isar?.favoritesZaimyDatas
@@ -196,7 +207,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                           await isar?.writeTxn(() async => await ref
                                   .watch(isarNotifierProvider.notifier)
                                   .isItemDuplicateInFavorites(
-                                      widget.productInfo,
+                                      widget.productInfo.id,
                                       widget.basicApiPageSettingsModel
                                           .productTypeUrl!)
                               ? await isar?.favoritesRkoDatas
@@ -214,7 +225,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                           future: ref
                               .watch(isarNotifierProvider.notifier)
                               .isItemDuplicateInFavorites(
-                                  widget.productInfo,
+                                  widget.productInfo.id,
                                   widget.basicApiPageSettingsModel
                                       .productTypeUrl!),
                           builder: (context, AsyncSnapshot snapshot) {
@@ -261,7 +272,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                             await isar?.writeTxn(() async => await ref
                                     .watch(isarNotifierProvider.notifier)
                                     .isItemDuplicateInComparison(
-                                        widget.productInfo,
+                                        widget.productInfo.id,
                                         widget.basicApiPageSettingsModel
                                             .productTypeUrl!)
                                 ? await isar?.comparisonDebitCardsDatas
@@ -278,7 +289,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                             await isar?.writeTxn(() async => await ref
                                     .watch(isarNotifierProvider.notifier)
                                     .isItemDuplicateInComparison(
-                                        widget.productInfo,
+                                        widget.productInfo.id,
                                         widget.basicApiPageSettingsModel
                                             .productTypeUrl!)
                                 ? await isar?.comparisonCreditCardsDatas
@@ -294,7 +305,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                             await isar?.writeTxn(() async => await ref
                                     .watch(isarNotifierProvider.notifier)
                                     .isItemDuplicateInComparison(
-                                        widget.productInfo,
+                                        widget.productInfo.id,
                                         widget.basicApiPageSettingsModel
                                             .productTypeUrl!)
                                 ? await isar?.comparisonZaimyDatas
@@ -309,7 +320,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                             await isar?.writeTxn(() async => await ref
                                     .watch(isarNotifierProvider.notifier)
                                     .isItemDuplicateInComparison(
-                                        widget.productInfo,
+                                        widget.productInfo.id,
                                         widget.basicApiPageSettingsModel
                                             .productTypeUrl!)
                                 ? await isar?.comparisonRkoDatas
@@ -327,7 +338,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                               future: ref
                                   .watch(isarNotifierProvider.notifier)
                                   .isItemDuplicateInComparison(
-                                      widget.productInfo,
+                                      widget.productInfo.id,
                                       widget.basicApiPageSettingsModel
                                           .productTypeUrl!),
                               builder: (context, AsyncSnapshot snapshot) {

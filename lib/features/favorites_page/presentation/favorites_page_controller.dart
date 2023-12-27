@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/favorites_page/data/favorites_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 final filterProductUrlStateProvider = StateProvider.autoDispose<String>((ref) {
@@ -12,14 +12,14 @@ final filterProductUrlStateProvider = StateProvider.autoDispose<String>((ref) {
 });
 ///контроллер списка избранного
 class FavoritesListController extends AutoDisposeAsyncNotifier<
-    ProductModel> {
+    DebitCardsModel> {
   FavoritesListController();
 
   String productTypeUrl = '';
   final isar = Isar.getInstance();
 
   @override
-  FutureOr<ProductModel> build() async {
+  FutureOr<DebitCardsModel> build() async {
     List<FavoritesDebitCardsData> productIdListDebitCards = [];
     List<FavoritesCreditCardsData> productIdListCreditCards = [];
     List<FavoritesZaimyData> productIdListZaimy = [];
@@ -72,6 +72,6 @@ class FavoritesListController extends AutoDisposeAsyncNotifier<
 
 ///контроллер для получения всех избранных продуктов
 final favoritesListControllerProvider = AutoDisposeAsyncNotifierProvider<
-    FavoritesListController,ProductModel>(
+    FavoritesListController,DebitCardsModel>(
   FavoritesListController.new,
 );

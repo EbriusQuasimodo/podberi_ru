@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/widgets/row_description_widget.dart';
 
 class TariffsRkoWidget extends StatelessWidget {
-  final ListProductModel productInfo;
+  final ListDebitCardsModel productInfo;
 
   const TariffsRkoWidget({
     super.key,
@@ -35,7 +35,7 @@ class TariffsRkoWidget extends StatelessWidget {
               ),
             ),
             RowDescriptionWidget(
-                rowDescription: productInfo.pauSystem,
+                rowDescription: productInfo.paymentSystem,
                 rowName: 'Платежная система'),
             const RowDescriptionWidget(
                 rowDescription: 'Классическая', rowName: 'Тип карты'),

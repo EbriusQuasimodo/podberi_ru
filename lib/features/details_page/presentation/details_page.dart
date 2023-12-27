@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
@@ -38,103 +39,111 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
         .when(
       data: (detailsInfo) {
         return Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                scrolledUnderElevation: 0,
-                backgroundColor: ThemeApp.mainWhite,
-                pinned: true,
-                title: Text(widget.basicApiPageSettingsModel.pageName!),
-              ),
-              CardPreviewWidget(
-                onFavoritesOrComparisonTap: () {
-                  setState(() {});
-                },
-                basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-                productInfo: detailsInfo[0],
-              ),
+          body: RefreshIndicator(
+            color: ThemeApp.mainBlue,
+            onRefresh: () => ref.refresh(productDetailsControllerProvider(
+                    widget.basicApiPageSettingsModel)
+                .future),
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  scrolledUnderElevation: 0,
+                  backgroundColor: ThemeApp.mainWhite,
+                  pinned: true,
+                  title: Text(widget.basicApiPageSettingsModel.pageName!),
+                ),
+                CardPreviewWidget(
+                  onFavoritesOrComparisonTap: () {
+                    setState(() {});
+                  },
+                  basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
+                  productInfo: detailsInfo[0],
+                ),
 
-              ///if bank card has custom designs - display widget with remainder of it
-              widget.basicApiPageSettingsModel.productTypeUrl !=
-                      ProductTypeEnum.rko.name
-                  ? SliverToBoxAdapter(
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 2),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: ThemeApp.mainWhite,
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.only(
-                              top: 21, bottom: 22, left: 15, right: 15),
-                          child: Text(
-                            'Есть возможность кастомизации дизайна',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: ThemeApp.mainBlue),
+                ///if bank card has custom designs - display widget with remainder of it
+                widget.basicApiPageSettingsModel.productTypeUrl !=
+                            ProductTypeEnum.rko.name &&
+                        widget.basicApiPageSettingsModel.productTypeUrl !=
+                            ProductTypeEnum.zaimy.name
+                    ? SliverToBoxAdapter(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 2),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: ThemeApp.mainWhite,
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.only(
+                                top: 21, bottom: 22, left: 15, right: 15),
+                            child: Text(
+                              'Есть возможность кастомизации дизайна',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: ThemeApp.mainBlue),
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              widget.basicApiPageSettingsModel.productTypeUrl !=
-                      ProductTypeEnum.rko.name
-                  ? CardInfoWidget(
-                      productInfo: detailsInfo[0],
-                      bankLogoPath: "picture!",
-                      bankName: "bankName!",
-                    )
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              widget.basicApiPageSettingsModel.productTypeUrl !=
-                      ProductTypeEnum.rko.name
-                  ? ConditionsWidget(
-                      productInfo: detailsInfo[0],
-                    )
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              widget.basicApiPageSettingsModel.productTypeUrl ==
-                      ProductTypeEnum.rko.name
-                  ? const RkoBankInfoWidget()
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              widget.basicApiPageSettingsModel.productTypeUrl ==
-                      ProductTypeEnum.rko.name
-                  ? RkoTitleAndTextWidget(
-                      productInfo: detailsInfo[0],
-                      description: detailsInfo[0].total,
-                      title: 'Описание',
-                    )
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              widget.basicApiPageSettingsModel.productTypeUrl ==
-                      ProductTypeEnum.rko.name
-                  ? AdvantagesRkoWidget(productInfo: detailsInfo[0])
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              widget.basicApiPageSettingsModel.productTypeUrl ==
-                      ProductTypeEnum.rko.name
-                  ? TariffsRkoWidget(productInfo: detailsInfo[0])
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              widget.basicApiPageSettingsModel.productTypeUrl ==
-                      ProductTypeEnum.rko.name
-                  ? RkoTitleAndTextWidget(
-                      productInfo: detailsInfo[0],
-                      description: detailsInfo[0].total,
-                      title: 'Эквайринг',
-                    )
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              widget.basicApiPageSettingsModel.productTypeUrl ==
-                      ProductTypeEnum.rko.name
-                  ? RkoTitleAndTextWidget(
-                      productInfo: detailsInfo[0],
-                      description: detailsInfo[0].total,
-                      title: 'Зарплатный проект',
-                    )
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-              widget.basicApiPageSettingsModel.productTypeUrl ==
-                      ProductTypeEnum.rko.name
-                  ? FaqRkoWidget()
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-            ],
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                widget.basicApiPageSettingsModel.productTypeUrl !=
+                        ProductTypeEnum.rko.name
+                    ? CardInfoWidget(
+                        productInfo: detailsInfo[0],
+                        basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
+
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                widget.basicApiPageSettingsModel.productTypeUrl !=
+                        ProductTypeEnum.rko.name
+                    ? ConditionsWidget(
+                        productInfo: detailsInfo[0],
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                widget.basicApiPageSettingsModel.productTypeUrl ==
+                        ProductTypeEnum.rko.name
+                    ? const RkoBankInfoWidget()
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                widget.basicApiPageSettingsModel.productTypeUrl ==
+                        ProductTypeEnum.rko.name
+                    ? RkoTitleAndTextWidget(
+                        productInfo: detailsInfo[0],
+                        description: detailsInfo[0].descriptions!.service,
+                        title: 'Описание',
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                widget.basicApiPageSettingsModel.productTypeUrl ==
+                        ProductTypeEnum.rko.name
+                    ? AdvantagesRkoWidget(productInfo: detailsInfo[0])
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                widget.basicApiPageSettingsModel.productTypeUrl ==
+                        ProductTypeEnum.rko.name
+                    ? TariffsRkoWidget(productInfo: detailsInfo[0])
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                widget.basicApiPageSettingsModel.productTypeUrl ==
+                        ProductTypeEnum.rko.name
+                    ? RkoTitleAndTextWidget(
+                        productInfo: detailsInfo[0],
+                        description: detailsInfo[0].descriptions!.service,
+                        title: 'Эквайринг',
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                widget.basicApiPageSettingsModel.productTypeUrl ==
+                        ProductTypeEnum.rko.name
+                    ? RkoTitleAndTextWidget(
+                        productInfo: detailsInfo[0],
+                        description: detailsInfo[0].descriptions!.service,
+                        title: 'Зарплатный проект',
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+                widget.basicApiPageSettingsModel.productTypeUrl ==
+                        ProductTypeEnum.rko.name
+                    ? FaqRkoWidget()
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+              ],
+            ),
           ),
         );
       },

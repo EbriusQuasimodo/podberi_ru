@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/widgets/product_comparison_widgets/product_comparison_widget.dart';
 
-import '../../../../../core/domain/bank_products_model/bank_products_model.dart';
 
 
 class MiniProductCardWidget extends StatelessWidget {
   final VoidCallback onDelete;
-  final ListProductModel comparisonList;
+  final ListDebitCardsModel comparisonList;
   ///виджет с продуктов в сравнении, используется в [ProductComparisonWidget]
   const MiniProductCardWidget({super.key, required this.onDelete,  required this.comparisonList});
 
@@ -50,7 +50,7 @@ class MiniProductCardWidget extends StatelessWidget {
                Padding(
                 padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
                 child: Text(
-                  comparisonList.cardName,
+                  comparisonList.name,
                   style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,

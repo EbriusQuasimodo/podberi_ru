@@ -19,24 +19,28 @@ class AllBanksPage extends ConsumerWidget {
     return ref.watch(allBanksControllerProvider).when(
       data: (allBanks) {
         return Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                scrolledUnderElevation: 0,
-                backgroundColor: ThemeApp.mainWhite,
-                pinned: true,
-                title: const Text('Все банки'),
-                leading: IconButton(
-                  onPressed: () {
-                    ref.read(goRouterProvider).go(RouteConstants.selectProduct);
-                  },
-                  icon: const Icon(Icons.arrow_back_ios),
+          body: RefreshIndicator(
+            color: ThemeApp.mainBlue,
+            onRefresh: () => ref.refresh(allBanksControllerProvider.future),
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  scrolledUnderElevation: 0,
+                  backgroundColor: ThemeApp.mainWhite,
+                  pinned: true,
+                  title: const Text('Все банки'),
+                  leading: IconButton(
+                    onPressed: () {
+                      ref.read(goRouterProvider).go(RouteConstants.selectProduct);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios),
+                  ),
                 ),
-              ),
-              AllBanksListWidget(
-                allBanks: allBanks,
-              ),
-            ],
+                AllBanksListWidget(
+                  allBanks: allBanks.items,
+                ),
+              ],
+            ),
           ),
         );
       },

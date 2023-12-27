@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
 class ConditionsWidget extends StatelessWidget {
-  final ListProductModel productInfo;
+  final ListDebitCardsModel productInfo;
   ///виджет с подробным описанием условий банковского продукта
   ///используется в [DetailsPage]
   const ConditionsWidget({super.key, required this.productInfo,});
@@ -37,7 +38,7 @@ class ConditionsWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 30, left: 15, right: 15),
               child: Text(
-                productInfo.total,
+                productInfo.descriptions!.service,
                  textAlign: TextAlign.justify,
                 style: const TextStyle(
                   color: ThemeApp.backgroundBlack,

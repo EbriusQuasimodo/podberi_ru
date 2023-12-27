@@ -10,20 +10,24 @@ import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_ca
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
+import 'package:podberi_ru/features/catalog_page/data/credit_cards_data/credit_cards_data_source.dart';
 import 'package:podberi_ru/features/favorites_page/data/favorites_data_source.dart';
 import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_data_source.dart';
-import 'package:podberi_ru/features/home_page/data/credit_cards_data/credit_cards_data_source.dart';
-import 'package:podberi_ru/features/home_page/data/debit_cards_data/debit_cards_data_source.dart';
 
 import 'core/constants/urls.dart';
 import 'core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
 import 'core/utils/comparison/rko/comparison_rko_data.dart';
 import 'core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'features/all_banks_page/data/all_banks_data_source.dart';
-import 'features/catalog_page/data/bank_products_data_source.dart';
-import 'features/comparison_page/data/comparison_data_source.dart';
+import 'features/catalog_page/data/debit_cards_data/debit_cards_data_source.dart';
+import 'features/catalog_page/data/zaimy_data/zaimy_data_source.dart';
+import 'features/comparison_page/data/credit_cards_data/comparison_credit_cards_data_source.dart';
+import 'features/comparison_page/data/debit_cards_data/comparison_debit_cards_data_source.dart';
+import 'features/comparison_page/data/zaimy_data/comparison_zaimy_data_source.dart';
 import 'features/details_page/data/product_details_data_source.dart';
 import 'features/home_page/data/banks_data/banks_data_source.dart';
+import 'features/home_page/data/best_credit_cards_data/best_credit_cards_data_source.dart';
+import 'features/home_page/data/best_debit_cards_data/best_debit_cards_data_source.dart';
 import 'internal/app.dart';
 
 void main() async {
@@ -57,14 +61,18 @@ void main() async {
     ),
   )..interceptors.add(alice.getDioInterceptor());
   GetIt.I.registerLazySingleton(() => alice);
-  GetIt.I.registerLazySingleton(() => BankProductsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => DebitCardsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => CreditCardsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => ZaimyGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => ProductDetailsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => BestOfferGetDataSource(dio: dio));
-  GetIt.I.registerLazySingleton(() => CreditCardsGetDataSource(dio: dio));
-  GetIt.I.registerLazySingleton(() => DebitCardsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => BestCreditCardsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => BestDebitCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => BanksGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => AllBanksGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => FavoritesGetDataSource(dio: dio));
-  GetIt.I.registerLazySingleton(() => ComparisonGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => ComparisonDebitCardsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => ComparisonCreditCardsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => ComparisonZaimyGetDataSource(dio: dio));
   runApp(const ProviderScope(child: App()));
 }

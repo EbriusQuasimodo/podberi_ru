@@ -1,16 +1,16 @@
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_chip.dart';
-import 'package:podberi_ru/core/presentation/product_card_widget_with_buttons.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/debit_cards/debit_card_button_widget.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/favorites_page_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class BankProductsListAndFilterWidget extends ConsumerStatefulWidget {
-  List<ListProductModel> favoritesData;
+  List<ListDebitCardsModel> favoritesData;
 ///пока что перенесено на страницу избранного
   BankProductsListAndFilterWidget({super.key, required this.favoritesData});
 
@@ -104,13 +104,12 @@ class _BankProductsListAndFilterWidgetState
                   delegate: SliverChildBuilderDelegate(
                     childCount: widget.favoritesData.length,
                         (context, index) =>
-                        ProductCardWidgetWithButtons(
+                        DebitCardWidgetWithButtons(
                           onTap: () {
                             ref.refresh(
                                 favoritesListControllerProvider);
                           },
                           productInfo: widget.favoritesData[index],
-                          isFavorite: false,
                           basicApiPageSettingsModel:
                           BasicApiPageSettingsModel(
                             productTypeUrl:

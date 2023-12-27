@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
@@ -11,9 +11,10 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class AllBanksListWidget extends ConsumerWidget {
-  final List<BankDetailsModel> allBanks;
+  final List<BankListDetailsModel> allBanks;
 
   ///виджет со списком банков, используется на странице [AllBanksPage]
   const AllBanksListWidget({
@@ -36,7 +37,7 @@ class AllBanksListWidget extends ConsumerWidget {
         padding: const EdgeInsets.only(top: 15, right: 15, left: 15, bottom: 9),
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: 10,
+            childCount: allBanks.length,
             (context, index) => Material(
               color: Colors.transparent,
               child: InkWell(
@@ -46,8 +47,8 @@ class AllBanksListWidget extends ConsumerWidget {
                       .state = 'debit_cards';
                   ref.watch(goRouterProvider).push(RouteConstants.catalog,
                       extra: BasicApiPageSettingsModel(
-                          bankDetailsModel: BankDetailsModel(
-                              picture: allBanks[index].picture,
+                          bankDetailsModel: BankListDetailsModel(
+                              logo: allBanks[index].logo,
                               bankName: allBanks[index].bankName),
                           filtersModel: FiltersModel(
                               banks: [allBanks[index].bankName],
@@ -76,9 +77,18 @@ class AllBanksListWidget extends ConsumerWidget {
                           color: ThemeApp.mainWhite,
                         ),
                         child: Image.network(
-                          '${Urls.api.files}/${allBanks[index].picture}',
+                          '${Urls.api.files}/${allBanks[index].logo}',
                           height: 32,
                           width: 36,
+                          errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return const Icon(
+                            Icons.error,
+                            size: 51,
+                            color: ThemeApp.backgroundBlack,
+                          );
+                        },
+
                         ),
                       ),
                       const SizedBox(

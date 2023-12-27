@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
 import 'common_helpers_widgets/product_card_widget_without_buttons.dart';
 
 class BestDebitCardsWidget extends ConsumerWidget {
-  final List<ListProductModel> debitCards;
+  final List<ListDebitCardsModel> debitCards;
   ///best debit cards widget when pressed go to [DetailsPage]
   const BestDebitCardsWidget({super.key, required this.debitCards});
 
@@ -56,13 +57,13 @@ class BestDebitCardsWidget extends ConsumerWidget {
                                         productTypeUrl: 'debit_cards',
                                         pageName: 'Дебетовые карты',
                                         productId: debitCards[index].id,
-                                        bankDetailsModel: BankDetailsModel(
+                                        bankDetailsModel: BankListDetailsModel(
                                             bankName: debitCards[index]
                                                 .bankDetails
-                                                ?.bankName,
-                                            picture: debitCards[index]
+                                                !.bankName,
+                                            logo: debitCards[index]
                                                 .bankDetails
-                                                ?.picture)));
+                                                !.logo)));
                               },
                               productRating: '4.8');
                         }),

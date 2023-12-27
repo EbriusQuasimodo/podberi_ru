@@ -5,6 +5,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 class AppThemeData {
   ThemeData themeData(BuildContext context) {
     return ThemeData(
+
       fontFamily: 'Geologica',
       scaffoldBackgroundColor: ThemeApp.backgroundBlack,
       appBarTheme: const AppBarTheme(

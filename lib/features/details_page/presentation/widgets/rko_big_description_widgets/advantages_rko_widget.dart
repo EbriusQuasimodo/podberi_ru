@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class AdvantagesRkoWidget extends StatelessWidget {
-  final ListProductModel productInfo;
+  final ListDebitCardsModel productInfo;
 
   const AdvantagesRkoWidget({
     super.key,

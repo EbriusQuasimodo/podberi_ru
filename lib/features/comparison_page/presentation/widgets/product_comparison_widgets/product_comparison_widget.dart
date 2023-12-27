@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/presentation/expandable_page_view.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
@@ -9,13 +8,14 @@ import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_ca
 import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
 import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
-import 'package:podberi_ru/features/comparison_page/presentation/comparison_page_controller.dart';
+import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 
 import 'mini_product_card_widget.dart';
 
 class ProductComparisonWidget extends ConsumerStatefulWidget {
-  final List<ListProductModel> comparisonList;
+  final List<ListDebitCardsModel> comparisonList;
   final VoidCallback onDeleteInFirstList;
   final VoidCallback onDeleteInSecondList;
   final VoidCallback onScrollPageViews;
@@ -53,7 +53,7 @@ class _ProductComparisonWidgetState
       ref
               .watch(comparisonSecondProductDescriptionStateController.notifier)
               .state =
-          widget.comparisonList[currentPageOnSecondPageView.toInt()].cardName;
+          widget.comparisonList[currentPageOnSecondPageView.toInt()].name;
       setState(() {});
       widget.onScrollPageViews();
     });
@@ -61,7 +61,7 @@ class _ProductComparisonWidgetState
     controllerBestOffers.addListener(() {
       currentPageOnFirstPageView = controllerBestOffers.page!.toDouble();
       ref.watch(comparisonFirstProductDescriptionStateProvider.notifier).state =
-          widget.comparisonList[currentPageOnFirstPageView.toInt()].cardName;
+          widget.comparisonList[currentPageOnFirstPageView.toInt()].name;
       setState(() {});
       widget.onScrollPageViews();
     });
@@ -116,7 +116,7 @@ class _ProductComparisonWidgetState
                             await ref
                                 .watch(isarNotifierProvider.notifier)
                                 .isItemDuplicateInComparison(
-                              widget.comparisonList[index],
+                              widget.comparisonList[index].id,
                               ref.watch(
                                   comparisonProductUrlStateProvider),
                             )
@@ -134,7 +134,7 @@ class _ProductComparisonWidgetState
                             await ref
                                 .watch(isarNotifierProvider.notifier)
                                 .isItemDuplicateInComparison(
-                              widget.comparisonList[index],
+                              widget.comparisonList[index].id,
                               ref.watch(
                                   comparisonProductUrlStateProvider),
                             )
@@ -152,7 +152,7 @@ class _ProductComparisonWidgetState
                             await ref
                                 .watch(isarNotifierProvider.notifier)
                                 .isItemDuplicateInComparison(
-                              widget.comparisonList[index],
+                              widget.comparisonList[index].id,
                               ref.watch(
                                   comparisonProductUrlStateProvider),
                             )
@@ -170,7 +170,7 @@ class _ProductComparisonWidgetState
                             await ref
                                 .watch(isarNotifierProvider.notifier)
                                 .isItemDuplicateInComparison(
-                              widget.comparisonList[index],
+                              widget.comparisonList[index].id,
                               ref.watch(
                                   comparisonProductUrlStateProvider),
                             )
@@ -250,7 +250,7 @@ class _ProductComparisonWidgetState
                               await isar?.writeTxn(() async => await ref
                                       .watch(isarNotifierProvider.notifier)
                                       .isItemDuplicateInComparison(
-                                        widget.comparisonList[index],
+                                        widget.comparisonList[index].id,
                                         ref.watch(
                                             comparisonProductUrlStateProvider),
                                       )
@@ -270,7 +270,7 @@ class _ProductComparisonWidgetState
                                   await ref
                                       .watch(isarNotifierProvider.notifier)
                                       .isItemDuplicateInComparison(
-                                    widget.comparisonList[index],
+                                    widget.comparisonList[index].id,
                                     ref.watch(
                                         comparisonProductUrlStateProvider),
                                   )
@@ -289,7 +289,7 @@ class _ProductComparisonWidgetState
                                   await ref
                                       .watch(isarNotifierProvider.notifier)
                                       .isItemDuplicateInComparison(
-                                    widget.comparisonList[index],
+                                    widget.comparisonList[index].id,
                                     ref.watch(
                                         comparisonProductUrlStateProvider),
                                   )
@@ -308,7 +308,7 @@ class _ProductComparisonWidgetState
                                   await ref
                                       .watch(isarNotifierProvider.notifier)
                                       .isItemDuplicateInComparison(
-                                    widget.comparisonList[index],
+                                    widget.comparisonList[index].id,
                                     ref.watch(
                                         comparisonProductUrlStateProvider),
                                   )

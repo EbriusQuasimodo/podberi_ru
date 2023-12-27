@@ -2,11 +2,12 @@ import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class ShowMorePage extends ConsumerStatefulWidget {
-  final List<BankDetailsModel> banksList;
+  final List<BankListDetailsModel> banksList;
   final AutoDisposeStateProvider<List<String>> providerName;
   final List<String> filters;
   final VoidCallback onTapTrashButton;

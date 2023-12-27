@@ -1,13 +1,13 @@
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 import 'best_offers_card.dart';
 
 class BestOfferWidget extends ConsumerStatefulWidget {
-  final List<ListProductModel> bestOffer;
+  final List<ListDebitCardsModel> bestOffer;
   ///виджет с лучшими банковскими предложениями
   const BestOfferWidget({super.key, required this.bestOffer});
 

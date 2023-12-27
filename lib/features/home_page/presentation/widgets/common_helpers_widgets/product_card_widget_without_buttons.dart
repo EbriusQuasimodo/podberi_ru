@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class BankProductCardWidgetWithoutButtons extends StatelessWidget {
   final String productRating;
   final VoidCallback onTap;
-  final ListProductModel productInfo;
+  final ListDebitCardsModel productInfo;
 ///карточка продукта без кнопок добавления в избранное и сравнение
   const BankProductCardWidgetWithoutButtons({
     super.key,
@@ -57,9 +57,17 @@ class BankProductCardWidgetWithoutButtons extends StatelessWidget {
                 color: ThemeApp.mainWhite,
               ),
               child: Image.network(
-                '${Urls.api.files}/${productInfo.bankDetails?.picture}',
+                '${Urls.api.files}/${productInfo.bankDetails?.logo}',
                 height: 32,
                 width: 36,
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return const Icon(
+                    Icons.error,
+                    size: 51,
+                    color: ThemeApp.backgroundBlack,
+                  );
+                },
               ),
             ),
           ),
@@ -68,7 +76,7 @@ class BankProductCardWidgetWithoutButtons extends StatelessWidget {
             top: 16,
             right: 86,
             child: Text(
-              '${productInfo.bankDetails?.bankName}\n${productInfo.cardName}',
+              '${productInfo.bankDetails?.bankName}\n${productInfo.name}',
               maxLines: 3,
               style: const TextStyle(
                   color: ThemeApp.mainWhite,

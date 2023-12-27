@@ -1,8 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/features/all_banks_page/data/all_banks_data_source.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 ///todo возможно стоит убрать и брать из апи [AllBanksGetDataSource]
 class BanksGetDataSource {
@@ -10,7 +10,7 @@ class BanksGetDataSource {
 
   final Dio dio;
 
-  Future<ProductModel> fetch() async {
+  Future<DebitCardsModel> fetch() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
       try {
@@ -19,7 +19,7 @@ class BanksGetDataSource {
         );
         switch (re.statusCode) {
           case 200:
-            return ProductModel.fromJson(re.data);
+            return DebitCardsModel.fromJson(re.data);
 
           case 404:
             throw PageNotFoundException().message;

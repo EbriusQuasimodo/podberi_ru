@@ -7,7 +7,7 @@ import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/comparison_page/presentation/comparison_page_controller.dart';
+import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/widgets/comparison_data_table_widgets/comparison_data_table_widget.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/widgets/product_comparison_widgets/product_comparison_widget.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/favorites_page_controller.dart';
@@ -63,94 +63,98 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
     return ref.watch(comparisonListControllerProvider).when(
       data: (comparisonData) {
         return Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              const SliverAppBar(
-                scrolledUnderElevation: 0,
-                backgroundColor: ThemeApp.mainWhite,
-                pinned: true,
-                title: Text('Сравнение'),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ThemeApp.mainWhite,
-                  ),
+          body: RefreshIndicator(
+            color: ThemeApp.mainBlue,
+            onRefresh: ()=> ref.refresh(comparisonListControllerProvider.future),
+            child: CustomScrollView(
+              slivers: [
+                const SliverAppBar(
+                  scrolledUnderElevation: 0,
+                  backgroundColor: ThemeApp.mainWhite,
+                  pinned: true,
+                  title: Text('Сравнение'),
+                ),
+                SliverToBoxAdapter(
                   child: Container(
-                    alignment: Alignment.topCenter,
-                    padding: const EdgeInsets.only(top: 18, bottom: 18),
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: list(),
-                        )),
+                    margin: const EdgeInsets.only(top: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: ThemeApp.mainWhite,
+                    ),
+                    child: Container(
+                      alignment: Alignment.topCenter,
+                      padding: const EdgeInsets.only(top: 18, bottom: 18),
+                      child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: list(),
+                          )),
+                    ),
                   ),
                 ),
-              ),
-              comparisonData.items.isNotEmpty
-                  ? ProductComparisonWidget(
-                      onScrollPageViews: () {
-                        setState(() {});
-                      },
-                      onDeleteInFirstList: () {
-                        setState(() {});
-                      },
-                      comparisonList: comparisonData.items,
-                      onDeleteInSecondList: () {
-                        setState(() {});
-                      })
-                  : SliverFillRemaining(
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 2, bottom: 72),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: ThemeApp.mainWhite,
-                        ),
-                        child: Column(
-                          children: [
-                            const Spacer(),
-                            const Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 57, left: 57),
-                              child: Text(
-                                'У вас пока нет продуктов в сравнении по данной категории',
-                              ),
-                            ),
-                            const Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: 17,
-                              ),
-                              child: MaterialButton(
-                                minWidth:
-                                    MediaQuery.of(context).size.width - 30,
-                                height: 50,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14)),
-                                padding: const EdgeInsets.only(
-                                    top: 17, bottom: 16, left: 75, right: 75),
-                                onPressed: () {},
-                                color: ThemeApp.mainBlue,
-                                child: const Text(
-                                  'В каталог',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: ThemeApp.mainWhite,
-                                  ),
+                comparisonData.items.isNotEmpty
+                    ? ProductComparisonWidget(
+                        onScrollPageViews: () {
+                          setState(() {});
+                        },
+                        onDeleteInFirstList: () {
+                          setState(() {});
+                        },
+                        comparisonList: comparisonData.items,
+                        onDeleteInSecondList: () {
+                          setState(() {});
+                        })
+                    : SliverFillRemaining(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 2, bottom: 72),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: ThemeApp.mainWhite,
+                          ),
+                          child: Column(
+                            children: [
+                              const Spacer(),
+                              const Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 57, left: 57),
+                                child: Text(
+                                  'У вас пока нет продуктов в сравнении по данной категории',
                                 ),
                               ),
-                            )
-                          ],
+                              const Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 17,
+                                ),
+                                child: MaterialButton(
+                                  minWidth:
+                                      MediaQuery.of(context).size.width - 30,
+                                  height: 50,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(14)),
+                                  padding: const EdgeInsets.only(
+                                      top: 17, bottom: 16, left: 75, right: 75),
+                                  onPressed: () {},
+                                  color: ThemeApp.mainBlue,
+                                  child: const Text(
+                                    'В каталог',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: ThemeApp.mainWhite,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-              comparisonData.items.isNotEmpty
-                  ? ComparisonDataTableWidget()
-                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
-            ],
+                comparisonData.items.isNotEmpty
+                    ? ComparisonDataTableWidget()
+                    : const SliverToBoxAdapter(child: SizedBox.shrink()),
+              ],
+            ),
           ),
         );
       },

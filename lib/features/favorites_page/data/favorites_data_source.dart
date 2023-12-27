@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/favorites_page/data/favorites_repository.dart';
 
 ///получение всех избранных продуктов, [productType] содержит в себе не только enum [ProductTypeEnum]
@@ -15,7 +15,7 @@ class FavoritesGetDataSource {
 
   final Dio dio;
 
-  Future<ProductModel> fetch(String productType) async {
+  Future<DebitCardsModel> fetch(String productType) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
 
@@ -26,7 +26,7 @@ class FavoritesGetDataSource {
         print(re.realUri);
         switch (re.statusCode) {
           case 200:
-            return ProductModel.fromJson(re.data);
+            return DebitCardsModel.fromJson(re.data);
 
           case 404:
             throw PageNotFoundException().message;

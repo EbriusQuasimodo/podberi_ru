@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 
 class MiniListOfBanksWidget extends ConsumerStatefulWidget {
-  final List<BankDetailsModel> banksModel;
+  final List<BankListDetailsModel> banksModel;
   ///mini list of banks on card tap go to [CatalogPage] on showAllBanks tap go to [AllBanksPage]
   const MiniListOfBanksWidget({super.key, required this.banksModel});
 
@@ -43,7 +44,7 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
               ref.watch(goRouterProvider).push(
                     RouteConstants.catalog,
                     extra: BasicApiPageSettingsModel(
-                      bankDetailsModel: BankDetailsModel(picture:  widget.banksModel[i].picture, bankName:  widget.banksModel[i].bankName),
+                      bankDetailsModel: BankListDetailsModel(logo:  widget.banksModel[i].logo, bankName:  widget.banksModel[i].bankName),
                       productTypeUrl: ProductTypeEnum.debit_cards.name,
                       pageName: 'Каталог',
                       whereFrom: 'homePageBanks',
@@ -67,7 +68,7 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
                   padding: const EdgeInsets.only(
                       top: 29.64, right: 39.58, left: 39, bottom: 30.77),
                   child: Image.network(
-                    '${Urls.api.files}/${widget.banksModel[i].picture}',
+                    '${Urls.api.files}/${widget.banksModel[i].logo}',
                     height: 51,
                     width: 57,
                     errorBuilder: (BuildContext context, Object exception,

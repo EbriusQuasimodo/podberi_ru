@@ -274,7 +274,7 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                                                   'selectProductPage'
                                               ? filterBanksFromSelectProductPageStateProvider
                                               : filterBanksFromHomePageStateProvider,
-                                          banksList: allBanks);
+                                          banksList: allBanks.items);
                                     }));
                                   },
                                   child: const Padding(
@@ -290,8 +290,8 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                         ],
                       ),
                       ChoiceChipItem(
-                        length: 6,
-                        banksList: allBanks,
+                        length: allBanks.items.length < 6 ? allBanks.items.length : 6,
+                        banksList: allBanks.items,
                         filters: selectedBanks,
                         providerName:
                             widget.basicApiPageSettingsModel.whereFrom ==

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class BestOffersCardWidget extends ConsumerWidget {
-  final ListProductModel bestOffer;
+  final ListDebitCardsModel bestOffer;
   ///карточка лучшего банковского предложения
   const BestOffersCardWidget({super.key, required this.bestOffer});
 
@@ -28,7 +28,14 @@ height: 220,
               turns: const AlwaysStoppedAnimation(15/360),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.network('${Urls.api.files}/${bestOffer.picture}', width: 261, height: 165,),
+                child: Image.network('${Urls.api.files}/${bestOffer.image}', width: 261, height: 165,errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return const Icon(
+                    Icons.error,
+                    size: 51,
+                    color: ThemeApp.backgroundBlack,
+                  );
+                },),
               ),
             ),
           ),
@@ -37,7 +44,7 @@ height: 220,
             top: 20,
             right: 20,
             child: Text(
-              "${bestOffer.bankDetails?.bankName} ${bestOffer.cardName}",
+              "${bestOffer.bankDetails?.bankName} ${bestOffer.name}",
               maxLines: 3,
               style: const TextStyle(
                   color: ThemeApp.mainWhite,

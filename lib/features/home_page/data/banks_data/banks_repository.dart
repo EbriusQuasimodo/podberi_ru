@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 import 'banks_data_source.dart';
 
@@ -14,7 +14,7 @@ class BanksRepository implements BanksRepositoryImpl {
   BanksRepository();
 
   @override
-  Future<ProductModel> fetch(AutoDisposeAsyncNotifierProviderRef ref) async {
+  Future<DebitCardsModel> fetch(AutoDisposeAsyncNotifierProviderRef ref) async {
     final response =
     await GetIt.I<BanksGetDataSource>().fetch();
     return response;

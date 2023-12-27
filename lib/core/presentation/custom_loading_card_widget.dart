@@ -18,7 +18,7 @@ class CustomLoadingCardWidget extends StatelessWidget {
         color: ThemeApp.mainWhite,
       ),
       child: const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(color: ThemeApp.mainBlue,),
       ),
     );
   }

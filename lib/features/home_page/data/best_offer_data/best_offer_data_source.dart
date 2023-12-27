@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_repository.dart';
 
 ///получение списка лучших предложений
@@ -11,7 +11,7 @@ class BestOfferGetDataSource {
 
   final Dio dio;
 
-  Future<ProductModel> fetch(String productType) async {
+  Future<DebitCardsModel> fetch(String productType) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
       try {
@@ -20,7 +20,7 @@ class BestOfferGetDataSource {
         );
         switch (re.statusCode) {
           case 200:
-            return ProductModel.fromJson(re.data);
+            return DebitCardsModel.fromJson(re.data);
 
           case 404:
             throw PageNotFoundException().message;

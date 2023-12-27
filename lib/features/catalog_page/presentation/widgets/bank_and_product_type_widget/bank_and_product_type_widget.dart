@@ -104,9 +104,9 @@ class _BankAndProductTypeWidgetState
     return Column(
       children: [
         BankInfoCard(
-          bankName: widget.basicApiPageSettingsModel.bankDetailsModel?.bankName,
+          bankName: widget.basicApiPageSettingsModel.bankDetailsModel!.bankName,
           bankPicture:
-              widget.basicApiPageSettingsModel.bankDetailsModel?.picture,
+              widget.basicApiPageSettingsModel.bankDetailsModel!.logo,
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,

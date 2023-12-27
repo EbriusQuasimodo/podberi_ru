@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
-import 'package:podberi_ru/features/comparison_page/presentation/comparison_page_controller.dart';
+import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 
 import 'comparison_row_item.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:podberi_ru/core/domain/bank_products_model/bank_products_model.dart';
+import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
+import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/home_page/presentation/controllers/best_offer_controller.dart';
 
 import 'best_offer_data_source.dart';
@@ -14,10 +15,10 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
   BestOfferRepository();
 
   @override
-  Future<List<ListProductModel>> fetch(
+  Future<List<ListDebitCardsModel>> fetch(
       AutoDisposeAsyncNotifierProviderRef ref) async {
     ///здесь поочереди вызываем каждый инстанс и записываем в список лучших банковских продуктов
-     List<ListProductModel> _listOfBestOffers = [];
+     List<ListDebitCardsModel> _listOfBestOffers = [];
     final responseDebit =
         await GetIt.I<BestOfferGetDataSource>().fetch('debit_cards');
     final responseCredit =
@@ -27,46 +28,46 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
     final responseRko = await GetIt.I<BestOfferGetDataSource>().fetch('rko');
     for (int i = 0; i < responseDebit.items.length; i++) {
       _listOfBestOffers.add(
-        ListProductModel(
-          cardName: responseDebit.items[i].cardName,
-          picture: responseDebit.items[i].picture,
-          bankDetails: BankDetailsModel(
-              color: responseDebit.items[i].bankDetails?.color,
-              bankName: responseDebit.items[i].bankDetails?.bankName),
+        ListDebitCardsModel(
+          name: responseDebit.items[i].name,
+          image: responseDebit.items[i].image,
+          bankDetails: BankListDetailsModel(
+              color: responseDebit.items[i].bankDetails!.color,
+              bankName: responseDebit.items[i].bankDetails!.bankName),
           id: responseDebit.items[i].id,
         ),
       );
     }
     for (int i = 0; i < responseCredit.items.length; i++) {
       _listOfBestOffers
-          .add(ListProductModel(
-        cardName: responseCredit.items[i].cardName,
-        picture: responseCredit.items[i].picture,
-        bankDetails: BankDetailsModel(
-            color: responseCredit.items[i].bankDetails?.color,
-            bankName: responseCredit.items[i].bankDetails?.bankName),
+          .add(ListDebitCardsModel(
+        name: responseCredit.items[i].name,
+        image: responseCredit.items[i].image,
+        bankDetails: BankListDetailsModel(
+            color: responseCredit.items[i].bankDetails!.color,
+            bankName: responseCredit.items[i].bankDetails!.bankName),
         id: responseCredit.items[i].id,
       ),);
     }
     for (int i = 0; i < responseZaimy.items.length; i++) {
       _listOfBestOffers
-          .add(ListProductModel(
-        cardName: responseZaimy.items[i].cardName,
-        picture: responseZaimy.items[i].picture,
-        bankDetails: BankDetailsModel(
-            color: responseZaimy.items[i].bankDetails?.color,
-            bankName: responseZaimy.items[i].bankDetails?.bankName),
+          .add(ListDebitCardsModel(
+        name: responseZaimy.items[i].name,
+        image: responseZaimy.items[i].image,
+        bankDetails: BankListDetailsModel(
+            color: responseZaimy.items[i].bankDetails!.color,
+            bankName: responseZaimy.items[i].bankDetails!.bankName),
         id: responseZaimy.items[i].id,
       ),);
     }
     for (int i = 0; i < responseRko.items.length; i++) {
       _listOfBestOffers
-          .add(ListProductModel(
-        cardName: responseRko.items[i].cardName,
-        picture: responseRko.items[i].picture,
-        bankDetails: BankDetailsModel(
-            color: responseRko.items[i].bankDetails?.color,
-            bankName: responseRko.items[i].bankDetails?.bankName),
+          .add(ListDebitCardsModel(
+        name: responseRko.items[i].name,
+        image: responseRko.items[i].image,
+        bankDetails: BankListDetailsModel(
+            color: responseRko.items[i].bankDetails!.color,
+            bankName: responseRko.items[i].bankDetails!.bankName),
         id: responseRko.items[i].id,
       ),);
     }

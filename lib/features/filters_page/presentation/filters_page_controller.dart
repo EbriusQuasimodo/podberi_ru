@@ -41,12 +41,3 @@ final filterAdditionalConditionsFromHomePageStateProvider = StateProvider.autoDi
 final filterAdditionalConditionsFromSelectProductPageStateProvider = StateProvider.autoDispose<List<String>>((ref) {
   return [];
 });
-
-
-final isFavoriteStateProviderController = ChangeNotifierProvider<IsFavoriteStateProviderController>((ref) {
-  return IsFavoriteStateProviderController();
-});
-class IsFavoriteStateProviderController extends ChangeNotifier{
-  final isar = Isar.getInstance();
-
-}
