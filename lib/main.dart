@@ -11,7 +11,7 @@ import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_card
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/features/catalog_page/data/credit_cards_data/credit_cards_data_source.dart';
-import 'package:podberi_ru/features/favorites_page/data/favorites_data_source.dart';
+import 'package:podberi_ru/features/favorites_page/data/zaimy/favorites_zaimy_data_source.dart';
 import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_data_source.dart';
 
 import 'core/constants/urls.dart';
@@ -25,6 +25,8 @@ import 'features/comparison_page/data/credit_cards_data/comparison_credit_cards_
 import 'features/comparison_page/data/debit_cards_data/comparison_debit_cards_data_source.dart';
 import 'features/comparison_page/data/zaimy_data/comparison_zaimy_data_source.dart';
 import 'features/details_page/data/product_details_data_source.dart';
+import 'features/favorites_page/data/credit_cards/favorites_credit_cards_data_source.dart';
+import 'features/favorites_page/data/debit_cards/favorites_debit_cards_data_source.dart';
 import 'features/home_page/data/banks_data/banks_data_source.dart';
 import 'features/home_page/data/best_credit_cards_data/best_credit_cards_data_source.dart';
 import 'features/home_page/data/best_debit_cards_data/best_debit_cards_data_source.dart';
@@ -70,7 +72,9 @@ void main() async {
   GetIt.I.registerLazySingleton(() => BestDebitCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => BanksGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => AllBanksGetDataSource(dio: dio));
-  GetIt.I.registerLazySingleton(() => FavoritesGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => FavoritesDebitCardsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => FavoritesCreditCardsGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => FavoritesZaimyGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => ComparisonDebitCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => ComparisonCreditCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => ComparisonZaimyGetDataSource(dio: dio));

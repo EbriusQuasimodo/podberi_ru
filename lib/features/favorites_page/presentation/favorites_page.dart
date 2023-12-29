@@ -12,7 +12,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/debit_cards/debit_card_button_widget.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import 'favorites_page_controller.dart';
+import 'controllers/favorites_debit_cards_controller.dart';
 
 class FavoritesPage extends ConsumerStatefulWidget {
   ///страница избранного

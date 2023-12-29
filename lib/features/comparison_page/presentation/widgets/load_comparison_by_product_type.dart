@@ -13,14 +13,14 @@ import 'package:podberi_ru/features/comparison_page/presentation/widgets/credit_
 import 'debit_cards/comparison_debit_cards_widget.dart';
 import 'zaimy/comparison_zaimy_widget.dart';
 
-class LoadWidgetByProductType extends ConsumerStatefulWidget {
-  const LoadWidgetByProductType({super.key});
+class LoadComparisonByProductType extends ConsumerStatefulWidget {
+  const LoadComparisonByProductType({super.key});
 
   @override
-  ConsumerState<LoadWidgetByProductType> createState() => _LoadWidgetByProductTypeState();
+  ConsumerState<LoadComparisonByProductType> createState() => _LoadWidgetByProductTypeState();
 }
 
-class _LoadWidgetByProductTypeState extends ConsumerState<LoadWidgetByProductType> {
+class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProductType> {
   @override
   Widget build(BuildContext context) {
     if (ref.watch(comparisonProductUrlStateProvider) == 'debit_cards') {

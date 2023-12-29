@@ -12,12 +12,12 @@ import 'package:podberi_ru/features/comparison_page/presentation/controllers/com
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_zaimy_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/favorites_page_controller.dart';
+import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_debit_cards_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import 'widgets/credit_cards/comparison_credit_cards_widget.dart';
 import 'widgets/debit_cards/comparison_debit_cards_widget.dart';
-import 'widgets/load_widget_by_product_type.dart';
+import 'widgets/load_comparison_by_product_type.dart';
 import 'widgets/zaimy/comparison_zaimy_widget.dart';
 
 class ComparisonPage extends ConsumerStatefulWidget {
@@ -102,7 +102,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                 ),
               ),
             ),
-            LoadWidgetByProductType(),
+            LoadComparisonByProductType(),
           ],
         ),
       ),

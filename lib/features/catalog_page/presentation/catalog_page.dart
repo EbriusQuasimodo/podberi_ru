@@ -11,6 +11,7 @@ import 'package:podberi_ru/features/catalog_page/data/debit_cards_data/debit_car
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_and_product_type_widget.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/bank_product_list_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/widgets/load_product_list_by_product_type.dart';
 
 import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
 
@@ -31,87 +32,6 @@ class CatalogPage extends ConsumerStatefulWidget {
 
 class _CatalogPageState extends ConsumerState<CatalogPage> {
   List<String> filters = [];
-
-  Widget listOfProducts() {
-    if (widget.basicApiPageSettingsModel.productTypeUrl == 'debit_cards') {
-      return ref
-          .watch(debitCardsControllerProvider(widget.basicApiPageSettingsModel))
-          .when(data: (debitCards) {
-        return BankProductsListWidget(
-          basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-          itemsCount: debitCards.itemsCount,
-        );
-      }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(debitCardsControllerProvider(
-                  widget.basicApiPageSettingsModel));
-            });
-      }, loading: () {
-        return const SliverFillRemaining(
-          child: CustomLoadingCardWidget(
-            bottomPadding: 72,
-          ),
-        );
-      });
-    }else if(widget.basicApiPageSettingsModel.productTypeUrl =='credit_cards'){
-     return ref
-          .watch(creditCardsControllerProvider(
-          widget.basicApiPageSettingsModel))
-          .when(data: (creditCards) {
-        return BankProductsListWidget(
-          basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-          itemsCount: creditCards.itemsCount,
-        );
-      }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(creditCardsControllerProvider(
-                  widget.basicApiPageSettingsModel));
-            });
-      }, loading: () {
-        return const SliverFillRemaining(
-          child: CustomLoadingCardWidget(
-            bottomPadding: 72,
-          ),
-        );
-      });
-    }else{
-      return ref
-          .watch(zaimyControllerProvider(widget.basicApiPageSettingsModel))
-          .when(data: (zaimy) {
-        return BankProductsListWidget(
-          basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-          itemsCount: zaimy.itemsCount,
-        );
-      }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(debitCardsControllerProvider(
-                  widget.basicApiPageSettingsModel));
-            });
-      }, loading: () {
-        return const SliverFillRemaining(
-          child: CustomLoadingCardWidget(
-            bottomPadding: 72,
-          ),
-        );
-      });
-    }
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +91,8 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                       ),
               ),
             ),
-            listOfProducts(),
+            LoadProductListByProductType(
+                basicApiPageSettingsModel: widget.basicApiPageSettingsModel),
           ],
         ),
       ),
