@@ -6,14 +6,15 @@ import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/debit_cards/debit_card_button_widget.dart';
+import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_credit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_debit_cards_controller.dart';
 
-import 'favorite_debit_card_widget.dart';
+import 'favorite_credit_card_widget.dart';
 
-class FavoritesDebitCardsList extends ConsumerWidget {
+class FavoritesCreditCardsList extends ConsumerWidget {
   final int itemsCount;
 
-  const FavoritesDebitCardsList({
+  const FavoritesCreditCardsList({
     super.key,
     required this.itemsCount,
   });
@@ -26,13 +27,13 @@ class FavoritesDebitCardsList extends ConsumerWidget {
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
               childCount: itemsCount, (context, index) {
-            return ref.watch(favoritesDebitCardsListControllerProvider).when(
-                data: (favoritesDebitCards) {
-                  return FavoriteDebitCardWidget(
+            return ref.watch(favoritesCreditCardsListControllerProvider).when(
+                data: (favoritesCreditCards) {
+                  return FavoriteCreditCardWidget(
                     onTap: () {
-                      ref.refresh(favoritesDebitCardsListControllerProvider);
+                      ref.refresh(favoritesCreditCardsListControllerProvider);
                     },
-                    productInfo: favoritesDebitCards.items[index],
+                    productInfo: favoritesCreditCards.items[index],
                     basicApiPageSettingsModel: BasicApiPageSettingsModel(
                       productTypeUrl: ref.watch(filterProductUrlStateProvider),
                       pageName: 'Избранное',
@@ -47,7 +48,7 @@ class FavoritesDebitCardsList extends ConsumerWidget {
                         ref.watch(goRouterProvider).pop();
                       },
                       onRefreshButtonTap: () {
-                        ref.refresh(favoritesDebitCardsListControllerProvider);
+                        ref.refresh(favoritesCreditCardsListControllerProvider);
                       });
                 }, loading: () {
               return const SliverFillRemaining(

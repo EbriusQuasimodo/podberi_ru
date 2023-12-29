@@ -10,9 +10,12 @@ import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/debit_cards/debit_card_button_widget.dart';
+import 'package:podberi_ru/features/favorites_page/presentation/widgets/load_favorites_by_product_type.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
+import 'controllers/favorites_credit_cards_controller.dart';
 import 'controllers/favorites_debit_cards_controller.dart';
+import 'controllers/favorites_zaimy_controller.dart';
 
 class FavoritesPage extends ConsumerStatefulWidget {
   ///страница избранного
@@ -65,20 +68,22 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(favoritesListControllerProvider).when(
-      data: (favoritesData) {
-        return Scaffold(
-          body: RefreshIndicator(
-            color: ThemeApp.mainBlue,
-            onRefresh: ()=>ref.refresh(favoritesListControllerProvider.future),
-            child: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  scrolledUnderElevation: 0,
-                  backgroundColor: ThemeApp.mainWhite,
-                  pinned: true,
-                  title: Text('Избранное'),
-                ),
+    return Scaffold(
+      body: RefreshIndicator(
+        color: ThemeApp.mainBlue,
+        onRefresh: () async{
+          ref.refresh(favoritesDebitCardsListControllerProvider.future);
+          ref.refresh(favoritesCreditCardsListControllerProvider.future);
+          ref.refresh(favoritesZaimyListControllerProvider.future);
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              scrolledUnderElevation: 0,
+              backgroundColor: ThemeApp.mainWhite,
+              pinned: true,
+              title: Text('Избранное'),
+            ),
             SliverStack(
               insetOnOverlap: true,
               children: [
@@ -113,173 +118,15 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
                         ),
                       ),
                     ),
-                    sliver: favoritesData != []
-                        ? SliverPadding(
-                        padding: const EdgeInsets.only(
-                            top: 90, right: 15, left: 15, bottom: 15),
-                        sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            childCount: favoritesData.items.length,
-                                (context, index) =>
-                                DebitCardWidgetWithButtons(
-                                  onTap: () {
-                                    ref.refresh(
-                                        favoritesListControllerProvider);
-                                  },
-                                  productInfo: favoritesData.items[index],
-                                  basicApiPageSettingsModel:
-                                  BasicApiPageSettingsModel(
-                                    productTypeUrl:
-                                    ref.watch(filterProductUrlStateProvider),
-                                    pageName: 'Избранное',
-                                  ),
-                                  productRating: '4.8',
-                                ),
-                          ),
-                        ))
-                        : SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          const Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                right: 57, left: 57),
-                            child: Text(
-                                'У вас пока нет избранных продуктов'),
-                          ),
-                          const Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 17,
-                            ),
-                            child: MaterialButton(
-                              minWidth:
-                              MediaQuery.of(context).size.width -
-                                  30,
-                              height: 50,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(14)),
-                              padding: const EdgeInsets.only(
-                                  top: 17,
-                                  bottom: 16,
-                                  left: 75,
-                                  right: 75),
-                              onPressed: () {},
-                              color: ThemeApp.mainBlue,
-                              child: Text(
-                                'В каталог',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: ThemeApp.mainWhite,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )),
+                    sliver: LoadFavoritesByProductType(
+                        basicApiPageSettingsModel: BasicApiPageSettingsModel(
+                            productTypeUrl: 'debit_cards'))),
               ],
             ),
-                //BankProductsListAndFilterWidget(favoritesData: favoritesData ),
-              ],
-            ),
-          ),
-        );
-      },
-      error: (error, _) {
-        if (error.toString() == NothingFoundException().message) {
-          return Scaffold(
-            body: CustomScrollView(slivers: [
-              SliverStack(
-                insetOnOverlap: true,
-                children: [
-                  SliverPositioned.fill(
-                    child: SliverFillRemaining(
-                      fillOverscroll: true,
-                      child: Container(
-                        height: MediaQuery.of(context).size.height - 72,
-                        margin: const EdgeInsets.only(top: 2, bottom: 72),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: ThemeApp.mainWhite,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SliverContainer(
-                    margin: const EdgeInsets.only(bottom: 72, top: 2),
-                    background: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: ThemeApp.mainWhite,
-                      ),
-                      child: Container(
-                        alignment: Alignment.topCenter,
-                        padding: const EdgeInsets.only(top: 30),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: list(),
-                          ),
-                        ),
-                      ),
-                    ),
-                    sliver: SliverPadding(
-                        padding: const EdgeInsets.only(
-                            top: 90, right: 15, left: 15, bottom: 15),
-                        sliver: SliverToBoxAdapter(
-                          child: Text(error.toString()),
-                        )),
-                  ),
-                ],
-              )
-            ]),
-          );
-        } else if (error.toString() ==
-            NoInternetConnectionException().message) {
-          return Scaffold(
-            body: CustomScrollView(slivers: [
-              SliverFillRemaining(
-                child: CustomErrorPageWidget(
-                  buttonName: 'Перезагрузить',
-                  onTap: () {
-                    ref.refresh(favoritesListControllerProvider);
-                  },
-                  error: error.toString(),
-                  bottomPadding: 72,
-                ),
-              )
-            ]),
-          );
-        }
-        return Scaffold(
-          body: CustomScrollView(slivers: [
-            SliverFillRemaining(
-              child: CustomErrorPageWidget(
-                buttonName: 'Вернуться',
-                onTap: () {
-                  ref.watch(goRouterProvider).pop();
-                },
-                error: error.toString(),
-                bottomPadding: 72,
-              ),
-            )
-          ]),
-        );
-      },
-      loading: () {
-        return Scaffold(
-          body: CustomScrollView(slivers: [
-            SliverFillRemaining(
-              child: CustomLoadingCardWidget(
-                bottomPadding: 72,
-              ),
-            ),
-          ]),
-        );
-      },
+            //BankProductsListAndFilterWidget(favoritesData: favoritesData ),
+          ],
+        ),
+      ),
     );
   }
 }

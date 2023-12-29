@@ -7,13 +7,14 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/debit_cards/debit_card_button_widget.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_debit_cards_controller.dart';
+import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_zaimy_controller.dart';
 
-import 'favorite_debit_card_widget.dart';
+import 'favorite_zaimy_widget.dart';
 
-class FavoritesDebitCardsList extends ConsumerWidget {
+class FavoritesZaimyList extends ConsumerWidget {
   final int itemsCount;
 
-  const FavoritesDebitCardsList({
+  const FavoritesZaimyList({
     super.key,
     required this.itemsCount,
   });
@@ -26,13 +27,13 @@ class FavoritesDebitCardsList extends ConsumerWidget {
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
               childCount: itemsCount, (context, index) {
-            return ref.watch(favoritesDebitCardsListControllerProvider).when(
-                data: (favoritesDebitCards) {
-                  return FavoriteDebitCardWidget(
+            return ref.watch(favoritesZaimyListControllerProvider).when(
+                data: (favoritesZaimy) {
+                  return FavoriteZaimyWidget(
                     onTap: () {
-                      ref.refresh(favoritesDebitCardsListControllerProvider);
+                      ref.refresh(favoritesZaimyListControllerProvider);
                     },
-                    productInfo: favoritesDebitCards.items[index],
+                    productInfo: favoritesZaimy.items[index],
                     basicApiPageSettingsModel: BasicApiPageSettingsModel(
                       productTypeUrl: ref.watch(filterProductUrlStateProvider),
                       pageName: 'Избранное',
@@ -47,7 +48,7 @@ class FavoritesDebitCardsList extends ConsumerWidget {
                         ref.watch(goRouterProvider).pop();
                       },
                       onRefreshButtonTap: () {
-                        ref.refresh(favoritesDebitCardsListControllerProvider);
+                        ref.refresh(favoritesZaimyListControllerProvider);
                       });
                 }, loading: () {
               return const SliverFillRemaining(
