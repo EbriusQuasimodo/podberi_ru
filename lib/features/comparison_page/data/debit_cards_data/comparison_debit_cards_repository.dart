@@ -25,18 +25,18 @@ class ComparisonDebitCardsRepository implements ComparisonDebitCardsRepositoryIm
       final response = await GetIt.I<ComparisonDebitCardsGetDataSource>().fetch(arg);
       if (response.items.length == 1) {
         ref
-            .watch(comparisonSecondProductDescriptionStateController.notifier)
+            .watch(comparisonSecondDebitBankNameStateController.notifier)
             .state = '';
         ref
-            .watch(comparisonFirstProductDescriptionStateProvider.notifier)
-            .state = response.items[0].name;
+            .watch(comparisonFirstDebitBankNameStateProvider.notifier)
+            .state = response.items[0].bankDetails!.bankName;
       } else {
         ref
-            .watch(comparisonFirstProductDescriptionStateProvider.notifier)
-            .state = response.items[0].name;
+            .watch(comparisonFirstDebitBankNameStateProvider.notifier)
+            .state = response.items[0].bankDetails!.bankName;
         ref
-            .watch(comparisonSecondProductDescriptionStateController.notifier)
-            .state = response.items[0].name;
+            .watch(comparisonSecondDebitBankNameStateController.notifier)
+            .state = response.items[0].bankDetails!.bankName;
       }
       return response;
     }

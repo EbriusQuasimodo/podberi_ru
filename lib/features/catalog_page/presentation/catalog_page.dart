@@ -10,7 +10,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/data/debit_cards_data/debit_cards_repository.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_and_product_type_widget.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/bank_product_list_widget.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/on_error_widget.dart';
+import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 
 import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
 

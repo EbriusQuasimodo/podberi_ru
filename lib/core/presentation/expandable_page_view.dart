@@ -48,7 +48,7 @@ class _CustomExpandablePageViewState extends State<CustomExpandablePageView>
       tween: Tween<double>(begin: _heights[0], end: _currentHeight),
       builder: (context, value, child) => SizedBox(height: value, child: child),
       child: PageView(
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         controller: widget.pageController,
         children: _sizeReportingChildren,
       ),
@@ -61,13 +61,12 @@ class _CustomExpandablePageViewState extends State<CustomExpandablePageView>
         (index, child) => MapEntry(
           index,
           OverflowBox(
-            //needed, so that parent won't impose its constraints on the children, thus skewing the measurement results.
             minHeight: 0,
             maxHeight: double.infinity,
             alignment: Alignment.topCenter,
             child: SizeReportingWidget(
               onSizeChange: (size) =>
-                  setState(() => _heights[index] = size?.height ?? 0),
+                  setState(() => _heights[index] = size.height ?? 0),
               child: child,
             ),
           ),
@@ -92,7 +91,7 @@ class SizeReportingWidget extends StatefulWidget {
 }
 
 class _SizeReportingWidgetState extends State<SizeReportingWidget> {
-  Size _oldSize = Size(0, 0);
+  Size _oldSize = const Size(0, 0);
 
   @override
   Widget build(BuildContext context) {

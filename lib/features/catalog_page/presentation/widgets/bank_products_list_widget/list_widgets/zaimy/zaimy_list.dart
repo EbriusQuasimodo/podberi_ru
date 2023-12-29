@@ -7,7 +7,7 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/debit_cards_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/zaimy_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/zaimy/zaimy_button_widget.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/on_error_widget.dart';
+import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
 

@@ -26,17 +26,17 @@ class ComparisonZaimyRepository implements ComparisonZaimyRepositoryImpl {
       final response = await GetIt.I<ComparisonZaimyGetDataSource>().fetch(arg);
       if (response.items.length == 1) {
         ref
-            .watch(comparisonSecondProductDescriptionStateController.notifier)
+            .watch(comparisonSecondZaimyBankNameStateController.notifier)
             .state = '';
         ref
-            .watch(comparisonFirstProductDescriptionStateProvider.notifier)
+            .watch(comparisonFirstZaimyBankNameStateProvider.notifier)
             .state = response.items[0].name;
       } else {
         ref
-            .watch(comparisonFirstProductDescriptionStateProvider.notifier)
+            .watch(comparisonFirstZaimyBankNameStateProvider.notifier)
             .state = response.items[0].name;
         ref
-            .watch(comparisonSecondProductDescriptionStateController.notifier)
+            .watch(comparisonSecondZaimyBankNameStateController.notifier)
             .state = response.items[0].name;
       }
       return response;

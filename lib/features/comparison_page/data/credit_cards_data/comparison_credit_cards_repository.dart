@@ -26,18 +26,18 @@ class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepository
       final response = await GetIt.I<ComparisonCreditCardsGetDataSource>().fetch(arg);
       if (response.items.length == 1) {
         ref
-            .watch(comparisonSecondProductDescriptionStateController.notifier)
+            .watch(comparisonSecondCreditBankNameStateController.notifier)
             .state = '';
         ref
-            .watch(comparisonFirstProductDescriptionStateProvider.notifier)
-            .state = response.items[0].name;
+            .watch(comparisonFirstCreditBankNameStateProvider.notifier)
+            .state = response.items[0].bankDetails!.bankName;
       } else {
         ref
-            .watch(comparisonFirstProductDescriptionStateProvider.notifier)
-            .state = response.items[0].name;
+            .watch(comparisonFirstCreditBankNameStateProvider.notifier)
+            .state = response.items[0].bankDetails!.bankName;
         ref
-            .watch(comparisonSecondProductDescriptionStateController.notifier)
-            .state = response.items[0].name;
+            .watch(comparisonSecondCreditBankNameStateController.notifier)
+            .state = response.items[0].bankDetails!.bankName;
       }
       return response;
     }

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
-import 'package:podberi_ru/features/comparison_page/presentation/widgets/product_comparison_widgets/product_comparison_widget.dart';
 
 
 
-class MiniProductCardWidget extends StatelessWidget {
+class MiniCreditCardWidget extends StatelessWidget {
   final VoidCallback onDelete;
-  final ListDebitCardsModel comparisonList;
-  ///виджет с продуктов в сравнении, используется в [ProductComparisonWidget]
-  const MiniProductCardWidget({super.key, required this.onDelete,  required this.comparisonList});
+  final ListCreditCardsModel creditCard;
+  ///виджет дебетовки в сравнении , используется в [ProductComparisonWidget]
+  const MiniCreditCardWidget({super.key, required this.onDelete,  required this.creditCard});
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +37,10 @@ class MiniProductCardWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
+               Padding(
                 padding: EdgeInsets.only(left: 15, bottom: 6, right: 5, top: 24),
                 child: Text(
-                  'bank name',
+                  creditCard.bankDetails!.bankName,
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -50,7 +50,7 @@ class MiniProductCardWidget extends StatelessWidget {
                Padding(
                 padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
                 child: Text(
-                  comparisonList.name,
+                  creditCard.name,
                   style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,

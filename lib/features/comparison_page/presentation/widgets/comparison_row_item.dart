@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/comparison_page/presentation/widgets/comparison_data_table_widgets/comparison_data_table_widget.dart';
 
 
 class ComparisonRowItemWidget extends StatefulWidget {
