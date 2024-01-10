@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_and_product_type_widget.dart';
@@ -21,6 +22,7 @@ class BankInfoCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
+            height: 50, width: 50,
             padding:
                 const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
             decoration: BoxDecoration(
@@ -29,8 +31,13 @@ class BankInfoCard extends StatelessWidget {
             ),
             child: Image.network(
               '${Urls.api.files}/${bankPicture}',
-              height: 32,
-              width: 36,
+              errorBuilder: (BuildContext context,
+                  Object exception, StackTrace? stackTrace) {
+                return SvgPicture.asset(
+                  'assets/icons/image_not_found_icon.svg',
+                  color: ThemeApp.darkestGrey,
+                );
+              },
             ),
           ),
           const SizedBox(

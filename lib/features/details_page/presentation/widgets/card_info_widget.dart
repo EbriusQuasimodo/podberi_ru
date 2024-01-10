@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
@@ -43,12 +44,11 @@ class CardInfoWidget extends StatelessWidget {
                     '${Urls.api.files}/${basicApiPageSettingsModel.bankDetailsModel?.logo}',
                     height: 37.921,
                     width: 42.208,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return const Icon(
-                        Icons.error,
-                        size: 51,
-                        color: ThemeApp.backgroundBlack,
+                    errorBuilder: (BuildContext context,
+                        Object exception, StackTrace? stackTrace) {
+                      return SvgPicture.asset(
+                        'assets/icons/image_not_found_icon.svg',
+                        color: ThemeApp.darkestGrey,
                       );
                     },
                   ),

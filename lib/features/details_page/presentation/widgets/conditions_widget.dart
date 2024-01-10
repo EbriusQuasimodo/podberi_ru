@@ -7,13 +7,17 @@ import 'package:podberi_ru/features/details_page/presentation/details_page.dart'
 
 class ConditionsWidget extends StatelessWidget {
   final ListDebitCardsModel productInfo;
+
   ///виджет с подробным описанием условий банковского продукта
   ///используется в [DetailsPage]
-  const ConditionsWidget({super.key, required this.productInfo,});
+  const ConditionsWidget({
+    super.key,
+    required this.productInfo,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return  SliverToBoxAdapter(
+    return SliverToBoxAdapter(
       child: Container(
         margin: const EdgeInsets.only(top: 2, bottom: 72),
         width: MediaQuery.of(context).size.width,
@@ -24,8 +28,8 @@ class ConditionsWidget extends StatelessWidget {
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.only(
-                  top: 30, bottom: 10, left: 15, right: 15),
+              padding:
+                  EdgeInsets.only(top: 30, bottom: 10, left: 15, right: 15),
               child: Text(
                 'Условия',
                 textAlign: TextAlign.center,
@@ -38,9 +42,16 @@ class ConditionsWidget extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 30, left: 15, right: 15),
-              child: Html(data: productInfo.descriptions!.service, style: {"product_description": Style(
-                color: ThemeApp.backgroundBlack, fontSize: FontSize(12), fontWeight: FontWeight.w400,
-              )},),
+              child: Html(
+                data: productInfo.descriptions!.service,
+                style: {
+                  "product_description": Style(
+                    color: ThemeApp.backgroundBlack,
+                    fontSize: FontSize(12),
+                    fontWeight: FontWeight.w400,
+                  )
+                },
+              ),
               // child: Text(
               //   productInfo.descriptions!.service,
               //    textAlign: TextAlign.justify,

@@ -62,9 +62,9 @@ class _FavoriteCreditCardWidget
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: widget.productInfo != null ? Colors.green : ThemeApp.darkestGrey,
-        //color: Color(int.parse(
-        //   '0xff${productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
+
+        color: Color(int.parse(
+          '0xff${widget.productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
       ),
       width: 280,
       height: 190,
@@ -77,6 +77,7 @@ class _FavoriteCreditCardWidget
             top: 16,
             right: 16,
             child: Container(
+              height: 50, width: 50,
               padding:
               const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
               decoration: BoxDecoration(
@@ -85,14 +86,11 @@ class _FavoriteCreditCardWidget
               ),
               child: Image.network(
                 '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
-                height: 32,
-                width: 36,
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-                  return const Icon(
-                    Icons.error,
-                    size: 51,
-                    color: ThemeApp.backgroundBlack,
+                errorBuilder: (BuildContext context,
+                    Object exception, StackTrace? stackTrace) {
+                  return SvgPicture.asset(
+                    'assets/icons/image_not_found_icon.svg',
+                    color: ThemeApp.darkestGrey,
                   );
                 },
               ),

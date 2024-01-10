@@ -3,15 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_credit_cards_widget/best_credit_cards_widget.dart';
-import 'package:podberi_ru/features/home_page/presentation/widgets/best_debit_cards_widget.dart';
+import 'package:podberi_ru/features/home_page/presentation/widgets/best_debit_cards_widget/best_debit_cards_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/blog_widget.dart';
 import 'package:podberi_ru/core/presentation/custom_app_bar_with_search.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/promocodes_ads_widgets/promocodes_ads_widget.dart';
 
+import 'controllers/banks_controller.dart';
 import 'controllers/best_offer_controller.dart';
 import 'controllers/best_credit_cards_controller.dart';
 import 'controllers/best_debit_cards_controller.dart';
 import 'widgets/best_offer_widgets/best_offer_widget.dart';
+import 'widgets/mini_list_of_banks_widget.dart';
 import 'widgets/select_product_type_widgets/select_product_type_widget.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -34,7 +36,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ref.refresh(bestOfferControllerProvider.future);
           ref.refresh(bestCreditCardsControllerProvider.future);
           ref.refresh(bestDebitCardsControllerProvider.future);
-          //ref.refresh(banksControllerProvider.future);
+          ref.refresh(banksControllerProvider.future);
         },
         child: CustomScrollView(
           slivers: [
@@ -95,21 +97,21 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ));
               },
             ),
-            // ref.watch(banksControllerProvider).when(
-            //   data: (banksModel) {
-            //     return MiniListOfBanksWidget(
-            //       banksModel: banksModel,
-            //     );
-            //   },
-            //   error: (error, _) {
-            //
-            //     return SliverToBoxAdapter(child: SizedBox.shrink());
-            //     //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
-            //   },
-            //   loading: () {
-            //     return const SliverToBoxAdapter(child:CustomLoadingCardWidget(bottomPadding: 0,));
-            //   },
-            // ),
+            ref.watch(banksControllerProvider).when(
+              data: (banksModel) {
+                return MiniListOfBanksWidget(
+                  banksModel: banksModel.items,
+                );
+              },
+              error: (error, _) {
+
+                return SliverToBoxAdapter(child: SizedBox.shrink());
+                //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
+              },
+              loading: () {
+                return const SliverToBoxAdapter(child:CustomLoadingCardWidget(bottomPadding: 0,));
+              },
+            ),
 
             ref.watch(bestDebitCardsControllerProvider).when(
               data: (debitCards) {

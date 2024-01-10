@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/home_page/data/banks_data/banks_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class BanksController extends AutoDisposeAsyncNotifier<DebitCardsModel> {
+class BanksController extends AutoDisposeAsyncNotifier<BanksDetailsModel> {
   BanksController();
   @override
-  FutureOr<DebitCardsModel> build() async {
+  FutureOr<BanksDetailsModel> build() async {
     final eventRepo = ref.read(banksRepositoryProvider);
     return await eventRepo.fetch(ref);
   }
@@ -21,6 +22,6 @@ class BanksController extends AutoDisposeAsyncNotifier<DebitCardsModel> {
 }
 ///todo возможно стоит убрать и брать из апи [AllBanksGetDataSource]
 final banksControllerProvider =
-AutoDisposeAsyncNotifierProvider<BanksController, DebitCardsModel>(
+AutoDisposeAsyncNotifierProvider<BanksController, BanksDetailsModel>(
   BanksController.new,
 );

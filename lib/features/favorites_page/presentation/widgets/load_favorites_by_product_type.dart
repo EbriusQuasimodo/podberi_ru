@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/constants/route_constants.dart';
+import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
@@ -56,7 +58,9 @@ class LoadFavoritesByProductType extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(14)),
                     padding: const EdgeInsets.only(
                         top: 17, bottom: 16, left: 75, right: 75),
-                    onPressed: () {},
+                    onPressed: () { ref
+                        .watch(goRouterProvider)
+                        .go(RouteConstants.selectProduct);},
                     color: ThemeApp.mainBlue,
                     child: const Text(
                       'В каталог',
@@ -123,7 +127,9 @@ class LoadFavoritesByProductType extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(14)),
                     padding: const EdgeInsets.only(
                         top: 17, bottom: 16, left: 75, right: 75),
-                    onPressed: () {},
+                    onPressed: () { ref
+                        .watch(goRouterProvider)
+                        .go(RouteConstants.selectProduct);},
                     color: ThemeApp.mainBlue,
                     child: const Text(
                       'В каталог',
@@ -155,7 +161,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
           ),
         );
       });
-    }else{
+    }else if (basicApiPageSettingsModel.productTypeUrl =='zaimy'){
       return ref
           .watch(favoritesZaimyListControllerProvider)
           .when(data: (zaimy) {
@@ -190,7 +196,9 @@ class LoadFavoritesByProductType extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(14)),
                     padding: const EdgeInsets.only(
                         top: 17, bottom: 16, left: 75, right: 75),
-                    onPressed: () {},
+                    onPressed: () { ref
+                        .watch(goRouterProvider)
+                        .go(RouteConstants.selectProduct);},
                     color: ThemeApp.mainBlue,
                     child: const Text(
                       'В каталог',
@@ -222,6 +230,9 @@ class LoadFavoritesByProductType extends ConsumerWidget {
           ),
         );
       });
+    }else{
+      return OnErrorWidget(error: NothingFoundException().message, onGoBackButtonTap: (){}, onRefreshButtonTap: (){});
+
     }
 
   }

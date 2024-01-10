@@ -76,27 +76,37 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                     const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
               ),
             ),
-            widget.basicApiPageSettingsModel.productTypeUrl != ProductTypeEnum.rko.name
+            widget.basicApiPageSettingsModel.productTypeUrl !=
+                    ProductTypeEnum.rko.name
                 ? ExpandablePageView(
                     physics: const BouncingScrollPhysics(),
                     controller: _controllerBestOffers,
                     children: [
                         Image.network(
-                            '${Urls.api.files}/${widget.productInfo.image}',
+                          '${Urls.api.files}/${widget.productInfo.image}',
                           errorBuilder: (BuildContext context, Object exception,
                               StackTrace? stackTrace) {
-                            return const Icon(
-                              Icons.error,
-                              size: 51,
-                              color: ThemeApp.backgroundBlack,
+                            return SvgPicture.asset(
+                              'assets/icons/image_not_found_icon.svg',
+                              color: ThemeApp.darkestGrey,
                             );
-                          },),
+                          },
+                        ),
                       ])
                 : Image.network(
-                    '${Urls.api.files}/${widget.productInfo.image}'),
+                    '${Urls.api.files}/${widget.productInfo.image}',
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return SvgPicture.asset(
+                        'assets/icons/image_not_found_icon.svg',
+                        color: ThemeApp.darkestGrey,
+                      );
+                    },
+                  ),
             widget.basicApiPageSettingsModel.productTypeUrl !=
-                ProductTypeEnum.rko.name && widget.basicApiPageSettingsModel.productTypeUrl !=
-                ProductTypeEnum.zaimy.name
+                        ProductTypeEnum.rko.name &&
+                    widget.basicApiPageSettingsModel.productTypeUrl !=
+                        ProductTypeEnum.zaimy.name
                 ? Padding(
                     padding: const EdgeInsets.only(top: 15, bottom: 30),
                     child: Row(
@@ -120,7 +130,9 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
                       ),
                     ),
                   )
-                : const SizedBox(height: 30,),
+                : const SizedBox(
+                    height: 30,
+                  ),
             Row(
               children: [
                 Expanded(

@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
+import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/credit_cards_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/debit_cards_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/zaimy_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/bank_product_list_widget.dart';
+import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 class LoadProductListByProductType extends ConsumerWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  const LoadProductListByProductType({super.key, required this.basicApiPageSettingsModel,});
+
+  const LoadProductListByProductType({
+    super.key,
+    required this.basicApiPageSettingsModel,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,20 +26,28 @@ class LoadProductListByProductType extends ConsumerWidget {
       return ref
           .watch(debitCardsControllerProvider(basicApiPageSettingsModel))
           .when(data: (debitCards) {
-        return BankProductsListWidget(
+        return debitCards.items.isNotEmpty ? BankProductsListWidget(
           basicApiPageSettingsModel: basicApiPageSettingsModel,
           itemsCount: debitCards.itemsCount,
-        );
+        )
+        :OnErrorWidget(
+            error: NothingFoundException().message,
+            onGoBackButtonTap: () {
+              ref.watch(goRouterProvider).pop();
+            },
+            onRefreshButtonTap: () {
+              ref.refresh(
+                  debitCardsControllerProvider(basicApiPageSettingsModel));
+            });
       }, error: (error, _) {
-            print(_);
         return OnErrorWidget(
             error: error.toString(),
             onGoBackButtonTap: () {
               ref.watch(goRouterProvider).pop();
             },
             onRefreshButtonTap: () {
-              ref.refresh(debitCardsControllerProvider(
-                  basicApiPageSettingsModel));
+              ref.refresh(
+                  debitCardsControllerProvider(basicApiPageSettingsModel));
             });
       }, loading: () {
         return const SliverFillRemaining(
@@ -41,15 +56,23 @@ class LoadProductListByProductType extends ConsumerWidget {
           ),
         );
       });
-    }else if(basicApiPageSettingsModel.productTypeUrl =='credit_cards'){
+    } else if (basicApiPageSettingsModel.productTypeUrl == 'credit_cards') {
       return ref
-          .watch(creditCardsControllerProvider(
-          basicApiPageSettingsModel))
+          .watch(creditCardsControllerProvider(basicApiPageSettingsModel))
           .when(data: (creditCards) {
-        return BankProductsListWidget(
+        return creditCards.items.isNotEmpty ? BankProductsListWidget(
           basicApiPageSettingsModel: basicApiPageSettingsModel,
           itemsCount: creditCards.itemsCount,
-        );
+        )
+            :OnErrorWidget(
+            error: NothingFoundException().message,
+            onGoBackButtonTap: () {
+              ref.watch(goRouterProvider).pop();
+            },
+            onRefreshButtonTap: () {
+              ref.refresh(
+                  debitCardsControllerProvider(basicApiPageSettingsModel));
+            });
       }, error: (error, _) {
         return OnErrorWidget(
             error: error.toString(),
@@ -57,8 +80,8 @@ class LoadProductListByProductType extends ConsumerWidget {
               ref.watch(goRouterProvider).pop();
             },
             onRefreshButtonTap: () {
-              ref.refresh(creditCardsControllerProvider(
-                  basicApiPageSettingsModel));
+              ref.refresh(
+                  creditCardsControllerProvider(basicApiPageSettingsModel));
             });
       }, loading: () {
         return const SliverFillRemaining(
@@ -67,14 +90,21 @@ class LoadProductListByProductType extends ConsumerWidget {
           ),
         );
       });
-    }else{
-      return ref
-          .watch(zaimyControllerProvider(basicApiPageSettingsModel))
-          .when(data: (zaimy) {
-        return BankProductsListWidget(
+    } else if (basicApiPageSettingsModel.productTypeUrl == 'zaimy') {
+      return ref.watch(zaimyControllerProvider(basicApiPageSettingsModel)).when(
+          data: (zaimy) {
+        return zaimy.items.isNotEmpty ? BankProductsListWidget(
           basicApiPageSettingsModel: basicApiPageSettingsModel,
           itemsCount: zaimy.itemsCount,
-        );
+        ) :OnErrorWidget(
+            error: NothingFoundException().message,
+            onGoBackButtonTap: () {
+              ref.watch(goRouterProvider).pop();
+            },
+            onRefreshButtonTap: () {
+              ref.refresh(
+                  debitCardsControllerProvider(basicApiPageSettingsModel));
+            });
       }, error: (error, _) {
         return OnErrorWidget(
             error: error.toString(),
@@ -82,8 +112,8 @@ class LoadProductListByProductType extends ConsumerWidget {
               ref.watch(goRouterProvider).pop();
             },
             onRefreshButtonTap: () {
-              ref.refresh(debitCardsControllerProvider(
-                  basicApiPageSettingsModel));
+              ref.refresh(
+                  debitCardsControllerProvider(basicApiPageSettingsModel));
             });
       }, loading: () {
         return const SliverFillRemaining(
@@ -92,7 +122,11 @@ class LoadProductListByProductType extends ConsumerWidget {
           ),
         );
       });
+    } else {
+      return OnErrorWidget(
+          error: NothingFoundException().message,
+          onGoBackButtonTap: () {},
+          onRefreshButtonTap: () {});
     }
-
   }
 }

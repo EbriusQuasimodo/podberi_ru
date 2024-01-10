@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
@@ -30,7 +31,7 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
     var list = <Widget>[
       const SizedBox(width: 12)
     ]; //sized box is a padding on start
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < widget.banksModel.length; i++) {
       list.add(
         Padding(
           padding: const EdgeInsets.only(right: 3, left: 3),
@@ -71,12 +72,13 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
                     '${Urls.api.files}/${widget.banksModel[i].logo}',
                     height: 51,
                     width: 57,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return const Icon(
-                        Icons.error,
-                        size: 51,
-                        color: ThemeApp.backgroundBlack,
+                    errorBuilder: (BuildContext context,
+                        Object exception, StackTrace? stackTrace) {
+                      return SvgPicture.asset(
+                        'assets/icons/image_not_found_icon.svg',
+                        color: ThemeApp.mainWhite,
+                        height: 51,
+                        width: 57,
                       );
                     },
                   ),

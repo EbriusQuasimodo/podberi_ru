@@ -9,8 +9,8 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
+import 'package:podberi_ru/features/home_page/presentation/widgets/best_debit_cards_widget/best_debit_card_button_widget.dart';
 
-import 'common_helpers_widgets/product_card_widget_without_buttons.dart';
 
 class BestDebitCardsWidget extends ConsumerWidget {
   final List<ListDebitCardsModel> debitCards;
@@ -47,7 +47,7 @@ class BestDebitCardsWidget extends ConsumerWidget {
                         itemCount: debitCards.length < 6 ? debitCards.length :  6,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
-                          return BankProductCardWidgetWithoutButtons(
+                          return BestDebitCardsButtonWidget(
                               productInfo: debitCards[index],
                               onTap: () {
                                 ref.watch(goRouterProvider).push(

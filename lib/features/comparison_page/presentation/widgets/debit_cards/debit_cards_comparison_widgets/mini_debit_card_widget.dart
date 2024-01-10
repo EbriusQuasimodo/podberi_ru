@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
@@ -20,6 +21,7 @@ class MiniDebitCardWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
+            height: 50,width: 50,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: ThemeApp.mainWhite,
@@ -27,10 +29,15 @@ class MiniDebitCardWidget extends StatelessWidget {
             margin: const EdgeInsets.only(top: 15, left: 15, right: 6, bottom: 15),
             padding: const EdgeInsets.only(
                 top: 10.5, bottom: 11.5, right: 8.63, left: 9.16),
-            child: SvgPicture.asset(
-              'assets/icons/tinkoff_logo_icon.svg',
-              height: 37.921,
-              width: 42.208,
+            child: Image.network(
+              '${Urls.api.files}/${debitCard.bankDetails?.logo}',
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace? stackTrace) {
+                return SvgPicture.asset(
+                  'assets/icons/image_not_found_icon.svg',
+                  color: ThemeApp.darkestGrey,
+                );
+              },
             ),
           ),
           Column(

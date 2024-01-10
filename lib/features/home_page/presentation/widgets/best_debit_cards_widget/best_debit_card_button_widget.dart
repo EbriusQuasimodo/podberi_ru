@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
-class BankProductCardWidgetWithoutButtons extends StatelessWidget {
+class BestDebitCardsButtonWidget extends StatelessWidget {
   final String productRating;
   final VoidCallback onTap;
   final ListDebitCardsModel productInfo;
 ///карточка продукта без кнопок добавления в избранное и сравнение
-  const BankProductCardWidgetWithoutButtons({
+  const BestDebitCardsButtonWidget({
     super.key,
     required this.productInfo,
     required this.onTap,
@@ -50,6 +51,7 @@ class BankProductCardWidgetWithoutButtons extends StatelessWidget {
             top: 16,
             right: 16,
             child: Container(
+              height: 50, width: 50,
               padding:
                   const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
               decoration: BoxDecoration(
@@ -58,14 +60,11 @@ class BankProductCardWidgetWithoutButtons extends StatelessWidget {
               ),
               child: Image.network(
                 '${Urls.api.files}/${productInfo.bankDetails?.logo}',
-                height: 32,
-                width: 36,
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-                  return const Icon(
-                    Icons.error,
-                    size: 51,
-                    color: ThemeApp.backgroundBlack,
+                errorBuilder: (BuildContext context,
+                    Object exception, StackTrace? stackTrace) {
+                  return SvgPicture.asset(
+                    'assets/icons/image_not_found_icon.svg',
+                    color: ThemeApp.mainWhite,
                   );
                 },
               ),

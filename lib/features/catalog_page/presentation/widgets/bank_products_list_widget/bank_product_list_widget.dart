@@ -2,7 +2,9 @@ import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
+import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/zaimy/zaimy_list.dart';
@@ -41,9 +43,12 @@ class _BankProductsListWidgetState
       return CreditCardsListWidget(
         basicApiPageSettingsModel: widget.basicApiPageSettingsModel,itemsCount: widget.itemsCount,
       );
-    } else {
+    } else if (widget.basicApiPageSettingsModel.productTypeUrl ==
+        'zaimy') {
       return ZaimyListWidget(
           basicApiPageSettingsModel: widget.basicApiPageSettingsModel,itemsCount: widget.itemsCount,);
+    }else{
+      return OnErrorWidget(error: NothingFoundException().message, onGoBackButtonTap: (){}, onRefreshButtonTap: (){});
     }
   }
 

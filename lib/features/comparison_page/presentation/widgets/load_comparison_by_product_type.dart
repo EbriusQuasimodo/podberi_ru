@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
@@ -61,7 +62,9 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
                             borderRadius: BorderRadius.circular(14)),
                         padding: const EdgeInsets.only(
                             top: 17, bottom: 16, left: 75, right: 75),
-                        onPressed: () {},
+                        onPressed: () { ref
+                            .watch(goRouterProvider)
+                            .go(RouteConstants.selectProduct);},
                         color: ThemeApp.mainBlue,
                         child: const Text(
                           'В каталог',
@@ -131,7 +134,9 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
                             borderRadius: BorderRadius.circular(14)),
                         padding: const EdgeInsets.only(
                             top: 17, bottom: 16, left: 75, right: 75),
-                        onPressed: () {},
+                        onPressed: () { ref
+                            .watch(goRouterProvider)
+                            .go(RouteConstants.selectProduct);},
                         color: ThemeApp.mainBlue,
                         child: const Text(
                           'В каталог',
@@ -201,7 +206,9 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
                             borderRadius: BorderRadius.circular(14)),
                         padding: const EdgeInsets.only(
                             top: 17, bottom: 16, left: 75, right: 75),
-                        onPressed: () {},
+                        onPressed: () { ref
+                            .watch(goRouterProvider)
+                            .go(RouteConstants.selectProduct);},
                         color: ThemeApp.mainBlue,
                         child: const Text(
                           'В каталог',
