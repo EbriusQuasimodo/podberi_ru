@@ -22,7 +22,6 @@ class CustomErrorPageWidget extends ConsumerWidget {
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(
-          top: 2,
           bottom: bottomPadding,
         ),
         width: MediaQuery.of(context).size.width,

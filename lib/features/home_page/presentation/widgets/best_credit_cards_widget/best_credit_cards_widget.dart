@@ -8,10 +8,8 @@ import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
-import '../common_helpers_widgets/product_card_widget_without_buttons.dart';
 import 'best_credit_card_button_widget.dart';
 
 class BestCreditCardsWidget extends ConsumerWidget {
@@ -42,8 +40,7 @@ class BestCreditCardsWidget extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                   ),
                 ),
-                creditCards.isNotEmpty
-                ? SizedBox(
+                 SizedBox(
                   height: 190,
                   child: ListView.builder(
                       padding: const EdgeInsets.only(right: 15, left: 15),
@@ -64,8 +61,7 @@ class BestCreditCardsWidget extends ConsumerWidget {
                             },
                             productRating: '4.8');
                       }),
-                )
-                :Text('произошла какая-то ошибка'),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 22,

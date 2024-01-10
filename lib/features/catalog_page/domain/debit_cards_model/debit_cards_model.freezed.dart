@@ -226,7 +226,7 @@ mixin _$ListDebitCardsModel {
   bool get forMinors => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
   @JsonKey(name: 'interest_on_balance')
-  int get interestOnBalance => throw _privateConstructorUsedError;
+  dynamic get interestOnBalance => throw _privateConstructorUsedError;
   int get issue => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_age')
   int get maxAge => throw _privateConstructorUsedError;
@@ -235,13 +235,13 @@ mixin _$ListDebitCardsModel {
   @JsonKey(name: 'max_cashback_percent')
   int get maxCashbackPercent => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_service')
-  int get maxService => throw _privateConstructorUsedError;
+  dynamic get maxService => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_sms')
   int get maxSms => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_age')
   int get minAge => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_service')
-  int get minService => throw _privateConstructorUsedError;
+  dynamic get minService => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_sms')
   int get minSms => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
@@ -286,15 +286,15 @@ abstract class $ListDebitCardsModelCopyWith<$Res> {
       @JsonKey(name: 'for_children') bool forChildren,
       @JsonKey(name: 'for_minors') bool forMinors,
       String image,
-      @JsonKey(name: 'interest_on_balance') int interestOnBalance,
+      @JsonKey(name: 'interest_on_balance') dynamic interestOnBalance,
       int issue,
       @JsonKey(name: 'max_age') int maxAge,
       @JsonKey(name: 'max_cashback') String maxCashBack,
       @JsonKey(name: 'max_cashback_percent') int maxCashbackPercent,
-      @JsonKey(name: 'max_service') int maxService,
+      @JsonKey(name: 'max_service') dynamic maxService,
       @JsonKey(name: 'max_sms') int maxSms,
       @JsonKey(name: 'min_age') int minAge,
-      @JsonKey(name: 'min_service') int minService,
+      @JsonKey(name: 'min_service') dynamic minService,
       @JsonKey(name: 'min_sms') int minSms,
       String name,
       bool overdraft,
@@ -340,15 +340,15 @@ class _$ListDebitCardsModelCopyWithImpl<$Res, $Val extends ListDebitCardsModel>
     Object? forChildren = null,
     Object? forMinors = null,
     Object? image = null,
-    Object? interestOnBalance = null,
+    Object? interestOnBalance = freezed,
     Object? issue = null,
     Object? maxAge = null,
     Object? maxCashBack = null,
     Object? maxCashbackPercent = null,
-    Object? maxService = null,
+    Object? maxService = freezed,
     Object? maxSms = null,
     Object? minAge = null,
-    Object? minService = null,
+    Object? minService = freezed,
     Object? minSms = null,
     Object? name = null,
     Object? overdraft = null,
@@ -428,10 +428,10 @@ class _$ListDebitCardsModelCopyWithImpl<$Res, $Val extends ListDebitCardsModel>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      interestOnBalance: null == interestOnBalance
+      interestOnBalance: freezed == interestOnBalance
           ? _value.interestOnBalance
           : interestOnBalance // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       issue: null == issue
           ? _value.issue
           : issue // ignore: cast_nullable_to_non_nullable
@@ -448,10 +448,10 @@ class _$ListDebitCardsModelCopyWithImpl<$Res, $Val extends ListDebitCardsModel>
           ? _value.maxCashbackPercent
           : maxCashbackPercent // ignore: cast_nullable_to_non_nullable
               as int,
-      maxService: null == maxService
+      maxService: freezed == maxService
           ? _value.maxService
           : maxService // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       maxSms: null == maxSms
           ? _value.maxSms
           : maxSms // ignore: cast_nullable_to_non_nullable
@@ -460,10 +460,10 @@ class _$ListDebitCardsModelCopyWithImpl<$Res, $Val extends ListDebitCardsModel>
           ? _value.minAge
           : minAge // ignore: cast_nullable_to_non_nullable
               as int,
-      minService: null == minService
+      minService: freezed == minService
           ? _value.minService
           : minService // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       minSms: null == minSms
           ? _value.minSms
           : minSms // ignore: cast_nullable_to_non_nullable
@@ -568,15 +568,15 @@ abstract class _$$ListDebitCardsModelImplCopyWith<$Res>
       @JsonKey(name: 'for_children') bool forChildren,
       @JsonKey(name: 'for_minors') bool forMinors,
       String image,
-      @JsonKey(name: 'interest_on_balance') int interestOnBalance,
+      @JsonKey(name: 'interest_on_balance') dynamic interestOnBalance,
       int issue,
       @JsonKey(name: 'max_age') int maxAge,
       @JsonKey(name: 'max_cashback') String maxCashBack,
       @JsonKey(name: 'max_cashback_percent') int maxCashbackPercent,
-      @JsonKey(name: 'max_service') int maxService,
+      @JsonKey(name: 'max_service') dynamic maxService,
       @JsonKey(name: 'max_sms') int maxSms,
       @JsonKey(name: 'min_age') int minAge,
-      @JsonKey(name: 'min_service') int minService,
+      @JsonKey(name: 'min_service') dynamic minService,
       @JsonKey(name: 'min_sms') int minSms,
       String name,
       bool overdraft,
@@ -623,15 +623,15 @@ class __$$ListDebitCardsModelImplCopyWithImpl<$Res>
     Object? forChildren = null,
     Object? forMinors = null,
     Object? image = null,
-    Object? interestOnBalance = null,
+    Object? interestOnBalance = freezed,
     Object? issue = null,
     Object? maxAge = null,
     Object? maxCashBack = null,
     Object? maxCashbackPercent = null,
-    Object? maxService = null,
+    Object? maxService = freezed,
     Object? maxSms = null,
     Object? minAge = null,
-    Object? minService = null,
+    Object? minService = freezed,
     Object? minSms = null,
     Object? name = null,
     Object? overdraft = null,
@@ -711,10 +711,10 @@ class __$$ListDebitCardsModelImplCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      interestOnBalance: null == interestOnBalance
+      interestOnBalance: freezed == interestOnBalance
           ? _value.interestOnBalance
           : interestOnBalance // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       issue: null == issue
           ? _value.issue
           : issue // ignore: cast_nullable_to_non_nullable
@@ -731,10 +731,10 @@ class __$$ListDebitCardsModelImplCopyWithImpl<$Res>
           ? _value.maxCashbackPercent
           : maxCashbackPercent // ignore: cast_nullable_to_non_nullable
               as int,
-      maxService: null == maxService
+      maxService: freezed == maxService
           ? _value.maxService
           : maxService // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       maxSms: null == maxSms
           ? _value.maxSms
           : maxSms // ignore: cast_nullable_to_non_nullable
@@ -743,10 +743,10 @@ class __$$ListDebitCardsModelImplCopyWithImpl<$Res>
           ? _value.minAge
           : minAge // ignore: cast_nullable_to_non_nullable
               as int,
-      minService: null == minService
+      minService: freezed == minService
           ? _value.minService
           : minService // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       minSms: null == minSms
           ? _value.minSms
           : minSms // ignore: cast_nullable_to_non_nullable
@@ -808,7 +808,7 @@ class _$ListDebitCardsModelImpl implements _ListDebitCardsModel {
       @JsonKey(name: 'for_children') this.forChildren = false,
       @JsonKey(name: 'for_minors') this.forMinors = false,
       this.image = '',
-      @JsonKey(name: 'interest_on_balance') this.interestOnBalance = 0,
+      @JsonKey(name: 'interest_on_balance') this.interestOnBalance = '',
       this.issue = 0,
       @JsonKey(name: 'max_age') this.maxAge = 0,
       @JsonKey(name: 'max_cashback') this.maxCashBack = '',
@@ -888,7 +888,7 @@ class _$ListDebitCardsModelImpl implements _ListDebitCardsModel {
   final String image;
   @override
   @JsonKey(name: 'interest_on_balance')
-  final int interestOnBalance;
+  final dynamic interestOnBalance;
   @override
   @JsonKey()
   final int issue;
@@ -903,7 +903,7 @@ class _$ListDebitCardsModelImpl implements _ListDebitCardsModel {
   final int maxCashbackPercent;
   @override
   @JsonKey(name: 'max_service')
-  final int maxService;
+  final dynamic maxService;
   @override
   @JsonKey(name: 'max_sms')
   final int maxSms;
@@ -912,7 +912,7 @@ class _$ListDebitCardsModelImpl implements _ListDebitCardsModel {
   final int minAge;
   @override
   @JsonKey(name: 'min_service')
-  final int minService;
+  final dynamic minService;
   @override
   @JsonKey(name: 'min_sms')
   final int minSms;
@@ -980,20 +980,20 @@ class _$ListDebitCardsModelImpl implements _ListDebitCardsModel {
             (identical(other.forMinors, forMinors) ||
                 other.forMinors == forMinors) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.interestOnBalance, interestOnBalance) ||
-                other.interestOnBalance == interestOnBalance) &&
+            const DeepCollectionEquality()
+                .equals(other.interestOnBalance, interestOnBalance) &&
             (identical(other.issue, issue) || other.issue == issue) &&
             (identical(other.maxAge, maxAge) || other.maxAge == maxAge) &&
             (identical(other.maxCashBack, maxCashBack) ||
                 other.maxCashBack == maxCashBack) &&
             (identical(other.maxCashbackPercent, maxCashbackPercent) ||
                 other.maxCashbackPercent == maxCashbackPercent) &&
-            (identical(other.maxService, maxService) ||
-                other.maxService == maxService) &&
+            const DeepCollectionEquality()
+                .equals(other.maxService, maxService) &&
             (identical(other.maxSms, maxSms) || other.maxSms == maxSms) &&
             (identical(other.minAge, minAge) || other.minAge == minAge) &&
-            (identical(other.minService, minService) ||
-                other.minService == minService) &&
+            const DeepCollectionEquality()
+                .equals(other.minService, minService) &&
             (identical(other.minSms, minSms) || other.minSms == minSms) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.overdraft, overdraft) ||
@@ -1029,15 +1029,15 @@ class _$ListDebitCardsModelImpl implements _ListDebitCardsModel {
         forChildren,
         forMinors,
         image,
-        interestOnBalance,
+        const DeepCollectionEquality().hash(interestOnBalance),
         issue,
         maxAge,
         maxCashBack,
         maxCashbackPercent,
-        maxService,
+        const DeepCollectionEquality().hash(maxService),
         maxSms,
         minAge,
-        minService,
+        const DeepCollectionEquality().hash(minService),
         minSms,
         name,
         overdraft,
@@ -1083,15 +1083,15 @@ abstract class _ListDebitCardsModel implements ListDebitCardsModel {
       @JsonKey(name: 'for_children') final bool forChildren,
       @JsonKey(name: 'for_minors') final bool forMinors,
       final String image,
-      @JsonKey(name: 'interest_on_balance') final int interestOnBalance,
+      @JsonKey(name: 'interest_on_balance') final dynamic interestOnBalance,
       final int issue,
       @JsonKey(name: 'max_age') final int maxAge,
       @JsonKey(name: 'max_cashback') final String maxCashBack,
       @JsonKey(name: 'max_cashback_percent') final int maxCashbackPercent,
-      @JsonKey(name: 'max_service') final int maxService,
+      @JsonKey(name: 'max_service') final dynamic maxService,
       @JsonKey(name: 'max_sms') final int maxSms,
       @JsonKey(name: 'min_age') final int minAge,
-      @JsonKey(name: 'min_service') final int minService,
+      @JsonKey(name: 'min_service') final dynamic minService,
       @JsonKey(name: 'min_sms') final int minSms,
       final String name,
       final bool overdraft,
@@ -1150,7 +1150,7 @@ abstract class _ListDebitCardsModel implements ListDebitCardsModel {
   String get image;
   @override
   @JsonKey(name: 'interest_on_balance')
-  int get interestOnBalance;
+  dynamic get interestOnBalance;
   @override
   int get issue;
   @override
@@ -1164,7 +1164,7 @@ abstract class _ListDebitCardsModel implements ListDebitCardsModel {
   int get maxCashbackPercent;
   @override
   @JsonKey(name: 'max_service')
-  int get maxService;
+  dynamic get maxService;
   @override
   @JsonKey(name: 'max_sms')
   int get maxSms;
@@ -1173,7 +1173,7 @@ abstract class _ListDebitCardsModel implements ListDebitCardsModel {
   int get minAge;
   @override
   @JsonKey(name: 'min_service')
-  int get minService;
+  dynamic get minService;
   @override
   @JsonKey(name: 'min_sms')
   int get minSms;

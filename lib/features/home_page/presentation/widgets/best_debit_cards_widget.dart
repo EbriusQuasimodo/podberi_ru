@@ -40,12 +40,11 @@ class BestDebitCardsWidget extends ConsumerWidget {
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
               ),
             ),
-            debitCards.isNotEmpty
-                ? SizedBox(
+             SizedBox(
                     height: 190,
                     child: ListView.builder(
                         padding: const EdgeInsets.only(right: 15, left: 15),
-                        itemCount: 6,
+                        itemCount: debitCards.length < 6 ? debitCards.length :  6,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           return BankProductCardWidgetWithoutButtons(
@@ -67,8 +66,7 @@ class BestDebitCardsWidget extends ConsumerWidget {
                               },
                               productRating: '4.8');
                         }),
-                  )
-                : Text('произошла какая-то ошибка'),
+                  ),
             Padding(
               padding: const EdgeInsets.only(
                 top: 22,

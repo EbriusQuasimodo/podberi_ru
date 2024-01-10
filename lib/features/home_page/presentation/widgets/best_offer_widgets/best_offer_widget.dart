@@ -54,7 +54,6 @@ class _BestOfferWidgetState extends ConsumerState<BestOfferWidget> {
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                 ),
               ),
-              widget.bestOffer.isNotEmpty ?
               ExpandablePageView(
                 physics: const BouncingScrollPhysics(),
                 controller: _controllerBestOffers,
@@ -63,9 +62,8 @@ class _BestOfferWidgetState extends ConsumerState<BestOfferWidget> {
                     bestOffer: widget.bestOffer[index],
                   );
                 }),
-              )
-              : const Text('не удалось загрузить('),
-              widget.bestOffer.isNotEmpty ? Padding(
+              ),
+              Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,8 +85,7 @@ class _BestOfferWidgetState extends ConsumerState<BestOfferWidget> {
                     },
                   ),
                 ),
-              )
-                  : const SizedBox.shrink(),
+              ),
             ],
           ),
         ),

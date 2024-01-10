@@ -5,10 +5,6 @@ import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/credit_cards_controller.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/debit_cards_controller.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/zaimy_controller.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/bank_product_list_widget.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_credit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_debit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_zaimy_controller.dart';
@@ -19,6 +15,7 @@ import 'zaimy/favorites_zaimy_list_widget.dart';
 
 class LoadFavoritesByProductType extends ConsumerWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
+  ///виджет для загрузки списка избранного по выбранному типу продукта
   const LoadFavoritesByProductType({super.key, required this.basicApiPageSettingsModel,});
 
   @override
@@ -33,10 +30,10 @@ class LoadFavoritesByProductType extends ConsumerWidget {
 
         ) : SliverFillRemaining(
           child: Container(
-            margin: const EdgeInsets.only(top: 72, bottom: 72),
+            margin: const EdgeInsets.only(top: 90,  bottom: 72),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: ThemeApp.mainWhite,
+             // color: ThemeApp.mainWhite,
             ),
             child: Column(
               children: [
@@ -44,7 +41,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
                 const Padding(
                   padding: const EdgeInsets.only(right: 57, left: 57),
                   child: Text(
-                    'У вас пока нет продуктов в сравнении по данной категории.',
+                    'У вас пока нет продуктов в избранном по данной категории.',
                   ),
                 ),
                 Spacer(),
@@ -101,10 +98,9 @@ class LoadFavoritesByProductType extends ConsumerWidget {
 
         ) : SliverFillRemaining(
           child: Container(
-            margin: const EdgeInsets.only(top: 72, bottom: 72),
+            margin: const EdgeInsets.only(top: 90, bottom: 72),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: ThemeApp.mainWhite,
             ),
             child: Column(
               children: [
@@ -112,7 +108,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
                 const Padding(
                   padding: const EdgeInsets.only(right: 57, left: 57),
                   child: Text(
-                    'У вас пока нет продуктов в сравнении по данной категории.',
+                    'У вас пока нет продуктов в избранном по данной категории.',
                   ),
                 ),
                 Spacer(),
@@ -147,7 +143,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
         return OnErrorWidget(
             error: error.toString(),
             onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
+              ref.refresh(favoritesCreditCardsListControllerProvider);
             },
             onRefreshButtonTap: () {
               ref.refresh(favoritesCreditCardsListControllerProvider);
@@ -169,10 +165,9 @@ class LoadFavoritesByProductType extends ConsumerWidget {
 
         ) : SliverFillRemaining(
           child: Container(
-            margin: const EdgeInsets.only(top: 72, bottom: 72),
+            margin: const EdgeInsets.only(top: 90, bottom: 72),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: ThemeApp.mainWhite,
             ),
             child: Column(
               children: [
@@ -180,7 +175,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
                 const Padding(
                   padding: const EdgeInsets.only(right: 57, left: 57),
                   child: Text(
-                    'У вас пока нет продуктов в сравнении по данной категории.',
+                    'У вас пока нет продуктов в избранном по данной категории.',
                   ),
                 ),
                 Spacer(),
@@ -215,7 +210,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
         return OnErrorWidget(
             error: error.toString(),
             onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
+              ref.refresh(favoritesCreditCardsListControllerProvider);
             },
             onRefreshButtonTap: () {
               ref.refresh(favoritesZaimyListControllerProvider);

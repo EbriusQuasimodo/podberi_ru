@@ -2,14 +2,9 @@ import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_chip.dart';
-import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
-import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
-import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/debit_cards/debit_card_button_widget.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/widgets/load_favorites_by_product_type.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
@@ -71,14 +66,14 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
     return Scaffold(
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,
-        onRefresh: () async{
+        onRefresh: () async {
           ref.refresh(favoritesDebitCardsListControllerProvider.future);
           ref.refresh(favoritesCreditCardsListControllerProvider.future);
           ref.refresh(favoritesZaimyListControllerProvider.future);
         },
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
+            const SliverAppBar(
               scrolledUnderElevation: 0,
               backgroundColor: ThemeApp.mainWhite,
               pinned: true,
@@ -91,7 +86,6 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
                   child: SliverFillRemaining(
                     fillOverscroll: true,
                     child: Container(
-                      height: MediaQuery.of(context).size.height - 72,
                       margin: const EdgeInsets.only(top: 2, bottom: 72),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -101,29 +95,29 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
                   ),
                 ),
                 SliverContainer(
-                    margin: const EdgeInsets.only(bottom: 72, top: 2),
-                    background: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: ThemeApp.mainWhite,
-                      ),
-                      child: Container(
-                        alignment: Alignment.topCenter,
-                        padding: const EdgeInsets.only(top: 30),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: list(),
-                          ),
+                  margin: const EdgeInsets.only(top: 2),
+                  background: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Container(
+                      alignment: Alignment.topCenter,
+                      padding: const EdgeInsets.only(top: 30),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: list(),
                         ),
                       ),
                     ),
-                    sliver: LoadFavoritesByProductType(
-                        basicApiPageSettingsModel: BasicApiPageSettingsModel(
-                            productTypeUrl: 'debit_cards'))),
+                  ),
+                  sliver: LoadFavoritesByProductType(
+                    basicApiPageSettingsModel: BasicApiPageSettingsModel(
+                        productTypeUrl: 'debit_cards'),
+                  ),
+                ),
               ],
             ),
-            //BankProductsListAndFilterWidget(favoritesData: favoritesData ),
           ],
         ),
       ),

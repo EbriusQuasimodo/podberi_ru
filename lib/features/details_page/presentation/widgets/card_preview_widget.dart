@@ -70,7 +70,7 @@ class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
             Padding(
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: Text(
-                '${widget.basicApiPageSettingsModel.bankDetailsModel?.bankName} 34 ${widget.productInfo.name}',
+                '${widget.basicApiPageSettingsModel.bankDetailsModel?.bankName} ${widget.productInfo.name}',
                 textAlign: TextAlign.center,
                 style:
                     const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),

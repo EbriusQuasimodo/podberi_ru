@@ -32,10 +32,11 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: 4.8.1
   dio: ^5.4.0
-  alice: ^0.4.1 #HTTP-инспектор
+  alice: ^0.4.1 #HTTP-инспектор (удалить перед публикацией )
   get_it: ^7.6.4
   connectivity_plus: ^5.0.2 #проверка подключения к сети
   riverpod_infinite_scroll_pagination: ^1.0.3 #пагинация
+  flutter_html: ^3.0.0-beta.2 #пакет для отображения текста с html тэгами
 
 dev_dependencies:
   flutter_test:

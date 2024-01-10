@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'favorites_debit_cards_controller.dart';
 
-///контроллер списка избранного
+///контроллер списка кредиток в избранном
 class FavoritesCreditCardsListController extends AutoDisposeAsyncNotifier<
     CreditCardsModel> {
   FavoritesCreditCardsListController();
@@ -36,7 +36,7 @@ class FavoritesCreditCardsListController extends AutoDisposeAsyncNotifier<
   }
 }
 
-///контроллер для получения всех избранных продуктов
+///контроллер для получения избранных кредитных карт
 final favoritesCreditCardsListControllerProvider = AutoDisposeAsyncNotifierProvider<
     FavoritesCreditCardsListController,CreditCardsModel>(
   FavoritesCreditCardsListController.new,

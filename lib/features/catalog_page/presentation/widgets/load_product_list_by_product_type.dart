@@ -24,6 +24,7 @@ class LoadProductListByProductType extends ConsumerWidget {
           itemsCount: debitCards.itemsCount,
         );
       }, error: (error, _) {
+            print(_);
         return OnErrorWidget(
             error: error.toString(),
             onGoBackButtonTap: () {

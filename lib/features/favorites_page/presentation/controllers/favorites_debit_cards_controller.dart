@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 final filterProductUrlStateProvider = StateProvider.autoDispose<String>((ref) {
   return 'debit_cards';
 });
-///контроллер списка избранного
+///контроллер списка дебетовок в  избранном
 class FavoritesDebitCardsListController extends AutoDisposeAsyncNotifier<
     DebitCardsModel> {
   FavoritesDebitCardsListController();
@@ -37,7 +37,7 @@ class FavoritesDebitCardsListController extends AutoDisposeAsyncNotifier<
   }
 }
 
-///контроллер для получения всех избранных продуктов
+///контроллер для получения всех дебетовок в избранном
 final favoritesDebitCardsListControllerProvider = AutoDisposeAsyncNotifierProvider<
     FavoritesDebitCardsListController,DebitCardsModel>(
   FavoritesDebitCardsListController.new,

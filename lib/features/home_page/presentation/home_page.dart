@@ -8,7 +8,6 @@ import 'package:podberi_ru/features/home_page/presentation/widgets/blog_widget.d
 import 'package:podberi_ru/core/presentation/custom_app_bar_with_search.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/promocodes_ads_widgets/promocodes_ads_widget.dart';
 
-import 'controllers/banks_controller.dart';
 import 'controllers/best_offer_controller.dart';
 import 'controllers/best_credit_cards_controller.dart';
 import 'controllers/best_debit_cards_controller.dart';
@@ -52,16 +51,13 @@ class _HomePageState extends ConsumerState<HomePage> {
             //const StoriesWidget(),
             ref.watch(bestOfferControllerProvider).when(
               data: (bestOffer) {
-                return BestOfferWidget(
-                  bestOffer: bestOffer,
-                );
+                return bestOffer.isNotEmpty
+                    ? BestOfferWidget(
+                        bestOffer: bestOffer,
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink());
               },
               error: (error, _) {
-                // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                //   ScaffoldMessenger.of(context).showSnackBar(
-                //     SnackBar(content: Text(error.toString())),
-                //   );
-                // });
                 return const SliverToBoxAdapter(child: SizedBox.shrink());
                 //return  SliverToBoxAdapter(child: CustomErrorPageWidget(error: error.toString(),bottomPadding: 0,));
               },
@@ -77,9 +73,11 @@ class _HomePageState extends ConsumerState<HomePage> {
 
             ref.watch(bestCreditCardsControllerProvider).when(
               data: (creditCards) {
-                return BestCreditCardsWidget(
-                  creditCards: creditCards.items,
-                );
+                return creditCards.items.isNotEmpty
+                    ? BestCreditCardsWidget(
+                        creditCards: creditCards.items,
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink());
               },
               error: (error, _) {
                 // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -115,9 +113,11 @@ class _HomePageState extends ConsumerState<HomePage> {
 
             ref.watch(bestDebitCardsControllerProvider).when(
               data: (debitCards) {
-                return BestDebitCardsWidget(
-                  debitCards: debitCards.items,
-                );
+                return debitCards.items.isNotEmpty
+                    ? BestDebitCardsWidget(
+                        debitCards: debitCards.items,
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox.shrink());
               },
               error: (error, _) {
                 return const SliverToBoxAdapter(child: SizedBox.shrink());

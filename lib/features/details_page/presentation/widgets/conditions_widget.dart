@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
@@ -24,7 +25,7 @@ class ConditionsWidget extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.only(
-                  top: 30, bottom: 20, left: 15, right: 15),
+                  top: 30, bottom: 10, left: 15, right: 15),
               child: Text(
                 'Условия',
                 textAlign: TextAlign.center,
@@ -37,15 +38,18 @@ class ConditionsWidget extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 30, left: 15, right: 15),
-              child: Text(
-                productInfo.descriptions!.service,
-                 textAlign: TextAlign.justify,
-                style: const TextStyle(
-                  color: ThemeApp.backgroundBlack,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+              child: Html(data: productInfo.descriptions!.service, style: {"product_description": Style(
+                color: ThemeApp.backgroundBlack, fontSize: FontSize(12), fontWeight: FontWeight.w400,
+              )},),
+              // child: Text(
+              //   productInfo.descriptions!.service,
+              //    textAlign: TextAlign.justify,
+              //   style: const TextStyle(
+              //     color: ThemeApp.backgroundBlack,
+              //     fontSize: 12,
+              //     fontWeight: FontWeight.w400,
+              //   ),
+              // ),
             ),
           ],
         ),
