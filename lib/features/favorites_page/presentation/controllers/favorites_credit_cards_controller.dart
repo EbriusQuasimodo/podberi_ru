@@ -3,9 +3,9 @@ import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/favorites_page/data/credit_cards/favorites_credit_cards_repository.dart';
+import 'package:podberi_ru/features/favorites_page/presentation/favorites_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'favorites_debit_cards_controller.dart';
 
 ///контроллер списка кредиток в избранном
 class FavoritesCreditCardsListController extends AutoDisposeAsyncNotifier<
@@ -18,7 +18,7 @@ class FavoritesCreditCardsListController extends AutoDisposeAsyncNotifier<
   @override
   FutureOr<CreditCardsModel> build() async {
     List<FavoritesCreditCardsData> productIdListCreditCards = [];
-    productTypeUrl = ref.watch(filterProductUrlStateProvider);
+    productTypeUrl = ref.watch(favoritesProductUrlStateProvider);
 
         await isar?.txn(() async {
           productIdListCreditCards =

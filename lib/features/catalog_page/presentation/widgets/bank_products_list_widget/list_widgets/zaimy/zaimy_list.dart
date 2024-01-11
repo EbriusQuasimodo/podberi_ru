@@ -8,14 +8,13 @@ import 'package:podberi_ru/features/catalog_page/presentation/controllers/debit_
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/zaimy_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/zaimy/zaimy_button_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
-import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
 
 class ZaimyListWidget extends ConsumerStatefulWidget {
   final int itemsCount;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
-  ///list of debit cards. when press on card - go to [DetailsPage]
+  ///list of zaimy. when press on card - go to [LoadDetailsPageByProductType]
   const ZaimyListWidget({
     super.key,
     required this.basicApiPageSettingsModel,
@@ -46,15 +45,17 @@ class _ZaimyListWidgetState extends ConsumerState<ZaimyListWidget> {
               productInfo: zaimyCards.items[index],
               productRating: '4.8');
         }, error: (error, _) {
-          return OnErrorWidget(
-              error: error.toString(),
-              onGoBackButtonTap: () {
-                ref.watch(goRouterProvider).pop();
-              },
-              onRefreshButtonTap: () {
-                ref.refresh(debitCardsControllerProvider(
-                    widget.basicApiPageSettingsModel));
-              });
+          return SliverFillRemaining(
+            child: OnErrorWidget(
+                error: error.toString(),
+                onGoBackButtonTap: () {
+                  ref.watch(goRouterProvider).pop();
+                },
+                onRefreshButtonTap: () {
+                  ref.refresh(debitCardsControllerProvider(
+                      widget.basicApiPageSettingsModel));
+                }),
+          );
         }, loading: () {
           return  const SliverFillRemaining(
             child: CustomLoadingCardWidget(

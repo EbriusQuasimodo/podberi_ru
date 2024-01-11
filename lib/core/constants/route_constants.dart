@@ -2,7 +2,6 @@ import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.d
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/select_product_type_page.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
-import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/select_category_promo_codes_page.dart';
@@ -23,7 +22,7 @@ class RouteConstants {
   static const String catalog = '/catalog';
 
   ///страница деталей (в нижнем баре ее нет,
-  ///но на нее можно попасть через каталог избранное и сравнение [DetailsPage]
+  ///но на нее можно попасть через каталог избранное и сравнение [LoadDetailsPageByProductType]
   static const String details = '/details';
 
   ///страница избранного [FavoritesPage]

@@ -3,18 +3,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
-import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
+import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 
-import 'row_description_widget.dart';
+import '../row_description_widget.dart';
 
 
-class CardInfoWidget extends StatelessWidget {
-  final ListDebitCardsModel productInfo;
+class CreditCardInfoWidget extends StatelessWidget {
+  final ListCreditCardsModel productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   ///виджет с основной информацией о банковском продукте (подробное описание его фукнций и название банка)
-  ///используется в [DetailsPage]
-  const CardInfoWidget({super.key, required this.productInfo, required this.basicApiPageSettingsModel});
+  ///используется в [LoadDetailsPageByProductType]
+  const CreditCardInfoWidget({super.key, required this.productInfo, required this.basicApiPageSettingsModel});
 
   @override
   Widget build(BuildContext context) {

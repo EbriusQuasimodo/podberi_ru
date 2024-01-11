@@ -8,7 +8,7 @@ import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/debit_cards/debit_card_button_widget.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_debit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_zaimy_controller.dart';
-
+import 'package:podberi_ru/features/favorites_page/presentation/favorites_controller.dart';
 import 'favorite_zaimy_widget.dart';
 
 class FavoritesZaimyList extends ConsumerWidget {
@@ -35,21 +35,23 @@ class FavoritesZaimyList extends ConsumerWidget {
                     },
                     productInfo: favoritesZaimy.items[index],
                     basicApiPageSettingsModel: BasicApiPageSettingsModel(
-                      productTypeUrl: ref.watch(filterProductUrlStateProvider),
+                      productTypeUrl: ref.watch(favoritesProductUrlStateProvider),
                       pageName: 'Избранное',
                     ),
                     productRating: '4.8',
                   );
                 },
                 error: (error, _) {
-                  return OnErrorWidget(
-                      error: error.toString(),
-                      onGoBackButtonTap: () {
-                        ref.watch(goRouterProvider).pop();
-                      },
-                      onRefreshButtonTap: () {
-                        ref.refresh(favoritesZaimyListControllerProvider);
-                      });
+                  return SliverFillRemaining(
+                    child: OnErrorWidget(
+                        error: error.toString(),
+                        onGoBackButtonTap: () {
+                          ref.watch(goRouterProvider).pop();
+                        },
+                        onRefreshButtonTap: () {
+                          ref.refresh(favoritesZaimyListControllerProvider);
+                        }),
+                  );
                 }, loading: () {
               return const SliverFillRemaining(
                 child: CustomLoadingCardWidget(

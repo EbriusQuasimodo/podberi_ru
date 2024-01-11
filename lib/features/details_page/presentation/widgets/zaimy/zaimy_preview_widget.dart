@@ -16,15 +16,17 @@ import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_card
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 
-class CardPreviewWidget extends ConsumerStatefulWidget {
-  final ListDebitCardsModel productInfo;
+class ZaimyPreviewWidget extends ConsumerStatefulWidget {
+  final ListZaimyModel productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   final VoidCallback onFavoritesOrComparisonTap;
 
   ///виджет с превью банковского продукта (фото, название, кнопка Заказать), используется в [DetailsPage]
-  const CardPreviewWidget({
+  const ZaimyPreviewWidget({
     super.key,
     required this.productInfo,
     required this.basicApiPageSettingsModel,
@@ -32,10 +34,10 @@ class CardPreviewWidget extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<CardPreviewWidget> createState() => _CardPreviewWidgetState();
+  ConsumerState<ZaimyPreviewWidget> createState() => _ZaimyPreviewWidgetState();
 }
 
-class _CardPreviewWidgetState extends ConsumerState<CardPreviewWidget> {
+class _ZaimyPreviewWidgetState extends ConsumerState<ZaimyPreviewWidget> {
   final _controllerBestOffers = PageController(
     viewportFraction: 0.9,
   );

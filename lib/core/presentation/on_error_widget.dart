@@ -18,42 +18,36 @@ class OnErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (error == NothingFoundException().message) {
-      return SliverFillRemaining(
-        child: Container(
-          margin: const EdgeInsets.only(top: 2, bottom: 72),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: ThemeApp.mainWhite,
-          ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 57, left: 57),
-              child: Text(error.toString()),
-            ),
+      return Container(
+        margin: const EdgeInsets.only(top: 2, bottom: 72),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: ThemeApp.mainWhite,
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 57, left: 57),
+            child: Text(error.toString()),
           ),
         ),
       );
     } else if (error.toString() == NoInternetConnectionException().message) {
-      return SliverFillRemaining(
-        child: CustomErrorPageWidget(
-          buttonName: 'Перезагрузить',
-          onTap: () {
-            onRefreshButtonTap();
-          },
-          error: error.toString(),
-          bottomPadding: 72,
-        ),
-      );
-    }
-    return SliverFillRemaining(
-      child: CustomErrorPageWidget(
-        buttonName: 'Вернуться',
+      return CustomErrorPageWidget(
+        buttonName: 'Перезагрузить',
         onTap: () {
-          onGoBackButtonTap();
+          onRefreshButtonTap();
         },
         error: error.toString(),
         bottomPadding: 72,
-      ),
+      );
+    }
+    return CustomErrorPageWidget(
+      buttonName: 'Вернуться',
+      onTap: () {
+        onGoBackButtonTap();
+      },
+      error: error.toString(),
+      bottomPadding: 72,
     );
   }
 }

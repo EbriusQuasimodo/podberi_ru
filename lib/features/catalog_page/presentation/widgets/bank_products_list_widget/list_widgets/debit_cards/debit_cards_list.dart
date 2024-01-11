@@ -6,7 +6,6 @@ import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/debit_cards_controller.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
-import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
 import 'debit_card_button_widget.dart';
 
@@ -14,7 +13,7 @@ class DebitCardsListWidget extends ConsumerStatefulWidget {
   final int itemsCount;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
-  ///list of debit cards. when press on card - go to [DetailsPage]
+  ///list of debit cards. when press on card - go to [LoadDetailsPageByProductType]
   const DebitCardsListWidget({
     super.key,
     required this.basicApiPageSettingsModel,
@@ -45,15 +44,17 @@ class _DebitCardsListWidgetState extends ConsumerState<DebitCardsListWidget> {
               productInfo: debitCards.items[index],
               productRating: '4.8');
         }, error: (error, _) {
-          return OnErrorWidget(
-              error: error.toString(),
-              onGoBackButtonTap: () {
-                ref.watch(goRouterProvider).pop();
-              },
-              onRefreshButtonTap: () {
-                ref.refresh(debitCardsControllerProvider(
-                    widget.basicApiPageSettingsModel));
-              });
+          return SliverFillRemaining(
+            child: OnErrorWidget(
+                error: error.toString(),
+                onGoBackButtonTap: () {
+                  ref.watch(goRouterProvider).pop();
+                },
+                onRefreshButtonTap: () {
+                  ref.refresh(debitCardsControllerProvider(
+                      widget.basicApiPageSettingsModel));
+                }),
+          );
         }, loading: () {
          return  const SliverFillRemaining(
             child: CustomLoadingCardWidget(

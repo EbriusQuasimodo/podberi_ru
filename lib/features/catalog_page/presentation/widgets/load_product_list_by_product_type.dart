@@ -22,6 +22,11 @@ class LoadProductListByProductType extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if(basicApiPageSettingsModel.whereFrom == 'allBanksPage'){
+      basicApiPageSettingsModel.productTypeUrl =ref.watch(productTypeUrlFromAllBanksStateProvider);
+    }else if (basicApiPageSettingsModel.whereFrom == 'homePageBanks'){
+      basicApiPageSettingsModel.productTypeUrl =ref.watch(productTypeUrlFromHomeBanksStateProvider);
+    }
     if (basicApiPageSettingsModel.productTypeUrl == 'debit_cards') {
       return ref
           .watch(debitCardsControllerProvider(basicApiPageSettingsModel))
@@ -30,25 +35,29 @@ class LoadProductListByProductType extends ConsumerWidget {
           basicApiPageSettingsModel: basicApiPageSettingsModel,
           itemsCount: debitCards.itemsCount,
         )
-        :OnErrorWidget(
-            error: NothingFoundException().message,
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(
-                  debitCardsControllerProvider(basicApiPageSettingsModel));
-            });
+        :SliverFillRemaining(
+          child: OnErrorWidget(
+              error: NothingFoundException().message,
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(
+                    debitCardsControllerProvider(basicApiPageSettingsModel));
+              }),
+        );
       }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(
-                  debitCardsControllerProvider(basicApiPageSettingsModel));
-            });
+        return SliverFillRemaining(
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(
+                    debitCardsControllerProvider(basicApiPageSettingsModel));
+              }),
+        );
       }, loading: () {
         return const SliverFillRemaining(
           child: CustomLoadingCardWidget(
@@ -64,25 +73,29 @@ class LoadProductListByProductType extends ConsumerWidget {
           basicApiPageSettingsModel: basicApiPageSettingsModel,
           itemsCount: creditCards.itemsCount,
         )
-            :OnErrorWidget(
-            error: NothingFoundException().message,
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(
-                  debitCardsControllerProvider(basicApiPageSettingsModel));
-            });
+            :SliverFillRemaining(
+              child: OnErrorWidget(
+              error: NothingFoundException().message,
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(
+                    debitCardsControllerProvider(basicApiPageSettingsModel));
+              }),
+            );
       }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(
-                  creditCardsControllerProvider(basicApiPageSettingsModel));
-            });
+        return SliverFillRemaining(
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(
+                    creditCardsControllerProvider(basicApiPageSettingsModel));
+              }),
+        );
       }, loading: () {
         return const SliverFillRemaining(
           child: CustomLoadingCardWidget(
@@ -96,25 +109,29 @@ class LoadProductListByProductType extends ConsumerWidget {
         return zaimy.items.isNotEmpty ? BankProductsListWidget(
           basicApiPageSettingsModel: basicApiPageSettingsModel,
           itemsCount: zaimy.itemsCount,
-        ) :OnErrorWidget(
-            error: NothingFoundException().message,
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(
-                  debitCardsControllerProvider(basicApiPageSettingsModel));
-            });
+        ) :SliverFillRemaining(
+          child: OnErrorWidget(
+              error: NothingFoundException().message,
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(
+                    debitCardsControllerProvider(basicApiPageSettingsModel));
+              }),
+        );
       }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(
-                  debitCardsControllerProvider(basicApiPageSettingsModel));
-            });
+        return SliverFillRemaining(
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(
+                    debitCardsControllerProvider(basicApiPageSettingsModel));
+              }),
+        );
       }, loading: () {
         return const SliverFillRemaining(
           child: CustomLoadingCardWidget(
@@ -123,10 +140,12 @@ class LoadProductListByProductType extends ConsumerWidget {
         );
       });
     } else {
-      return OnErrorWidget(
-          error: NothingFoundException().message,
-          onGoBackButtonTap: () {},
-          onRefreshButtonTap: () {});
+      return SliverFillRemaining(
+        child: OnErrorWidget(
+            error: NothingFoundException().message,
+            onGoBackButtonTap: () {},
+            onRefreshButtonTap: () {}),
+      );
     }
   }
 }

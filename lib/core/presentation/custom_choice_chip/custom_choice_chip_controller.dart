@@ -3,7 +3,7 @@ import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_contro
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_debit_cards_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
-
+import 'package:podberi_ru/features/favorites_page/presentation/favorites_controller.dart';
 final customChoiceChipControllerProvider = StateNotifierProvider.autoDispose<
     CustomChoiceChipControllerNotifier, String>(CustomChoiceChipControllerNotifier.new);
 class CustomChoiceChipControllerNotifier extends StateNotifier<String>{
@@ -76,22 +76,22 @@ class CustomChoiceChipControllerNotifier extends StateNotifier<String>{
     } else if (whereFrom == 'favorites') {
       switch (element) {
         case 'Дебетовые карты':
-          ref.read(filterProductUrlStateProvider.notifier).state =
+          ref.read(favoritesProductUrlStateProvider.notifier).state =
           'debit_cards';
 
           break;
         case 'Кредитные карты':
-          ref.read(filterProductUrlStateProvider.notifier).state =
+          ref.read(favoritesProductUrlStateProvider.notifier).state =
           'credit_cards';
 
           break;
         case 'РКО':
-          ref.read(filterProductUrlStateProvider.notifier).state =
+          ref.read(favoritesProductUrlStateProvider.notifier).state =
           'rko';
 
           break;
         case 'Микрозаймы':
-          ref.read(filterProductUrlStateProvider.notifier).state =
+          ref.read(favoritesProductUrlStateProvider.notifier).state =
           'zaimy';
 
           break;

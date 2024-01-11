@@ -4,9 +4,7 @@ import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_card
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/favorites_page/data/debit_cards/favorites_debit_cards_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-final filterProductUrlStateProvider = StateProvider.autoDispose<String>((ref) {
-  return 'debit_cards';
-});
+import 'package:podberi_ru/features/favorites_page/presentation/favorites_controller.dart';
 ///контроллер списка дебетовок в  избранном
 class FavoritesDebitCardsListController extends AutoDisposeAsyncNotifier<
     DebitCardsModel> {
@@ -18,7 +16,7 @@ class FavoritesDebitCardsListController extends AutoDisposeAsyncNotifier<
   @override
   FutureOr<DebitCardsModel> build() async {
     List<FavoritesDebitCardsData> productIdListDebitCards = [];
-    productTypeUrl = ref.watch(filterProductUrlStateProvider);
+    productTypeUrl = ref.watch(favoritesProductUrlStateProvider);
 
         await isar?.txn(() async {
           productIdListDebitCards =

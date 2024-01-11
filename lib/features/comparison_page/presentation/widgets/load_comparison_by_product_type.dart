@@ -81,14 +81,16 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
               ),
             );
           }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(comparisonDebitCardsListControllerProvider);
-            });
+        return SliverFillRemaining(
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(comparisonDebitCardsListControllerProvider);
+              }),
+        );
       }, loading: () {
         return const SliverFillRemaining(
           child: CustomLoadingCardWidget(
@@ -153,14 +155,16 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
               ),
             );
           }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(comparisonCreditCardsListControllerProvider);
-            });
+        return SliverFillRemaining(
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(comparisonCreditCardsListControllerProvider);
+              }),
+        );
       }, loading: () {
         return const SliverFillRemaining(
           child: CustomLoadingCardWidget(
@@ -225,14 +229,16 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
               ),
             );
           }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(comparisonZaimyListControllerProvider);
-            });
+        return SliverFillRemaining(
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(comparisonZaimyListControllerProvider);
+              }),
+        );
       }, loading: () {
         return const SliverFillRemaining(
           child: CustomLoadingCardWidget(

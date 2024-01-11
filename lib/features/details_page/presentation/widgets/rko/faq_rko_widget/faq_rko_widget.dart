@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/details_page/presentation/widgets/rko_big_description_widgets/faq_rko_widget/custom_dropdown_button_widget.dart';
+
+import 'custom_dropdown_button_widget.dart';
 
 class FaqRkoWidget extends StatefulWidget {
   FaqRkoWidget({super.key});

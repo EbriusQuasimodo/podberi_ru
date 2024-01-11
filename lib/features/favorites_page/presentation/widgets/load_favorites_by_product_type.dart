@@ -10,6 +10,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_credit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_debit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_zaimy_controller.dart';
+import 'package:podberi_ru/features/favorites_page/presentation/favorites_controller.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/widgets/debit_cards/favorites_debit_cards_list_widget.dart';
 
 import 'credit_cards/favorites_credit_cards_list_widget.dart';
@@ -22,7 +23,8 @@ class LoadFavoritesByProductType extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (basicApiPageSettingsModel.productTypeUrl == 'debit_cards') {
+    print(basicApiPageSettingsModel.productTypeUrl);
+    if (ref.watch(favoritesProductUrlStateProvider) ==  'debit_cards') {
       return ref
           .watch(favoritesDebitCardsListControllerProvider)
           .when(data: (debitCards) {
@@ -77,14 +79,16 @@ class LoadFavoritesByProductType extends ConsumerWidget {
           ),
         );
       }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.watch(goRouterProvider).pop();
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(favoritesDebitCardsListControllerProvider);
-            });
+        return SliverFillRemaining(
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(favoritesDebitCardsListControllerProvider);
+              }),
+        );
       }, loading: () {
         return const SliverFillRemaining(
           child: CustomLoadingCardWidget(
@@ -92,7 +96,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
           ),
         );
       });
-    }else if(basicApiPageSettingsModel.productTypeUrl =='credit_cards'){
+    }else if(ref.watch(favoritesProductUrlStateProvider) ==  'credit_cards'){
       return ref
           .watch(favoritesCreditCardsListControllerProvider)
           .when(data: (creditCards) {
@@ -146,14 +150,16 @@ class LoadFavoritesByProductType extends ConsumerWidget {
           ),
         );
       }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.refresh(favoritesCreditCardsListControllerProvider);
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(favoritesCreditCardsListControllerProvider);
-            });
+        return SliverFillRemaining(
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.refresh(favoritesCreditCardsListControllerProvider);
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(favoritesCreditCardsListControllerProvider);
+              }),
+        );
       }, loading: () {
         return const SliverFillRemaining(
           child: CustomLoadingCardWidget(
@@ -161,7 +167,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
           ),
         );
       });
-    }else if (basicApiPageSettingsModel.productTypeUrl =='zaimy'){
+    }else if (ref.watch(favoritesProductUrlStateProvider) ==  'zaimy'){
       return ref
           .watch(favoritesZaimyListControllerProvider)
           .when(data: (zaimy) {
@@ -215,14 +221,16 @@ class LoadFavoritesByProductType extends ConsumerWidget {
           ),
         );
       }, error: (error, _) {
-        return OnErrorWidget(
-            error: error.toString(),
-            onGoBackButtonTap: () {
-              ref.refresh(favoritesCreditCardsListControllerProvider);
-            },
-            onRefreshButtonTap: () {
-              ref.refresh(favoritesZaimyListControllerProvider);
-            });
+        return SliverFillRemaining(
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.refresh(favoritesCreditCardsListControllerProvider);
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(favoritesZaimyListControllerProvider);
+              }),
+        );
       }, loading: () {
         return const SliverFillRemaining(
           child: CustomLoadingCardWidget(
@@ -231,7 +239,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
         );
       });
     }else{
-      return OnErrorWidget(error: NothingFoundException().message, onGoBackButtonTap: (){}, onRefreshButtonTap: (){});
+      return SliverFillRemaining(child: OnErrorWidget(error: NothingFoundException().message, onGoBackButtonTap: (){}, onRefreshButtonTap: (){}));
 
     }
 

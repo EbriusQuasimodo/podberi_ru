@@ -3,14 +3,13 @@ import 'package:flutter_html/flutter_html.dart';
 
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
-import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 
-class ConditionsWidget extends StatelessWidget {
+class DebitCardConditionsWidget extends StatelessWidget {
   final ListDebitCardsModel productInfo;
 
   ///виджет с подробным описанием условий банковского продукта
-  ///используется в [DetailsPage]
-  const ConditionsWidget({
+  ///используется в [LoadDetailsPageByProductType]
+  const DebitCardConditionsWidget({
     super.key,
     required this.productInfo,
   });

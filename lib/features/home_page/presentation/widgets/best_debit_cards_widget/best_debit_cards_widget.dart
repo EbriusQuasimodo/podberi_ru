@@ -8,13 +8,12 @@ import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
-import 'package:podberi_ru/features/details_page/presentation/details_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_debit_cards_widget/best_debit_card_button_widget.dart';
 
 
 class BestDebitCardsWidget extends ConsumerWidget {
   final List<ListDebitCardsModel> debitCards;
-  ///best debit cards widget when pressed go to [DetailsPage]
+  ///best debit cards widget when pressed go to [LoadDetailsPageByProductType]
   const BestDebitCardsWidget({super.key, required this.debitCards});
 
 
