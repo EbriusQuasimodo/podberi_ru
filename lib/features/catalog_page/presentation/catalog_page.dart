@@ -12,8 +12,9 @@ import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_p
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/bank_product_list_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/load_product_list_by_product_type.dart';
+import 'package:podberi_ru/features/filters_page/filters_page.dart';
 
-import 'package:podberi_ru/features/filters_page/presentation/filters_page.dart';
+import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page.dart';
 
 import 'controllers/credit_cards_controller.dart';
 import 'controllers/debit_cards_controller.dart';

@@ -8,7 +8,7 @@ import 'package:podberi_ru/features/catalog_page/data/zaimy_data/zaimy_repositor
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
-import 'package:podberi_ru/features/filters_page/presentation/filters_page_controller.dart';
+import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page_controller.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -29,16 +29,16 @@ class ZaimyController extends AutoDisposeFamilyAsyncNotifier<
     ///(из выбора категории продука, с главной страницы или со страницы всех банков)
     switch (arg.whereFrom) {
       case 'selectProductPage':
-        filterBanks = ref.watch(filterBanksFromSelectProductPageStateProvider);
+        filterBanks = ref.watch(debitCardsFilterBanksFromSelectProductPageStateProvider);
         filterPaySystem =
-            ref.watch(filterPaySystemFromSelectProductPageStateProvider);
+            ref.watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider);
         filterCashBack =
-            ref.watch(filterCashBackFromSelectProductPageStateProvider);
+            ref.watch(debitCardsFilterCashBackFromSelectProductPageStateProvider);
         break;
       case 'homePage':
-        filterBanks = ref.watch(filterBanksFromHomePageStateProvider);
-        filterPaySystem = ref.watch(filterPaySystemFromHomePageStateProvider);
-        filterCashBack = ref.watch(filterCashBackFromHomePageStateProvider);
+        filterBanks = ref.watch(debitCardsFilterBanksFromHomePageStateProvider);
+        filterPaySystem = ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider);
+        filterCashBack = ref.watch(debitCardsFilterCashBackFromHomePageStateProvider);
       case 'allBanksPage':
         filterBanks = arg.filtersModel?.banks ?? [];
     }

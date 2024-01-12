@@ -37,19 +37,22 @@ class CreditCardsRepository implements CreditCardsRepositoryImpl {
     if(arg.filtersModel!.banks!.isNotEmpty ||arg.filtersModel!.cashBack!.isNotEmpty||arg.filtersModel!.paySystem!.isNotEmpty) {
       if (arg.filtersModel!.banks!.isNotEmpty) {
         for (int i = 0; i < arg.filtersModel!.banks!.length; i++) {
-          productType += '&bank_details.bank_name=${arg.filtersModel?.banks?[i]}';
+          productType += '&bank_details.bank_name gte=${arg.filtersModel?.banks?[i]}';
         }
       }
-      if (arg.filtersModel!.cashBack!.isNotEmpty) {
+      if (arg.filtersModel!.noPercentPeriod!.isNotEmpty) {
 
-        for (int i = 0; i < arg.filtersModel!.cashBack!.length; i++) {
-          productType += '&bonus_format=${arg.filtersModel?.cashBack?[i]}';
+        for (int i = 0; i < arg.filtersModel!.noPercentPeriod!.length; i++) {
+          productType += '&no_percent_period gte=${arg.filtersModel?.noPercentPeriod?[i]}';
         }
       }
-      if (arg.filtersModel!.paySystem!.isNotEmpty) {
+      if (arg.filtersModel!.percents!.isNotEmpty) {
 
-        for (int i = 0; i < arg.filtersModel!.paySystem!.length; i++) {
-          productType += '&pay_system=${arg.filtersModel?.paySystem?[i]}';
+        for (int i = 0; i < arg.filtersModel!.percents!.length; i++) {
+          if (arg.filtersModel?.percents?[i] == "50"){
+          productType += '&max_percent gte=${arg.filtersModel?.percents?[i]}';}else {
+            productType += '&max_percent ite=${arg.filtersModel?.percents?[i]}';
+          }
         }
       }
     }

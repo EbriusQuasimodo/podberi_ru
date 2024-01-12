@@ -4,21 +4,20 @@ import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dar
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
-class ChoiceChipItem extends ConsumerStatefulWidget {
+class ChoiceChipWithManyChoiceItem extends ConsumerStatefulWidget {
   final List<String>? itemsNames;
-  final AutoDisposeStateProvider<List<String>> providerName;
   final List<String> filters;
   final int length;
   final List<BankListDetailsModel>? banksList;
 ///виджет для чойс чипов в фильтрах (чтобы переиспользовать его)
-   ChoiceChipItem(
-      {super.key, this.itemsNames, this.banksList, required this.filters, required this.length, required this.providerName,});
+   ChoiceChipWithManyChoiceItem(
+      {super.key, this.itemsNames, this.banksList, required this.filters, required this.length,});
 
   @override
-  ConsumerState<ChoiceChipItem> createState() => _ChoiceChipItemState();
+  ConsumerState<ChoiceChipWithManyChoiceItem> createState() => _ChoiceChipWithManyChoiceItemState();
 }
 
-class _ChoiceChipItemState extends ConsumerState<ChoiceChipItem> {
+class _ChoiceChipWithManyChoiceItemState extends ConsumerState<ChoiceChipWithManyChoiceItem> {
   @override
   Widget build(BuildContext context) {
     var list = <Widget>[const SizedBox(width: 12)];
@@ -60,8 +59,6 @@ class _ChoiceChipItemState extends ConsumerState<ChoiceChipItem> {
                     });
                     widget.filters.removeWhere((String name) {return name ==widget.banksList?[i].bankName;});
                   }
-                //  ref.watch(widget.providerName.notifier).state = widget.filters;
-                 // print(widget.filters);
                 });
 
               },

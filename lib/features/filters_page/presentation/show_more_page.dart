@@ -7,7 +7,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class ShowMorePage extends ConsumerStatefulWidget {
-  final List<BankListDetailsModel> banksList;
+  final List<String> filtersNamesList;
   final AutoDisposeStateProvider<List<String>> providerName;
   final List<String> filters;
   final VoidCallback onTapTrashButton;
@@ -16,27 +16,33 @@ class ShowMorePage extends ConsumerStatefulWidget {
   ShowMorePage({
     super.key,
     required this.filters,
-    required this.banksList,
+    required this.filtersNamesList,
     required this.onTapSaveButton,
     required this.onTapTrashButton,
     required this.providerName,
   });
 
   @override
-  ConsumerState<ShowMorePage> createState() => _ShowMorePageState();
+  ConsumerState<ShowMorePage> createState() => _ShowMoreState();
 }
 
-class _ShowMorePageState extends ConsumerState<ShowMorePage> {
+class _ShowMoreState extends ConsumerState<ShowMorePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
+          SliverAppBar(
             scrolledUnderElevation: 0,
             backgroundColor: ThemeApp.mainWhite,
             pinned: true,
             title: Text('Фильтры'),
+            leading: IconButton(
+                onPressed: () {
+                  widget.onTapSaveButton();
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.arrow_back_ios_new)),
           ),
           SliverContainer(
             margin: const EdgeInsets.only(top: 2, bottom: 82),
@@ -51,8 +57,8 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                   top: 15, right: 15, left: 15, bottom: 9),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  childCount: widget.banksList.length,
-                  (context, index) => Container(
+                  childCount: widget.filtersNamesList.length,
+                      (context, index) => Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
                         color: ThemeApp.grey,
@@ -64,12 +70,12 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                         borderRadius: BorderRadius.circular(12),
                         onTap: () {
                           setState(() {
-                            if (!widget.filters.contains(widget.banksList[index].bankName)) {
+                            if (!widget.filters.contains(widget.filtersNamesList[index])) {
                               //widget.filters.clear();
-                              widget.filters.add(widget.banksList[index].bankName);
+                              widget.filters.add(widget.filtersNamesList[index]);
                             } else {
-                             widget.filters.removeWhere((String name) {
-                                return name == widget.banksList[index].bankName;
+                              widget.filters.removeWhere((String name) {
+                                return name == widget.filtersNamesList[index];
                               });
                             }
                             //ref.watch(widget.providerName.notifier).state = widget.filters;
@@ -81,7 +87,7 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(15),
-                              child: Text(widget.banksList[index].bankName,
+                              child: Text(widget.filtersNamesList[index],
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
@@ -98,7 +104,7 @@ class _ShowMorePageState extends ConsumerState<ShowMorePage> {
                                 'assets/icons/filer_check_icon.svg',
                                 height: 16,
                                 width: 16,
-                                color: widget.filters.contains(widget.banksList[index].bankName)
+                                color: widget.filters.contains(widget.filtersNamesList[index])
                                     ? ThemeApp.mainBlue
                                     : Colors.transparent,
                               ),

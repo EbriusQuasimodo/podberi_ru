@@ -23,7 +23,6 @@ class LoadFavoritesByProductType extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print(basicApiPageSettingsModel.productTypeUrl);
     if (ref.watch(favoritesProductUrlStateProvider) ==  'debit_cards') {
       return ref
           .watch(favoritesDebitCardsListControllerProvider)

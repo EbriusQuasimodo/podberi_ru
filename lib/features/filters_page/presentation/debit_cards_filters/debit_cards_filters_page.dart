@@ -5,45 +5,30 @@ import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
-import 'package:podberi_ru/features/filters_page/presentation/filters_page_controller.dart';
-import 'package:podberi_ru/features/filters_page/presentation/widgets/choice_chip_item.dart';
+import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page_controller.dart';
+import 'package:podberi_ru/features/filters_page/presentation/widgets/choice_chip_with_many_choice_item.dart';
 import 'package:podberi_ru/features/filters_page/presentation/widgets/save_button_widget.dart';
-import 'package:podberi_ru/features/filters_page/presentation/show_more_page.dart';
+import 'package:podberi_ru/features/filters_page/presentation/show_more_banks_page.dart';
 
-class FiltersPage extends ConsumerStatefulWidget {
+import '../show_more_page.dart';
+
+class DebitCardsFiltersPage extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
   ///страница с фильтрами
-  const FiltersPage({super.key, required this.basicApiPageSettingsModel});
+  const DebitCardsFiltersPage({super.key, required this.basicApiPageSettingsModel});
 
   @override
-  ConsumerState<FiltersPage> createState() => _FiltersPageState();
+  ConsumerState<DebitCardsFiltersPage> createState() => _DebitCardsFiltersPageState();
 }
 
-class _FiltersPageState extends ConsumerState<FiltersPage> {
-  final List<String> bankNamesList = [
-    'Тинькофф банк',
-    'Газпромбанк',
-    'Сбербанк',
-    'ВТБ банк',
-    'Альфа банк',
-    'Росбанк',
-    'МТС банк',
-    'Райфайзен Банк',
-    'Россельхозбанк',
-    'Банк Уралсиб',
-  ];
+class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
+
   final List<String> cashBackNamesList = [
     'Баллы',
     'Рубли',
     'Не важно',
     'Мили',
-  ];
-  final List<String> deliveryNamesList = [
-    'Любая',
-    'Курьером',
-    'По почте',
-    'В отделе'
   ];
   final List<String> paySystemNamesList = [
     'Любая',
@@ -54,13 +39,21 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
   ];
   final List<String> additionalConditionsNamesList = [
     'Бесплатное обслуживание',
-    'С процентом на остаток',
-    'Еще условие',
-    'И еще условия'
+    'Виртуальная карта',
+    'Моменатльный выпуск',
+    'Бесконтактная оплата',
+    'Доступно с 14 лет',
+    'Детская карта',
+    'Samsung Pay',
+    'Mir Pay',
+    'Выпуск за день',
+    'Выпуск допкарты',
+    'Рассрочка на покупки',
+    'Снятие наличных везде',
+    'Мультивалютная карта',
   ];
   List<String> selectedBanks = [];
   List<String> selectedCashBack = [];
-  List<String> selectedDelivery = [];
   List<String> selectedPaySystem = [];
   List<String> selectedAdditionalConditions = [];
 
@@ -69,66 +62,66 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
     switch (widget.basicApiPageSettingsModel.whereFrom) {
       case 'homePage':
         if (ref
-            .watch(filterBanksFromHomePageStateProvider.notifier)
+            .watch(debitCardsFilterBanksFromHomePageStateProvider.notifier)
             .state
             .isNotEmpty) {
           for (int i = 0;
               i <
                   ref
-                      .watch(filterBanksFromHomePageStateProvider.notifier)
+                      .watch(debitCardsFilterBanksFromHomePageStateProvider.notifier)
                       .state
                       .length;
               i++) {
             selectedBanks.add(ref
-                .watch(filterBanksFromHomePageStateProvider.notifier)
+                .watch(debitCardsFilterBanksFromHomePageStateProvider.notifier)
                 .state[i]);
           }
         }
         if (ref
-            .watch(filterCashBackFromHomePageStateProvider.notifier)
+            .watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier)
             .state
             .isNotEmpty) {
-          selectedCashBack = ref.watch(filterCashBackFromHomePageStateProvider);
+          selectedCashBack = ref.watch(debitCardsFilterCashBackFromHomePageStateProvider);
         }
         if (ref
-            .watch(filterPaySystemFromHomePageStateProvider.notifier)
+            .watch(debitCardsFilterPaySystemFromHomePageStateProvider.notifier)
             .state
             .isNotEmpty) {
           selectedPaySystem =
-              ref.watch(filterPaySystemFromHomePageStateProvider);
+              ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider);
         }
         break;
       case 'selectProductPage':
         if (ref
-            .watch(filterBanksFromSelectProductPageStateProvider.notifier)
+            .watch(debitCardsFilterBanksFromSelectProductPageStateProvider.notifier)
             .state
             .isNotEmpty) {
           for (int i = 0;
               i <
                   ref
-                      .watch(filterBanksFromSelectProductPageStateProvider
+                      .watch(debitCardsFilterBanksFromSelectProductPageStateProvider
                           .notifier)
                       .state
                       .length;
               i++) {
             selectedBanks.add(ref
-                .watch(filterBanksFromSelectProductPageStateProvider.notifier)
+                .watch(debitCardsFilterBanksFromSelectProductPageStateProvider.notifier)
                 .state[i]);
           }
         }
         if (ref
-            .watch(filterCashBackFromSelectProductPageStateProvider.notifier)
+            .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider.notifier)
             .state
             .isNotEmpty) {
           selectedCashBack =
-              ref.watch(filterCashBackFromSelectProductPageStateProvider);
+              ref.watch(debitCardsFilterCashBackFromSelectProductPageStateProvider);
         }
         if (ref
-            .watch(filterPaySystemFromSelectProductPageStateProvider.notifier)
+            .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider.notifier)
             .state
             .isNotEmpty) {
           selectedPaySystem =
-              ref.watch(filterPaySystemFromSelectProductPageStateProvider);
+              ref.watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider);
         }
         break;
     }
@@ -138,25 +131,25 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
   void saveFilters() {
     setState(() {
       if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
-        ref.watch(filterBanksFromHomePageStateProvider.notifier).state =
+        ref.watch(debitCardsFilterBanksFromHomePageStateProvider.notifier).state =
             selectedBanks;
-        ref.watch(filterCashBackFromHomePageStateProvider.notifier).state =
+        ref.watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier).state =
             selectedCashBack;
 
-        ref.watch(filterPaySystemFromHomePageStateProvider.notifier).state =
+        ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider.notifier).state =
             selectedPaySystem;
       }
       if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
         ref
-            .watch(filterBanksFromSelectProductPageStateProvider.notifier)
+            .watch(debitCardsFilterBanksFromSelectProductPageStateProvider.notifier)
             .state = selectedBanks;
 
         ref
-            .watch(filterCashBackFromSelectProductPageStateProvider.notifier)
+            .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider.notifier)
             .state = selectedCashBack;
 
         ref
-            .watch(filterPaySystemFromSelectProductPageStateProvider.notifier)
+            .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider.notifier)
             .state = selectedPaySystem;
       }
     });
@@ -165,24 +158,23 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
   void clearFilters() {
     setState(() {
       if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
-        ref.watch(filterBanksFromHomePageStateProvider.notifier).state = [];
-        ref.watch(filterCashBackFromHomePageStateProvider.notifier).state = [];
-        ref.watch(filterPaySystemFromHomePageStateProvider.notifier).state = [];
+        ref.watch(debitCardsFilterBanksFromHomePageStateProvider.notifier).state = [];
+        ref.watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier).state = [];
+        ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider.notifier).state = [];
       }
       if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
         ref
-            .watch(filterBanksFromSelectProductPageStateProvider.notifier)
+            .watch(debitCardsFilterBanksFromSelectProductPageStateProvider.notifier)
             .state = [];
         ref
-            .watch(filterCashBackFromSelectProductPageStateProvider.notifier)
+            .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider.notifier)
             .state = [];
         ref
-            .watch(filterPaySystemFromSelectProductPageStateProvider.notifier)
+            .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider.notifier)
             .state = [];
       }
       selectedBanks.clear();
       selectedCashBack.clear();
-      selectedDelivery.clear();
       selectedPaySystem.clear();
       selectedAdditionalConditions.clear();
     });
@@ -218,23 +210,23 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(top: 30, bottom: 20),
-                        child: Center(
-                          child: Text(
-                            'Найдено по запросу (2)',
-                            style: TextStyle(
-                                color: ThemeApp.backgroundBlack,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        color: ThemeApp.darkestGrey,
-                        height: 1,
-                        width: double.infinity,
-                      ),
+                      // const Padding(
+                      //   padding: EdgeInsets.only(top: 30, bottom: 20),
+                      //   child: Center(
+                      //     child: Text(
+                      //       'Найдено по запросу (2)',
+                      //       style: TextStyle(
+                      //           color: ThemeApp.backgroundBlack,
+                      //           fontSize: 14,
+                      //           fontWeight: FontWeight.w400),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Container(
+                      //   color: ThemeApp.darkestGrey,
+                      //   height: 1,
+                      //   width: double.infinity,
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -260,7 +252,7 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                                     Navigator.of(context, rootNavigator: true)
                                         .push(MaterialPageRoute(
                                             builder: (BuildContext context) {
-                                      return ShowMorePage(
+                                      return ShowMoreBanksPage(
                                           onTapSaveButton: () {
                                             saveFilters();
                                           },
@@ -272,8 +264,8 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                                                       .basicApiPageSettingsModel
                                                       .whereFrom ==
                                                   'selectProductPage'
-                                              ? filterBanksFromSelectProductPageStateProvider
-                                              : filterBanksFromHomePageStateProvider,
+                                              ? debitCardsFilterBanksFromSelectProductPageStateProvider
+                                              : debitCardsFilterBanksFromHomePageStateProvider,
                                           banksList: allBanks.items);
                                     }));
                                   },
@@ -289,15 +281,10 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                           ),
                         ],
                       ),
-                      ChoiceChipItem(
+                      ChoiceChipWithManyChoiceItem(
                         length: allBanks.items.length < 6 ? allBanks.items.length : 6,
                         banksList: allBanks.items,
                         filters: selectedBanks,
-                        providerName:
-                            widget.basicApiPageSettingsModel.whereFrom ==
-                                    'selectProductPage'
-                                ? filterBanksFromSelectProductPageStateProvider
-                                : filterBanksFromHomePageStateProvider,
                       ),
                       Container(
                         color: ThemeApp.darkestGrey,
@@ -314,39 +301,11 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                               fontSize: 14),
                         ),
                       ),
-                      ChoiceChipItem(
-                          providerName: widget
-                                      .basicApiPageSettingsModel.whereFrom ==
-                                  'selectProductPage'
-                              ? filterCashBackFromSelectProductPageStateProvider
-                              : filterCashBackFromHomePageStateProvider,
+                      ChoiceChipWithManyChoiceItem(
+
                           length: cashBackNamesList.length,
                           itemsNames: cashBackNamesList,
                           filters: selectedCashBack),
-                      Container(
-                        color: ThemeApp.darkestGrey,
-                        height: 1,
-                        width: double.infinity,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                        child: Text(
-                          'Доставка',
-                          style: TextStyle(
-                              color: ThemeApp.backgroundBlack,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14),
-                        ),
-                      ),
-                      ChoiceChipItem(
-                          providerName: widget
-                                      .basicApiPageSettingsModel.whereFrom ==
-                                  'selectProductPage'
-                              ? filterDeliveryFromSelectProductPageStateProvider
-                              : filterDeliveryFromHomePageStateProvider,
-                          length: deliveryNamesList.length,
-                          itemsNames: deliveryNamesList,
-                          filters: selectedDelivery),
                       Container(
                         color: ThemeApp.darkestGrey,
                         height: 1,
@@ -362,40 +321,74 @@ class _FiltersPageState extends ConsumerState<FiltersPage> {
                               fontSize: 14),
                         ),
                       ),
-                      ChoiceChipItem(
+                      ChoiceChipWithManyChoiceItem(
                         length: paySystemNamesList.length,
                         itemsNames: paySystemNamesList,
                         filters: selectedPaySystem,
-                        providerName: widget
-                                    .basicApiPageSettingsModel.whereFrom ==
-                                'selectProductPage'
-                            ? filterPaySystemFromSelectProductPageStateProvider
-                            : filterPaySystemFromHomePageStateProvider,
+
                       ),
                       Container(
                         color: ThemeApp.darkestGrey,
                         height: 1,
                         width: double.infinity,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                        child: Text(
-                          'Доп. условия',
-                          style: TextStyle(
-                              color: ThemeApp.backgroundBlack,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14),
-                        ),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
+                            child: Text(
+                              'Доп. условия',
+                              style: TextStyle(
+                                  color: ThemeApp.backgroundBlack,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 26, bottom: 15, right: 15),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                  borderRadius: BorderRadius.circular(12),
+                                  onTap: () {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return ShowMorePage(
+                                              onTapSaveButton: () {
+                                                saveFilters();
+                                              },
+                                              onTapTrashButton: () {
+                                                clearFilters();
+                                              },
+                                              filters: selectedAdditionalConditions,
+                                              providerName: widget
+                                                  .basicApiPageSettingsModel
+                                                  .whereFrom ==
+                                                  'selectProductPage'
+                                                  ? debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider
+                                                  : debitCardsFilterAdditionalConditionsFromHomePageStateProvider,
+                                              filtersNamesList: additionalConditionsNamesList);
+                                        }));
+                                  },
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(left: 40, top: 5),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: ThemeApp.backgroundBlack,
+                                      size: 14,
+                                    ),
+                                  )),
+                            ),
+                          ),
+                        ],
                       ),
-                      ChoiceChipItem(
-                        length: additionalConditionsNamesList.length,
+                      ChoiceChipWithManyChoiceItem(
+                        length: additionalConditionsNamesList.length < 6 ? additionalConditionsNamesList.length : 6,
                         itemsNames: additionalConditionsNamesList,
                         filters: selectedAdditionalConditions,
-                        providerName: widget
-                                    .basicApiPageSettingsModel.whereFrom ==
-                                'selectProductPage'
-                            ? filterAdditionalConditionsFromSelectProductPageStateProvider
-                            : filterAdditionalConditionsFromHomePageStateProvider,
+
                       ),
                     ],
                   ),

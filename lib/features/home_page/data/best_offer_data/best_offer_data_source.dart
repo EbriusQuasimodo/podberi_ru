@@ -16,7 +16,7 @@ class BestOfferGetDataSource {
     if (connectivityResult != ConnectivityResult.none) {
       try {
         final re = await dio.get(
-          '/$productType/?best_offer=true',
+          '/$productType/?best=true',
         );
         switch (re.statusCode) {
           case 200:
