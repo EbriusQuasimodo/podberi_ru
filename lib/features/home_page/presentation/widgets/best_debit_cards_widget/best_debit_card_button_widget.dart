@@ -40,7 +40,8 @@ class BestDebitCardsButtonWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: const Color(0xffFFBE0B),
+        color: Color(int.parse(
+            '0xff${productInfo.bankDetails?.color}')),
       ),
       width: 280,
       height: 190,
@@ -65,6 +66,7 @@ class BestDebitCardsButtonWidget extends StatelessWidget {
                   return SvgPicture.asset(
                     'assets/icons/image_not_found_icon.svg',
                     color: ThemeApp.mainWhite,
+
                   );
                 },
               ),

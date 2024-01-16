@@ -9,9 +9,10 @@ class ChoiceChipWithManyChoiceItem extends ConsumerStatefulWidget {
   final List<String> filters;
   final int length;
   final List<BankListDetailsModel>? banksList;
+  final VoidCallback onTap;
 ///виджет для чойс чипов в фильтрах (чтобы переиспользовать его)
    ChoiceChipWithManyChoiceItem(
-      {super.key, this.itemsNames, this.banksList, required this.filters, required this.length,});
+      {super.key, this.itemsNames, this.banksList, required this.filters, required this.length, required this.onTap});
 
   @override
   ConsumerState<ChoiceChipWithManyChoiceItem> createState() => _ChoiceChipWithManyChoiceItemState();
@@ -49,6 +50,7 @@ class _ChoiceChipWithManyChoiceItemState extends ConsumerState<ChoiceChipWithMan
                 setState(() {
                   if (value) {
                     if (!widget.filters.contains(widget.itemsNames?[i] ?? widget.banksList?[i].bankName)) {
+                      widget.onTap();
                       widget.filters.add(widget.itemsNames?[i] ?? widget.banksList![i].bankName);
                     }
                   } else {
@@ -60,7 +62,6 @@ class _ChoiceChipWithManyChoiceItemState extends ConsumerState<ChoiceChipWithMan
                     widget.filters.removeWhere((String name) {return name ==widget.banksList?[i].bankName;});
                   }
                 });
-
               },
             )),
       );

@@ -285,6 +285,10 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                         length: allBanks.items.length < 6 ? allBanks.items.length : 6,
                         banksList: allBanks.items,
                         filters: selectedBanks,
+                        onTap: () {
+                          setState(() {
+                          });
+                        },
                       ),
                       Container(
                         color: ThemeApp.darkestGrey,
@@ -302,7 +306,10 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                         ),
                       ),
                       ChoiceChipWithManyChoiceItem(
-
+                          onTap: () {
+                            setState(() {
+                            });
+                          },
                           length: cashBackNamesList.length,
                           itemsNames: cashBackNamesList,
                           filters: selectedCashBack),
@@ -325,7 +332,10 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                         length: paySystemNamesList.length,
                         itemsNames: paySystemNamesList,
                         filters: selectedPaySystem,
-
+                        onTap: () {
+                          setState(() {
+                          });
+                        },
                       ),
                       Container(
                         color: ThemeApp.darkestGrey,
@@ -363,12 +373,6 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                                                 clearFilters();
                                               },
                                               filters: selectedAdditionalConditions,
-                                              providerName: widget
-                                                  .basicApiPageSettingsModel
-                                                  .whereFrom ==
-                                                  'selectProductPage'
-                                                  ? debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider
-                                                  : debitCardsFilterAdditionalConditionsFromHomePageStateProvider,
                                               filtersNamesList: additionalConditionsNamesList);
                                         }));
                                   },
@@ -388,7 +392,10 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                         length: additionalConditionsNamesList.length < 6 ? additionalConditionsNamesList.length : 6,
                         itemsNames: additionalConditionsNamesList,
                         filters: selectedAdditionalConditions,
-
+                        onTap: () {
+                          setState(() {
+                          });
+                        },
                       ),
                     ],
                   ),

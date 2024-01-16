@@ -21,33 +21,38 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
   @override
   FutureOr<CreditCardsModel> build(BasicApiPageSettingsModel arg) async {
     String filterNoPercentPeriod = '';
-   int filterCreditLimit = 0;
-   String filterPercents = '';
-    List<String> filterFeatures = [];
+    int filterCreditLimit = 0;
+    String filterPercents = '';
     List<String> filterBank = [];
 
     ///выбираем какой провайдер слушать в зависимости от того с какой страницы открыли
     ///(из выбора категории продука, с главной страницы или со страницы всех банков)
     switch (arg.whereFrom) {
       case 'selectProductPage':
-        filterNoPercentPeriod = ref.watch(creditCardsFilterNoPercentPeriodFromSelectProductPageStateProvider);
-        filterPercents =
-            ref.watch(creditCardsFilterPercentsFromSelectProductPageStateProvider);
-        filterFeatures =
-            ref.watch(creditCardsFilterAdditionalConditionsFromSelectProductPageStateProvider);
+        filterNoPercentPeriod = ref.watch(
+            creditCardsFilterNoPercentPeriodFromSelectProductPageStateProvider);
+        filterPercents = ref
+            .watch(creditCardsFilterPercentsFromSelectProductPageStateProvider);
+        arg.filtersModel?.features = ref.watch(
+            creditCardsFilterAdditionalConditionsFromSelectProductPageStateProvider);
+        filterCreditLimit = ref.watch(creditCardsFilterCreditLimitFromSelectProductPageStateProvider);
         break;
       case 'homePage':
-        filterNoPercentPeriod = ref.watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider);
-        filterPercents = ref.watch(creditCardsFilterPercentsFromHomePageStateProvider);
-        filterFeatures = ref.watch(creditCardsFilterAdditionalConditionsFromHomePageStateProvider);
+        filterNoPercentPeriod = ref
+            .watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider);
+        filterPercents =
+            ref.watch(creditCardsFilterPercentsFromHomePageStateProvider);
+        arg.filtersModel?.features = ref.watch(
+            creditCardsFilterAdditionalConditionsFromHomePageStateProvider);
+        filterCreditLimit = ref.watch(creditCardsFilterCreditLimitFromHomePageStateProvider);
       case 'allBanksPage':
         filterBank = arg.filtersModel?.banks ?? [];
     }
 
-    final eventRepo = ref.read(creditCardsRepositoryProvider);
+    final eventRepo =  ref.read(creditCardsRepositoryProvider);
 
-    ///проверяем откуда пришли
-    ///(фильтры когда мы приходим со страницы банков отличаются от тех
+    ///проверяем с какой страницы пришли.
+    ///фильтры когда мы приходим со страницы банков отличаются от тех
     ///когда приходим со страницы по какой-то категории
     if (arg.whereFrom != 'allBanksPage' && arg.whereFrom != 'homePageBanks') {
       ///если фильтр по банкам не пустой
@@ -64,45 +69,49 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
     }
 
     ///если фильтр по безпроцентному периоду не пустой
-    if (filterNoPercentPeriod.isNotEmpty) {
+    if (filterNoPercentPeriod != '') {
       ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
       ///и добавляем в эту же модель новые фильтры из filterNoPercentPeriod
       arg.filtersModel?.noPercentPeriod = '';
       for (int i = 0; i < filterNoPercentPeriod.length; i++) {
-        if (!filterNoPercentPeriod.contains('Не важно')) {
-          arg.filtersModel?.noPercentPeriod = filterNoPercentPeriod[i];
+        if (filterNoPercentPeriod.contains('от 30 дней')) {
+          arg.filtersModel?.noPercentPeriod = '30';
+        } else if (filterNoPercentPeriod.contains('от 60 дней')) {
+          arg.filtersModel?.noPercentPeriod = '60';
+        } else if (filterNoPercentPeriod.contains('от 90 дней')) {
+          arg.filtersModel?.noPercentPeriod = '90';
+        } else if (filterNoPercentPeriod.contains('от 120 дней')) {
+          arg.filtersModel?.noPercentPeriod = '120';
+        } else if (filterNoPercentPeriod.contains('от 200 дней')) {
+          arg.filtersModel?.noPercentPeriod = '200';
+        } else {
+          arg.filtersModel?.noPercentPeriod = '';
         }
       }
     } else {
-      arg.filtersModel?.noPercentPeriod ='';
+      arg.filtersModel?.noPercentPeriod = '';
     }
 
     ///если фильтр по процентной ставке не пустой
-    if (filterPercents.isNotEmpty) {
+    if (filterPercents != '') {
       ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
       ///и добавляем в эту же модель новые фильтры из filterPercents
-      arg.filtersModel?.percents ='';
-      for (int i = 0; i < filterPercents.length; i++) {
-        if (!filterPercents.contains('Не важно')) {
-          arg.filtersModel?.percents = filterPercents[i];
-        }
+      arg.filtersModel?.percents = '';
+      if (filterPercents == 'до 10 процентов') {
+        arg.filtersModel?.percents = '10';
+      } else if (filterPercents == 'до 30 процентов') {
+        arg.filtersModel?.percents = '30';
+      }
+      if (filterPercents == 'от 50 процентов') {
+        arg.filtersModel?.percents = '50';
       }
     } else {
       arg.filtersModel?.percents = '';
     }
-
-    ///если фильтр по доп услугам (фичам)  не пустой
-    if (filterFeatures.isNotEmpty) {
-      ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
-      ///и добавляем в эту же модель новые фильтры из filterFeatures
-      arg.filtersModel?.features?.clear();
-      for (int i = 0; i < filterFeatures.length; i++) {
-        if (!filterFeatures.contains('Любая')) {
-          arg.filtersModel?.features?.add(filterFeatures[i]);
-        }
-      }
+    if (filterCreditLimit != 0) {
+      arg.filtersModel?.creditLimit = filterCreditLimit;
     } else {
-      arg.filtersModel?.features?.clear();
+      arg.filtersModel?.creditLimit = 0;
     }
     arg.page = '1';
     return await eventRepo.fetch(arg, ref);
@@ -114,4 +123,3 @@ final creditCardsControllerProvider = AutoDisposeAsyncNotifierProvider.family<
     CreditCardsController, CreditCardsModel, BasicApiPageSettingsModel>(
   CreditCardsController.new,
 );
-

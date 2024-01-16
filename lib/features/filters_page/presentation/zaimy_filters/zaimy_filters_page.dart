@@ -237,7 +237,10 @@ class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
                         length: termNamesList.length,
                         itemsNames: termNamesList,
                         filters: selectedTerm,
-
+                        onTap: () {
+                          setState(() {
+                          });
+                        },
                       ),
                       Container(
                         color: ThemeApp.darkestGrey,
@@ -274,7 +277,10 @@ class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
                         length: percentsNamesList.length,
                         itemsNames: percentsNamesList,
                         filters: selectedPercents,
-
+                        onTap: () {
+                          setState(() {
+                          });
+                        },
                       ),
                     ],
                   ),

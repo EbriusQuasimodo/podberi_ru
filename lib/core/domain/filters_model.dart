@@ -2,9 +2,10 @@ class FiltersModel {
   final List<String>? banks;
   final List<String>? cashBack;
   final List<String>? paySystem;
+   List<String>? features = [];
   String? percents;
    String? noPercentPeriod;
-  final List<String>? features;
+   int? creditLimit;
   String? term;
 
   ///модель для передачи фильтров
@@ -16,5 +17,6 @@ class FiltersModel {
     this.noPercentPeriod,
     this.features,
     this.term,
+    this.creditLimit,
   });
 }

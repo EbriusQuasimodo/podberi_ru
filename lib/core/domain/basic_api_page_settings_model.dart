@@ -8,6 +8,7 @@ class BasicApiPageSettingsModel {
   final String? pageName;
   final String? productId;
   final String? whereFrom;
+
   final FiltersModel? filtersModel;
   String? page;
 

@@ -8,7 +8,6 @@ import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_
 
 class ShowMorePage extends ConsumerStatefulWidget {
   final List<String> filtersNamesList;
-  final AutoDisposeStateProvider<List<String>> providerName;
   final List<String> filters;
   final VoidCallback onTapTrashButton;
   final VoidCallback onTapSaveButton;
@@ -19,7 +18,6 @@ class ShowMorePage extends ConsumerStatefulWidget {
     required this.filtersNamesList,
     required this.onTapSaveButton,
     required this.onTapTrashButton,
-    required this.providerName,
   });
 
   @override

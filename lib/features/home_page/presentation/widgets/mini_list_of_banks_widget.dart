@@ -60,7 +60,8 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            color: const Color(0xffFFBE0B),
+            color:  Color(int.parse(
+                '0xffef3124')),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
