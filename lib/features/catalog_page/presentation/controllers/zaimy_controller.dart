@@ -9,6 +9,7 @@ import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credi
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page_controller.dart';
+import 'package:podberi_ru/features/filters_page/presentation/zaimy_filters/zaimy_filters_page_controller.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -21,24 +22,27 @@ class ZaimyController extends AutoDisposeFamilyAsyncNotifier<
 
   @override
   FutureOr<ZaimyModel> build(BasicApiPageSettingsModel arg) async {
-    List<String> filterBanks = [];
-    List<String> filterCashBack = [];
-    List<String> filterPaySystem = [];
+    String filterTerm = '';
+    int filterSum = 0;
 
+List<String>filterBanks=[];
     ///выбираем какой провайдер слушать в зависимости от того с какой страницы открыли
     ///(из выбора категории продука, с главной страницы или со страницы всех банков)
     switch (arg.whereFrom) {
       case 'selectProductPage':
-        filterBanks = ref.watch(debitCardsFilterBanksFromSelectProductPageStateProvider);
-        filterPaySystem =
-            ref.watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider);
-        filterCashBack =
-            ref.watch(debitCardsFilterCashBackFromSelectProductPageStateProvider);
+        filterTerm = ref.watch(zaimyFilterTermFromSelectProductPageStateProvider);
+        arg.filtersModel?.percents =
+            ref.watch(zaimyFilterPercentsFromSelectProductPageStateProvider);
+        filterSum =
+            ref.watch(zaimyFilterSumFromSelectProductPageStateProvider);
         break;
       case 'homePage':
-        filterBanks = ref.watch(debitCardsFilterBanksFromHomePageStateProvider);
-        filterPaySystem = ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider);
-        filterCashBack = ref.watch(debitCardsFilterCashBackFromHomePageStateProvider);
+        filterTerm = ref.watch(zaimyFilterTermFromHomePageStateProvider);
+        arg.filtersModel?.percents =
+            ref.watch(zaimyFilterPercentsFromHomePageStateProvider);
+        filterSum =
+            ref.watch(zaimyFilterSumFromHomePageStateProvider);
+
       case 'allBanksPage':
         filterBanks = arg.filtersModel?.banks ?? [];
     }
@@ -61,32 +65,34 @@ class ZaimyController extends AutoDisposeFamilyAsyncNotifier<
       }
     }
 
-    ///если фильтр по кэшбеку не пустой
-    if (filterCashBack.isNotEmpty) {
+    ///если фильтр по безпроцентному периоду не пустой
+    if (filterTerm != '') {
       ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
-      ///и добавляем в эту же модель новые фильтры из filterCashBack
-      arg.filtersModel?.cashBack?.clear();
-      for (int i = 0; i < filterCashBack.length; i++) {
-        if (!filterCashBack.contains('Не важно')) {
-          arg.filtersModel?.cashBack?.add(filterCashBack[i]);
+      ///и добавляем в эту же модель новые фильтры из filterNoPercentPeriod
+      arg.filtersModel?.term = '';
+      for (int i = 0; i < filterTerm.length; i++) {
+        if (filterTerm.contains('от 30 дней')) {
+          arg.filtersModel?.term = '30';
+        } else if (filterTerm.contains('от 60 дней')) {
+          arg.filtersModel?.term = '60';
+        } else if (filterTerm.contains('от 90 дней')) {
+          arg.filtersModel?.term = '90';
+        } else if (filterTerm.contains('от 120 дней')) {
+          arg.filtersModel?.term = '120';
+        } else if (filterTerm.contains('от 200 дней')) {
+          arg.filtersModel?.term = '200';
+        } else {
+          arg.filtersModel?.term = '';
         }
       }
     } else {
-      arg.filtersModel?.cashBack?.clear();
+      arg.filtersModel?.term = '';
     }
 
-    ///если фильтр по платежной системе не пустой
-    if (filterPaySystem.isNotEmpty) {
-      ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
-      ///и добавляем в эту же модель новые фильтры из filterPaySystem
-      arg.filtersModel?.paySystem?.clear();
-      for (int i = 0; i < filterPaySystem.length; i++) {
-        if (!filterPaySystem.contains('Любая')) {
-          arg.filtersModel?.paySystem?.add(filterPaySystem[i]);
-        }
-      }
+    if (filterSum != 0) {
+      arg.filtersModel?.sum = filterSum;
     } else {
-      arg.filtersModel?.paySystem?.clear();
+      arg.filtersModel?.sum = 0;
     }
     arg.page = '1';
     return await eventRepo.fetch(arg, ref);

@@ -18,6 +18,7 @@ class App extends ConsumerWidget {
       routerConfig: goRouter,
       builder: (BuildContext context, child) {
         return Scaffold(
+          resizeToAvoidBottomInset:false,
           body: Stack(
             children: [
               child!,

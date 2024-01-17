@@ -12,13 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.4.5 #стейт менеджер и управление темой
-  riverpod_generator: ^2.3.5
+  riverpod_generator: ^2.3.5 #генератор кода
   riverpod_annotation: ^2.3.0
 
-  shared_preferences: ^2.2.2 #маленький кэш
   isar: ^3.1.0+1 #локальное хранилище
   isar_flutter_libs: ^3.1.0+1 #локальное хранилище
-  path_provider: ^2.1.1
 
   go_router: ^12.1.1 #роутинг в приложении
   cupertino_icons: ^1.0.2
@@ -35,8 +33,8 @@ dependencies:
   alice: ^0.4.1 #HTTP-инспектор (удалить перед публикацией )
   get_it: ^7.6.4
   connectivity_plus: ^5.0.2 #проверка подключения к сети
-  riverpod_infinite_scroll_pagination: ^1.0.3 #пагинация
   flutter_html: ^3.0.0-beta.2 #пакет для отображения текста с html тэгами
+  flutter_keyboard_visibility: ^6.0.0 #пакет для проверки открыта ли клавиатура
 
 dev_dependencies:
   flutter_test:

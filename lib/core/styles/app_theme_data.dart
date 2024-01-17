@@ -5,7 +5,10 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 class AppThemeData {
   ThemeData themeData(BuildContext context) {
     return ThemeData(
-
+      sliderTheme: SliderThemeData(
+          trackShape: CustomTrackShape(),
+         // overlayShape: SliderComponentShape.noThumb
+      ),
       fontFamily: 'Geologica',
       scaffoldBackgroundColor: ThemeApp.backgroundBlack,
       appBarTheme: const AppBarTheme(
@@ -33,5 +36,21 @@ class AppThemeData {
       ),
       brightness: Brightness.light,
     );
+  }
+}
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final trackHeight = sliderTheme.trackHeight;
+    final trackLeft = offset.dx;
+    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }

@@ -43,15 +43,10 @@ class CreditCardsRepository implements CreditCardsRepositoryImpl {
       productType +=
           '&no_percent_period%24gte=${arg.filtersModel?.noPercentPeriod}';
     }
-    if (arg.filtersModel!.percents !='') {
-      ///если макс процент по кредиту равен 50 (от 50)
-      if (arg.filtersModel?.percents == "50") {
-        ///то ищем те что больше или равны 50 %
-        productType += '&max_percent%24gte=${arg.filtersModel?.percents}';
-      } else {
-        ///иначе ищем те что меньше или равны проценту
-        productType += '&max_percent%24lte=${arg.filtersModel?.percents}';
-      }
+    if (arg.filtersModel!.percents != 0) {
+      ///ищем кредитки у которых макс процент находится в диапазоне min - max
+      productType += '&min_percent%24lte=${arg.filtersModel!.percents}&max_percent%24gte=${arg.filtersModel!.percents}';
+
     }
     if (arg.filtersModel!.features !=null) {
       for (int i = 0; i < arg.filtersModel!.features!.length; i++) {

@@ -18,7 +18,7 @@ class DebitCardsController extends AutoDisposeFamilyAsyncNotifier<
   @override
   FutureOr<DebitCardsModel> build(BasicApiPageSettingsModel arg) async {
     List<String> filterBanks = [];
-    List<String> filterCashBack = [];
+    //List<String> filterCashBack = [];
     List<String> filterPaySystem = [];
 
     ///выбираем какой провайдер слушать в зависимости от того с какой страницы открыли
@@ -28,13 +28,17 @@ class DebitCardsController extends AutoDisposeFamilyAsyncNotifier<
         filterBanks = ref.watch(debitCardsFilterBanksFromSelectProductPageStateProvider);
         filterPaySystem =
             ref.watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider);
-        filterCashBack =
-            ref.watch(debitCardsFilterCashBackFromSelectProductPageStateProvider);
+        // filterCashBack =
+        //     ref.watch(debitCardsFilterCashBackFromSelectProductPageStateProvider);
+        arg.filtersModel?.features = ref.watch(
+            debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider);
         break;
       case 'homePage':
         filterBanks = ref.watch(debitCardsFilterBanksFromHomePageStateProvider);
         filterPaySystem = ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider);
-        filterCashBack = ref.watch(debitCardsFilterCashBackFromHomePageStateProvider);
+        // filterCashBack = ref.watch(debitCardsFilterCashBackFromHomePageStateProvider);
+        arg.filtersModel?.features = ref.watch(
+            debitCardsFilterAdditionalConditionsFromHomePageStateProvider);
       case 'allBanksPage':
         filterBanks = arg.filtersModel?.banks ?? [];
     }
@@ -57,19 +61,19 @@ class DebitCardsController extends AutoDisposeFamilyAsyncNotifier<
       }
     }
 
-    ///если фильтр по кэшбеку не пустой
-    if (filterCashBack.isNotEmpty) {
-      ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
-      ///и добавляем в эту же модель новые фильтры из filterCashBack
-      arg.filtersModel?.cashBack?.clear();
-      for (int i = 0; i < filterCashBack.length; i++) {
-        if (!filterCashBack.contains('Не важно')) {
-          arg.filtersModel?.cashBack?.add(filterCashBack[i]);
-        }
-      }
-    } else {
-      arg.filtersModel?.cashBack?.clear();
-    }
+    // ///если фильтр по кэшбеку не пустой
+    // if (filterCashBack.isNotEmpty) {
+    //   ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
+    //   ///и добавляем в эту же модель новые фильтры из filterCashBack
+    //   arg.filtersModel?.cashBack?.clear();
+    //   for (int i = 0; i < filterCashBack.length; i++) {
+    //     if (!filterCashBack.contains('Не важно')) {
+    //       arg.filtersModel?.cashBack?.add(filterCashBack[i]);
+    //     }
+    //   }
+    // } else {
+    //   arg.filtersModel?.cashBack?.clear();
+    // }
 
     ///если фильтр по платежной системе не пустой
     if (filterPaySystem.isNotEmpty) {
@@ -77,7 +81,7 @@ class DebitCardsController extends AutoDisposeFamilyAsyncNotifier<
       ///и добавляем в эту же модель новые фильтры из filterPaySystem
       arg.filtersModel?.paySystem?.clear();
       for (int i = 0; i < filterPaySystem.length; i++) {
-        if (!filterPaySystem.contains('Любая')) {
+        if (!filterPaySystem.contains('Не важно')) {
           arg.filtersModel?.paySystem?.add(filterPaySystem[i]);
         }
       }

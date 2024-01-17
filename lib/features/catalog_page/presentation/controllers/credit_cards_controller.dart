@@ -22,7 +22,6 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
   FutureOr<CreditCardsModel> build(BasicApiPageSettingsModel arg) async {
     String filterNoPercentPeriod = '';
     int filterCreditLimit = 0;
-    String filterPercents = '';
     List<String> filterBank = [];
 
     ///выбираем какой провайдер слушать в зависимости от того с какой страницы открыли
@@ -31,7 +30,7 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
       case 'selectProductPage':
         filterNoPercentPeriod = ref.watch(
             creditCardsFilterNoPercentPeriodFromSelectProductPageStateProvider);
-        filterPercents = ref
+        arg.filtersModel?.percents = ref
             .watch(creditCardsFilterPercentsFromSelectProductPageStateProvider);
         arg.filtersModel?.features = ref.watch(
             creditCardsFilterAdditionalConditionsFromSelectProductPageStateProvider);
@@ -40,7 +39,7 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
       case 'homePage':
         filterNoPercentPeriod = ref
             .watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider);
-        filterPercents =
+        arg.filtersModel?.percents =
             ref.watch(creditCardsFilterPercentsFromHomePageStateProvider);
         arg.filtersModel?.features = ref.watch(
             creditCardsFilterAdditionalConditionsFromHomePageStateProvider);
@@ -92,22 +91,6 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
       arg.filtersModel?.noPercentPeriod = '';
     }
 
-    ///если фильтр по процентной ставке не пустой
-    if (filterPercents != '') {
-      ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
-      ///и добавляем в эту же модель новые фильтры из filterPercents
-      arg.filtersModel?.percents = '';
-      if (filterPercents == 'до 10 процентов') {
-        arg.filtersModel?.percents = '10';
-      } else if (filterPercents == 'до 30 процентов') {
-        arg.filtersModel?.percents = '30';
-      }
-      if (filterPercents == 'от 50 процентов') {
-        arg.filtersModel?.percents = '50';
-      }
-    } else {
-      arg.filtersModel?.percents = '';
-    }
     if (filterCreditLimit != 0) {
       arg.filtersModel?.creditLimit = filterCreditLimit;
     } else {

@@ -10,32 +10,43 @@ class ChoiceChipWithManyChoiceItem extends ConsumerStatefulWidget {
   final int length;
   final List<BankListDetailsModel>? banksList;
   final VoidCallback onTap;
-///виджет для чойс чипов в фильтрах (чтобы переиспользовать его)
-   ChoiceChipWithManyChoiceItem(
-      {super.key, this.itemsNames, this.banksList, required this.filters, required this.length, required this.onTap});
+
+  ///виджет для чойс чипов в фильтрах (чтобы переиспользовать его)
+  ChoiceChipWithManyChoiceItem(
+      {super.key,
+      this.itemsNames,
+      this.banksList,
+      required this.filters,
+      required this.length,
+      required this.onTap});
 
   @override
-  ConsumerState<ChoiceChipWithManyChoiceItem> createState() => _ChoiceChipWithManyChoiceItemState();
+  ConsumerState<ChoiceChipWithManyChoiceItem> createState() =>
+      _ChoiceChipWithManyChoiceItemState();
 }
 
-class _ChoiceChipWithManyChoiceItemState extends ConsumerState<ChoiceChipWithManyChoiceItem> {
+class _ChoiceChipWithManyChoiceItemState
+    extends ConsumerState<ChoiceChipWithManyChoiceItem> {
   @override
   Widget build(BuildContext context) {
     var list = <Widget>[const SizedBox(width: 12)];
 
-    for (int i = 0; i < widget.length; i ++) {
+    for (int i = 0; i < widget.length; i++) {
       list.add(
         Padding(
             padding: const EdgeInsets.only(left: 3, right: 3, bottom: 26),
             child: ChoiceChip(
-              label: Text(widget.itemsNames?[i] ?? widget.banksList![i].bankName),
+              label:
+                  Text(widget.itemsNames?[i] ?? widget.banksList![i].bankName),
               labelStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: widget.filters.contains(widget.itemsNames?[i] ?? widget.banksList?[i].bankName)
+                  color: widget.filters.contains(widget.itemsNames?[i] ??
+                          widget.banksList?[i].bankName)
                       ? ThemeApp.mainWhite
                       : ThemeApp.backgroundBlack),
-              selected: widget.filters.contains(widget.itemsNames?[i] ?? widget.banksList?[i].bankName),
+              selected: widget.filters.contains(
+                  widget.itemsNames?[i] ?? widget.banksList?[i].bankName),
               selectedColor: ThemeApp.darkestGrey,
               backgroundColor: ThemeApp.grey,
               shape: RoundedRectangleBorder(
@@ -46,27 +57,45 @@ class _ChoiceChipWithManyChoiceItemState extends ConsumerState<ChoiceChipWithMan
               padding: const EdgeInsets.only(
                   top: 15, bottom: 15, right: 15, left: 15),
               onSelected: (bool value) {
-
                 setState(() {
                   if (value) {
-                    if (!widget.filters.contains(widget.itemsNames?[i] ?? widget.banksList?[i].bankName)) {
+                    ///если фильтры содержут в себе выбранный фильтр и не содержут "Не важно"
+                    if (!widget.filters.contains(widget.itemsNames?[i] ??
+                            widget.banksList?[i].bankName) &&
+                        widget.itemsNames?[i] != 'Не важно') {
+                      ///тогда вызываем onTap (там либо просто сэт стейт либо очистка фильтров если может быть выбран только один элемент)
                       widget.onTap();
-                      widget.filters.add(widget.itemsNames?[i] ?? widget.banksList![i].bankName);
+                      ///если фильтр уже содержит "не важно" то удаляем из него "Не важно"
+                      if (widget.filters.contains('Не важно')) {
+                        widget.filters.removeWhere((String name) {
+                          return name == 'Не важно';
+                        });
+                      }
+                      ///добавляем выбранный фильтр в список
+                      widget.filters.add(widget.itemsNames?[i] ??
+                          widget.banksList![i].bankName);
+                    } else {
+                      ///иначе (если нажали на "Не важно") очищаем список фильтров и добавляем "Не важно"
+                      widget.filters.clear();
+                      widget.filters.add(widget.itemsNames?[i] ??
+                          widget.banksList![i].bankName);
                     }
                   } else {
-
                     widget.filters.removeWhere((String name) {
                       return name == widget.itemsNames?[i];
-
                     });
-                    widget.filters.removeWhere((String name) {return name ==widget.banksList?[i].bankName;});
+                    widget.filters.removeWhere((String name) {
+                      return name == widget.banksList?[i].bankName;
+                    });
                   }
                 });
               },
             )),
       );
     }
-    list.add(SizedBox(width: 12,));
+    list.add(SizedBox(
+      width: 12,
+    ));
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(

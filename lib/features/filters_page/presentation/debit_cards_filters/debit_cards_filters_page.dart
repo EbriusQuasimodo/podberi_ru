@@ -23,24 +23,25 @@ class DebitCardsFiltersPage extends ConsumerStatefulWidget {
 }
 
 class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
+///todo разобраться с кэшбеком (нет поля по которому я могу фильтроваться)
+//   final List<String> cashBackNamesList = [
+//     'Баллы', //баллов
+//     'Рубли', //рублей
+//     'Не важно',
+//     'Мили', //милей
+//   ];
 
-  final List<String> cashBackNamesList = [
-    'Баллы',
-    'Рубли',
-    'Не важно',
-    'Мили',
-  ];
   final List<String> paySystemNamesList = [
-    'Любая',
+    'Не важно',
     'МИР',
-    'MasterCard',
+    'Mastercard',
     'VISA',
     'Union Pay',
   ];
   final List<String> additionalConditionsNamesList = [
     'Бесплатное обслуживание',
     'Виртуальная карта',
-    'Моменатльный выпуск',
+    'Моментальный выпуск',
     'Бесконтактная оплата',
     'Доступно с 14 лет',
     'Детская карта',
@@ -53,7 +54,7 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
     'Мультивалютная карта',
   ];
   List<String> selectedBanks = [];
-  List<String> selectedCashBack = [];
+  //List<String> selectedCashBack = [];
   List<String> selectedPaySystem = [];
   List<String> selectedAdditionalConditions = [];
 
@@ -65,24 +66,18 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
             .watch(debitCardsFilterBanksFromHomePageStateProvider.notifier)
             .state
             .isNotEmpty) {
-          for (int i = 0;
-              i <
-                  ref
-                      .watch(debitCardsFilterBanksFromHomePageStateProvider.notifier)
-                      .state
-                      .length;
-              i++) {
-            selectedBanks.add(ref
+
+            selectedBanks = ref
                 .watch(debitCardsFilterBanksFromHomePageStateProvider.notifier)
-                .state[i]);
-          }
+                .state;
+
         }
-        if (ref
-            .watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier)
-            .state
-            .isNotEmpty) {
-          selectedCashBack = ref.watch(debitCardsFilterCashBackFromHomePageStateProvider);
-        }
+        // if (ref
+        //     .watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier)
+        //     .state
+        //     .isNotEmpty) {
+        //   selectedCashBack = ref.watch(debitCardsFilterCashBackFromHomePageStateProvider);
+        // }
         if (ref
             .watch(debitCardsFilterPaySystemFromHomePageStateProvider.notifier)
             .state
@@ -90,38 +85,36 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
           selectedPaySystem =
               ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider);
         }
+        if(ref.watch(debitCardsFilterAdditionalConditionsFromHomePageStateProvider.notifier).state.isNotEmpty){
+          selectedAdditionalConditions = ref.watch(debitCardsFilterAdditionalConditionsFromHomePageStateProvider);
+        }
         break;
       case 'selectProductPage':
         if (ref
             .watch(debitCardsFilterBanksFromSelectProductPageStateProvider.notifier)
             .state
             .isNotEmpty) {
-          for (int i = 0;
-              i <
-                  ref
-                      .watch(debitCardsFilterBanksFromSelectProductPageStateProvider
-                          .notifier)
-                      .state
-                      .length;
-              i++) {
-            selectedBanks.add(ref
+
+            selectedBanks =ref
                 .watch(debitCardsFilterBanksFromSelectProductPageStateProvider.notifier)
-                .state[i]);
-          }
+                .state;
         }
-        if (ref
-            .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider.notifier)
-            .state
-            .isNotEmpty) {
-          selectedCashBack =
-              ref.watch(debitCardsFilterCashBackFromSelectProductPageStateProvider);
-        }
+        // if (ref
+        //     .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider.notifier)
+        //     .state
+        //     .isNotEmpty) {
+        //   selectedCashBack =
+        //       ref.watch(debitCardsFilterCashBackFromSelectProductPageStateProvider);
+        // }
         if (ref
             .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider.notifier)
             .state
             .isNotEmpty) {
           selectedPaySystem =
               ref.watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider);
+        }
+        if(ref.watch(debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider.notifier).state.isNotEmpty){
+          selectedAdditionalConditions = ref.watch(debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider);
         }
         break;
     }
@@ -133,24 +126,34 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
       if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
         ref.watch(debitCardsFilterBanksFromHomePageStateProvider.notifier).state =
             selectedBanks;
-        ref.watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier).state =
-            selectedCashBack;
+        // ref.watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier).state =
+        //     selectedCashBack;
 
         ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider.notifier).state =
             selectedPaySystem;
       }
+      ref
+          .watch(
+          debitCardsFilterAdditionalConditionsFromHomePageStateProvider
+              .notifier)
+          .state = selectedAdditionalConditions;
       if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
         ref
             .watch(debitCardsFilterBanksFromSelectProductPageStateProvider.notifier)
             .state = selectedBanks;
 
-        ref
-            .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider.notifier)
-            .state = selectedCashBack;
+        // ref
+        //     .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider.notifier)
+        //     .state = selectedCashBack;
 
         ref
             .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider.notifier)
             .state = selectedPaySystem;
+        ref
+            .watch(
+            debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider
+                .notifier)
+            .state = selectedAdditionalConditions;
       }
     });
   }
@@ -161,6 +164,7 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
         ref.watch(debitCardsFilterBanksFromHomePageStateProvider.notifier).state = [];
         ref.watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier).state = [];
         ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider.notifier).state = [];
+        ref.watch(debitCardsFilterAdditionalConditionsFromHomePageStateProvider.notifier).state =[];
       }
       if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
         ref
@@ -172,9 +176,10 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
         ref
             .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider.notifier)
             .state = [];
+        ref.watch(debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider.notifier).state =[];
       }
       selectedBanks.clear();
-      selectedCashBack.clear();
+    //  selectedCashBack.clear();
       selectedPaySystem.clear();
       selectedAdditionalConditions.clear();
     });
@@ -295,29 +300,29 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                         height: 1,
                         width: double.infinity,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                        child: Text(
-                          'Кэшбек',
-                          style: TextStyle(
-                              color: ThemeApp.backgroundBlack,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14),
-                        ),
-                      ),
-                      ChoiceChipWithManyChoiceItem(
-                          onTap: () {
-                            setState(() {
-                            });
-                          },
-                          length: cashBackNamesList.length,
-                          itemsNames: cashBackNamesList,
-                          filters: selectedCashBack),
-                      Container(
-                        color: ThemeApp.darkestGrey,
-                        height: 1,
-                        width: double.infinity,
-                      ),
+                      // const Padding(
+                      //   padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
+                      //   child: Text(
+                      //     'Кэшбек',
+                      //     style: TextStyle(
+                      //         color: ThemeApp.backgroundBlack,
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: 14),
+                      //   ),
+                      // ),
+                      // ChoiceChipWithManyChoiceItem(
+                      //     onTap: () {
+                      //       setState(() {
+                      //       });
+                      //     },
+                      //     length: cashBackNamesList.length,
+                      //     itemsNames: cashBackNamesList,
+                      //     filters: selectedCashBack),
+                      // Container(
+                      //   color: ThemeApp.darkestGrey,
+                      //   height: 1,
+                      //   width: double.infinity,
+                      // ),
                       const Padding(
                         padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
                         child: Text(

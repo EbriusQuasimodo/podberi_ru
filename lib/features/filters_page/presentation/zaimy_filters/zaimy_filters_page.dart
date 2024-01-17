@@ -5,6 +5,7 @@ import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/controllers/zaimy_controller.dart';
 import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page_controller.dart';
 import 'package:podberi_ru/features/filters_page/presentation/widgets/choice_chip_with_many_choice_item.dart';
 import 'package:podberi_ru/features/filters_page/presentation/widgets/save_button_widget.dart';
@@ -25,34 +26,17 @@ class ZaimyFiltersPage extends ConsumerStatefulWidget {
 
 class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
   final List<String> termNamesList = [
-    'Тинькофф банк',
-    'Газпромбанк',
-    'Сбербанк',
-    'ВТБ банк',
-    'Альфа банк',
-    'Росбанк',
-    'МТС банк',
-    'Райфайзен Банк',
-    'Россельхозбанк',
-    'Банк Уралсиб',
-  ];
-  final List<String> sumNamesList = [
-    'Баллы',
-    'Рубли',
     'Не важно',
-    'Мили',
+    'от 30 дней',
+    'от 60 дней',
+    'от 90 дней',
+    'от 120 дней',
+    'от 200 дней',
   ];
-  final List<String> percentsNamesList = [
-    'Любая',
-    'МИР',
-    'MasterCard',
-    'VISA',
-    'Union Pay',
-  ];
-
+  final _formKey = GlobalKey<FormState>();
   List<String> selectedTerm = [];
   TextEditingController selectedSum = TextEditingController();
-  List<String> selectedPercents = [];
+  double selectedPercents = 0;
 
   @override
   void didChangeDependencies() {
@@ -62,29 +46,24 @@ class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
             .watch(zaimyFilterTermFromHomePageStateProvider.notifier)
             .state
             .isNotEmpty) {
-          for (int i = 0;
-              i <
-                  ref
-                      .watch(zaimyFilterTermFromHomePageStateProvider.notifier)
-                      .state
-                      .length;
-              i++) {
-            selectedTerm.add(ref
-                .watch(zaimyFilterTermFromHomePageStateProvider.notifier)
-                .state[i]);
-          }
+          selectedTerm.add(ref
+              .watch(zaimyFilterTermFromHomePageStateProvider.notifier)
+              .state);
+        }
+        if (ref.watch(zaimyFilterSumFromHomePageStateProvider.notifier).state !=
+            0) {
+          selectedSum.text = ref
+              .watch(zaimyFilterSumFromHomePageStateProvider.notifier)
+              .state
+              .toString();
         }
         if (ref
-            .watch(zaimyFilterSumFromHomePageStateProvider.notifier)
-            .state != 0) {
-          selectedSum.text = ref.watch(zaimyFilterSumFromHomePageStateProvider.notifier).state.toString();
-        }
-        if (ref
-            .watch(zaimyFilterPercentsFromHomePageStateProvider.notifier)
-            .state
-            .isNotEmpty) {
-          selectedPercents =
-              ref.watch(zaimyFilterPercentsFromHomePageStateProvider);
+                .watch(zaimyFilterPercentsFromHomePageStateProvider.notifier)
+                .state !=
+            0) {
+          selectedPercents = ref
+              .watch(zaimyFilterPercentsFromHomePageStateProvider)
+              .toDouble();
         }
         break;
       case 'selectProductPage':
@@ -92,31 +71,28 @@ class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
             .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
             .state
             .isNotEmpty) {
-          for (int i = 0;
-              i <
-                  ref
-                      .watch(zaimyFilterTermFromSelectProductPageStateProvider
-                          .notifier)
-                      .state
-                      .length;
-              i++) {
-            selectedTerm.add(ref
-                .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
-                .state[i]);
-          }
+          selectedTerm.add(ref
+              .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
+              .state);
         }
         if (ref
-            .watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier)
-            .state != 0) {
-          selectedSum.text =
-              ref.watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier).state.toString();
+                .watch(
+                    zaimyFilterSumFromSelectProductPageStateProvider.notifier)
+                .state !=
+            0) {
+          selectedSum.text = ref
+              .watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier)
+              .state
+              .toString();
         }
         if (ref
-            .watch(zaimyFilterPercentsFromSelectProductPageStateProvider.notifier)
-            .state
-            .isNotEmpty) {
-          selectedPercents =
-              ref.watch(zaimyFilterPercentsFromSelectProductPageStateProvider);
+                .watch(zaimyFilterPercentsFromSelectProductPageStateProvider
+                    .notifier)
+                .state !=
+            0) {
+          selectedPercents = ref
+              .watch(zaimyFilterPercentsFromSelectProductPageStateProvider)
+              .toDouble();
         }
         break;
     }
@@ -126,26 +102,37 @@ class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
   void saveFilters() {
     setState(() {
       if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
-        ref.watch(zaimyFilterTermFromHomePageStateProvider.notifier).state =
-            selectedTerm;
-        // ref.watch(zaimyFilterSumFromHomePageStateProvider.notifier).state =
-        //     selectedSum as int;
+        if (selectedTerm.isNotEmpty) {
+          ref.watch(zaimyFilterTermFromHomePageStateProvider.notifier).state =
+              selectedTerm.first;
+        }
+        if (selectedSum.text.isNotEmpty) {
+          ref.watch(zaimyFilterSumFromHomePageStateProvider.notifier).state =
+              int.parse(selectedSum.text);
+        }
 
-        ref.watch(zaimyFilterPercentsFromHomePageStateProvider.notifier).state =
-            selectedPercents;
+          ref
+              .watch(zaimyFilterPercentsFromHomePageStateProvider.notifier)
+              .state = selectedPercents.round();
+
       }
       if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
-        ref
-            .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
-            .state = selectedTerm;
+        if (selectedTerm.isNotEmpty) {
+          ref
+              .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
+              .state = selectedTerm.first;
+        }
+        if (selectedSum.text.isNotEmpty) {
+          ref
+              .watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier)
+              .state = int.parse(selectedSum.text);
+        }
 
-        // ref
-        //     .watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier)
-        //     .state = selectedSum.text as int;
+          ref
+              .watch(zaimyFilterPercentsFromSelectProductPageStateProvider
+                  .notifier)
+              .state = selectedPercents.round();
 
-        ref
-            .watch(zaimyFilterPercentsFromSelectProductPageStateProvider.notifier)
-            .state = selectedPercents;
       }
     });
   }
@@ -153,152 +140,214 @@ class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
   void clearFilters() {
     setState(() {
       if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
-        ref.watch(zaimyFilterTermFromHomePageStateProvider.notifier).state = [];
+        ref.watch(zaimyFilterTermFromHomePageStateProvider.notifier).state = '';
         ref.watch(zaimyFilterSumFromHomePageStateProvider.notifier).state = 0;
-        ref.watch(zaimyFilterPercentsFromHomePageStateProvider.notifier).state = [];
+        ref.watch(zaimyFilterPercentsFromHomePageStateProvider.notifier).state =
+            0;
       }
       if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
         ref
             .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
-            .state = [];
+            .state = '';
         ref
             .watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier)
             .state = 0;
         ref
-            .watch(zaimyFilterPercentsFromSelectProductPageStateProvider.notifier)
-            .state = [];
+            .watch(
+                zaimyFilterPercentsFromSelectProductPageStateProvider.notifier)
+            .state = 0;
       }
       selectedTerm.clear();
       selectedSum.clear();
-      selectedPercents.clear();
+      selectedPercents = 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              scrolledUnderElevation: 0,
+              backgroundColor: ThemeApp.mainWhite,
+              pinned: true,
+              title: const Text('Фильтры'),
+              leading: IconButton(
+                  onPressed: () {
+                    saveFilters();
+                    Navigator.of(context).pop();
 
-        return Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                scrolledUnderElevation: 0,
-                backgroundColor: ThemeApp.mainWhite,
-                pinned: true,
-                title: const Text('Фильтры'),
-                leading: IconButton(
-                    onPressed: () {
-                      saveFilters();
-                      Navigator.of(context).pop();
-                    },
-                    icon: const Icon(Icons.arrow_back_ios_new)),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 2, bottom: 82),
-                  padding: const EdgeInsets.only(bottom: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ThemeApp.mainWhite,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // const Padding(
-                      //   padding: EdgeInsets.only(top: 30, bottom: 20),
-                      //   child: Center(
-                      //     child: Text(
-                      //       'Найдено по запросу (2)',
-                      //       style: TextStyle(
-                      //           color: ThemeApp.backgroundBlack,
-                      //           fontSize: 14,
-                      //           fontWeight: FontWeight.w400),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   color: ThemeApp.darkestGrey,
-                      //   height: 1,
-                      //   width: double.infinity,
-                      // ),
 
-                          const Padding(
-                            padding:
-                                EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                            child: Text(
-                              'Срок займа',
-                              style: TextStyle(
-                                  color: ThemeApp.backgroundBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14),
+                  },
+                  icon: const Icon(Icons.arrow_back_ios_new)),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                margin: const EdgeInsets.only(top: 2, bottom: 82),
+                padding: const EdgeInsets.only(bottom: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: ThemeApp.mainWhite,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // const Padding(
+                    //   padding: EdgeInsets.only(top: 30, bottom: 20),
+                    //   child: Center(
+                    //     child: Text(
+                    //       'Найдено по запросу (2)',
+                    //       style: TextStyle(
+                    //           color: ThemeApp.backgroundBlack,
+                    //           fontSize: 14,
+                    //           fontWeight: FontWeight.w400),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   color: ThemeApp.darkestGrey,
+                    //   height: 1,
+                    //   width: double.infinity,
+                    // ),
+
+                    const Padding(
+                      padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
+                      child: Text(
+                        'Срок займа',
+                        style: TextStyle(
+                            color: ThemeApp.backgroundBlack,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14),
+                      ),
+                    ),
+
+                    ChoiceChipWithManyChoiceItem(
+                      length: termNamesList.length,
+                      itemsNames: termNamesList,
+                      filters: selectedTerm,
+                      onTap: () {
+                        setState(() {
+                          selectedTerm.clear();
+                        });
+                      },
+                    ),
+                    Container(
+                      color: ThemeApp.darkestGrey,
+                      height: 1,
+                      width: double.infinity,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
+                      child: Text(
+                        'Сумма займа',
+                        style: TextStyle(
+                            color: ThemeApp.backgroundBlack,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 26, left: 15, right: 15),
+                      child: Form(
+                        key: _formKey,
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(14),
+                          ),
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w500),
+                            controller: selectedSum,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              fillColor: ThemeApp.grey,
+                              filled: true,
+                              counterText: '',
+                              counterStyle: TextStyle(fontSize: 0),
+                              labelText: 'Введите сумму займа',
+                              labelStyle: TextStyle(
+                                  color: ThemeApp.darkestGrey,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      color: ThemeApp.darkestGrey,
+                      height: 1,
+                      width: double.infinity,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
+                      child: Text(
+                        'Ставка в %',
+                        style: TextStyle(
+                            color: ThemeApp.backgroundBlack,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(color: ThemeApp.grey,
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      padding: const EdgeInsets.only(top: 15, bottom: 20, right: 15, left: 15),
+                      margin: const EdgeInsets.only(left: 15, right: 15, bottom: 26),
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Text(
+                              "Выбранная ставка около ${selectedPercents.round().toString()} %",
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: ThemeApp.backgroundBlack,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Slider(
+                              inactiveColor: ThemeApp.darkGrey,
+                              activeColor: ThemeApp.darkestGrey,
+                              thumbColor: ThemeApp.darkestGrey,
+                              value: selectedPercents,
+                              max: 100,
+                              label: selectedPercents.round().toString(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedPercents = value;
+                                });
+                              }),
 
-                      ChoiceChipWithManyChoiceItem(
-                        length: termNamesList.length,
-                        itemsNames: termNamesList,
-                        filters: selectedTerm,
-                        onTap: () {
-                          setState(() {
-                          });
-                        },
+                        ],
                       ),
-                      Container(
-                        color: ThemeApp.darkestGrey,
-                        height: 1,
-                        width: double.infinity,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                        child: Text(
-                          'Сумма займа',
-                          style: TextStyle(
-                              color: ThemeApp.backgroundBlack,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14),
-                        ),
-                      ),
-                      ///todo: add text field
-                      Container(
-                        color: ThemeApp.darkestGrey,
-                        height: 1,
-                        width: double.infinity,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                        child: Text(
-                          'Ставка в %',
-                          style: TextStyle(
-                              color: ThemeApp.backgroundBlack,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14),
-                        ),
-                      ),
-                      ChoiceChipWithManyChoiceItem(
-                        length: percentsNamesList.length,
-                        itemsNames: percentsNamesList,
-                        filters: selectedPercents,
-                        onTap: () {
-                          setState(() {
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: SaveButtonWidget(
-            onTapSaveButton: () {
-              saveFilters();
-            },
-            onTapTrashButton: () {
-              clearFilters();
-            },
-          ),
-        );
-
+            ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SaveButtonWidget(
+        onTapSaveButton: () {
+          saveFilters();
+        },
+        onTapTrashButton: () {
+          clearFilters();
+        },
+      ),
+    );
   }
 }

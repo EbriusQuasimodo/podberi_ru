@@ -19,12 +19,12 @@ final creditCardsFilterCreditLimitFromSelectProductPageStateProvider = StateProv
   return 0;
 });
 /// фильтр процентной ставки если мы зашли с главной страницы
-final creditCardsFilterPercentsFromHomePageStateProvider = StateProvider.autoDispose<String>((ref) {
-  return '';
+final creditCardsFilterPercentsFromHomePageStateProvider = StateProvider.autoDispose<int>((ref) {
+  return 0;
 });
 /// фильтр процентной ставки если мы зашли со странциы выбора типа продукта
-final creditCardsFilterPercentsFromSelectProductPageStateProvider = StateProvider.autoDispose<String>((ref) {
-  return '';
+final creditCardsFilterPercentsFromSelectProductPageStateProvider = StateProvider.autoDispose<int>((ref) {
+  return 0;
 });
 
 /// фильтр платежной системы если мы зашли с главной страницы
