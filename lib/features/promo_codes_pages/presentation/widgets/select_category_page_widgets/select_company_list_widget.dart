@@ -57,7 +57,7 @@ class _SelectCompanyListWidgetState
         child: Container(
           decoration: BoxDecoration(
               color: widget.promoCodesAllFilters.color,
-              shape: BoxShape.circle,
+              borderRadius: BorderRadius.circular(100),
               border: Border.all(
                   color: selectedCompanies
                           .contains(widget.promoCodesAllFilters.companyName)
@@ -67,17 +67,44 @@ class _SelectCompanyListWidgetState
                           .contains(widget.promoCodesAllFilters.companyName)
                       ? 4
                       : 0)),
-          child: ClipOval(
-            child: SvgPicture.asset(
-              widget.promoCodesAllFilters.imagePath,
-              height: selectedCompanies
-                      .contains(widget.promoCodesAllFilters.companyName)
-                  ? 56
-                  : 60,
-              width: selectedCompanies
-                      .contains(widget.promoCodesAllFilters.companyName)
-                  ? 56
-                  : 60,
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: widget.promoCodesAllFilters.color,
+                boxShadow: const [
+                  BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(1, -1),
+                      spreadRadius: 0,
+                      blurRadius: 0),
+                  BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(-1, 1),
+                      spreadRadius: 0,
+                      blurRadius: 0),
+                  BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(1, 1),
+                      spreadRadius: 0,
+                      blurRadius: 0),
+                  BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(-1, -1),
+                      spreadRadius: 0,
+                      blurRadius: 0)
+                ]),
+            child: ClipOval(
+              child: SvgPicture.asset(
+                widget.promoCodesAllFilters.imagePath,
+                height: selectedCompanies
+                        .contains(widget.promoCodesAllFilters.companyName)
+                    ? 56
+                    : 60,
+                width: selectedCompanies
+                        .contains(widget.promoCodesAllFilters.companyName)
+                    ? 56
+                    : 60,
+              ),
             ),
           ),
         ),
