@@ -1,4 +1,3 @@
-import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,7 +11,6 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class AllBanksListWidget extends ConsumerWidget {
@@ -28,10 +26,12 @@ class AllBanksListWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ///todo: maybe change to sliver stack + sliver container
     return SliverStack(
+      insetOnOverlap: true,
       children: [
         SliverPositioned.fill(
           child: SliverFillRemaining(
             fillOverscroll: true,
+            hasScrollBody: false,
             child: Container(
               margin: const EdgeInsets.only(top: 2, bottom: 72),
               decoration: BoxDecoration(

@@ -58,9 +58,9 @@ class _BankProductsListWidgetState
       children: [
         SliverPositioned.fill(
           child: SliverFillRemaining(
+            hasScrollBody: false,
             fillOverscroll: true,
             child: Container(
-              height: MediaQuery.of(context).size.height - 72,
               margin: const EdgeInsets.only(top: 2, bottom: 72),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),

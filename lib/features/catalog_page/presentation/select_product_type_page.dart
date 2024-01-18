@@ -31,16 +31,15 @@ class SelectProductTypePage extends ConsumerWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           ),
           CustomAppBarWithSearch(controller: searchController),
-
-          ///todo: maybe change to sliver stack + sliver container
           SliverStack(
             insetOnOverlap: true,
             children: [
               SliverPositioned.fill(
                 child: SliverFillRemaining(
+                  hasScrollBody: false,
                   fillOverscroll: true,
                   child: Container(
-                    margin: const EdgeInsets.only(top: 2, bottom: 72),
+                    margin: EdgeInsets.only(top: 2, bottom: 72),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: ThemeApp.mainWhite,
@@ -49,10 +48,20 @@ class SelectProductTypePage extends ConsumerWidget {
                 ),
               ),
               SliverContainer(
-                  padding: const EdgeInsets.all(15),
-                  sliver: SliverToBoxAdapter(
-                    child: Column(
-                      children: [
+                margin: const EdgeInsets.only(top: 2, bottom: 72),
+                background: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ThemeApp.mainWhite,
+                  ),
+                ),
+                sliver: SliverPadding(
+                  padding: const EdgeInsets.all(
+                    15,
+                  ),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
                         CatalogProductTypeCardWidget(
                             imageAsset: 'assets/images/debet_card_image.png',
                             productName: 'Дебетовые карты',
@@ -154,7 +163,9 @@ class SelectProductTypePage extends ConsumerWidget {
                             }),
                       ],
                     ),
-                  ))
+                  ),
+                ),
+              )
             ],
           ),
         ],
