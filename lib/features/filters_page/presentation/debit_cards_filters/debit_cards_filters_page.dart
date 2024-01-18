@@ -1,3 +1,4 @@
+import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
@@ -9,6 +10,7 @@ import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filter
 import 'package:podberi_ru/features/filters_page/presentation/widgets/choice_chip_with_many_choice_item.dart';
 import 'package:podberi_ru/features/filters_page/presentation/widgets/save_button_widget.dart';
 import 'package:podberi_ru/features/filters_page/presentation/show_more_banks_page.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 import '../show_more_page.dart';
 
@@ -204,59 +206,58 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                     },
                     icon: const Icon(Icons.arrow_back_ios_new)),
               ),
-              SliverToBoxAdapter(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 2, bottom: 82),
-                  padding: const EdgeInsets.only(bottom: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ThemeApp.mainWhite,
+              SliverStack(
+                insetOnOverlap: true,
+                children: [
+                  SliverPositioned.fill(
+                    child: SliverFillRemaining(
+                      hasScrollBody: false,
+                      fillOverscroll: true,
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 2, bottom: 82),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: ThemeApp.mainWhite,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // const Padding(
-                      //   padding: EdgeInsets.only(top: 30, bottom: 20),
-                      //   child: Center(
-                      //     child: Text(
-                      //       'Найдено по запросу (2)',
-                      //       style: TextStyle(
-                      //           color: ThemeApp.backgroundBlack,
-                      //           fontSize: 14,
-                      //           fontWeight: FontWeight.w400),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   color: ThemeApp.darkestGrey,
-                      //   height: 1,
-                      //   width: double.infinity,
-                      // ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Padding(
-                            padding:
-                                EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                            child: Text(
-                              'Банк',
-                              style: TextStyle(
-                                  color: ThemeApp.backgroundBlack,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 26, bottom: 15, right: 15),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                  borderRadius: BorderRadius.circular(12),
-                                  onTap: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(MaterialPageRoute(
-                                            builder: (BuildContext context) {
+                  SliverContainer(
+                    margin: const EdgeInsets.only(top: 2, bottom: 82),
+                    background: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: ThemeApp.mainWhite,
+                      ),
+                    ),
+                    sliver: SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          // const Padding(
+                          //   padding: EdgeInsets.only(top: 30, bottom: 20),
+                          //   child: Center(
+                          //     child: Text(
+                          //       'Найдено по запросу (2)',
+                          //       style: TextStyle(
+                          //           color: ThemeApp.backgroundBlack,
+                          //           fontSize: 14,
+                          //           fontWeight: FontWeight.w400),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Container(
+                          //   color: ThemeApp.darkestGrey,
+                          //   height: 1,
+                          //   width: double.infinity,
+                          // ),
+                          Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () {
+                                Navigator.of(context, rootNavigator: true)
+                                    .push(MaterialPageRoute(
+                                    builder: (BuildContext context) {
                                       return ShowMoreBanksPage(
                                           onTapSaveButton: () {
                                             saveFilters();
@@ -266,109 +267,108 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                                           },
                                           filters: selectedBanks,
                                           providerName: widget
-                                                      .basicApiPageSettingsModel
-                                                      .whereFrom ==
-                                                  'selectProductPage'
+                                              .basicApiPageSettingsModel
+                                              .whereFrom ==
+                                              'selectProductPage'
                                               ? debitCardsFilterBanksFromSelectProductPageStateProvider
                                               : debitCardsFilterBanksFromHomePageStateProvider,
                                           banksList: allBanks.items);
                                     }));
-                                  },
-                                  child: const Padding(
-                                    padding: EdgeInsets.only(left: 40, top: 5),
+                              },
+                              child: const Row(
+                                children: [
+                                  Padding(
+                                    padding:
+                                    EdgeInsets.only(top: 26, bottom: 15, left: 15, right: 20),
+                                    child: Text(
+                                      'Банк',
+                                      style: TextStyle(
+                                          color: ThemeApp.backgroundBlack,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 26, bottom: 15, right: 15),
                                     child: Icon(
                                       Icons.arrow_forward_ios,
                                       color: ThemeApp.backgroundBlack,
                                       size: 14,
                                     ),
-                                  )),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ],
-                      ),
-                      ChoiceChipWithManyChoiceItem(
-                        length: allBanks.items.length < 6 ? allBanks.items.length : 6,
-                        banksList: allBanks.items,
-                        filters: selectedBanks,
-                        onTap: () {
-                          setState(() {
-                          });
-                        },
-                      ),
-                      Container(
-                        color: ThemeApp.darkestGrey,
-                        height: 1,
-                        width: double.infinity,
-                      ),
-                      // const Padding(
-                      //   padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                      //   child: Text(
-                      //     'Кэшбек',
-                      //     style: TextStyle(
-                      //         color: ThemeApp.backgroundBlack,
-                      //         fontWeight: FontWeight.w500,
-                      //         fontSize: 14),
-                      //   ),
-                      // ),
-                      // ChoiceChipWithManyChoiceItem(
-                      //     onTap: () {
-                      //       setState(() {
-                      //       });
-                      //     },
-                      //     length: cashBackNamesList.length,
-                      //     itemsNames: cashBackNamesList,
-                      //     filters: selectedCashBack),
-                      // Container(
-                      //   color: ThemeApp.darkestGrey,
-                      //   height: 1,
-                      //   width: double.infinity,
-                      // ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                        child: Text(
-                          'Платежная система',
-                          style: TextStyle(
-                              color: ThemeApp.backgroundBlack,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14),
-                        ),
-                      ),
-                      ChoiceChipWithManyChoiceItem(
-                        length: paySystemNamesList.length,
-                        itemsNames: paySystemNamesList,
-                        filters: selectedPaySystem,
-                        onTap: () {
-                          setState(() {
-                          });
-                        },
-                      ),
-                      Container(
-                        color: ThemeApp.darkestGrey,
-                        height: 1,
-                        width: double.infinity,
-                      ),
-                      Row(
-                        children: [
+                          ChoiceChipWithManyChoiceItem(
+                            length: allBanks.items.length < 6 ? allBanks.items.length : 6,
+                            banksList: allBanks.items,
+                            filters: selectedBanks,
+                            onTap: () {
+                              setState(() {
+                              });
+                            },
+                          ),
+                          Container(
+                            color: ThemeApp.darkestGrey,
+                            height: 1,
+                            width: double.infinity,
+                          ),
+                          // const Padding(
+                          //   padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
+                          //   child: Text(
+                          //     'Кэшбек',
+                          //     style: TextStyle(
+                          //         color: ThemeApp.backgroundBlack,
+                          //         fontWeight: FontWeight.w500,
+                          //         fontSize: 14),
+                          //   ),
+                          // ),
+                          // ChoiceChipWithManyChoiceItem(
+                          //     onTap: () {
+                          //       setState(() {
+                          //       });
+                          //     },
+                          //     length: cashBackNamesList.length,
+                          //     itemsNames: cashBackNamesList,
+                          //     filters: selectedCashBack),
+                          // Container(
+                          //   color: ThemeApp.darkestGrey,
+                          //   height: 1,
+                          //   width: double.infinity,
+                          // ),
                           const Padding(
                             padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
                             child: Text(
-                              'Доп. условия',
+                              'Платежная система',
                               style: TextStyle(
                                   color: ThemeApp.backgroundBlack,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 26, bottom: 15, right: 15),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                  borderRadius: BorderRadius.circular(12),
-                                  onTap: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(MaterialPageRoute(
+                          ChoiceChipWithManyChoiceItem(
+                            length: paySystemNamesList.length,
+                            itemsNames: paySystemNamesList,
+                            filters: selectedPaySystem,
+                            onTap: () {
+                              setState(() {
+                              });
+                            },
+                          ),
+                          Container(
+                            color: ThemeApp.darkestGrey,
+                            height: 1,
+                            width: double.infinity,
+                          ),
+                          Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () {
+                                Navigator.of(context, rootNavigator: true).push(
+                                    MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return ShowMorePage(
                                               onTapSaveButton: () {
@@ -378,34 +378,56 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                                                 clearFilters();
                                               },
                                               filters: selectedAdditionalConditions,
-                                              filtersNamesList: additionalConditionsNamesList);
+                                              filtersNamesList:
+                                              additionalConditionsNamesList);
                                         }));
-                                  },
-                                  child: const Padding(
-                                    padding: EdgeInsets.only(left: 40, top: 5),
+                              },
+                              child: const Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 26,
+                                        bottom: 15,
+                                        left: 15,
+                                        right: 20),
+                                    child: Text(
+                                      'Доп. условия',
+                                      style: TextStyle(
+                                          color: ThemeApp.backgroundBlack,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 26, bottom: 15, right: 15),
                                     child: Icon(
                                       Icons.arrow_forward_ios,
                                       color: ThemeApp.backgroundBlack,
                                       size: 14,
                                     ),
-                                  )),
+                                  ),
+                                ],
+                              ),
                             ),
+                          ),
+                          ChoiceChipWithManyChoiceItem(
+                            length: additionalConditionsNamesList.length < 6 ? additionalConditionsNamesList.length : 6,
+                            itemsNames: additionalConditionsNamesList,
+                            filters: selectedAdditionalConditions,
+                            onTap: () {
+                              setState(() {
+                              });
+                            },
                           ),
                         ],
                       ),
-                      ChoiceChipWithManyChoiceItem(
-                        length: additionalConditionsNamesList.length < 6 ? additionalConditionsNamesList.length : 6,
-                        itemsNames: additionalConditionsNamesList,
-                        filters: selectedAdditionalConditions,
-                        onTap: () {
-                          setState(() {
-                          });
-                        },
-                      ),
-                    ],
+                    ),
+
                   ),
-                ),
+                ],
               ),
+
             ],
           ),
           floatingActionButtonLocation:
