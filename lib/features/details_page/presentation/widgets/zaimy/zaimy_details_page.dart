@@ -2,15 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/controllers/debit_cards_controller.dart';
-import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_card_info_widget.dart';
-import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_card_conditions_widget.dart';
-
 import 'zaimy_conditions_widget.dart';
-import 'zaimy_info_widget.dart';
 import 'zaimy_preview_widget.dart';
 
 class ZaimyDetailsPage extends ConsumerStatefulWidget {
@@ -76,13 +70,14 @@ class _ZaimyDetailsPageState extends ConsumerState<ZaimyDetailsPage> {
                 ),
               ),
             ),
-            ZaimyInfoWidget(
+            ZaimyConditionsWidget(
               productInfo: widget.detailsInfo,
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
             ),
-            ZaimyConditionsWidget(
-              productInfo: widget.detailsInfo,
-            ),
+            ///todo: пока что непонятно будет ли описание у микрозаймов
+            // ZaimyDescriptionWidget(
+            //   productInfo: widget.detailsInfo,
+            // ),
           ],
         ),
       ),

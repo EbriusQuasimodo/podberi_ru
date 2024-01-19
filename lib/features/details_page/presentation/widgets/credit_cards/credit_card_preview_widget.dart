@@ -17,7 +17,7 @@ import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/web_view_widget.dart';
 
 class CreditCardPreviewWidget extends ConsumerStatefulWidget {
   final ListCreditCardsModel productInfo;
@@ -142,15 +142,12 @@ class _CreditCardPreviewWidgetState extends ConsumerState<CreditCardPreviewWidge
                     child: MaterialButton(
                       height: 50,
                       onPressed: () {
-                        Navigator.of(context).pop();
+                       Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (BuildContext context){return CustomWebViewPage(url: widget.productInfo.refLink,);}));
                       },
                       color: ThemeApp.mainBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
-                      child: Text(
-                        widget.basicApiPageSettingsModel.productTypeUrl != 'rko'
-                            ? 'Заказать карту'
-                            : 'Открыть счет',
+                      child: Text( 'Заказать карту',
                         style: const TextStyle(
                             color: ThemeApp.mainWhite,
                             fontWeight: FontWeight.w600,

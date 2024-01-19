@@ -34,6 +34,8 @@ dependencies:
   get_it: ^7.6.4
   connectivity_plus: ^5.0.2 #проверка подключения к сети
   flutter_html: ^3.0.0-beta.2 #пакет для отображения текста с html тэгами
+  webview_flutter: ^4.4.4 #пакет для открытия веб страниц внутри приложения
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

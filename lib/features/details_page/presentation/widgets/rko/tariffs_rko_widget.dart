@@ -35,21 +35,28 @@ class TariffsRkoWidget extends StatelessWidget {
               ),
             ),
             RowDescriptionWidget(
+                isTextWithHtmlTags: false,
                 rowDescription: productInfo.paymentSystem,
                 rowName: 'Платежная система'),
             const RowDescriptionWidget(
+                isTextWithHtmlTags: false,
                 rowDescription: 'Классическая', rowName: 'Тип карты'),
             const RowDescriptionWidget(
+                isTextWithHtmlTags: false,
                 rowDescription: 'Рубль, доллар, евро, +27',
                 rowName: 'Валюта карты'),
             const RowDescriptionWidget(
+                isTextWithHtmlTags: false,
                 rowDescription: '8 лет', rowName: 'Срок действия'),
             const RowDescriptionWidget(
+                isTextWithHtmlTags: false,
                 rowDescription: '1-2 дня', rowName: 'Доставка'),
             const RowDescriptionWidget(
+                isTextWithHtmlTags: false,
                 rowDescription: 'Курьером или почтой',
                 rowName: 'Способ доставки'),
             const RowDescriptionWidget(
+                isTextWithHtmlTags: false,
                 rowDescription: 'Есть, рассчитывается индивидуально',
                 rowName: 'Овердрафт'),
             Center(

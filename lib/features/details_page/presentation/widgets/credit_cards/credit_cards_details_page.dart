@@ -3,13 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/controllers/debit_cards_controller.dart';
-import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_card_info_widget.dart';
-import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_card_conditions_widget.dart';
 
+import 'credit_card_description_widget.dart';
 import 'credit_card_conditions_widget.dart';
-import 'credit_card_info_widget.dart';
 import 'credit_card_preview_widget.dart';
 
 class CreditCardsDetailsPage extends ConsumerStatefulWidget {
@@ -75,11 +72,11 @@ class _CreditCardsDetailsPageState extends ConsumerState<CreditCardsDetailsPage>
                 ),
               ),
             ),
-            CreditCardInfoWidget(
+            CreditCardConditionsWidget(
               productInfo: widget.detailsInfo,
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
             ),
-            CreditCardConditionsWidget(
+            CreditCardDescriptionWidget(
               productInfo: widget.detailsInfo,
             ),
           ],

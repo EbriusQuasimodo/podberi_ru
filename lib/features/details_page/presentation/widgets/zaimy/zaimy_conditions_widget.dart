@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 
-class ZaimyConditionsWidget extends StatelessWidget {
+import '../row_description_widget.dart';
+
+class ZaimyConditionsWidget extends StatefulWidget {
   final ListZaimyModel productInfo;
+  final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
-  ///виджет с подробным описанием условий банковского продукта
+  ///виджет с основной информацией о банковском продукте (подробное описание его фукнций и название банка)
   ///используется в [LoadDetailsPageByProductType]
-  const ZaimyConditionsWidget({
-    super.key,
-    required this.productInfo,
-  });
+  const ZaimyConditionsWidget(
+      {super.key,
+      required this.productInfo,
+      required this.basicApiPageSettingsModel});
 
+  @override
+  State<ZaimyConditionsWidget> createState() => _ZaimyConditionsWidgetState();
+}
+
+class _ZaimyConditionsWidgetState extends State<ZaimyConditionsWidget> {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -26,32 +33,69 @@ class ZaimyConditionsWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const Padding(
-              padding:
-                  EdgeInsets.only(top: 30, bottom: 10, left: 15, right: 15),
-              child: Text(
-                'Условия',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: ThemeApp.backgroundBlack,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+            Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: ThemeApp.grey,
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10, left: 15, right: 15),
-              child: Html(
-                data: productInfo.allConditionsLink,
-                style: {
-                  "product_description": Style(
-                    color: ThemeApp.backgroundBlack,
-                    fontSize: FontSize(12),
-                    fontWeight: FontWeight.w400,
-                  )
-                },
-              ),
-            ),
+                width: double.infinity,
+                height: 60,
+                margin:
+                const EdgeInsets.only(top: 15, right: 15,left: 15, bottom: 30),
+                padding: const EdgeInsets.only(
+                    top: 22, bottom: 21, right: 15, left: 15),
+                child: Text(
+                  widget.productInfo.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      color: ThemeApp.backgroundBlack),
+                )),
+            RowDescriptionWidget(
+                isTextWithHtmlTags: false,
+                rowDescription: "${widget.productInfo.sum} руб.",
+                rowName: 'Сумма займа'),
+            RowDescriptionWidget(
+                isTextWithHtmlTags: false,
+                rowDescription:
+                widget.productInfo.type,
+                rowName: 'Тип займа'),
+            RowDescriptionWidget(
+                isTextWithHtmlTags: false,
+                rowDescription:
+                    'от ${widget.productInfo.minTerm} до ${widget.productInfo.maxTerm} ${widget.productInfo.termFormat == 'дни' ? "дн." : "мес."}',
+                rowName: 'Срок займа'),
+            RowDescriptionWidget(
+                isTextWithHtmlTags: false,
+                rowDescription:
+                    'от ${widget.productInfo.minPercent} до ${widget.productInfo.maxPercent} %',
+                rowName: 'Процентная ставка'),
+            RowDescriptionWidget(
+                isTextWithHtmlTags: true,
+                rowDescription:
+                "<a href=\"${widget.productInfo.allConditionsLink}\"rel=\"noopener noreferrer\"target=\"_blank\">${widget.productInfo.allConditionsLink}</a>",
+                rowName: 'Ссылка на полные условия'),
+
+            // Center(
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 10, bottom: 24),
+            //     child: Material(
+            //       color: Colors.transparent,
+            //       child: InkWell(
+            //         borderRadius: BorderRadius.circular(12),
+            //         onTap: () {},
+            //         child: const Text(
+            //           'Показать все',
+            //           style: TextStyle(
+            //               color: ThemeApp.backgroundBlack,
+            //               fontWeight: FontWeight.w600,
+            //               fontSize: 13),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

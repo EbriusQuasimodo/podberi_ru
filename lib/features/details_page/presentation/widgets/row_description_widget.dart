@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_card_info_widget.dart';
+import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_card_conditions_widget.dart';
+import 'package:podberi_ru/features/web_view_widget.dart';
 
 class RowDescriptionWidget extends StatelessWidget {
   final String rowName;
   final String rowDescription;
-///виджет ряда в таблице с основной информацией о банковском продукте, используется в [DebitCardInfoWidget]
+  final bool isTextWithHtmlTags;
+
+  ///виджет ряда в таблице с основной информацией о банковском продукте, используется в [DebitCardConditionsWidget]
   const RowDescriptionWidget({
     super.key,
     required this.rowDescription,
     required this.rowName,
+    required this.isTextWithHtmlTags,
   });
 
   @override
@@ -19,32 +24,77 @@ class RowDescriptionWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: 15),
-              child: Text(
-                rowName,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w300,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Text(
+                  rowName,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: ThemeApp.backgroundBlack,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(right: 15),
-              child: Text(
-                rowDescription,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            )
+            isTextWithHtmlTags
+                ? Expanded(
+                    child: Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: Html(
+                          data: rowDescription,
+                          onLinkTap: (url, _, __) {
+                            Navigator.of(context, rootNavigator: true).push(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                              return CustomWebViewPage(
+                                url: url!,
+                              );
+                            }));
+                          },
+                          style: {
+                            "body": Style(
+                              textAlign: TextAlign.justify,
+                              margin: Margins.zero,
+                              padding: HtmlPaddings.zero,
+                              color: ThemeApp.backgroundBlack,
+                              fontSize: FontSize(13),
+                              fontWeight: FontWeight.w300,
+                            ),
+                            "p": Style(
+                              textAlign: TextAlign.justify,
+                              margin: Margins.zero,
+                              padding: HtmlPaddings.zero,
+                              color: ThemeApp.backgroundBlack,
+                              fontSize: FontSize(13),
+                              fontWeight: FontWeight.w300,
+                            ),
+                            "a": Style(
+                              textAlign: TextAlign.justify,
+                              textDecoration: TextDecoration.none,
+                            )
+                          },
+                        )))
+                : Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Text(
+                        rowDescription,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: ThemeApp.backgroundBlack,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ),
+                  ),
           ],
         ),
         Container(
           height: 2,
           color: ThemeApp.grey,
-          margin: EdgeInsets.only(top: 12, bottom: 12),
+          margin: const EdgeInsets.only(top: 12, bottom: 12),
         )
       ],
     );

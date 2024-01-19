@@ -4,8 +4,8 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/presentation/controllers/debit_cards_controller.dart';
-import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_card_info_widget.dart';
 import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_card_conditions_widget.dart';
+import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_card_description_widget.dart';
 
 import 'debit_card_preview_widget.dart';
 
@@ -72,11 +72,11 @@ class _DebitCardsDetailsPageState extends ConsumerState<DebitCardsDetailsPage> {
                 ),
               ),
             ),
-            DebitCardInfoWidget(
+            DebitCardConditionsWidget(
               productInfo: widget.detailsInfo,
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
             ),
-            DebitCardConditionsWidget(
+            DebitCardDescriptionWidget(
               productInfo: widget.detailsInfo,
             ),
           ],
