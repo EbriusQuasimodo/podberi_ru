@@ -14,10 +14,10 @@ class MiniCreditCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.width);
     return Container(
       decoration: BoxDecoration(
-          color: const Color(0xffFFBE0B),
+          color: Color(int.parse(
+              '0xff${creditCard.bankDetails?.color}')),
           borderRadius: BorderRadius.circular(14)),
       margin: const EdgeInsets.only(right: 3, left: 3),
       child: Row(
@@ -38,8 +38,7 @@ class MiniCreditCardWidget extends StatelessWidget {
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
                 return SvgPicture.asset(
-                  'assets/icons/image_not_found_icon.svg',
-                  color: ThemeApp.darkestGrey,
+                  'assets/icons/photo_not_found.svg',
                 );
               },
             ),

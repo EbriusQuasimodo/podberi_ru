@@ -91,11 +91,11 @@ class RowDescriptionWidget extends StatelessWidget {
                   ),
           ],
         ),
-        Container(
+         Container(
           height: 2,
           color: ThemeApp.grey,
           margin: const EdgeInsets.only(top: 12, bottom: 12),
-        )
+        ),
       ],
     );
   }

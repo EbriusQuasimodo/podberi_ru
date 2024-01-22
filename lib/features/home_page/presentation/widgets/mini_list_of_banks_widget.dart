@@ -10,13 +10,12 @@ import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
-
 class MiniListOfBanksWidget extends ConsumerStatefulWidget {
   final List<BankListDetailsModel> banksModel;
+
   ///mini list of banks on card tap go to [CatalogPage] on showAllBanks tap go to [AllBanksPage]
   const MiniListOfBanksWidget({super.key, required this.banksModel});
 
@@ -45,7 +44,9 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
               ref.watch(goRouterProvider).push(
                     RouteConstants.catalog,
                     extra: BasicApiPageSettingsModel(
-                      bankDetailsModel: BankListDetailsModel(logo:  widget.banksModel[i].logo, bankName:  widget.banksModel[i].bankName),
+                      bankDetailsModel: BankListDetailsModel(
+                          logo: widget.banksModel[i].logo,
+                          bankName: widget.banksModel[i].bankName),
                       productTypeUrl: ProductTypeEnum.debit_cards.name,
                       pageName: 'Каталог',
                       whereFrom: 'homePageBanks',
@@ -60,8 +61,7 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            color:  Color(int.parse(
-                '0xffef3124')),
+            color: Color(int.parse('0xffef3124')),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -69,19 +69,25 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 29.64, right: 39.58, left: 39, bottom: 30.77),
-                  child: Image.network(
-                    '${Urls.api.files}/${widget.banksModel[i].logo}',
-                    height: 51,
-                    width: 57,
-                    errorBuilder: (BuildContext context,
-                        Object exception, StackTrace? stackTrace) {
-                      return SvgPicture.asset(
-                        'assets/icons/image_not_found_icon.svg',
-                        color: ThemeApp.mainWhite,
-                        height: 51,
-                        width: 57,
-                      );
-                    },
+                  child: Container(
+                    height: 50, width: 50,
+                    padding:
+                    const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: ThemeApp.mainWhite,
+                    ),
+                    child: Image.network(
+                      '${Urls.api.files}/${widget.banksModel[i].logo}',
+                      height: 51,
+                      width: 57,
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
+                        return SvgPicture.asset(
+                          'assets/icons/photo_not_found.svg',
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Padding(
@@ -121,36 +127,43 @@ class _MiniListOfBanksWidgetState extends ConsumerState<MiniListOfBanksWidget> {
           color: ThemeApp.mainWhite,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(
-                bottom: 22,
-              ),
-              child: Text(
-                'Выберите банк',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: 22,
+                ),
+                child: Text(
+                  'Выберите банк',
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                ),
               ),
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: list(),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 22,
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(12),
-                  onTap: () {
-                    ref.watch(goRouterProvider).go(RouteConstants.allBanks);
-                  },
-                  child: const Text(
-                    'Все банки',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 22,
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () {
+                      ref.watch(goRouterProvider).go(RouteConstants.allBanks);
+                    },
+                    child: const Text(
+                      'Все банки',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ),

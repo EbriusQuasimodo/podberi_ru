@@ -64,9 +64,7 @@ class BestDebitCardsButtonWidget extends StatelessWidget {
                 errorBuilder: (BuildContext context,
                     Object exception, StackTrace? stackTrace) {
                   return SvgPicture.asset(
-                    'assets/icons/image_not_found_icon.svg',
-                    color: ThemeApp.mainWhite,
-
+                    'assets/icons/photo_not_found.svg',
                   );
                 },
               ),

@@ -58,19 +58,17 @@ class _DebitCardConditionsWidgetState extends State<DebitCardConditionsWidget> {
                     color: ThemeApp.grey,
                   ),
                   height: 60,
+                  width: 60,
                   margin: const EdgeInsets.only(
                       top: 15, left: 15, right: 6, bottom: 30),
                   padding: const EdgeInsets.only(
                       top: 10.5, bottom: 11.5, right: 8.63, left: 9.16),
                   child: Image.network(
                     '${Urls.api.files}/${widget.basicApiPageSettingsModel.bankDetailsModel?.logo}',
-                    height: 37.921,
-                    width: 42.208,
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
                       return SvgPicture.asset(
-                        'assets/icons/image_not_found_icon.svg',
-                        color: ThemeApp.darkestGrey,
+                        'assets/icons/photo_not_found.svg',
                       );
                     },
                   ),

@@ -7,14 +7,8 @@ import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
-import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
-import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
-import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
-import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
-import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
@@ -33,10 +27,12 @@ class DebitCardPreviewWidget extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<DebitCardPreviewWidget> createState() => _DebitCardPreviewWidgetState();
+  ConsumerState<DebitCardPreviewWidget> createState() =>
+      _DebitCardPreviewWidgetState();
 }
 
-class _DebitCardPreviewWidgetState extends ConsumerState<DebitCardPreviewWidget> {
+class _DebitCardPreviewWidgetState
+    extends ConsumerState<DebitCardPreviewWidget> {
   final _controllerBestOffers = PageController(
     viewportFraction: 0.9,
   );
@@ -88,8 +84,7 @@ class _DebitCardPreviewWidgetState extends ConsumerState<DebitCardPreviewWidget>
                           errorBuilder: (BuildContext context, Object exception,
                               StackTrace? stackTrace) {
                             return SvgPicture.asset(
-                              'assets/icons/image_not_found_icon.svg',
-                              color: ThemeApp.darkestGrey,
+                              'assets/icons/photo_not_found.svg',
                             );
                           },
                         ),
@@ -99,8 +94,7 @@ class _DebitCardPreviewWidgetState extends ConsumerState<DebitCardPreviewWidget>
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
                       return SvgPicture.asset(
-                        'assets/icons/image_not_found_icon.svg',
-                        color: ThemeApp.darkestGrey,
+                        'assets/icons/photo_not_found.svg',
                       );
                     },
                   ),
@@ -142,16 +136,19 @@ class _DebitCardPreviewWidgetState extends ConsumerState<DebitCardPreviewWidget>
                     child: MaterialButton(
                       height: 50,
                       onPressed: () {
-                        Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (BuildContext context){return CustomWebViewPage(url: widget.productInfo.refLink,);}));
-
+                        Navigator.of(context, rootNavigator: true).push(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return CustomWebViewPage(
+                            url: widget.productInfo.refLink,
+                          );
+                        }));
                       },
                       color: ThemeApp.mainBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
-                      child: Text(
-                       'Заказать карту',
-
-                        style: const TextStyle(
+                      child: const Text(
+                        'Заказать карту',
+                        style: TextStyle(
                             color: ThemeApp.mainWhite,
                             fontWeight: FontWeight.w600,
                             fontSize: 14),
@@ -165,8 +162,7 @@ class _DebitCardPreviewWidgetState extends ConsumerState<DebitCardPreviewWidget>
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () async {
-                      switch (widget.basicApiPageSettingsModel.productTypeUrl) {
-                        case 'debit_cards':
+
                           FavoritesDebitCardsData favoritesDebitCardsData =
                               FavoritesDebitCardsData()
                                 ..id = widget.productInfo.id;
@@ -183,53 +179,7 @@ class _DebitCardPreviewWidgetState extends ConsumerState<DebitCardPreviewWidget>
                                   .deleteAll()
                               : await isar?.favoritesDebitCardsDatas
                                   .put(favoritesDebitCardsData));
-                        case 'credit_cards':
-                          FavoritesCreditCardsData favoritesCreditCardsData =
-                              FavoritesCreditCardsData()
-                                ..id = widget.productInfo.id;
-                          await isar?.writeTxn(() async => await ref
-                                  .watch(isarNotifierProvider.notifier)
-                                  .isItemDuplicateInFavorites(
-                                      widget.productInfo.id,
-                                      widget.basicApiPageSettingsModel
-                                          .productTypeUrl!)
-                              ? await isar?.favoritesCreditCardsDatas
-                                  .filter()
-                                  .idEqualTo(widget.productInfo.id)
-                                  .deleteAll()
-                              : await isar?.favoritesCreditCardsDatas
-                                  .put(favoritesCreditCardsData));
-                        case 'zaimy':
-                          FavoritesZaimyData favoritesZaimyData =
-                              FavoritesZaimyData()..id = widget.productInfo.id;
-                          await isar?.writeTxn(() async => await ref
-                                  .watch(isarNotifierProvider.notifier)
-                                  .isItemDuplicateInFavorites(
-                                      widget.productInfo.id,
-                                      widget.basicApiPageSettingsModel
-                                          .productTypeUrl!)
-                              ? await isar?.favoritesZaimyDatas
-                                  .filter()
-                                  .idEqualTo(widget.productInfo.id)
-                                  .deleteAll()
-                              : await isar?.favoritesZaimyDatas
-                                  .put(favoritesZaimyData));
-                        case 'rko':
-                          FavoritesRkoData favoritesRkoData = FavoritesRkoData()
-                            ..id = widget.productInfo.id;
-                          await isar?.writeTxn(() async => await ref
-                                  .watch(isarNotifierProvider.notifier)
-                                  .isItemDuplicateInFavorites(
-                                      widget.productInfo.id,
-                                      widget.basicApiPageSettingsModel
-                                          .productTypeUrl!)
-                              ? await isar?.favoritesRkoDatas
-                                  .filter()
-                                  .idEqualTo(widget.productInfo.id)
-                                  .deleteAll()
-                              : await isar?.favoritesRkoDatas
-                                  .put(favoritesRkoData));
-                      }
+
                       widget.onFavoritesOrComparisonTap();
                     },
                     child: Padding(
@@ -275,9 +225,7 @@ class _DebitCardPreviewWidgetState extends ConsumerState<DebitCardPreviewWidget>
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () async {
-                        switch (
-                            widget.basicApiPageSettingsModel.productTypeUrl) {
-                          case 'debit_cards':
+
                             ComparisonDebitCardsData comparisonDebitCardsData =
                                 ComparisonDebitCardsData()
                                   ..id = widget.productInfo.id;
@@ -294,55 +242,7 @@ class _DebitCardPreviewWidgetState extends ConsumerState<DebitCardPreviewWidget>
                                     .deleteAll()
                                 : await isar?.comparisonDebitCardsDatas
                                     .put(comparisonDebitCardsData));
-                          case 'credit_cards':
-                            ComparisonCreditCardsData
-                                comparisonCreditCardsData =
-                                ComparisonCreditCardsData()
-                                  ..id = widget.productInfo.id;
-                            await isar?.writeTxn(() async => await ref
-                                    .watch(isarNotifierProvider.notifier)
-                                    .isItemDuplicateInComparison(
-                                        widget.productInfo.id,
-                                        widget.basicApiPageSettingsModel
-                                            .productTypeUrl!)
-                                ? await isar?.comparisonCreditCardsDatas
-                                    .filter()
-                                    .idEqualTo(widget.productInfo.id)
-                                    .deleteAll()
-                                : await isar?.comparisonCreditCardsDatas
-                                    .put(comparisonCreditCardsData));
-                          case 'zaimy':
-                            ComparisonZaimyData comparisonZaimyData =
-                                ComparisonZaimyData()
-                                  ..id = widget.productInfo.id;
-                            await isar?.writeTxn(() async => await ref
-                                    .watch(isarNotifierProvider.notifier)
-                                    .isItemDuplicateInComparison(
-                                        widget.productInfo.id,
-                                        widget.basicApiPageSettingsModel
-                                            .productTypeUrl!)
-                                ? await isar?.comparisonZaimyDatas
-                                    .filter()
-                                    .idEqualTo(widget.productInfo.id)
-                                    .deleteAll()
-                                : await isar?.comparisonZaimyDatas
-                                    .put(comparisonZaimyData));
-                          case 'rko':
-                            ComparisonRkoData comparisonRkoData =
-                                ComparisonRkoData()..id = widget.productInfo.id;
-                            await isar?.writeTxn(() async => await ref
-                                    .watch(isarNotifierProvider.notifier)
-                                    .isItemDuplicateInComparison(
-                                        widget.productInfo.id,
-                                        widget.basicApiPageSettingsModel
-                                            .productTypeUrl!)
-                                ? await isar?.comparisonRkoDatas
-                                    .filter()
-                                    .idEqualTo(widget.productInfo.id)
-                                    .deleteAll()
-                                : await isar?.comparisonRkoDatas
-                                    .put(comparisonRkoData));
-                        }
+
                         widget.onFavoritesOrComparisonTap();
                       },
                       child: Padding(

@@ -73,7 +73,7 @@ class AllBanksListWidget extends ConsumerWidget {
                         top: 15, left: 15, bottom: 15, right: 20),
                     height: 80,
                     decoration: BoxDecoration(
-                      color: const Color(0xffFFBE0B),
+                      color: Color(int.parse('0xffef3124')),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
@@ -91,8 +91,7 @@ class AllBanksListWidget extends ConsumerWidget {
                             errorBuilder: (BuildContext context,
                                 Object exception, StackTrace? stackTrace) {
                               return SvgPicture.asset(
-                                'assets/icons/image_not_found_icon.svg',
-                                color: ThemeApp.darkestGrey,
+                                'assets/icons/photo_not_found.svg',
                               );
                             },
                           ),

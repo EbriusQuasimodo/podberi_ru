@@ -9,16 +9,9 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
-import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
-import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
-import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
-import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
-import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
-import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class CreditCardWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
@@ -96,8 +89,7 @@ class _CreditCardWidgetWithButtonsState
                 errorBuilder: (BuildContext context,
                     Object exception, StackTrace? stackTrace) {
                   return SvgPicture.asset(
-                    'assets/icons/image_not_found_icon.svg',
-                    color: ThemeApp.darkestGrey,
+                    'assets/icons/photo_not_found.svg',
                   );
                 },
               ),

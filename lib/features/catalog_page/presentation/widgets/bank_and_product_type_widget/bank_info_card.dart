@@ -34,8 +34,7 @@ class BankInfoCard extends StatelessWidget {
               errorBuilder: (BuildContext context,
                   Object exception, StackTrace? stackTrace) {
                 return SvgPicture.asset(
-                  'assets/icons/image_not_found_icon.svg',
-                  color: ThemeApp.darkestGrey,
+                  'assets/icons/photo_not_found.svg',
                 );
               },
             ),
@@ -50,19 +49,19 @@ class BankInfoCard extends StatelessWidget {
                 fontSize: 14,
                 fontWeight: FontWeight.w500),
           ),
-          const Spacer(),
-          const Icon(
-            Icons.star,
-            color: ThemeApp.backgroundBlack,
-            size: 20,
-          ),
-          const Text(
-            '4.8',
-            style: TextStyle(
-                color: ThemeApp.backgroundBlack,
-                fontWeight: FontWeight.w500,
-                fontSize: 20),
-          )
+          // const Spacer(),
+          // const Icon(
+          //   Icons.star,
+          //   color: ThemeApp.backgroundBlack,
+          //   size: 20,
+          // ),
+          // const Text(
+          //   '4.8',
+          //   style: TextStyle(
+          //       color: ThemeApp.backgroundBlack,
+          //       fontWeight: FontWeight.w500,
+          //       fontSize: 20),
+          // )
         ],
       ),
     );

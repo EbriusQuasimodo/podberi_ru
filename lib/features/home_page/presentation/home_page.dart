@@ -5,7 +5,6 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_credit_cards_widget/best_credit_cards_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_debit_cards_widget/best_debit_cards_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/blog_widget.dart';
-import 'package:podberi_ru/core/presentation/custom_app_bar_with_search.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/promocodes_ads_widgets/promocodes_ads_widget.dart';
 
 import 'controllers/banks_controller.dart';
@@ -42,14 +41,15 @@ class _HomePageState extends ConsumerState<HomePage> {
           slivers: [
             ///custom app bar with search widget
             SliverAppBar(
+              surfaceTintColor: ThemeApp.mainWhite,
+              pinned: true,
               title: const Text(
-                'Доброго дня, дорогой гость!',
+                'Добрый день!',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0)),
             ),
-            CustomAppBarWithSearch(controller: searchController),
+            ///todo: поиск добавим в след релиз
+            //CustomAppBarWithSearch(controller: searchController),
             //const StoriesWidget(),
             ref.watch(bestOfferControllerProvider).when(
               data: (bestOffer) {

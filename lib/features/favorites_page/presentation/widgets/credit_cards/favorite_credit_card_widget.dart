@@ -89,8 +89,7 @@ class _FavoriteCreditCardWidget
                 errorBuilder: (BuildContext context,
                     Object exception, StackTrace? stackTrace) {
                   return SvgPicture.asset(
-                    'assets/icons/image_not_found_icon.svg',
-                    color: ThemeApp.darkestGrey,
+                    'assets/icons/photo_not_found.svg',
                   );
                 },
               ),

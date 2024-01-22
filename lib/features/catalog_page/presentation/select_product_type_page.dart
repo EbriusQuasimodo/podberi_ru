@@ -6,7 +6,6 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
-import 'package:podberi_ru/core/presentation/custom_app_bar_with_search.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/product_type_card.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -27,10 +26,9 @@ class SelectProductTypePage extends ConsumerWidget {
               'Каталог',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           ),
-          CustomAppBarWithSearch(controller: searchController),
+         ///todo: поиск добавим в след релизе
+         // CustomAppBarWithSearch(controller: searchController),
           SliverStack(
             insetOnOverlap: true,
             children: [

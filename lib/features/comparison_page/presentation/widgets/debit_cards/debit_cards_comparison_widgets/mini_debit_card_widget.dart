@@ -16,7 +16,8 @@ class MiniDebitCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: const Color(0xffFFBE0B), borderRadius: BorderRadius.circular(14)),
+          color: Color(int.parse(
+              '0xff${debitCard.bankDetails?.color}')), borderRadius: BorderRadius.circular(14)),
       margin: const EdgeInsets.only(right: 3, left: 3),
       child: Row(
         children: [
@@ -28,14 +29,13 @@ class MiniDebitCardWidget extends StatelessWidget {
             ),
             margin: const EdgeInsets.only(top: 15, left: 15, right: 6, bottom: 15),
             padding: const EdgeInsets.only(
-                top: 10.5, bottom: 11.5, right: 8.63, left: 9.16),
+                top: 9, right: 7, left: 7, bottom: 9),
             child: Image.network(
               '${Urls.api.files}/${debitCard.bankDetails?.logo}',
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
                 return SvgPicture.asset(
-                  'assets/icons/image_not_found_icon.svg',
-                  color: ThemeApp.darkestGrey,
+                  'assets/icons/photo_not_found.svg',
                 );
               },
             ),
