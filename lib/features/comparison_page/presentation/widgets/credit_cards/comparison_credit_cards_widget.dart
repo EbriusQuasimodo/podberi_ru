@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 
 import 'credit_cards_comparison_data_table_widget.dart';
@@ -34,7 +33,7 @@ class _ComparisonCreditCardsWidgetState
               onDeleteFromComparison: () {
                 setState(() {});
               }),
-          CreditCardsComparisonDataTableWidget()
+          CreditCardsComparisonDataTableWidget(creditCardsModel: widget.creditCardsInComparison,)
         ],
       ),
     );

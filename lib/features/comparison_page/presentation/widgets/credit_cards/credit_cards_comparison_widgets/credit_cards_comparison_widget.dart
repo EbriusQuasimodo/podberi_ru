@@ -4,15 +4,10 @@ import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/presentation/expandable_page_view.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
-import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
-import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
-import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_credit_cards_controller.dart';
-import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 
 import 'mini_credit_card_widget.dart';
@@ -51,16 +46,28 @@ class _CreditCardsComparisonWidgetState
   void didChangeDependencies() {
     controllerSecondPageView.addListener(() {
       currentPageOnSecondPageView = controllerSecondPageView.page!.toDouble();
-      ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =
-          widget.creditCardsList[currentPageOnSecondPageView.toInt()].bankDetails!.bankName;
+      ref.watch(comparisonSecondCreditBankNameStateController.notifier).state =
+          widget.creditCardsList[currentPageOnSecondPageView.toInt()]
+              .bankDetails!.bankName;
+      ref.watch(comparisonSecondCreditProductNameStateController.notifier).state =
+          widget.creditCardsList[currentPageOnSecondPageView.toInt()]
+              .name;
+      ref.watch(comparisonSecondCreditPageNumStateController.notifier).state =
+          currentPageOnSecondPageView.toInt();
       setState(() {});
       widget.onScrollPageViews();
     });
 
     controllerFirstPageView.addListener(() {
       currentPageOnFirstPageView = controllerFirstPageView.page!.toDouble();
-      ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
-          widget.creditCardsList[currentPageOnFirstPageView.toInt()].bankDetails!.bankName;
+      ref.watch(comparisonFirstCreditBankNameStateProvider.notifier).state =
+          widget.creditCardsList[currentPageOnFirstPageView.toInt()]
+              .bankDetails!.bankName;
+      ref.watch(comparisonFirstCreditProductNameStateProvider.notifier).state =
+          widget.creditCardsList[currentPageOnFirstPageView.toInt()]
+              .name;
+      ref.watch(comparisonFirstCreditPageNumStateProvider.notifier).state =
+          currentPageOnFirstPageView.toInt();
       setState(() {});
       widget.onScrollPageViews();
     });
@@ -70,7 +77,7 @@ class _CreditCardsComparisonWidgetState
   @override
   void dispose() {
     //controllerSecondPageView.dispose();
-   // controllerFirstPageView.dispose();
+    // controllerFirstPageView.dispose();
     super.dispose();
   }
 
@@ -87,8 +94,7 @@ class _CreditCardsComparisonWidgetState
       child: Column(
         children: [
           const Padding(
-            padding:
-                EdgeInsets.only(top: 30, bottom: 30, left: 15, right: 15),
+            padding: EdgeInsets.only(top: 30, bottom: 30, left: 15, right: 15),
             child: Text(
               'Продукты в сравнении',
               textAlign: TextAlign.center,
@@ -124,15 +130,13 @@ class _CreditCardsComparisonWidgetState
                   ref.refresh(comparisonCreditCardsListControllerProvider);
                   setState(() {
                     controllerFirstPageView.animateToPage(
-                        controllerFirstPageView.page == 1.0 ? 1 : index - 1,
+                        controllerFirstPageView.page == 0.0 ? -1 : index - 1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.linear);
                     if (controllerFirstPageView.page ==
                         controllerSecondPageView.page) {
                       controllerSecondPageView.animateToPage(
-                          controllerSecondPageView.page == 1.0
-                              ? 1
-                              : index - 1,
+                          controllerSecondPageView.page == 0.0 ? -1 : index - 1,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.linear);
                     }
@@ -156,8 +160,7 @@ class _CreditCardsComparisonWidgetState
                         return Container(
                           margin: const EdgeInsets.only(right: 4),
                           alignment: Alignment.centerLeft,
-                          height:
-                              currentPageOnFirstPageView == index ? 10 : 8,
+                          height: currentPageOnFirstPageView == index ? 10 : 8,
                           width: currentPageOnFirstPageView == index ? 10 : 8,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -187,8 +190,7 @@ class _CreditCardsComparisonWidgetState
                                 .watch(isarNotifierProvider.notifier)
                                 .isItemDuplicateInComparison(
                                   widget.creditCardsList[index].id,
-                                  ref.watch(
-                                      comparisonProductUrlStateProvider),
+                                  ref.watch(comparisonProductUrlStateProvider),
                                 )
                             ? await isar?.comparisonCreditCardsDatas
                                 .filter()
@@ -198,19 +200,19 @@ class _CreditCardsComparisonWidgetState
                                 .put(comparisonCreditCardsData));
 
                         ref.refresh(
-                            comparisonDebitCardsListControllerProvider);
+                            comparisonCreditCardsListControllerProvider);
                         setState(() {
                           controllerSecondPageView.animateToPage(
-                              controllerSecondPageView.page == 1.0
-                                  ? 1
+                              controllerSecondPageView.page == 0.0
+                                  ? -1
                                   : index - 1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.linear);
                           if (controllerFirstPageView.page ==
                               controllerSecondPageView.page) {
                             controllerFirstPageView.animateToPage(
-                                controllerFirstPageView.page == 1.0
-                                    ? 1
+                                controllerFirstPageView.page == 0.0
+                                    ? -1
                                     : index - 1,
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.linear);
@@ -233,10 +235,8 @@ class _CreditCardsComparisonWidgetState
                         return Container(
                           margin: const EdgeInsets.only(right: 4),
                           alignment: Alignment.centerLeft,
-                          height:
-                              currentPageOnSecondPageView == index ? 10 : 8,
-                          width:
-                              currentPageOnSecondPageView == index ? 10 : 8,
+                          height: currentPageOnSecondPageView == index ? 10 : 8,
+                          width: currentPageOnSecondPageView == index ? 10 : 8,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: currentPageOnSecondPageView == index

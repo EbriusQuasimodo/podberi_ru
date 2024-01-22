@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 
 import 'comparison_credit_cards_data_source.dart';
@@ -31,6 +30,13 @@ class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepository
         ref
             .watch(comparisonFirstCreditBankNameStateProvider.notifier)
             .state = response.items[0].bankDetails!.bankName;
+
+        ref
+            .watch(comparisonSecondCreditProductNameStateController.notifier)
+            .state = '';
+        ref
+            .watch(comparisonFirstCreditProductNameStateProvider.notifier)
+            .state = response.items[0].name;
       } else {
         ref
             .watch(comparisonFirstCreditBankNameStateProvider.notifier)
@@ -38,6 +44,13 @@ class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepository
         ref
             .watch(comparisonSecondCreditBankNameStateController.notifier)
             .state = response.items[0].bankDetails!.bankName;
+
+        ref
+            .watch(comparisonFirstCreditProductNameStateProvider.notifier)
+            .state = response.items[0].name;
+        ref
+            .watch(comparisonSecondCreditProductNameStateController.notifier)
+            .state = response.items[0].name;
       }
       return response;
     }

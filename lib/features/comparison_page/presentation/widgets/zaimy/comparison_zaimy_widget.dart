@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/debit_cards/debit_cards_list.dart';
-
-import '../credit_cards/credit_cards_comparison_data_table_widget.dart';
 import 'zaimy_comparison_data_table_widget.dart';
 import 'zaimy_comparison_widgets/zaimy_product_comparison_widget.dart';
 
@@ -36,7 +31,7 @@ class _ComparisonZaimyWidgetState
                   zaimyList: widget.zaimyInComparison,
                   onDeleteFromComparison: () {
                     setState(() {});
-                  }), ZaimyComparisonDataTableWidget()
+                  }), ZaimyComparisonDataTableWidget(zaimyModel: widget.zaimyInComparison,)
 
         ],
       ),

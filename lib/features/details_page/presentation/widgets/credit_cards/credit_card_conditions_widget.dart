@@ -132,7 +132,7 @@ class _CreditCardConditionsWidgetState extends State<CreditCardConditionsWidget>
             RowDescriptionWidget(
                 isTextWithHtmlTags: false,
                 rowDescription: widget.productInfo.maxService != 0
-                    ? "${widget.productInfo.minService}-${widget.productInfo.maxService} рублей в месяц"
+                    ? "От ${widget.productInfo.minService} до ${widget.productInfo.maxService} рублей в месяц"
                     : "Бесплатно",
                 rowName: 'Обслуживание'),
             RowDescriptionWidget(
@@ -143,19 +143,19 @@ class _CreditCardConditionsWidgetState extends State<CreditCardConditionsWidget>
             showAll
                 ? RowDescriptionWidget(
                 isTextWithHtmlTags: true,
-                rowDescription:widget.productInfo.conditions?.cashWithdrawal ?? 'нет информации',
+                rowDescription:widget.productInfo.conditions?.cashWithdrawal ?? 'Нет информации',
                 rowName: 'Снятие наличных')
                 : const SizedBox.shrink(),
             showAll
                 ? RowDescriptionWidget(
                 isTextWithHtmlTags: true,
-                rowDescription:widget.productInfo.conditions?.stocks ?? 'нет информации',
+                rowDescription:widget.productInfo.conditions?.stocks ?? 'Нет информации',
                 rowName: 'Акции')
                 : const SizedBox.shrink(),
             showAll
                 ? RowDescriptionWidget(
                 isTextWithHtmlTags: true,
-                rowDescription:widget.productInfo.conditions?.addRequirements ?? 'нет информации',
+                rowDescription:widget.productInfo.conditions?.addRequirements ?? 'Нет информации',
                 rowName: 'Дополнительные требования')
                 : const SizedBox.shrink(),
             showAll
@@ -180,14 +180,14 @@ class _CreditCardConditionsWidgetState extends State<CreditCardConditionsWidget>
                 ?  RowDescriptionWidget(
                 isTextWithHtmlTags: false,
                 rowDescription:
-                '${widget.productInfo.delivery ? 'есть' : 'нет'}',
+                '${widget.productInfo.delivery ? 'Есть' : 'Нет'}',
                 rowName: 'Доставка')
                 : const SizedBox.shrink(),
             showAll
                 ?  RowDescriptionWidget(
                 isTextWithHtmlTags: false,
-                rowDescription:
-                "${widget.productInfo.minSms}-${widget.productInfo.maxSms} руб. в месяц",
+                rowDescription:widget.productInfo.maxSms !=0?
+                "От ${widget.productInfo.minSms} до ${widget.productInfo.maxSms} руб. в месяц" :'Бесплатно',
                 rowName: 'SMS-уведомления')
                 : const SizedBox.shrink(),
             showAll
@@ -212,7 +212,7 @@ class _CreditCardConditionsWidgetState extends State<CreditCardConditionsWidget>
             showAll
                 ? RowDescriptionWidget(
                 isTextWithHtmlTags: true,
-                rowDescription:widget.productInfo.conditions?.cashback ?? 'нет информации',
+                rowDescription:widget.productInfo.conditions?.cashback ?? 'Нет информации',
                 rowName: 'Условия кэшбека')
                 : const SizedBox.shrink(),
             showAll

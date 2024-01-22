@@ -1,29 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 
 import '../comparison_row_item.dart';
 
-
 class CreditCardsComparisonDataTableWidget extends ConsumerStatefulWidget {
+  final List<ListCreditCardsModel> creditCardsModel;
 
   ///таблица сравнения двух кредиток, используется в [ComparisonPage]
   const CreditCardsComparisonDataTableWidget({
     super.key,
-
+    required this.creditCardsModel,
   });
 
   @override
-  ConsumerState<CreditCardsComparisonDataTableWidget> createState() => _CreditCardsComparisonDataTableWidgetState();
+  ConsumerState<CreditCardsComparisonDataTableWidget> createState() =>
+      _CreditCardsComparisonDataTableWidgetState();
 }
 
-class _CreditCardsComparisonDataTableWidgetState extends ConsumerState<CreditCardsComparisonDataTableWidget> {
+class _CreditCardsComparisonDataTableWidgetState
+    extends ConsumerState<CreditCardsComparisonDataTableWidget> {
+  String creditRates(int index) {
+    String creditRates = '';
+
+    for (int i = 0; i < widget.creditCardsModel[index].creditRates.length; i++) {
+      creditRates += "${widget.creditCardsModel[index].creditRates[i]}\n\n";
+    }
+    creditRates = creditRates.substring(0, creditRates.length - 4);
+    return creditRates;
+  }
+  String cashbackFormat(int index) {
+    String cashbackFormat = '';
+    switch (widget.creditCardsModel[index].cashbackFormat) {
+      case 'рублей':
+        cashbackFormat = 'Рубли';
+      case 'миль':
+        cashbackFormat = 'Мили';
+      case 'баллов':
+        cashbackFormat = 'Баллы';
+    }
+    return cashbackFormat;
+  }
+
   @override
   Widget build(BuildContext context) {
-    String firstProductDescription = ref.watch(comparisonFirstCreditBankNameStateProvider);
-    String secondProductDescription = ref.watch(comparisonSecondCreditBankNameStateController);
+    String firstProductDescription =
+    ref.watch(comparisonFirstCreditBankNameStateProvider);
+    String secondProductDescription =
+    ref.watch(comparisonSecondCreditBankNameStateController);
+    int firstPageNum = ref.watch(comparisonFirstCreditPageNumStateProvider);
+    int secondPageNum = ref.watch(comparisonSecondCreditPageNumStateController);
     return Container(
       padding: const EdgeInsets.only(top: 43, bottom: 30),
       margin: const EdgeInsets.only(top: 2, bottom: 72),
@@ -34,97 +63,177 @@ class _CreditCardsComparisonDataTableWidgetState extends ConsumerState<CreditCar
       child: Column(
         children: [
           ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
             rowName: 'Банк',
-            firstProductDescription: firstProductDescription,
-            secondProductDescription: secondProductDescription,
+            firstProductDescription:
+            firstProductDescription,
+            secondProductDescription:
+            secondProductDescription,
           ),
           ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
             rowName: 'Платежная система',
-            firstProductDescription: 'Мир, MasterCard',
-            secondProductDescription: secondProductDescription != '' ?'UnionPay' :'',
+            firstProductDescription:
+            widget.creditCardsModel[firstPageNum].paymentSystem,
+            secondProductDescription: secondProductDescription != ''
+                ? widget.creditCardsModel[secondPageNum].paymentSystem
+                : '',
           ),
           ComparisonRowItemWidget(
-            rowName: 'Тип карты',
-            firstProductDescription: 'Классическая',
-            secondProductDescription: secondProductDescription != '' ?'Classic / Gold / Platinum':'',
-          ),
-         ComparisonRowItemWidget(
-            rowName: 'Валюта карты',
-            firstProductDescription: 'Рубль, доллар, евро +27',
-            secondProductDescription: secondProductDescription != '' ?'Рубль, доллар, евро':'',
-          ),
-         ComparisonRowItemWidget(
-            rowName: 'Срок действия',
-            firstProductDescription: '8 лет',
-            secondProductDescription: secondProductDescription != '' ?'5 лет':'',
+            isTextWithHtmlTags: false,
+            rowName: 'Кредитный лимит',
+            firstProductDescription: 'До ${widget.creditCardsModel[firstPageNum].creditLimit} руб.',
+            secondProductDescription: secondProductDescription != ''
+                ? 'До ${widget.creditCardsModel[secondPageNum].creditLimit} руб.'
+                : '',
           ),
           ComparisonRowItemWidget(
+            isTextWithHtmlTags: true,
+            rowName: 'Кредитная ставка',
+            firstProductDescription: creditRates(firstPageNum),
+            secondProductDescription:
+            secondProductDescription != '' ? creditRates(secondPageNum) : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
+            rowName: 'Процентная ставка',
+            firstProductDescription: 'От ${widget.creditCardsModel[firstPageNum].minPercent} до ${widget.creditCardsModel[firstPageNum].maxPercent} %',
+            secondProductDescription:
+            secondProductDescription != '' ? 'От ${widget.creditCardsModel[secondPageNum].minPercent} до ${widget.creditCardsModel[secondPageNum].maxPercent} %' : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
+            rowName: 'Безпроцентный период',
+            firstProductDescription: "До ${widget.creditCardsModel[firstPageNum].noPercentPeriod} дней",
+            secondProductDescription:
+            secondProductDescription != '' ? "До ${widget.creditCardsModel[secondPageNum].noPercentPeriod} дней" : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
+            rowName: 'Обслуживание',
+            firstProductDescription:
+            widget.creditCardsModel[firstPageNum].maxService != 0
+                ? "От ${widget.creditCardsModel[firstPageNum].minService} до ${widget.creditCardsModel[firstPageNum].maxService} рублей в месяц"
+                : "Бесплатно",
+            secondProductDescription: secondProductDescription != ''
+                ? widget.creditCardsModel[secondPageNum].maxService != 0
+                ? "От ${widget.creditCardsModel[secondPageNum].minService} до ${widget.creditCardsModel[secondPageNum].maxService} рублей в месяц"
+                : "Бесплатно"
+                : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
+            rowName: 'Выпуск и перевыпуск карты',
+            firstProductDescription:
+            "Выпуск ${widget.creditCardsModel[firstPageNum].issue} руб.\nПеревыпуск ${widget.creditCardsModel[firstPageNum].reissue} руб.",
+            secondProductDescription: secondProductDescription != ''
+                ? "Выпуск ${widget.creditCardsModel[secondPageNum].issue} руб.\nПеревыпуск ${widget.creditCardsModel[secondPageNum].reissue} руб."
+                : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: true,
+            rowName: 'Снятие наличных',
+            firstProductDescription:widget.creditCardsModel[firstPageNum].conditions?.cashWithdrawal ?? 'Нет информации',
+            secondProductDescription: secondProductDescription != ''
+                ? widget.creditCardsModel[secondPageNum].conditions?.cashWithdrawal ?? 'Нет информации'
+                : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: true,
+            rowName: 'Акции',
+            firstProductDescription:
+            widget.creditCardsModel[firstPageNum].conditions?.stocks ??'Нет информации',
+            secondProductDescription: secondProductDescription != ''
+                ?widget.creditCardsModel[secondPageNum].conditions?.stocks ??'Нет информации'
+                : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags:true,
+            rowName: 'Дополнительные требования',
+            firstProductDescription:widget.creditCardsModel[firstPageNum].conditions?.addRequirements ??'Отсутствуют',
+            secondProductDescription: secondProductDescription != ''
+                ? widget.creditCardsModel[secondPageNum].conditions?.addRequirements ??'Отсутствуют'
+                : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
+            rowName: 'Минимальный и максимальный возраст',
+            firstProductDescription: 'От ${widget.creditCardsModel[firstPageNum].minAge} до ${widget.creditCardsModel[firstPageNum].maxAge}',
+            secondProductDescription: secondProductDescription != ''
+                ? 'От ${widget.creditCardsModel[secondPageNum].minAge} до ${widget.creditCardsModel[secondPageNum].maxAge}'
+                : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
+            rowName: 'Минимальный доход',
+            firstProductDescription: "${widget.creditCardsModel[firstPageNum].minIncome} руб.",
+            secondProductDescription:
+            secondProductDescription != '' ? "${widget.creditCardsModel[secondPageNum].minIncome} руб." : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
+            rowName: 'Стаж работы',
+            firstProductDescription: widget.creditCardsModel[firstPageNum].workExp,
+            secondProductDescription: secondProductDescription != ''
+                ? widget.creditCardsModel[secondPageNum].workExp
+                : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
+            rowName: 'Доставка',
+            firstProductDescription: widget.creditCardsModel[firstPageNum].delivery ? 'есть':'нет',
+            secondProductDescription:
+            secondProductDescription != '' ?  widget.creditCardsModel[secondPageNum].delivery ? 'есть':'нет' : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
+            rowName: 'SMS-уведомления',
+            firstProductDescription: widget.creditCardsModel[firstPageNum]
+                .maxSms != 0 ? "от ${widget.creditCardsModel[firstPageNum]
+                .minSms} до ${widget.creditCardsModel[firstPageNum]
+                .maxSms} руб. в месяц" : "Бесплатно",
+            secondProductDescription: secondProductDescription != ''
+                ? widget.creditCardsModel[secondPageNum]
+                .maxSms != 0 ? "от ${widget.creditCardsModel[secondPageNum]
+                .minSms} до ${widget.creditCardsModel[secondPageNum]
+                .maxSms} руб. в месяц" : "Бесплатно"
+                : '',
+          ),
+          ComparisonRowItemWidget(
+            isTextWithHtmlTags: false,
             rowName: 'Кэшбек',
             firstProductDescription:
-                '2% или 5% на отдельные категории расходов',
-            secondProductDescription:
-            secondProductDescription != '' ? 'От 1% до 15% на четыре выбранные категории\nОт 3% до 30% на предложения партнеров':'',
+            '${widget.creditCardsModel[firstPageNum].maxCashBack} %',
+            secondProductDescription: secondProductDescription != '' ? '${widget
+                .creditCardsModel[secondPageNum].maxCashBack} %' : '',
           ),
           ComparisonRowItemWidget(
-            rowName: 'Стоимость обслуживания',
+            isTextWithHtmlTags: false,
+            rowName: 'Формат кэшбека',
             firstProductDescription:
-                '0 руб. при наличии на вкладах или счетах от 50 000 ₽\n0 руб. при наличии кредита\n99 руб. в мес. в прочих случаях',
-            secondProductDescription:
-            secondProductDescription != '' ? 'Бесплатно\nВыпуск карты - 5000 руб. Эту плату можно вернуть полностью или частично:- 5000 рублей, если в течение трех месяцев подряд (в период первых 4 месяцев) после получения карты тратить на покупки от 50 000 в месяц;- 3000 рублей, если в течение первых трех месяцев тратить на покупки от 10 000 в месяц':'',
+            cashbackFormat(firstPageNum),
+            secondProductDescription: secondProductDescription != '' ? cashbackFormat(secondPageNum) : '',
           ),
           ComparisonRowItemWidget(
-            rowName: 'Снятие наличных',
+            isTextWithHtmlTags: false,
+            rowName: 'Максимальный кэшбек',
             firstProductDescription:
-                '0 руб. при снятии в банкоматах Тинькофф (до 500 000 ₽ в месяц)\n0 руб. при снятии от 3000 до 100 000 руб. за расч. период в сторонних банкоматах\n90 руб. при снятии до 3000 руб.2% мин\n90 руб. при снятии от 100 000 руб. в сторонних банкоматах за расч. период',
-            secondProductDescription:
-            secondProductDescription != '' ?  'Бесплатно в банкоматах Газпромбанка до 1 млн рублей в месяц\n- Бесплатно через сторонние банкоматы до 200 000 рублей в месяц \n- 1%, мин. 300 руб. - в прочих случаях':'',
+            "${widget.creditCardsModel[firstPageNum].maxCashBack} ${widget
+                .creditCardsModel[firstPageNum].cashbackFormat}",
+            secondProductDescription: secondProductDescription != ''
+                ? "${widget.creditCardsModel[secondPageNum]
+                .maxCashBack} ${widget.creditCardsModel[secondPageNum]
+                .cashbackFormat}"
+                : '',
           ),
           ComparisonRowItemWidget(
-            rowName: 'Перевод средств',
+            isTextWithHtmlTags: true,
+            rowName: 'Условия кэшбека',
             firstProductDescription:
-                '0 руб. внутренний банковский перевод\n0 руб. перевод по системе СБП',
-            secondProductDescription:
-            secondProductDescription != '' ?   '- 0 руб. внутри банка- 1,5%, мин.\n50 руб. по номеру карты в сторонние банки\nЧерез СБП: \n- 0 руб. в до 100 000 руб./мес. \n- 0,5%, максимум 1500 руб., если более 100 000 руб./мес.':'',
-          ),
-           ComparisonRowItemWidget(
-            rowName: 'Процент на остаток',
-            firstProductDescription:
-                '5% годовых на остаток до 300 000 руб. при сумме покупок от 3000 руб. за расчетный период и при подключенном сервисе Tinkoff Pro/Premium/PrivateВ прочих случаях не начисляется',
-            secondProductDescription:
-            secondProductDescription != '' ?    'До 13.5% годовых по накопительному счету':'',
-          ),
-          ComparisonRowItemWidget(
-            rowName: 'Доставка',
-            firstProductDescription: 'Курьером или по почте',
-            secondProductDescription:
-            secondProductDescription != '' ?   'Бесплатная доставка или получение в офисе в день обращения':'',
-          ),
-          ComparisonRowItemWidget(
-            rowName: 'Срок доставки',
-            firstProductDescription: '1-2 дня',
-            secondProductDescription:secondProductDescription != '' ? '1-2 дня':'',
-          ),
-           ComparisonRowItemWidget(
-            rowName: 'Овердрафт',
-            firstProductDescription: 'Есть, расчитывается индивидуально',
-            secondProductDescription:secondProductDescription != '' ? 'Бесплатно 7 дней\n0,1% в день далее':'',
-          ),
-           ComparisonRowItemWidget(
-            rowName: 'Приложение',
-            firstProductDescription: 'Бесплатно\niOS, Android',
-            secondProductDescription: secondProductDescription != '' ?'Бесплатно\niOS, Android':'',
-          ),
-          ComparisonRowItemWidget(
-            rowName: 'Смс-информирование',
-            firstProductDescription: '59 руб. в месяц',
-            secondProductDescription:
-            secondProductDescription != '' ?'99 руб./мес.\nБесплатно первые 2 месяца':'',
-          ),
-           ComparisonRowItemWidget(
-            rowName: 'Дополнительно',
-            firstProductDescription:
-                'Условия дебетовой карты Tinkoff Black с подпиской Tinkoff Pro становятся выгоднее.',
-            secondProductDescription: secondProductDescription != '' ?'-' :'',
+            widget.creditCardsModel[firstPageNum].conditions!.cashback,
+            secondProductDescription: secondProductDescription != ''
+                ? widget.creditCardsModel[secondPageNum].conditions!.cashback
+                : '',
           ),
           Row(
             children: [
@@ -148,8 +257,8 @@ class _CreditCardsComparisonDataTableWidgetState extends ConsumerState<CreditCar
                   ),
                 ),
               ),
-              secondProductDescription != '' ?
-              Expanded(
+              secondProductDescription != ''
+                  ? Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 15, left: 3),
                   child: MaterialButton(
@@ -169,7 +278,7 @@ class _CreditCardsComparisonDataTableWidgetState extends ConsumerState<CreditCar
                   ),
                 ),
               )
-                  :SizedBox.shrink(),
+                  : SizedBox.shrink(),
             ],
           ),
         ],

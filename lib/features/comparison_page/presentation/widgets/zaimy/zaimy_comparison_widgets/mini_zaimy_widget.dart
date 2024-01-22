@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 
 
@@ -34,22 +33,25 @@ class MiniZaimyWidget extends StatelessWidget {
               width: 42.208,
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
-                child: Text(
-                  zaimy.name,
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: ThemeApp.mainWhite),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
+                  child: Text(
+                    zaimy.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width < 400 ? 10 :12,
+                        fontWeight: FontWeight.w500,
+                        color: ThemeApp.mainWhite),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const Spacer(),
           Padding(
             padding: const EdgeInsets.only(right: 15),
             child: MaterialButton(

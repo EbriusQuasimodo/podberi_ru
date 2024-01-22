@@ -34,7 +34,6 @@ class AppThemeData {
         unselectedItemColor: ThemeApp.backgroundBlack,
         selectedItemColor: ThemeApp.mainBlue,
       ),
-      brightness: Brightness.light,
     );
   }
 }

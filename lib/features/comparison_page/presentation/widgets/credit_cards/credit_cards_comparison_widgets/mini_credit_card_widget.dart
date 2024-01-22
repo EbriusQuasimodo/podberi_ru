@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class MiniCreditCardWidget extends StatelessWidget {
   final VoidCallback onDelete;
@@ -15,6 +14,7 @@ class MiniCreditCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.width);
     return Container(
       decoration: BoxDecoration(
           color: const Color(0xffFFBE0B),
@@ -44,33 +44,39 @@ class MiniCreditCardWidget extends StatelessWidget {
               },
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    EdgeInsets.only(left: 15, bottom: 6, right: 5, top: 24),
-                child: Text(
-                  creditCard.bankDetails!.bankName,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: ThemeApp.mainWhite),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 15, bottom: 6, right: 5, top: 24),
+                  child: Text(
+                    creditCard.bankDetails!.bankName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width < 400 ? 12 :14,
+                        fontWeight: FontWeight.w700,
+                        color: ThemeApp.mainWhite),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
-                child: Text(
-                  creditCard.name,
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: ThemeApp.mainWhite),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
+                  child: Text(
+                    creditCard.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width < 400 ? 10 :12,
+                        fontWeight: FontWeight.w500,
+                        color: ThemeApp.mainWhite),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const Spacer(),
+         // const Spacer(),
           Padding(
             padding: const EdgeInsets.only(right: 15),
             child: MaterialButton(

@@ -6,6 +6,7 @@ import 'package:podberi_ru/features/comparison_page/presentation/controllers/com
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_zaimy_controller.dart';
 
+import 'controllers/comparison_page_controller.dart';
 import 'widgets/load_comparison_by_product_type.dart';
 
 class ComparisonPage extends ConsumerStatefulWidget {
@@ -25,9 +26,6 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
   ];
 
   List<String> selectedBankProductsFilter = ['Дебетовые карты'];
-
-  String firstProductDescription = '';
-  String secondProductDescription = '';
 
   List<Widget> list() {
     ///creating list of product type (filter) with unknown height
@@ -53,8 +51,26 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
     return list;
   }
 
+  String firstProductName = '';
+  String secondProductName = '';
+
   @override
   Widget build(BuildContext context) {
+    if (ref.watch(comparisonProductUrlStateProvider) == 'debit_cards') {
+      firstProductName =
+          ref.watch(comparisonFirstDebitProductNameStateProvider);
+      secondProductName =
+          ref.watch(comparisonSecondDebitProductNameStateController);
+    } else if (ref.watch(comparisonProductUrlStateProvider) == 'credit_cards') {
+      firstProductName =
+          ref.watch(comparisonFirstCreditProductNameStateProvider);
+      secondProductName =
+          ref.watch(comparisonSecondCreditProductNameStateController);
+    } else if (ref.watch(comparisonProductUrlStateProvider) == 'zaimy') {
+      firstProductName = ref.watch(comparisonFirstZaimyBankNameStateProvider);
+      secondProductName =
+          ref.watch(comparisonSecondZaimyBankNameStateController);
+    }
     return Scaffold(
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,
@@ -66,11 +82,92 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
         },
         child: CustomScrollView(
           slivers: [
-            const SliverAppBar(
-              scrolledUnderElevation: 0,
-              backgroundColor: ThemeApp.mainWhite,
+            MediaQuery.removePadding(
+              context: context,
+              removeBottom: true,
+              child: SliverAppBar(
+                pinned: false,
+                title: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text('Сравнение'),
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0)),
+              ),
+            ),
+            SliverAppBar(
+              surfaceTintColor: ThemeApp.mainWhite,
+              titleSpacing: 0,
+              toolbarHeight: 54,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        left: 15,
+                        bottom: 15,
+
+                        right: secondProductName == '' ? 15 : 0,
+                      ),
+                      height: 40,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                      decoration: BoxDecoration(
+                          color: ThemeApp.grey,
+                          borderRadius: BorderRadius.circular(14)),
+                      child: Center(
+                        child: Text(
+                          firstProductName,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontFamily: 'Geologica',
+                              color: ThemeApp.backgroundBlack,
+                              fontSize:
+                                  MediaQuery.of(context).size.width < 400
+                                      ? 10
+                                      : 12,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  secondProductName != ''
+                      ? Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(right: 15, bottom: 15,),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 3),
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color: ThemeApp.grey,
+                                borderRadius: BorderRadius.circular(14)),
+                            child: Center(
+                              child: Text(
+                                secondProductName,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                style: TextStyle(
+                                    fontFamily: 'Geologica',
+                                    color: ThemeApp.backgroundBlack,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width <
+                                                400
+                                            ? 10
+                                            : 12,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox.shrink(),
+                ],
+              ),
               pinned: true,
-              title: Text('Сравнение'),
             ),
             SliverToBoxAdapter(
               child: Container(

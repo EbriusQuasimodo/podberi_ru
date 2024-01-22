@@ -3,15 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/presentation/expandable_page_view.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
-import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
-import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
 import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
-import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_zaimy_controller.dart';
 
@@ -53,6 +48,8 @@ class _ZaimyComparisonWidgetState
       currentPageOnSecondPageView = controllerSecondPageView.page!.toDouble();
       ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =
           widget.zaimyList[currentPageOnSecondPageView.toInt()].name;
+      ref.watch(comparisonSecondZaimyPageNumStateController.notifier).state =
+          currentPageOnSecondPageView.toInt();
       setState(() {});
       widget.onScrollPageViews();
     });
@@ -61,6 +58,8 @@ class _ZaimyComparisonWidgetState
       currentPageOnFirstPageView = controllerFirstPageView.page!.toDouble();
       ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
           widget.zaimyList[currentPageOnFirstPageView.toInt()].name;
+      ref.watch(comparisonFirstZaimyPageNumStateProvider.notifier).state =
+          currentPageOnSecondPageView.toInt();
       setState(() {});
       widget.onScrollPageViews();
     });

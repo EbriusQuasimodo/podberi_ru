@@ -39,6 +39,7 @@ class OnErrorWidget extends StatelessWidget {
         },
         error: error.toString(),
         bottomPadding: 72,
+
       );
     }
     return CustomErrorPageWidget(

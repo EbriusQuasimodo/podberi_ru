@@ -128,32 +128,32 @@ class _DebitCardConditionsWidgetState extends State<DebitCardConditionsWidget> {
                 ? RowDescriptionWidget(
                 isTextWithHtmlTags: true,
                 rowDescription:
-                widget.productInfo.conditions?.accrualOfBonuses ?? 'нет информации',
+                widget.productInfo.conditions?.accrualOfBonuses ?? 'Нет информации',
                 rowName: 'Начисление бонусов')
                 : const SizedBox.shrink(),
             RowDescriptionWidget(
                 isTextWithHtmlTags: false,
-                rowDescription: widget.productInfo.overdraft ? 'есть' : 'нет',
+                rowDescription: widget.productInfo.overdraft ? 'Есть' : 'Нет',
                 rowName: 'Овердрафт'),
             showAll
                 ? RowDescriptionWidget(
                     isTextWithHtmlTags: false,
                     rowDescription:
-                        '${widget.productInfo.delivery ? 'есть' : 'нет'}',
+                        '${widget.productInfo.delivery ? 'Есть' : 'Нет'}',
                     rowName: 'Доставка')
                 : const SizedBox.shrink(),
             showAll
                 ? RowDescriptionWidget(
                     isTextWithHtmlTags: true,
                     rowDescription:
-                        widget.productInfo.conditions?.stocks ?? 'нет',
+                        widget.productInfo.conditions?.stocks ?? 'Отсутствуют',
                     rowName: 'Акции и скидки')
                 : const SizedBox.shrink(),
             showAll
                 ? RowDescriptionWidget(
                     isTextWithHtmlTags: false,
-                    rowDescription:
-                        "${widget.productInfo.minSms}-${widget.productInfo.maxSms} руб. в месяц",
+                    rowDescription:widget.productInfo.maxSms!=0?
+                        "От ${widget.productInfo.minSms} до ${widget.productInfo.maxSms} руб. в месяц" :"Бесплатно",
                     rowName: 'SMS-уведомления')
                 : const SizedBox.shrink(),
             showAll
@@ -167,7 +167,7 @@ class _DebitCardConditionsWidgetState extends State<DebitCardConditionsWidget> {
                 ? RowDescriptionWidget(
                 isTextWithHtmlTags: true,
                 rowDescription:
-                widget.productInfo.conditions?.cashWithdrawal ?? 'нет информации',
+                widget.productInfo.conditions?.cashWithdrawal ?? 'Нет информации',
                 rowName: 'Лимиты на снятие')
                 : const SizedBox.shrink(),
             showAll

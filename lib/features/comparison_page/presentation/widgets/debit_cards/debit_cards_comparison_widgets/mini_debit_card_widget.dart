@@ -40,32 +40,37 @@ class MiniDebitCardWidget extends StatelessWidget {
               },
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               Padding(
-                padding: EdgeInsets.only(left: 15, bottom: 6, right: 5, top: 24),
-                child: Text(
-                  debitCard.bankDetails!.bankName,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: ThemeApp.mainWhite),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 Padding(
+                  padding: EdgeInsets.only(left: 15, bottom: 6, right: 5, top: 24),
+                  child: Text(
+                    debitCard.bankDetails!.bankName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width < 400 ? 12 :14,
+                        fontWeight: FontWeight.w700,
+                        color: ThemeApp.mainWhite),
+                  ),
                 ),
-              ),
-               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
-                child: Text(
-                  debitCard.name,
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: ThemeApp.mainWhite),
+                 Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
+                  child: Text(
+                    debitCard.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style:  TextStyle(
+                        fontSize: MediaQuery.of(context).size.width < 400 ? 10 :12,
+                        fontWeight: FontWeight.w500,
+                        color: ThemeApp.mainWhite),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const Spacer(),
           Padding(
             padding: const EdgeInsets.only(right: 15),
             child: MaterialButton(

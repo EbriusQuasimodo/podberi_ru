@@ -30,6 +30,13 @@ class ComparisonDebitCardsRepository implements ComparisonDebitCardsRepositoryIm
         ref
             .watch(comparisonFirstDebitBankNameStateProvider.notifier)
             .state = response.items[0].bankDetails!.bankName;
+
+        ref
+            .watch(comparisonSecondDebitProductNameStateController.notifier)
+            .state = '';
+        ref
+            .watch(comparisonFirstDebitProductNameStateProvider.notifier)
+            .state = response.items[0].name;
       } else {
         ref
             .watch(comparisonFirstDebitBankNameStateProvider.notifier)
@@ -37,6 +44,13 @@ class ComparisonDebitCardsRepository implements ComparisonDebitCardsRepositoryIm
         ref
             .watch(comparisonSecondDebitBankNameStateController.notifier)
             .state = response.items[0].bankDetails!.bankName;
+
+        ref
+            .watch(comparisonFirstDebitProductNameStateProvider.notifier)
+            .state = response.items[0].name;
+        ref
+            .watch(comparisonSecondDebitProductNameStateController.notifier)
+            .state = response.items[0].name;
       }
       return response;
     }
