@@ -7,8 +7,9 @@ import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart'
 
 class SortAndFilterWidget extends ConsumerStatefulWidget {
   final VoidCallback onFiltersButtonTap;
+  final VoidCallback onSortButtonTap;
   ///виджет с сортировкой и фильтрами, используется на странице [CatalogPage]
-  const SortAndFilterWidget({super.key, required this.onFiltersButtonTap});
+  const SortAndFilterWidget({super.key, required this.onFiltersButtonTap, required this.onSortButtonTap});
 
   @override
   ConsumerState<SortAndFilterWidget> createState() =>
@@ -18,7 +19,7 @@ class SortAndFilterWidget extends ConsumerStatefulWidget {
 class _SortAndfilterButtonsWidgetState
     extends ConsumerState<SortAndFilterWidget> {
   String sortType = 'По новизне';
-  var sortVariantsList = ['По популярности', 'По рейтингу', 'По новизне'];
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,52 +30,8 @@ class _SortAndfilterButtonsWidgetState
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           onPressed: () {
-            showModalBottomSheet(
-                constraints: const BoxConstraints(minWidth: double.infinity),
-                context: context,
-                builder: (context) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: ThemeApp.mainWhite,
-                        borderRadius: BorderRadius.circular(14)),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 15),
-                    child: ListView.builder(
-                        itemCount: sortVariantsList.length,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: ThemeApp.grey,
-                                borderRadius: BorderRadius.circular(14)),
-                            margin: const EdgeInsets.only(bottom: 6),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(12),
-                                onTap: () {
-                                  setState(() {
-                                    sortType = sortVariantsList[index];
-                                  });
-                                  ref.read(goRouterProvider).pop();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 15, right: 15, top: 15, bottom: 15),
-                                  child: Text(
-                                    sortVariantsList[index],
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
-                  );
-                });
+            widget.onSortButtonTap();
+
           },
           child: Row(
             children: [

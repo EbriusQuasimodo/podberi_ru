@@ -12,6 +12,7 @@ import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_p
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/bank_product_list_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/load_product_list_by_product_type.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/widgets/load_sort_by_product_type.dart';
 import 'package:podberi_ru/features/filters_page/filters_page.dart';
 
 import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page.dart';
@@ -79,6 +80,16 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                         },
                       )
                     : SortAndFilterWidget(
+                        onSortButtonTap: () {
+                          showModalBottomSheet(
+                              useRootNavigator:true,
+                              constraints: const BoxConstraints(minWidth: double.infinity,maxHeight: 360),
+                              context: context,
+                              builder: (context) {
+                                return LoadSortByProductType(basicApiPageSettingsModel: widget.basicApiPageSettingsModel);
+                              });
+
+                        },
                         onFiltersButtonTap: () {
                           Navigator.of(context, rootNavigator: true).push(
                               MaterialPageRoute(
