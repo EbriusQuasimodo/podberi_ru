@@ -30,7 +30,7 @@ class _BankAndProductTypeWidgetState
     'РКО',
     'Микрозаймы',
   ];
-  List<String> selectedBankProducts = [];
+  List<String> selectedCategory = [];
 
   @override
   void didChangeDependencies() {
@@ -39,16 +39,16 @@ class _BankAndProductTypeWidgetState
         switch (
             ref.watch(productTypeUrlFromAllBanksStateProvider.notifier).state) {
           case 'debit_cards':
-            selectedBankProducts.add('Дебетовые карты');
+            selectedCategory.add('Дебетовые карты');
             break;
           case 'credit_cards':
-            selectedBankProducts.add('Кредитные карты');
+            selectedCategory.add('Кредитные карты');
             break;
           case 'rko':
-            selectedBankProducts.add('РКО');
+            selectedCategory.add('РКО');
             break;
           case 'zaimy':
-            selectedBankProducts.add('Микрозаймы');
+            selectedCategory.add('Микрозаймы');
             break;
         }
       }
@@ -57,16 +57,16 @@ class _BankAndProductTypeWidgetState
             .watch(productTypeUrlFromHomeBanksStateProvider.notifier)
             .state) {
           case 'debit_cards':
-            selectedBankProducts.add('Дебетовые карты');
+            selectedCategory.add('Дебетовые карты');
             break;
           case 'credit_cards':
-            selectedBankProducts.add('Кредитные карты');
+            selectedCategory.add('Кредитные карты');
             break;
           case 'rko':
-            selectedBankProducts.add('РКО');
+            selectedCategory.add('РКО');
             break;
           case 'zaimy':
-            selectedBankProducts.add('Микрозаймы');
+            selectedCategory.add('Микрозаймы');
             break;
         }
       }
@@ -87,8 +87,8 @@ class _BankAndProductTypeWidgetState
         onTap: () {
           setState(() {});
         },
-        element: bankProductsNamesList[i],
-        selectedBankProducts: selectedBankProducts,
+        categoryName: bankProductsNamesList[i],
+        selectedCategory: selectedCategory,
         bankProductsNamesList: bankProductsNamesList,
       ));
     }

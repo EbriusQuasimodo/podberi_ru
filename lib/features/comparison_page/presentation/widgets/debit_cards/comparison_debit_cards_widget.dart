@@ -6,6 +6,7 @@ import 'debit_cards_comparison_widgets/debit_cards_product_comparison_widget.dar
 class ComparisonDebitCardsWidget extends StatefulWidget {
   final List<ListDebitCardsModel> debitCardsInComparison;
   final VoidCallback onScrollPageViews;
+
   const ComparisonDebitCardsWidget({
     super.key,
     required this.debitCardsInComparison,
@@ -22,24 +23,24 @@ class _ComparisonDebitCardsWidgetState
   @override
   Widget build(BuildContext context) {
     return SliverList(
-      delegate: SliverChildListDelegate([
-         DebitCardsComparisonWidget(
-                onScrollPageViews: () {
-                  widget.onScrollPageViews();
-                },
-                debitCardsList: widget.debitCardsInComparison,
-             onDeleteFromComparisonTwo: (){setState(() {
-
-             });},
-                onDeleteFromComparison: () {
-                  setState(() {});
-                }),
-
-
-
-            DebitCardsComparisonDataTableWidget(debitCardsModel: widget.debitCardsInComparison,)
-
-      ],
-    ),);
+      delegate: SliverChildListDelegate(
+        [
+          DebitCardsComparisonWidget(
+              onScrollPageViews: () {
+                widget.onScrollPageViews();
+              },
+              debitCardsList: widget.debitCardsInComparison,
+              onDeleteFromComparisonTwo: () {
+                setState(() {});
+              },
+              onDeleteFromComparison: () {
+                setState(() {});
+              }),
+          DebitCardsComparisonDataTableWidget(
+            debitCardsModel: widget.debitCardsInComparison,
+          )
+        ],
+      ),
+    );
   }
 }

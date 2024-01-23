@@ -19,11 +19,11 @@ class ZaimyRepository implements ZaimyRepositoryImpl {
     String productType =arg.productTypeUrl!;
     switch (arg.whereFrom) {
       case "allBanksPage":
-        productType = ref.watch(productTypeUrlFromAllBanksStateProvider);
+        productType = ref.read(productTypeUrlFromAllBanksStateProvider);
 
         break;
       case 'homePageBanks':
-        productType = ref.watch(productTypeUrlFromHomeBanksStateProvider);
+        productType = ref.read(productTypeUrlFromHomeBanksStateProvider);
         break;
     }
     productType += '?fetch=10&page=1';

@@ -7,7 +7,6 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/credit_cards_controller.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/debit_cards_controller.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
-import 'package:podberi_ru/features/filters_page/presentation/credit_cards_filters/credit_cards_filters_page_controller.dart';
 
 import 'credit_card_button_widget.dart';
 
@@ -48,6 +47,8 @@ class _CreditCardsListWidgetState extends ConsumerState<CreditCardsListWidget> {
               productRating: '4.8');
         }, error: (error, _) {
           return SliverFillRemaining(
+            hasScrollBody: false,
+            fillOverscroll: true,
             child: OnErrorWidget(
                 error: error.toString(),
                 onGoBackButtonTap: () {

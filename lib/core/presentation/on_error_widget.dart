@@ -19,7 +19,7 @@ class OnErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (error == NothingFoundException().message) {
       return Container(
-        margin: const EdgeInsets.only(top: 2, bottom: 72),
+        margin: const EdgeInsets.only(top: 2,bottom: 72),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: ThemeApp.mainWhite,

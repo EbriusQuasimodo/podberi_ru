@@ -17,8 +17,7 @@ class FavoritesZaimyListController extends AutoDisposeAsyncNotifier<
   @override
   FutureOr<ZaimyModel> build() async {
     List<FavoritesZaimyData> productIdListZaimy = [];
-    productTypeUrl = ref.watch(favoritesProductUrlStateProvider);
-print (productIdListZaimy);
+    productTypeUrl = ref.read(favoritesProductUrlStateProvider);
         await isar?.txn(() async {
           productIdListZaimy =
           (await isar?.favoritesZaimyDatas.where().findAll())!;
@@ -27,7 +26,7 @@ print (productIdListZaimy);
         for (int i = 0; i < productIdListZaimy.length; i++) {
           productTypeUrl += '_id=${productIdListZaimy[i].id}&';
         }
-
+    productTypeUrl = productTypeUrl.substring(0, productTypeUrl.length - 1);
 
 
     final favoritesRepo = ref.read(favoritesZaimyRepositoryProvider);

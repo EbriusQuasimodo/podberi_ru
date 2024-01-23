@@ -39,8 +39,8 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
         onTap: () {
           setState(() {});
         },
-        element: element,
-        selectedBankProducts: selectedBankProductsFilter,
+        categoryName: element,
+        selectedCategory: selectedBankProductsFilter,
         bankProductsNamesList: bankProductsNamesListFilter,
       ));
     }
@@ -61,12 +61,14 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
           ref.watch(comparisonFirstDebitProductNameStateProvider);
       secondProductName =
           ref.watch(comparisonSecondDebitProductNameStateController);
-    } else if (ref.watch(comparisonProductUrlStateProvider) == 'credit_cards') {
+    }
+    if (ref.watch(comparisonProductUrlStateProvider) == 'credit_cards') {
       firstProductName =
           ref.watch(comparisonFirstCreditProductNameStateProvider);
       secondProductName =
           ref.watch(comparisonSecondCreditProductNameStateController);
-    } else if (ref.watch(comparisonProductUrlStateProvider) == 'zaimy') {
+    }
+    if (ref.watch(comparisonProductUrlStateProvider) == 'zaimy') {
       firstProductName = ref.watch(comparisonFirstZaimyBankNameStateProvider);
       secondProductName =
           ref.watch(comparisonSecondZaimyBankNameStateController);
@@ -82,98 +84,121 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
         },
         child: CustomScrollView(
           slivers: [
-            MediaQuery.removePadding(
+            secondProductName == ''
+                ? MediaQuery.removePadding(
               context: context,
               removeBottom: true,
               child: SliverAppBar(
-                pinned: false,
-                title: const Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Text('Сравнение'),
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(firstProductName != '' ? 0 : 20)),
-              ),
+                  pinned: false,
+                  title: const Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text('Сравнение'),
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                     BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20))
+
+                  ),
+
+              )
+            )
+            :MediaQuery.removePadding(
+                context: context,
+                removeBottom: true,
+                child: SliverAppBar(
+                  pinned: false,
+                  title: const Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text('Сравнение'),
+                  ),
+                  shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+
+                )
             ),
-            firstProductName != ''
+            secondProductName != ''
                 ? SliverAppBar(
-                    surfaceTintColor: ThemeApp.mainWhite,
-                    titleSpacing: 0,
-                    toolbarHeight: 54,
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(
-                              left: 15,
-                              bottom: 15,
-                              right: secondProductName == '' ? 15 : 0,
-                            ),
-                            height: 40,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 3),
-                            decoration: BoxDecoration(
-                                color: ThemeApp.grey,
-                                borderRadius: BorderRadius.circular(14)),
-                            child: Center(
-                              child: Text(
-                                firstProductName,
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                style: TextStyle(
-                                    fontFamily: 'Geologica',
-                                    color: ThemeApp.backgroundBlack,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width < 400
-                                            ? 10
-                                            : 12,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                          ),
+              surfaceTintColor: ThemeApp.mainWhite,
+              titleSpacing: 0,
+              toolbarHeight: 54,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        left: 15,
+                        bottom: 15,
+                        right: secondProductName == '' ? 15 : 0,
+                      ),
+                      height: 40,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 3),
+                      decoration: BoxDecoration(
+                          color: ThemeApp.grey,
+                          borderRadius: BorderRadius.circular(14)),
+                      child: Center(
+                        child: Text(
+                          firstProductName,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: TextStyle(
+                              fontFamily: 'Geologica',
+                              color: ThemeApp.backgroundBlack,
+                              fontSize:
+                              MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width < 400
+                                  ? 10
+                                  : 12,
+                              fontWeight: FontWeight.w400),
                         ),
-                        const SizedBox(
-                          width: 6,
-                        ),
-                        secondProductName != ''
-                            ? Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                    right: 15,
-                                    bottom: 15,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 3),
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: ThemeApp.grey,
-                                      borderRadius: BorderRadius.circular(14)),
-                                  child: Center(
-                                    child: Text(
-                                      secondProductName,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                          fontFamily: 'Geologica',
-                                          color: ThemeApp.backgroundBlack,
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
-                                                  400
-                                              ? 10
-                                              : 12,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      ],
+                      ),
                     ),
-                    pinned: true,
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  secondProductName != ''
+                      ? Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        right: 15,
+                        bottom: 15,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 3),
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: ThemeApp.grey,
+                          borderRadius: BorderRadius.circular(14)),
+                      child: Center(
+                        child: Text(
+                          secondProductName,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: TextStyle(
+                              fontFamily: 'Geologica',
+                              color: ThemeApp.backgroundBlack,
+                              fontSize: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width <
+                                  400
+                                  ? 10
+                                  : 12,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    ),
                   )
+                      : const SizedBox.shrink(),
+                ],
+              ),
+              pinned: true,
+            )
                 : const SliverToBoxAdapter(child: SizedBox.shrink()),
             SliverToBoxAdapter(
               child: Container(

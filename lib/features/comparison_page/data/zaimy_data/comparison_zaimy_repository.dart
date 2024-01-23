@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
 
@@ -16,10 +15,7 @@ class ComparisonZaimyRepository implements ComparisonZaimyRepositoryImpl {
   @override
   Future<ZaimyModel> fetch(
       String arg, AutoDisposeAsyncNotifierProviderRef ref) async {
-    if (arg == 'debit_cards?' ||
-        arg == 'credit_cards?' ||
-        arg == 'zaimy?' ||
-        arg == 'rko?') {
+    if (arg == 'zaimy') {
       List<ListZaimyModel> list = [];
       return ZaimyModel(items: list, itemsCount: 0);
     } else {

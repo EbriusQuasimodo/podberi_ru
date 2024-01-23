@@ -15,10 +15,8 @@ class ComparisonDebitCardsRepository implements ComparisonDebitCardsRepositoryIm
   @override
   Future<DebitCardsModel> fetch(
       String arg, AutoDisposeAsyncNotifierProviderRef ref) async {
-    if (arg == 'debit_cards?' ||
-        arg == 'credit_cards?' ||
-        arg == 'zaimy?' ||
-        arg == 'rko?') {
+    if (arg == 'debit_cards'
+        ) {
       List<ListDebitCardsModel> list = [];
       return DebitCardsModel(items: list, itemsCount: 0);
     } else {

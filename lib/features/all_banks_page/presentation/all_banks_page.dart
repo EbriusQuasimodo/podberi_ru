@@ -41,6 +41,8 @@ class AllBanksPage extends ConsumerWidget {
               },
               error: (error, _) {
                 return SliverFillRemaining(
+                  hasScrollBody: false,
+                  fillOverscroll: true,
                   child: OnErrorWidget(
                       error: error.toString(),
                       onGoBackButtonTap: () {

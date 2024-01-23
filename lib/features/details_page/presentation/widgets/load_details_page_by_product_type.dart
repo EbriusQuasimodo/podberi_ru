@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
-import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/details_page/presentation/controllers/credit_cards_controller.dart';
 import 'package:podberi_ru/features/details_page/presentation/controllers/debit_cards_controller.dart';
 import 'package:podberi_ru/features/details_page/presentation/controllers/zaimy_controller.dart';
 import 'package:podberi_ru/features/details_page/presentation/widgets/credit_cards/credit_cards_details_page.dart';
 import 'package:podberi_ru/features/details_page/presentation/widgets/debit_cards/debit_cards_details_page.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_credit_cards_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_debit_cards_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_zaimy_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/widgets/debit_cards/favorites_debit_cards_list_widget.dart';
 
 import 'zaimy/zaimy_details_page.dart';
 
@@ -41,7 +35,7 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
               ref.watch(goRouterProvider).pop();
             },
             onRefreshButtonTap: () {
-              ref.refresh(favoritesDebitCardsListControllerProvider);
+              ref.refresh(debitCardsDetailsControllerProvider(basicApiPageSettingsModel));
             });
       }, loading: () {
         return CustomLoadingCardWidget(
@@ -60,10 +54,10 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
         return OnErrorWidget(
             error: error.toString(),
             onGoBackButtonTap: () {
-              ref.refresh(favoritesCreditCardsListControllerProvider);
+              ref.watch(goRouterProvider).pop();
             },
             onRefreshButtonTap: () {
-              ref.refresh(favoritesCreditCardsListControllerProvider);
+              ref.refresh(creditCardsDetailsControllerProvider(basicApiPageSettingsModel));
             });
       }, loading: () {
         return CustomLoadingCardWidget(
@@ -82,10 +76,10 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
         return OnErrorWidget(
             error: error.toString(),
             onGoBackButtonTap: () {
-              ref.refresh(favoritesCreditCardsListControllerProvider);
+              ref.watch(goRouterProvider).pop();
             },
             onRefreshButtonTap: () {
-              ref.refresh(favoritesZaimyListControllerProvider);
+              ref.refresh(zaimyDetailsControllerProvider(basicApiPageSettingsModel));
             });
       }, loading: () {
         return CustomLoadingCardWidget(

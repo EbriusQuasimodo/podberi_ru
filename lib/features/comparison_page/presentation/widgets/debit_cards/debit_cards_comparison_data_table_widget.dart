@@ -4,6 +4,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
 import 'package:podberi_ru/features/comparison_page/presentation/controllers/comparison_page_controller.dart';
+import 'package:podberi_ru/features/web_view_widget.dart';
 
 import '../comparison_row_item.dart';
 
@@ -201,7 +202,14 @@ class _DebitCardsComparisonDataTableWidgetState
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, right: 3),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).push(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return CustomWebViewPage(
+                              url: widget.debitCardsModel[firstPageNum].refLink,
+                            );
+                          }));
+                    },
                     color: ThemeApp.mainBlue,
                     height: 50,
                     shape: RoundedRectangleBorder(
@@ -222,7 +230,14 @@ class _DebitCardsComparisonDataTableWidgetState
                       child: Padding(
                         padding: const EdgeInsets.only(right: 15, left: 3),
                         child: MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context, rootNavigator: true).push(
+                                MaterialPageRoute(builder: (BuildContext context) {
+                                  return CustomWebViewPage(
+                                    url: widget.debitCardsModel[secondPageNum].refLink,
+                                  );
+                                }));
+                          },
                           height: 50,
                           color: ThemeApp.mainBlue,
                           shape: RoundedRectangleBorder(

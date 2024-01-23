@@ -133,17 +133,17 @@ class _DebitCardsComparisonWidgetState
                   ref.refresh(comparisonDebitCardsListControllerProvider);
                   setState(() {
                     controllerFirstPageView.animateToPage(
-                        controllerFirstPageView.page == 1.0 ? 1 : index - 1,
+                        controllerFirstPageView.page == 0.0 ? -1 : index - 1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.linear);
-                    if (controllerFirstPageView.page ==
-                        controllerSecondPageView.page) {
-                      controllerSecondPageView.animateToPage(
-                          controllerSecondPageView.page == 1.0 ? 1 : index - 1,
-                          duration: const Duration(milliseconds: 300),
-
-                          curve: Curves.linear);
-                    }
+                    if(controllerSecondPageView.positions.isNotEmpty){
+                      if (controllerFirstPageView.page ==
+                          controllerSecondPageView.page) {
+                        controllerSecondPageView.animateToPage(
+                            controllerSecondPageView.page == 0.0 ? -1 : index - 1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.linear);
+                      }}
                   });
 
                   widget.onDeleteFromComparison();
@@ -206,17 +206,13 @@ class _DebitCardsComparisonWidgetState
                         ref.refresh(comparisonDebitCardsListControllerProvider);
                         setState(() {
                           controllerSecondPageView.animateToPage(
-                              controllerSecondPageView.page == 1.0
-                                  ? 1
-                                  : index - 1,
+                              controllerSecondPageView.page == 0.0 ? -1 : index - 1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.linear);
                           if (controllerFirstPageView.page ==
                               controllerSecondPageView.page) {
                             controllerFirstPageView.animateToPage(
-                                controllerFirstPageView.page == 1.0
-                                    ? 1
-                                    : index - 1,
+                                controllerFirstPageView.page == 0.0 ? -1 : index - 1,
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.linear);
                           }

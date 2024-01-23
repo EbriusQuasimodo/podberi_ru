@@ -88,6 +88,9 @@ class LoadProductListByProductType extends ConsumerWidget {
         );
       }, error: (error, _) {
         return SliverFillRemaining(
+
+          hasScrollBody: false,
+          fillOverscroll: true,
           child: OnErrorWidget(
               error: error.toString(),
               onGoBackButtonTap: () {
@@ -162,6 +165,8 @@ class LoadProductListByProductType extends ConsumerWidget {
               );
       }, error: (error, _) {
         return SliverFillRemaining(
+          hasScrollBody: false,
+          fillOverscroll: true,
           child: OnErrorWidget(
               error: error.toString(),
               onGoBackButtonTap: () {
@@ -235,6 +240,8 @@ class LoadProductListByProductType extends ConsumerWidget {
         );
       }, error: (error, _) {
         return SliverFillRemaining(
+          hasScrollBody: false,
+          fillOverscroll: true,
           child: OnErrorWidget(
               error: error.toString(),
               onGoBackButtonTap: () {
@@ -254,6 +261,8 @@ class LoadProductListByProductType extends ConsumerWidget {
       });
     } else {
       return SliverFillRemaining(
+        hasScrollBody: false,
+        fillOverscroll: true,
         child: OnErrorWidget(
             error: NothingFoundException().message,
             onGoBackButtonTap: () {},

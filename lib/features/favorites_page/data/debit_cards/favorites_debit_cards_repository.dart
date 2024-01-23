@@ -17,7 +17,7 @@ class FavoritesDebitCardsRepository implements FavoritesDebitCardsRepositoryImpl
   Future<DebitCardsModel> fetch(String arg,
       AutoDisposeAsyncNotifierProviderRef ref) async {
 
-    if(arg == 'debit_cards?'){
+    if(arg == 'debit_cards'){
       List<ListDebitCardsModel> list = [];
       return DebitCardsModel(itemsCount: 0,items: list);
     }else{

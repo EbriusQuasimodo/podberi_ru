@@ -27,10 +27,12 @@ class CreditCardPreviewWidget extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<CreditCardPreviewWidget> createState() => _CreditCardPreviewWidgetState();
+  ConsumerState<CreditCardPreviewWidget> createState() =>
+      _CreditCardPreviewWidgetState();
 }
 
-class _CreditCardPreviewWidgetState extends ConsumerState<CreditCardPreviewWidget> {
+class _CreditCardPreviewWidgetState
+    extends ConsumerState<CreditCardPreviewWidget> {
   final _controllerBestOffers = PageController(
     viewportFraction: 0.9,
   );
@@ -134,12 +136,18 @@ class _CreditCardPreviewWidgetState extends ConsumerState<CreditCardPreviewWidge
                     child: MaterialButton(
                       height: 50,
                       onPressed: () {
-                       Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (BuildContext context){return CustomWebViewPage(url: widget.productInfo.refLink,);}));
+                        Navigator.of(context, rootNavigator: true).push(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return CustomWebViewPage(
+                            url: widget.productInfo.refLink,
+                          );
+                        }));
                       },
                       color: ThemeApp.mainBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
-                      child: Text( 'Заказать карту',
+                      child: Text(
+                        'Заказать карту',
                         style: const TextStyle(
                             color: ThemeApp.mainWhite,
                             fontWeight: FontWeight.w600,
@@ -154,21 +162,21 @@ class _CreditCardPreviewWidgetState extends ConsumerState<CreditCardPreviewWidge
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () async {
-                          FavoritesCreditCardsData favoritesCreditCardsData =
-                              FavoritesCreditCardsData()
-                                ..id = widget.productInfo.id;
-                          await isar?.writeTxn(() async => await ref
-                                  .watch(isarNotifierProvider.notifier)
-                                  .isItemDuplicateInFavorites(
-                                      widget.productInfo.id,
-                                      widget.basicApiPageSettingsModel
-                                          .productTypeUrl!)
-                              ? await isar?.favoritesCreditCardsDatas
-                                  .filter()
-                                  .idEqualTo(widget.productInfo.id)
-                                  .deleteAll()
-                              : await isar?.favoritesCreditCardsDatas
-                                  .put(favoritesCreditCardsData));
+                      FavoritesCreditCardsData favoritesCreditCardsData =
+                          FavoritesCreditCardsData()
+                            ..id = widget.productInfo.id;
+                      await isar?.writeTxn(() async => await ref
+                              .watch(isarNotifierProvider.notifier)
+                              .isItemDuplicateInFavorites(
+                                  widget.productInfo.id,
+                                  widget.basicApiPageSettingsModel
+                                      .productTypeUrl!)
+                          ? await isar?.favoritesCreditCardsDatas
+                              .filter()
+                              .idEqualTo(widget.productInfo.id)
+                              .deleteAll()
+                          : await isar?.favoritesCreditCardsDatas
+                              .put(favoritesCreditCardsData));
 
                       widget.onFavoritesOrComparisonTap();
                     },
@@ -215,22 +223,21 @@ class _CreditCardPreviewWidgetState extends ConsumerState<CreditCardPreviewWidge
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () async {
-                            ComparisonCreditCardsData
-                                comparisonCreditCardsData =
-                                ComparisonCreditCardsData()
-                                  ..id = widget.productInfo.id;
-                            await isar?.writeTxn(() async => await ref
-                                    .watch(isarNotifierProvider.notifier)
-                                    .isItemDuplicateInComparison(
-                                        widget.productInfo.id,
-                                        widget.basicApiPageSettingsModel
-                                            .productTypeUrl!)
-                                ? await isar?.comparisonCreditCardsDatas
-                                    .filter()
-                                    .idEqualTo(widget.productInfo.id)
-                                    .deleteAll()
-                                : await isar?.comparisonCreditCardsDatas
-                                    .put(comparisonCreditCardsData));
+                        ComparisonCreditCardsData comparisonCreditCardsData =
+                            ComparisonCreditCardsData()
+                              ..id = widget.productInfo.id;
+                        await isar?.writeTxn(() async => await ref
+                                .watch(isarNotifierProvider.notifier)
+                                .isItemDuplicateInComparison(
+                                    widget.productInfo.id,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!)
+                            ? await isar?.comparisonCreditCardsDatas
+                                .filter()
+                                .idEqualTo(widget.productInfo.id)
+                                .deleteAll()
+                            : await isar?.comparisonCreditCardsDatas
+                                .put(comparisonCreditCardsData));
 
                         widget.onFavoritesOrComparisonTap();
                       },

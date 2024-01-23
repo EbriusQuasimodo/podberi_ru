@@ -1,4 +1,3 @@
-import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
@@ -6,7 +5,6 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_chip.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/widgets/load_favorites_by_product_type.dart';
-import 'package:sliver_tools/sliver_tools.dart';
 
 import 'controllers/favorites_credit_cards_controller.dart';
 import 'controllers/favorites_debit_cards_controller.dart';
@@ -41,8 +39,8 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
           onTap: () {
             setState(() {});
           },
-          element: element,
-          selectedBankProducts: selectedBankProducts,
+          categoryName: element,
+          selectedCategory: selectedBankProducts,
           bankProductsNamesList: bankProductsNamesList,
           whereFrom: 'favorites'));
     }
@@ -79,45 +77,29 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
               pinned: true,
               title: Text('Избранное'),
             ),
-            SliverStack(
-              insetOnOverlap: true,
-              children: [
-                SliverPositioned.fill(
-                  child: SliverFillRemaining(
-                    fillOverscroll: true,
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 2, bottom: 72),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: ThemeApp.mainWhite,
-                      ),
-                    ),
-                  ),
+            SliverToBoxAdapter(
+              child: Container(
+                margin: const EdgeInsets.only(top: 2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: ThemeApp.mainWhite,
                 ),
-                SliverContainer(
-                  margin: const EdgeInsets.only(top: 2),
-                  background: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Container(
-                      alignment: Alignment.topCenter,
-                      padding: const EdgeInsets.only(top: 30),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: list(),
-                        ),
-                      ),
-                    ),
-                  ),
-                  sliver: LoadFavoritesByProductType(
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  padding: const EdgeInsets.only(top: 18, bottom: 18),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: list(),
+                      )),
+                ),
+              ),
+            ),
+           LoadFavoritesByProductType(
                     basicApiPageSettingsModel: BasicApiPageSettingsModel(
                         productTypeUrl: 'debit_cards'),
                   ),
-                ),
-              ],
-            ),
+
           ],
         ),
       ),

@@ -16,7 +16,7 @@ class FavoritesDebitCardsListController extends AutoDisposeAsyncNotifier<
   @override
   FutureOr<DebitCardsModel> build() async {
     List<FavoritesDebitCardsData> productIdListDebitCards = [];
-    productTypeUrl = ref.watch(favoritesProductUrlStateProvider);
+    productTypeUrl = ref.read(favoritesProductUrlStateProvider);
 
         await isar?.txn(() async {
           productIdListDebitCards =
@@ -26,7 +26,7 @@ class FavoritesDebitCardsListController extends AutoDisposeAsyncNotifier<
         for (int i = 0; i < productIdListDebitCards.length; i++) {
           productTypeUrl += '_id=${productIdListDebitCards[i].id}&';
         }
-
+    productTypeUrl = productTypeUrl.substring(0, productTypeUrl.length - 1);
 
 
     final favoritesRepo = ref.read(favoritesDebitCardsRepositoryProvider);

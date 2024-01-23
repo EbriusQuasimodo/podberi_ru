@@ -9,8 +9,8 @@ import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.d
 import 'custom_choice_chip_controller.dart';
 
 class CustomChoiceChip extends ConsumerStatefulWidget {
-  final String element;
-  final List<String> selectedBankProducts;
+  final String categoryName;
+  final List<String> selectedCategory;
   final List<String> bankProductsNamesList;
   final VoidCallback onTap;
   final String whereFrom;
@@ -20,8 +20,8 @@ class CustomChoiceChip extends ConsumerStatefulWidget {
   const CustomChoiceChip({
     super.key,
     required this.onTap,
-    required this.element,
-    required this.selectedBankProducts,
+    required this.categoryName,
+    required this.selectedCategory,
     required this.bankProductsNamesList,
     required this.whereFrom,
   });
@@ -40,9 +40,9 @@ class _CustomChoiceChipState extends ConsumerState<CustomChoiceChip> {
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 25),
-              child: Text(widget.element),
+              child: Text(widget.categoryName),
             ),
-            widget.selectedBankProducts.contains(widget.element)
+            widget.selectedCategory.contains(widget.categoryName)
                 ? SvgPicture.asset('assets/icons/delete_icon.svg')
                 : const SizedBox.shrink(),
           ],
@@ -50,10 +50,10 @@ class _CustomChoiceChipState extends ConsumerState<CustomChoiceChip> {
         labelStyle: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: widget.selectedBankProducts.contains(widget.element)
+            color: widget.selectedCategory.contains(widget.categoryName)
                 ? ThemeApp.mainWhite
                 : ThemeApp.backgroundBlack),
-        selected: widget.selectedBankProducts.contains(widget.element),
+        selected: widget.selectedCategory.contains(widget.categoryName),
         selectedColor: ThemeApp.mainBlue,
         backgroundColor: ThemeApp.grey,
         shape: RoundedRectangleBorder(
@@ -63,22 +63,18 @@ class _CustomChoiceChipState extends ConsumerState<CustomChoiceChip> {
         showCheckmark: false,
         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
         onSelected: (bool value) {
-          widget.onTap();
-          setState(() {
+
+
             if (value) {
-              if (!widget.selectedBankProducts.contains(widget.element)) {
-                widget.selectedBankProducts.clear();
-                widget.selectedBankProducts.add(widget.element);
+              if (!widget.selectedCategory.contains(widget.categoryName)) {
+                widget.selectedCategory.clear();
+                widget.selectedCategory.add(widget.categoryName);
                 ref
-                    .watch(customChoiceChipControllerProvider.notifier)
-                    .changeCategory(widget.whereFrom, widget.element);
+                    .read(customChoiceChipControllerProvider.notifier)
+                    .changeCategory(widget.whereFrom, widget.categoryName);
               }
-            } else {
-              widget.selectedBankProducts.removeWhere((String name) {
-                return name == widget.element;
-              });
             }
-          });
+            widget.onTap();
         },
       ),
     );

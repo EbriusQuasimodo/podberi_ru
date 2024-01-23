@@ -46,6 +46,8 @@ class _ZaimyListWidgetState extends ConsumerState<ZaimyListWidget> {
               productRating: '4.8');
         }, error: (error, _) {
           return SliverFillRemaining(
+            hasScrollBody: false,
+            fillOverscroll: true,
             child: OnErrorWidget(
                 error: error.toString(),
                 onGoBackButtonTap: () {

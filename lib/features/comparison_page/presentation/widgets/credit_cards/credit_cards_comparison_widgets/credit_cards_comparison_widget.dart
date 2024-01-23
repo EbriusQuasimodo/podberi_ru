@@ -133,13 +133,14 @@ class _CreditCardsComparisonWidgetState
                         controllerFirstPageView.page == 0.0 ? -1 : index - 1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.linear);
+                    if(controllerSecondPageView.positions.isNotEmpty){
                     if (controllerFirstPageView.page ==
                         controllerSecondPageView.page) {
                       controllerSecondPageView.animateToPage(
                           controllerSecondPageView.page == 0.0 ? -1 : index - 1,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.linear);
-                    }
+                    }}
                   });
                   widget.onDeleteFromComparison();
                 },
