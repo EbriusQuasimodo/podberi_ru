@@ -54,6 +54,7 @@ flutter:
   assets:
     - assets/icons/nav_bar_icons/
     - assets/icons/promo_codes_icons/
+    - assets/icons/error_icons/
     - assets/icons/
     - assets/images/promo_codes_images/
     - assets/images/

@@ -27,12 +27,35 @@ class OnErrorWidget extends StatelessWidget {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.only(right: 57, left: 57),
-            child: Text(error.toString()),
+            child: Text(error.toString(), textAlign: TextAlign.center,),
           ),
         ),
       );
     } else if (error.toString() == NoInternetConnectionException().message) {
       return CustomErrorPageWidget(
+        errorImagePath: 'assets/icons/error_icons/no_internet.svg',
+        buttonName: 'Перезагрузить',
+        onTap: () {
+          onRefreshButtonTap();
+        },
+        error: error.toString(),
+        bottomPadding: 72,
+
+      );
+    }else if (error.toString() == UnknownServerException().message){
+      return CustomErrorPageWidget(
+        errorImagePath: 'assets/icons/error_icons/server_error.svg',
+        buttonName: 'Перезагрузить',
+        onTap: () {
+          onRefreshButtonTap();
+        },
+        error: error.toString(),
+        bottomPadding: 72,
+
+      );
+    }else if (error.toString() == PageNotFoundException().message){
+      return CustomErrorPageWidget(
+        errorImagePath: 'assets/icons/error_icons/page_not_found.svg',
         buttonName: 'Перезагрузить',
         onTap: () {
           onRefreshButtonTap();
@@ -43,6 +66,7 @@ class OnErrorWidget extends StatelessWidget {
       );
     }
     return CustomErrorPageWidget(
+      errorImagePath: 'assets/icons/error_icons/server_error.svg',
       buttonName: 'Вернуться',
       onTap: () {
         onGoBackButtonTap();

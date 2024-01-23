@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class CustomErrorPageWidget extends ConsumerWidget {
@@ -7,7 +8,7 @@ class CustomErrorPageWidget extends ConsumerWidget {
   final double bottomPadding;
   final VoidCallback onTap;
   final String buttonName;
-
+final String errorImagePath;
   ///кастомный виджет с ошибкой
   const CustomErrorPageWidget({
     super.key,
@@ -15,6 +16,7 @@ class CustomErrorPageWidget extends ConsumerWidget {
     required this.bottomPadding,
     required this.onTap,
     required this.buttonName,
+    required this.errorImagePath
   });
 
   @override
@@ -32,10 +34,12 @@ class CustomErrorPageWidget extends ConsumerWidget {
         ),
         child: Column(
           children: [
-            const Spacer(),
+            Spacer(),
+            SvgPicture.asset(errorImagePath),
+
             Padding(
-              padding: const EdgeInsets.only(right: 57, left: 57),
-              child: Text(error),
+              padding: const EdgeInsets.only(right: 57, left: 57, top: 30),
+              child: Text(error,textAlign: TextAlign.center,),
             ),
             const Spacer(),
             Padding(

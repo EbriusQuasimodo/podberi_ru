@@ -8,14 +8,14 @@ class NoInternetConnectionException extends APIException {
 }
 
 class PageNotFoundException extends APIException {
-  PageNotFoundException() : super('Похоже, эта страница не найдена. Давайте вернемся назад?');
+  PageNotFoundException() : super('Кажется, страница не найдена. Давайте вернемся назад?');
 }
 class NothingFoundException extends APIException {
-  NothingFoundException() : super('Похоже, ничего не найдено. Возможно вы указали слишком много фильтров, либо по данной категории отсутствуют предложения.');
+  NothingFoundException() : super('По всем вашим фильтрам не найдено продуктов');
 }
 class UnknownServerException extends APIException {
   UnknownServerException() : super('Похоже, произошла ошибка сервера. Давайте вернемся назад?');
 }
 class TimeOutException extends APIException {
-  TimeOutException() : super('Похоже, превышено время ожидания ответа от сервера. Давайте вернемся назад и попробуем еще раз?');
+  TimeOutException() : super('Превышено время ожидания ответа от сервера. Давайте вернемся назад и попробуем еще раз?');
 }
