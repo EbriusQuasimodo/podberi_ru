@@ -8,6 +8,7 @@ class FiltersModel {
    int? creditLimit;
   int? sum;
   String? term;
+  String? sort;
 
   ///модель для передачи фильтров
   FiltersModel({
@@ -20,5 +21,6 @@ class FiltersModel {
     this.term,
     this.sum,
     this.creditLimit,
+    this.sort,
   });
 }

@@ -5,9 +5,8 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/features/catalog_page/data/credit_cards_data/credit_cards_repository.dart';
 import 'package:podberi_ru/features/catalog_page/data/debit_cards_data/debit_cards_repository.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/controllers/sort_controllers/debit_cards_sort_controller.dart';
 import 'package:podberi_ru/features/filters_page/presentation/credit_cards_filters/credit_cards_filters_page_controller.dart';
-import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page_controller.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,7 +22,7 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
     String filterNoPercentPeriod = '';
     int filterCreditLimit = 0;
     List<String> filterBank = [];
-
+    String sort='';
     ///выбираем какой провайдер слушать в зависимости от того с какой страницы открыли
     ///(из выбора категории продука, с главной страницы или со страницы всех банков)
     switch (arg.whereFrom) {
@@ -35,8 +34,12 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
         arg.filtersModel?.features = ref.watch(
             creditCardsFilterAdditionalConditionsFromSelectProductPageStateProvider);
         filterCreditLimit = ref.watch(creditCardsFilterCreditLimitFromSelectProductPageStateProvider);
+        sort = ref.watch(
+            sortFromSelectProductPageStateProvider);
         break;
       case 'homePage':
+        sort = ref.watch(
+            sortFromHomePageStateProvider);
         filterNoPercentPeriod = ref
             .watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider);
         arg.filtersModel?.percents =
@@ -95,6 +98,26 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
       arg.filtersModel?.creditLimit = filterCreditLimit;
     } else {
       arg.filtersModel?.creditLimit = 0;
+    }
+
+    ///если сортировка  не пустая
+    if (sort != '') {
+      arg.filtersModel?.sort = '';
+
+      if (sort == 'По льготному периоду') {
+        arg.filtersModel?.sort = 'no_percent_period=-1';
+      } else if (sort == 'По лимиту') {
+        arg.filtersModel?.sort = 'credit_limit=-1';
+      }else if (sort == 'По ставке') {
+        arg.filtersModel?.sort = 'max_percent=1';
+      } else if (sort == 'По умолчанию') {
+        arg.filtersModel?.sort = '';
+      }else {
+        arg.filtersModel?.sort = '';
+      }
+
+    } else {
+      arg.filtersModel?.sort = '';
     }
     arg.page = '1';
     return await eventRepo.fetch(arg, ref);

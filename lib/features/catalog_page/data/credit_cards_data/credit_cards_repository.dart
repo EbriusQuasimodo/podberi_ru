@@ -58,6 +58,11 @@ class CreditCardsRepository implements CreditCardsRepositoryImpl {
         productType += '&credit_limit%24gte=${arg.filtersModel?.creditLimit}';
 
     }
+    if (arg.filtersModel!.sort !='') {
+
+      productType += '&sort\$${arg.filtersModel!.sort}';
+
+    }
     final response =
         await GetIt.I<CreditCardsGetDataSource>().fetch(productType);
 

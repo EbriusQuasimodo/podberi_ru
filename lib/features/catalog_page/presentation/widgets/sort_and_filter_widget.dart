@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
-import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/controllers/sort_controllers/debit_cards_sort_controller.dart';
 
 class SortAndFilterWidget extends ConsumerStatefulWidget {
   final VoidCallback onFiltersButtonTap;
   final VoidCallback onSortButtonTap;
+  final BasicApiPageSettingsModel basicApiPageSettingsModel;
   ///виджет с сортировкой и фильтрами, используется на странице [CatalogPage]
-  const SortAndFilterWidget({super.key, required this.onFiltersButtonTap, required this.onSortButtonTap});
+  const SortAndFilterWidget({super.key, required this.onFiltersButtonTap, required this.onSortButtonTap, required this.basicApiPageSettingsModel});
 
   @override
   ConsumerState<SortAndFilterWidget> createState() =>
@@ -18,11 +20,21 @@ class SortAndFilterWidget extends ConsumerStatefulWidget {
 
 class _SortAndfilterButtonsWidgetState
     extends ConsumerState<SortAndFilterWidget> {
-  String sortType = 'По новизне';
+  String sortType = '';
 
 
   @override
   Widget build(BuildContext context) {
+    if (widget.basicApiPageSettingsModel.whereFrom ==
+        AppRoute.homePage.name) {
+      sortType = ref.watch(sortFromHomePageStateProvider);
+    } else if (widget
+        .basicApiPageSettingsModel.whereFrom ==
+        AppRoute.selectProductPage.name) {
+      sortType = ref.watch(sortFromSelectProductPageStateProvider);
+    }
+
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

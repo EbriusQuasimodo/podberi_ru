@@ -5,9 +5,15 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 class AppThemeData {
   ThemeData themeData(BuildContext context) {
     return ThemeData(
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          elevation: 0,
+          foregroundColor: Colors.transparent),
       sliderTheme: SliderThemeData(
-          trackShape: CustomTrackShape(),
-         // overlayShape: SliderComponentShape.noThumb
+        trackShape: CustomTrackShape(),
+        // overlayShape: SliderComponentShape.noThumb
       ),
       fontFamily: 'Geologica',
       scaffoldBackgroundColor: ThemeApp.backgroundBlack,
@@ -37,6 +43,7 @@ class AppThemeData {
     );
   }
 }
+
 class CustomTrackShape extends RoundedRectSliderTrackShape {
   @override
   Rect getPreferredRect({

@@ -2,13 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
-import 'package:podberi_ru/features/catalog_page/data/credit_cards_data/credit_cards_repository.dart';
 import 'package:podberi_ru/features/catalog_page/data/debit_cards_data/debit_cards_repository.dart';
 import 'package:podberi_ru/features/catalog_page/data/zaimy_data/zaimy_repository.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
-import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page_controller.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/controllers/sort_controllers/debit_cards_sort_controller.dart';
 import 'package:podberi_ru/features/filters_page/presentation/zaimy_filters/zaimy_filters_page_controller.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -24,7 +21,7 @@ class ZaimyController extends AutoDisposeFamilyAsyncNotifier<
   FutureOr<ZaimyModel> build(BasicApiPageSettingsModel arg) async {
     String filterTerm = '';
     int filterSum = 0;
-
+    String sort='';
 List<String>filterBanks=[];
     ///выбираем какой провайдер слушать в зависимости от того с какой страницы открыли
     ///(из выбора категории продука, с главной страницы или со страницы всех банков)
@@ -35,8 +32,12 @@ List<String>filterBanks=[];
             ref.watch(zaimyFilterPercentsFromSelectProductPageStateProvider);
         filterSum =
             ref.watch(zaimyFilterSumFromSelectProductPageStateProvider);
+        sort = ref.watch(
+            sortFromSelectProductPageStateProvider);
         break;
       case 'homePage':
+        sort = ref.watch(
+            sortFromHomePageStateProvider);
         filterTerm = ref.watch(zaimyFilterTermFromHomePageStateProvider);
         arg.filtersModel?.percents =
             ref.watch(zaimyFilterPercentsFromHomePageStateProvider);
@@ -93,6 +94,27 @@ List<String>filterBanks=[];
       arg.filtersModel?.sum = filterSum;
     } else {
       arg.filtersModel?.sum = 0;
+    }
+
+
+    ///если сортировка  не пустая
+    if (sort != '') {
+      arg.filtersModel?.sort = '';
+
+      if (sort == 'По сумме займа') {
+        arg.filtersModel?.sort = 'sum=-1';
+      } else if (sort == 'По ставке') {
+        arg.filtersModel?.sort = 'max_percent=1';
+      }else if (sort == 'По сроку') {
+        arg.filtersModel?.sort = 'max_term=-1';
+      } else if (sort == 'По умолчанию') {
+        arg.filtersModel?.sort = '';
+      }else {
+        arg.filtersModel?.sort = '';
+      }
+
+    } else {
+      arg.filtersModel?.sort = '';
     }
     arg.page = '1';
     return await eventRepo.fetch(arg, ref);

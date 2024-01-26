@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/constants/urls.dart';
-import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
-import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
-import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/data/debit_cards_data/debit_cards_repository.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_and_product_type_widget.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/bank_product_list_widget.dart';
-import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/load_product_list_by_product_type.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/load_sort_by_product_type.dart';
 import 'package:podberi_ru/features/filters_page/filters_page.dart';
 
-import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page.dart';
-
-import 'controllers/credit_cards_controller.dart';
-import 'controllers/debit_cards_controller.dart';
-import 'controllers/zaimy_controller.dart';
+import 'controllers/page_controllers/debit_cards_controller.dart';
+import 'controllers/sort_controllers/debit_cards_sort_controller.dart';
 import 'widgets/sort_and_filter_widget.dart';
 
 class CatalogPage extends ConsumerStatefulWidget {
@@ -54,6 +44,21 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
               title: Text(widget.basicApiPageSettingsModel.pageName!),
               leading: IconButton(
                 onPressed: () {
+                  if (widget.basicApiPageSettingsModel.whereFrom ==
+                      AppRoute.homePage.name) {
+                    ref
+                        .watch(sortFromHomePageStateProvider
+                        .notifier)
+                        .state ='По умолчанию';
+                  } else if (widget
+                      .basicApiPageSettingsModel.whereFrom ==
+                      AppRoute.selectProductPage.name) {
+                    ref
+                        .watch(
+                        sortFromSelectProductPageStateProvider
+                            .notifier)
+                        .state = 'По умолчанию';
+                  }
                   ref.read(goRouterProvider).pop();
                 },
                 icon: const Icon(Icons.arrow_back_ios),
@@ -80,6 +85,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                         },
                       )
                     : SortAndFilterWidget(
+                  basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
                         onSortButtonTap: () {
                           showModalBottomSheet(
                               useRootNavigator:true,

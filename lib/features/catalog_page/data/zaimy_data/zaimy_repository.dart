@@ -50,7 +50,11 @@ class ZaimyRepository implements ZaimyRepositoryImpl {
       productType += '&sum%24gte=${arg.filtersModel?.sum}';
 
     }
+    if (arg.filtersModel!.sort !='') {
 
+      productType += '&sort\$${arg.filtersModel!.sort}';
+
+    }
     final response = await GetIt.I<ZaimyGetDataSource>().fetch(productType);
 
     return response;
