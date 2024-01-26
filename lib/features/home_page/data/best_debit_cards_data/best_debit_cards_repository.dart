@@ -5,8 +5,6 @@ import 'package:podberi_ru/features/home_page/presentation/controllers/best_debi
 
 import 'best_debit_cards_data_source.dart';
 
-
-///repository for fetch debit cards
 abstract class BestDebitCardsRepositoryImpl {
   Future<void> fetch(AutoDisposeAsyncNotifierProviderRef ref);
 }

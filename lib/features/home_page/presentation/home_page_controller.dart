@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/features/home_page/presentation/widgets/mini_list_of_banks_widget.dart';
+import 'package:podberi_ru/features/home_page/presentation/widgets/mini_list_of_banks_widgets/mini_list_of_banks_widget.dart';
 
 ///bank name which select on [MiniListOfBanksWidget] used for instance in api
 final bankNameFromHomeStateProvider =

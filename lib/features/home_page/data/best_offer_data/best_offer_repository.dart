@@ -6,7 +6,6 @@ import 'package:podberi_ru/features/home_page/presentation/controllers/best_offe
 
 import 'best_offer_data_source.dart';
 
-///repository for fetch best offer bank product
 abstract class BestOfferRepositoryImpl {
   Future<void> fetch(AutoDisposeAsyncNotifierProviderRef ref);
 }
@@ -26,6 +25,7 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
     final responseZaimy =
         await GetIt.I<BestOfferGetDataSource>().fetch('zaimy');
     final responseRko = await GetIt.I<BestOfferGetDataSource>().fetch('rko');
+    if(responseDebit.itemsCount !=0){
     for (int i = 0; i < responseDebit.items.length; i++) {
       _listOfBestOffers.add(
         ListDebitCardsModel(
@@ -37,7 +37,9 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
           id: responseDebit.items[i].id,
         ),
       );
-    }
+    }}
+
+     if(responseCredit.itemsCount !=0){
     for (int i = 0; i < responseCredit.items.length; i++) {
       _listOfBestOffers
           .add(ListDebitCardsModel(
@@ -48,7 +50,8 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
             bankName: responseCredit.items[i].bankDetails!.bankName),
         id: responseCredit.items[i].id,
       ),);
-    }
+    }}
+     if(responseZaimy.itemsCount !=0){
     for (int i = 0; i < responseZaimy.items.length; i++) {
       _listOfBestOffers
           .add(ListDebitCardsModel(
@@ -59,7 +62,8 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
             bankName: responseZaimy.items[i].bankDetails!.bankName),
         id: responseZaimy.items[i].id,
       ),);
-    }
+    }}
+     if(responseRko.itemsCount !=0){
     for (int i = 0; i < responseRko.items.length; i++) {
       _listOfBestOffers
           .add(ListDebitCardsModel(
@@ -70,7 +74,7 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
             bankName: responseRko.items[i].bankDetails!.bankName),
         id: responseRko.items[i].id,
       ),);
-    }
+    }}
     return _listOfBestOffers;
   }
 }
