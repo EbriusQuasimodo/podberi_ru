@@ -164,6 +164,7 @@ class LoadProductListByProductType extends ConsumerWidget {
                 ],
               );
       }, error: (error, _) {
+            print(_);
         return SliverFillRemaining(
           hasScrollBody: false,
           fillOverscroll: true,

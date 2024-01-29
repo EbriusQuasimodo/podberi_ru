@@ -8,17 +8,10 @@ class BestOfferController extends AutoDisposeAsyncNotifier<List<ListDebitCardsMo
   BestOfferController();
   @override
   FutureOr<List<ListDebitCardsModel>> build() async {
-    final eventRepo = ref.read(bestOfferRepositoryProvider);
-    return await eventRepo.fetch(ref);
+    final bestOfferRepo = ref.read(bestOfferRepositoryProvider);
+    return await bestOfferRepo.fetch(ref);
   }
 
-  fetchProductDetailsData() async {
-    state = const AsyncLoading();
-    final eventRepo = ref.read(bestOfferRepositoryProvider);
-    state = await AsyncValue.guard(() async {
-      return await eventRepo.fetch( ref);
-    });
-  }
 }
 ///контроллер для получения лучших предложений
 final bestOfferControllerProvider =

@@ -2,122 +2,105 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/catalog_page/data/debit_cards_data/debit_cards_repository.dart';
 import 'package:podberi_ru/features/catalog_page/data/zaimy_data/zaimy_repository.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/sort_controllers/debit_cards_sort_controller.dart';
-import 'package:podberi_ru/features/filters_page/presentation/zaimy_filters/zaimy_filters_page_controller.dart';
+import 'package:podberi_ru/features/filters_page/zaimy/presentation/zaimy_filters_page_controller.dart';
+import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 ///credit cards controller. used for fetch list of products. have required params (product type) which used in [DebitCardsRepository]
-class ZaimyController extends AutoDisposeFamilyAsyncNotifier<
-    ZaimyModel, BasicApiPageSettingsModel> {
+class ZaimyController extends AutoDisposeFamilyAsyncNotifier<ZaimyModel,
+    BasicApiPageSettingsModel> {
   ZaimyController();
-
-  String productType = '';
 
   @override
   FutureOr<ZaimyModel> build(BasicApiPageSettingsModel arg) async {
-    String filterTerm = '';
-    int filterSum = 0;
-    String sort='';
-List<String>filterBanks=[];
+    String productTypeWithQuery = arg.productTypeUrl!;
+
     ///выбираем какой провайдер слушать в зависимости от того с какой страницы открыли
     ///(из выбора категории продука, с главной страницы или со страницы всех банков)
     switch (arg.whereFrom) {
       case 'selectProductPage':
-        filterTerm = ref.watch(zaimyFilterTermFromSelectProductPageStateProvider);
+        arg.filtersModel!.term =
+            ref.watch(zaimyFilterTermFromSelectProductPageStateProvider);
         arg.filtersModel?.percents =
             ref.watch(zaimyFilterPercentsFromSelectProductPageStateProvider);
-        filterSum =
+        arg.filtersModel?.sum =
             ref.watch(zaimyFilterSumFromSelectProductPageStateProvider);
-        sort = ref.watch(
-            sortFromSelectProductPageStateProvider);
+        arg.filtersModel?.sort =
+            ref.watch(sortFromSelectProductPageStateProvider);
         break;
       case 'homePage':
-        sort = ref.watch(
-            sortFromHomePageStateProvider);
-        filterTerm = ref.watch(zaimyFilterTermFromHomePageStateProvider);
+        arg.filtersModel?.sort = ref.watch(sortFromHomePageStateProvider);
+        arg.filtersModel!.term =
+            ref.watch(zaimyFilterTermFromHomePageStateProvider);
         arg.filtersModel?.percents =
             ref.watch(zaimyFilterPercentsFromHomePageStateProvider);
-        filterSum =
+        arg.filtersModel?.sum =
             ref.watch(zaimyFilterSumFromHomePageStateProvider);
 
-      case 'allBanksPage':
-        filterBanks = arg.filtersModel?.banks ?? [];
+      case "allBanksPage":
+        productTypeWithQuery =
+            ref.read(productTypeUrlFromAllBanksStateProvider);
+
+      case 'homePageBanks':
+        productTypeWithQuery =
+            ref.read(productTypeUrlFromHomeBanksStateProvider);
     }
+    productTypeWithQuery += '?fetch=10&page=1';
 
-    final eventRepo = ref.read(zaimyRepositoryProvider);
+    final zaimyRepo = ref.read(zaimyRepositoryProvider);
 
-    ///проверяем откуда пришли
-    ///(фильтры когда мы приходим со страницы банков отличаются от тех когда приходим со страницы по какой-то категории
-    if (arg.whereFrom != 'allBanksPage' && arg.whereFrom != 'homePageBanks') {
-      ///если фильтр по банкам не пустой
-      if (filterBanks.isNotEmpty) {
-        ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
-        ///и добавляем в эту же модель новые фильтры из filterBanks
-        arg.filtersModel?.banks?.clear();
-        for (int i = 0; i < filterBanks.length; i++) {
-          arg.filtersModel?.banks?.add(filterBanks[i]);
-        }
-      } else {
-        arg.filtersModel?.banks?.clear();
+    if (arg.filtersModel!.percents != 0) {
+      ///ищем займы у которых макс процент находится в диапазоне min - max
+      productTypeWithQuery +=
+          '&min_percent%24lte=${arg.filtersModel!.percents}&max_percent%24gte=${arg.filtersModel!.percents}';
+    }
+    if (arg.filtersModel!.banks!.isNotEmpty) {
+      for (int i = 0; i < arg.filtersModel!.banks!.length; i++) {
+        productTypeWithQuery +=
+            '&bank_details.bank_name=${arg.filtersModel?.banks?[i]}';
       }
     }
 
-    ///если фильтр по безпроцентному периоду не пустой
-    if (filterTerm != '') {
-      ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
-      ///и добавляем в эту же модель новые фильтры из filterNoPercentPeriod
-      arg.filtersModel?.term = '';
-      for (int i = 0; i < filterTerm.length; i++) {
-        if (filterTerm.contains('от 30 дней')) {
-          arg.filtersModel?.term = '30';
-        } else if (filterTerm.contains('от 60 дней')) {
-          arg.filtersModel?.term = '60';
-        } else if (filterTerm.contains('от 90 дней')) {
-          arg.filtersModel?.term = '90';
-        } else if (filterTerm.contains('от 120 дней')) {
-          arg.filtersModel?.term = '120';
-        } else if (filterTerm.contains('от 200 дней')) {
-          arg.filtersModel?.term = '200';
-        } else {
-          arg.filtersModel?.term = '';
-        }
+    ///фильтр по безпроцентному периоду
+    if (arg.filtersModel?.term != null) {
+      ///ищем в диапазоне где min term меньше либо равно выбранному периоду
+      ///а max  term больше либо равно выбраному периоду
+      if (arg.filtersModel?.term == 'от 30 дней') {
+        productTypeWithQuery += '&min_term%24lte=30&max_term%24gte=30';
+      } else if (arg.filtersModel?.term == 'от 60 дней') {
+        productTypeWithQuery += '&min_term%24lte=60&max_term%24gte=60';
+      } else if (arg.filtersModel?.term == 'от 90 дней') {
+        productTypeWithQuery += '&min_term%24lte=90&max_term%24gte=90';
+      } else if (arg.filtersModel?.term == 'от 120 дней') {
+        productTypeWithQuery += '&min_term%24lte=120&max_term%24gte=120';
+      } else if (arg.filtersModel?.term == 'от 200 дней') {
+        productTypeWithQuery += '&min_term%24lte=200&max_term%24gte=200';
       }
-    } else {
-      arg.filtersModel?.term = '';
     }
 
-    if (filterSum != 0) {
-      arg.filtersModel?.sum = filterSum;
-    } else {
-      arg.filtersModel?.sum = 0;
+    ///фильтр по сумме займа
+    if (arg.filtersModel?.sum != null) {
+      productTypeWithQuery += '&sum%24gte=${arg.filtersModel?.sum}';
     }
 
-
-    ///если сортировка  не пустая
-    if (sort != '') {
-      arg.filtersModel?.sort = '';
-
-      if (sort == 'По сумме займа') {
-        arg.filtersModel?.sort = 'sum=-1';
-      } else if (sort == 'По ставке') {
-        arg.filtersModel?.sort = 'max_percent=1';
-      }else if (sort == 'По сроку') {
-        arg.filtersModel?.sort = 'max_term=-1';
-      } else if (sort == 'По умолчанию') {
-        arg.filtersModel?.sort = '';
-      }else {
-        arg.filtersModel?.sort = '';
+    ///сортировка
+    if (arg.filtersModel?.sort != '') {
+      if (arg.filtersModel?.sort == 'По сумме займа') {
+        productTypeWithQuery += '&sort\$sum=-1';
+      } else if (arg.filtersModel?.sort == 'По ставке') {
+        productTypeWithQuery += '&sort\$max_percent=1';
+      } else if (arg.filtersModel?.sort == 'По сроку') {
+        productTypeWithQuery += '&sort\$max_term=-1';
       }
-
-    } else {
-      arg.filtersModel?.sort = '';
     }
     arg.page = '1';
-    return await eventRepo.fetch(arg, ref);
+    return await zaimyRepo.fetch(productTypeWithQuery, ref);
   }
 }
 

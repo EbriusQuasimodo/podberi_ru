@@ -4,7 +4,7 @@ import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/features/all_banks_page/data/all_banks_repository.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
-import 'package:podberi_ru/features/filters_page/presentation/debit_cards_filters/debit_cards_filters_page.dart';
+import 'package:podberi_ru/features/filters_page/debit_cards/presentation/debit_cards_filters_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/mini_list_of_banks_widgets/mini_list_of_banks_widget.dart';
 
 ///получение списка всех банков, используется в [MiniListOfBanksWidget], [AllBanksPage] и [DebitCardsFiltersPage]

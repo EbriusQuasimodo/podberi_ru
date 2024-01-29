@@ -7,8 +7,8 @@ class BestDebitCardsController extends AutoDisposeAsyncNotifier<DebitCardsModel>
   BestDebitCardsController();
   @override
   FutureOr<DebitCardsModel> build() async {
-    final eventRepo = ref.read(bestDebitCardsRepositoryProvider);
-    return await eventRepo.fetch(ref);
+    final bestDebitCardsRepo = ref.read(bestDebitCardsRepositoryProvider);
+    return await bestDebitCardsRepo.fetch(ref);
   }
 
   fetchProductDetailsData() async {

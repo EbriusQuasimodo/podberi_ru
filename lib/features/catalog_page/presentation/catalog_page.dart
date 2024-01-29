@@ -6,7 +6,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_and_product_type_widget.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/load_product_list_by_product_type.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/widgets/load_sort_by_product_type.dart';
-import 'package:podberi_ru/features/filters_page/filters_page.dart';
+import 'package:podberi_ru/features/filters_page/shared_presentation/filters_page.dart';
 
 import 'controllers/page_controllers/debit_cards_controller.dart';
 import 'controllers/sort_controllers/debit_cards_sort_controller.dart';

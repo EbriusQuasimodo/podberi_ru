@@ -9,8 +9,8 @@ import 'package:podberi_ru/core/presentation/navigation_bar_icon.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/select_product_type_page.dart';
-import 'package:podberi_ru/features/comparison_page/presentation/comparison_page.dart';
-import 'package:podberi_ru/features/details_page/presentation/widgets/load_details_page_by_product_type.dart';
+import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page.dart';
+import 'package:podberi_ru/features/details_page/shared_presentation/load_details_page_by_product_type.dart';
 import 'package:podberi_ru/features/favorites_page/presentation/favorites_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_page.dart';
@@ -84,9 +84,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                       ),
                     );
                   },
-                  routes: [
 
-                  ],
                 ),
 
                 GoRoute(

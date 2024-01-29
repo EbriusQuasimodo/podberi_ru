@@ -25,7 +25,7 @@ class BestOfferRepository implements BestOfferRepositoryImpl {
     final responseZaimy =
         await GetIt.I<BestOfferGetDataSource>().fetch('zaimy');
     final responseRko = await GetIt.I<BestOfferGetDataSource>().fetch('rko');
-    if(responseDebit.itemsCount !=0){
+    if(responseDebit.itemsCount != 0){
     for (int i = 0; i < responseDebit.items.length; i++) {
       _listOfBestOffers.add(
         ListDebitCardsModel(

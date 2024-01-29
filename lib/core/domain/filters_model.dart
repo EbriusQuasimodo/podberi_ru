@@ -1,7 +1,7 @@
 class FiltersModel {
-  final List<String>? banks;
+  List<String>? banks;
   final List<String>? cashBack;
-  final List<String>? paySystem;
+   List<String>? paySystem;
    List<String>? features = [];
   int percents =0;
    String? noPercentPeriod;

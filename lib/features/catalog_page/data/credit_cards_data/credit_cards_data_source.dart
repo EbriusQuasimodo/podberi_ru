@@ -4,9 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
+import 'package:podberi_ru/features/catalog_page/data/credit_cards_data/credit_cards_repository.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 
-///получение кредиток [productType] содержит в себе не только enum [ProductTypeEnum]
+///получение кредиток. [productType] содержит в себе не только enum [ProductTypeEnum]
 ///но и фильтры, имя банка, сортировку и тд
 ///вызывается из [creditCardsRepositoryProvider]
 class CreditCardsGetDataSource {
@@ -21,12 +22,9 @@ class CreditCardsGetDataSource {
     if (connectivityResult != ConnectivityResult.none) {
       try {
         final re = await dio.get(
-          '/$urlWithParams',
-
+          '/$urlWithParams'
         );
-        print(re.realUri);
         switch (re.statusCode) {
-
           case 200:
             return CreditCardsModel.fromJson(re.data);
 
