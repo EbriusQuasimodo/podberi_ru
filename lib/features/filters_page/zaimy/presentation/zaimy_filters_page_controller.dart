@@ -1,6 +1,4 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
 
 /// фильтр срока займа если мы зашли с главной страницы
 final zaimyFilterTermFromHomePageStateProvider = StateProvider.autoDispose<String>((ref) {

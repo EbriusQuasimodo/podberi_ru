@@ -14,7 +14,7 @@ class CreditCardsDetailsPage extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   final ListCreditCardsModel detailsInfo;
 
-  ///странциа деталей банковского продукта
+  ///странциа деталей кредитки
   const CreditCardsDetailsPage(
       {super.key,
       required this.basicApiPageSettingsModel,

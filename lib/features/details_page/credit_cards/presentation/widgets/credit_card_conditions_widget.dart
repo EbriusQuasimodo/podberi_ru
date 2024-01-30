@@ -4,15 +4,16 @@ import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_page.dart';
+import 'package:podberi_ru/features/details_page/shared_presentation/shared_widgets/row_description_widget.dart';
 
-import '../../../shared_presentation/shared_widgets/row_description_widget.dart';
 
 class CreditCardConditionsWidget extends StatefulWidget {
   final ListCreditCardsModel productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
-  ///виджет с основной информацией о банковском продукте (подробное описание его фукнций и название банка)
-  ///используется в [LoadDetailsPageByProductType]
+  ///виджет с условиями по кредитке
+  ///используется в [CreditCardsDetailsPage]
   const CreditCardConditionsWidget(
       {super.key,
       required this.productInfo,

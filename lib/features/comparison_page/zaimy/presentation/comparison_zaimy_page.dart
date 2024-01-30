@@ -2,29 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 
 import 'widgets/zaimy_comparison_data_table_widget.dart';
-import 'widgets/zaimy_comparison_widgets/zaimy_product_comparison_widget.dart';
+import 'widgets/zaimy_comparison_widgets/zaimy_page_view_widget.dart';
 
-class ComparisonZaimyWidget extends StatefulWidget {
+class ComparisonZaimyPage extends StatefulWidget {
   final List<ListZaimyModel> zaimyInComparison;
   final VoidCallback onScrollPageViews;
 
-  const ComparisonZaimyWidget({
+  const ComparisonZaimyPage({
     super.key,
     required this.zaimyInComparison,
     required this.onScrollPageViews,
   });
 
   @override
-  State<ComparisonZaimyWidget> createState() => _ComparisonZaimyWidgetState();
+  State<ComparisonZaimyPage> createState() => _ComparisonZaimyPageState();
 }
 
-class _ComparisonZaimyWidgetState extends State<ComparisonZaimyWidget> {
+class _ComparisonZaimyPageState extends State<ComparisonZaimyPage> {
   @override
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildListDelegate(
         [
-          ZaimyComparisonWidget(
+          ZaimyPageViewWidget(
               onScrollPageViews: () {
                 widget.onScrollPageViews();
               },

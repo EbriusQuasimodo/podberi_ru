@@ -6,31 +6,30 @@ import 'package:podberi_ru/features/comparison_page/credit_cards/data/comparison
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-///контроллер списка сравнения
 class ComparisonCreditCardsListController
     extends AutoDisposeAsyncNotifier<CreditCardsModel> {
   ComparisonCreditCardsListController();
 
-  String productTypeUrl = '';
+  String productTypeWithQuery = '';
   final isar = Isar.getInstance();
 
   @override
   FutureOr<CreditCardsModel> build() async {
     List<ComparisonCreditCardsData> productIdListCreditCards = [];
 
-    productTypeUrl = ref.read(comparisonProductUrlStateProvider);
+    productTypeWithQuery = ref.read(comparisonProductUrlStateProvider);
     await isar?.txn(() async {
       productIdListCreditCards =
           (await isar?.comparisonCreditCardsDatas.where().findAll())!;
     });
-    productTypeUrl += '?';
+    productTypeWithQuery += '?';
     for (int i = 0; i < productIdListCreditCards.length; i++) {
-      productTypeUrl += '_id=${productIdListCreditCards[i].id}&';
+      productTypeWithQuery += '_id=${productIdListCreditCards[i].id}&';
     }
-    productTypeUrl = productTypeUrl.substring(0, productTypeUrl.length - 1);
-    final comparisonRepo = ref.read(comparisonCreditCardsRepositoryProvider);
+    productTypeWithQuery = productTypeWithQuery.substring(0, productTypeWithQuery.length - 1);
+    final comparisonCreditCardsRepo = ref.read(comparisonCreditCardsRepositoryProvider);
 
-    return await comparisonRepo.fetch(productTypeUrl, ref);
+    return await comparisonCreditCardsRepo.fetch(productTypeWithQuery, ref);
   }
 }
 

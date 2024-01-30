@@ -11,7 +11,7 @@ class ZaimyDetailsPage extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   final ListZaimyModel detailsInfo;
 
-  ///странциа деталей банковского продукта
+  ///странциа деталей займа
   const ZaimyDetailsPage(
       {super.key,
       required this.basicApiPageSettingsModel,
@@ -47,28 +47,6 @@ class _ZaimyDetailsPageState extends ConsumerState<ZaimyDetailsPage> {
               },
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
               productInfo: widget.detailsInfo,
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                margin: const EdgeInsets.only(top: 2),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: ThemeApp.mainWhite,
-                ),
-                child: const Padding(
-                  padding:
-                      EdgeInsets.only(top: 21, bottom: 22, left: 15, right: 15),
-                  child: Text(
-                    'Есть возможность кастомизации дизайна',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: ThemeApp.mainBlue),
-                  ),
-                ),
-              ),
             ),
             ZaimyConditionsWidget(
               productInfo: widget.detailsInfo,

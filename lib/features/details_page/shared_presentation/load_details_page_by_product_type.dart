@@ -5,7 +5,7 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
-import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_controller.dart';
+import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_controller.dart';
 import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/details_page/zaimy/presentation/zaimy_controller.dart';
 
@@ -15,7 +15,7 @@ import '../zaimy/presentation/zaimy_details_page.dart';
 
 class LoadDetailsPageByProductType extends ConsumerWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  ///виджет для загрузки списка избранного по выбранному типу продукта
+  ///виджет для загрузки страницы деталей по выбранному типу продукта
   const LoadDetailsPageByProductType({super.key, required this.basicApiPageSettingsModel,});
 
   @override
@@ -29,7 +29,6 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
 
         );
       }, error: (error, _) {
-            print(_);
         return OnErrorWidget(
             error: error.toString(),
             onGoBackButtonTap: () {
@@ -39,7 +38,7 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
               ref.refresh(debitCardsDetailsControllerProvider(basicApiPageSettingsModel));
             });
       }, loading: () {
-        return CustomLoadingCardWidget(
+        return const CustomLoadingCardWidget(
           bottomPadding: 72,
         );
       });
@@ -52,7 +51,6 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
 
         );
       }, error: (error, _) {
-        print(_);
         return OnErrorWidget(
             error: error.toString(),
             onGoBackButtonTap: () {
@@ -62,7 +60,7 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
               ref.refresh(creditCardsDetailsControllerProvider(basicApiPageSettingsModel));
             });
       }, loading: () {
-        return CustomLoadingCardWidget(
+        return const CustomLoadingCardWidget(
           bottomPadding: 72,
         );
       });
@@ -75,7 +73,6 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
 
         );
       }, error: (error, _) {
-        print(_);
         return OnErrorWidget(
             error: error.toString(),
             onGoBackButtonTap: () {
@@ -85,7 +82,7 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
               ref.refresh(zaimyDetailsControllerProvider(basicApiPageSettingsModel));
             });
       }, loading: () {
-        return CustomLoadingCardWidget(
+        return const CustomLoadingCardWidget(
           bottomPadding: 72,
         );
       });

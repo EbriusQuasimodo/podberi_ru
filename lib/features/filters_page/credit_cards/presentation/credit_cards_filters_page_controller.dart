@@ -1,6 +1,4 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
 
 /// фильтр безпроцентного периода если мы зашли с главной страницы
 final creditCardsFilterNoPercentPeriodFromHomePageStateProvider = StateProvider.autoDispose<String>((ref) {

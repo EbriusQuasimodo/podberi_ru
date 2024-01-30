@@ -14,8 +14,7 @@ class ZaimyDetailsController extends AutoDisposeFamilyAsyncNotifier<ListZaimyMod
   }
 }
 
-///контроллер для получения данных о деталях кредитки,
-///используется в [LoadDetailsPageByProductType]
+///контроллер для получения данных о деталях займа
 final zaimyDetailsControllerProvider =
 AutoDisposeAsyncNotifierProvider.family<ZaimyDetailsController, ListZaimyModel, BasicApiPageSettingsModel>(
   ZaimyDetailsController.new,

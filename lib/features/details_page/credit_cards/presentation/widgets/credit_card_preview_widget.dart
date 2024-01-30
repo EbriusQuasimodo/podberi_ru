@@ -1,16 +1,15 @@
-import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
-import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_page.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 
 class CreditCardPreviewWidget extends ConsumerStatefulWidget {
@@ -18,7 +17,7 @@ class CreditCardPreviewWidget extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   final VoidCallback onFavoritesOrComparisonTap;
 
-  ///виджет с превью банковского продукта (фото, название, кнопка Заказать), используется в [DetailsPage]
+  ///виджет с превью кредитки (фото, название, кнопка Заказать), используется в [CreditCardsDetailsPage]
   const CreditCardPreviewWidget({
     super.key,
     required this.productInfo,
@@ -33,21 +32,6 @@ class CreditCardPreviewWidget extends ConsumerStatefulWidget {
 
 class _CreditCardPreviewWidgetState
     extends ConsumerState<CreditCardPreviewWidget> {
-  final _controllerBestOffers = PageController(
-    viewportFraction: 0.9,
-  );
-
-  double currentPage = 0;
-
-  @override
-  void initState() {
-    _controllerBestOffers.addListener(() {
-      setState(() {
-        currentPage = _controllerBestOffers.page!.toDouble();
-      });
-    });
-    super.initState();
-  }
 
   final isar = Isar.getInstance();
 
@@ -73,61 +57,18 @@ class _CreditCardPreviewWidgetState
                     const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
               ),
             ),
-            widget.basicApiPageSettingsModel.productTypeUrl !=
-                    ProductTypeEnum.rko.name
-                ? ExpandablePageView(
-                    physics: const BouncingScrollPhysics(),
-                    controller: _controllerBestOffers,
-                    children: [
-                        Image.network(
-                          '${Urls.api.files}/${widget.productInfo.image}',
-                          errorBuilder: (BuildContext context, Object exception,
-                              StackTrace? stackTrace) {
-                            return SvgPicture.asset(
-                              'assets/icons/photo_not_found.svg',
-                            );
-                          },
-                        ),
-                      ])
-                : Image.network(
-                    '${Urls.api.files}/${widget.productInfo.image}',
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return SvgPicture.asset(
-                        'assets/icons/photo_not_found.svg',
-                      );
-                    },
-                  ),
-            widget.basicApiPageSettingsModel.productTypeUrl !=
-                        ProductTypeEnum.rko.name &&
-                    widget.basicApiPageSettingsModel.productTypeUrl !=
-                        ProductTypeEnum.zaimy.name
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        4,
-                        (index) {
-                          return Container(
-                            margin: const EdgeInsets.only(right: 4),
-                            alignment: Alignment.centerLeft,
-                            height: currentPage == index ? 10 : 8,
-                            width: currentPage == index ? 10 : 8,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: currentPage == index
-                                  ? ThemeApp.backgroundBlack
-                                  : ThemeApp.darkestGrey,
-                            ),
-                          );
-                        },
-                      ),
+            Padding(
+padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
+              child: Image.network(
+                      '${Urls.api.files}/${widget.productInfo.image}',
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
+                        return SvgPicture.asset(
+                          'assets/icons/photo_not_found.svg',
+                        );
+                      },
                     ),
-                  )
-                : const SizedBox(
-                    height: 30,
-                  ),
+            ),
             Row(
               children: [
                 Expanded(
@@ -146,9 +87,9 @@ class _CreditCardPreviewWidgetState
                       color: ThemeApp.mainBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
-                      child: Text(
+                      child: const Text(
                         'Заказать карту',
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: ThemeApp.mainWhite,
                             fontWeight: FontWeight.w600,
                             fontSize: 14),
@@ -162,6 +103,7 @@ class _CreditCardPreviewWidgetState
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () async {
+                      ///добавление или удаление из избранного
                       FavoritesCreditCardsData favoritesCreditCardsData =
                           FavoritesCreditCardsData()
                             ..id = widget.productInfo.id;
@@ -223,6 +165,7 @@ class _CreditCardPreviewWidgetState
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () async {
+                        ///добавление или удаление из сравнения
                         ComparisonCreditCardsData comparisonCreditCardsData =
                             ComparisonCreditCardsData()
                               ..id = widget.productInfo.id;

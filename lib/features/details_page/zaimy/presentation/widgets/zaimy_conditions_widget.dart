@@ -4,6 +4,7 @@ import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/features/details_page/zaimy/presentation/zaimy_details_page.dart';
 
 import '../../../shared_presentation/shared_widgets/row_description_widget.dart';
 
@@ -11,8 +12,8 @@ class ZaimyConditionsWidget extends StatefulWidget {
   final ListZaimyModel productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
-  ///виджет с основной информацией о банковском продукте (подробное описание его фукнций и название банка)
-  ///используется в [LoadDetailsPageByProductType]
+  ///виджет с условиями по займу
+  ///используется в [ZaimyDetailsPage]
   const ZaimyConditionsWidget(
       {super.key,
       required this.productInfo,
@@ -106,12 +107,13 @@ class _ZaimyConditionsWidgetState extends State<ZaimyConditionsWidget> {
                 rowDescription:
                     widget.productInfo.signInGosuslugi ? 'Да' : 'Нет',
                 rowName: 'Вход через госуслуги'),
-            showAll ? RowDescriptionWidget(
-                isTextWithHtmlTags: true,
-                rowDescription:
-                    "<a href=\"${widget.productInfo.allConditionsLink}\"rel=\"noopener noreferrer\"target=\"_blank\">${widget.productInfo.allConditionsLink}</a>",
-                rowName: 'Ссылка на полные условия')
-            :SizedBox.shrink(),
+            showAll
+                ? RowDescriptionWidget(
+                    isTextWithHtmlTags: true,
+                    rowDescription:
+                        "<a href=\"${widget.productInfo.allConditionsLink}\"rel=\"noopener noreferrer\"target=\"_blank\">${widget.productInfo.allConditionsLink}</a>",
+                    rowName: 'Ссылка на полные условия')
+                : const SizedBox.shrink(),
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 24),

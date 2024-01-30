@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_controller.dart';
 
 import 'credit_cards_details_data_source.dart';
-
 
 abstract class CreditCardsDetailsRepositoryImpl {
   Future<void> fetch(BasicApiPageSettingsModel detailsParameters,

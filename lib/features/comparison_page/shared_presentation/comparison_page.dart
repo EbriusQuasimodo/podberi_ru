@@ -73,6 +73,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
       secondProductName =
           ref.watch(comparisonSecondZaimyBankNameStateController);
     }
+    print(secondProductName);
     return Scaffold(
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,
@@ -88,8 +89,10 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                 ? MediaQuery.removePadding(
                     context: context,
                     removeBottom: true,
+
                     child: const SliverAppBar(
-                      pinned: false,
+                      surfaceTintColor: ThemeApp.mainWhite,
+                      pinned: true,
                       title: Padding(
                         padding: EdgeInsets.only(top: 10.0),
                         child: Text('Сравнение'),

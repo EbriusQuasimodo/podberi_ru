@@ -9,13 +9,12 @@ class DebitCardsDetailsController extends AutoDisposeFamilyAsyncNotifier<ListDeb
   DebitCardsDetailsController();
   @override
   FutureOr<ListDebitCardsModel> build(BasicApiPageSettingsModel arg) async {
-    final eventRepo = ref.read(debitCardsDetailsRepositoryProvider);
-    return await eventRepo.fetch(arg, ref);
+    final debitCardsDetailsRepo = ref.read(debitCardsDetailsRepositoryProvider);
+    return await debitCardsDetailsRepo.fetch(arg, ref);
   }
 }
 
-///контроллер для получения данных о деталях дебетовки,
-///используется в [LoadDetailsPageByProductType]
+///контроллер для получения данных о деталях дебетовки
 final debitCardsDetailsControllerProvider =
 AutoDisposeAsyncNotifierProvider.family<DebitCardsDetailsController, ListDebitCardsModel, BasicApiPageSettingsModel>(
   DebitCardsDetailsController.new,

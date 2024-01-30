@@ -7,19 +7,19 @@ import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_ca
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
+import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_page.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
-import 'package:podberi_ru/features/comparison_page/shared_presentation/shared_widgets/load_comparison_by_product_type.dart';
 
 import 'mini_debit_card_widget.dart';
 
-class DebitCardsComparisonWidget extends ConsumerStatefulWidget {
+class DebitCardsPageViewWidget extends ConsumerStatefulWidget {
   final List<ListDebitCardsModel> debitCardsList;
   final VoidCallback onDeleteFromComparison;
   final VoidCallback onDeleteFromComparisonTwo;
   final VoidCallback onScrollPageViews;
 
-  ///виджет дебетовок в сранении, используется в [LoadComparisonByProductType]
-  const DebitCardsComparisonWidget({
+  ///виджет дебетовок в сранении, используется в [ComparisonDebitCardsPage]
+  const DebitCardsPageViewWidget({
     super.key,
     required this.debitCardsList,
     required this.onDeleteFromComparison,
@@ -28,12 +28,12 @@ class DebitCardsComparisonWidget extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<DebitCardsComparisonWidget> createState() =>
+  ConsumerState<DebitCardsPageViewWidget> createState() =>
       _DebitCardsComparisonWidgetState();
 }
 
 class _DebitCardsComparisonWidgetState
-    extends ConsumerState<DebitCardsComparisonWidget> {
+    extends ConsumerState<DebitCardsPageViewWidget> {
   final controllerFirstPageView = PageController(
     viewportFraction: 0.9,
   );
@@ -46,31 +46,42 @@ class _DebitCardsComparisonWidgetState
 
   @override
   void didChangeDependencies() {
+    ///прослушиваем второй page view
     controllerSecondPageView.addListener(() {
+      ///задаем номер текущей страницы при пролистывании
       currentPageOnSecondPageView = controllerSecondPageView.page!.toDouble();
+      ///меняем имя банка в провайдере в зависимости от текущей страницы
       ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =
           widget.debitCardsList[currentPageOnSecondPageView.toInt()]
               .bankDetails!.bankName;
+      ///меняем имя банковского продукта в провайдере
       ref.watch(comparisonSecondDebitProductNameStateController.notifier).state =
           widget.debitCardsList[currentPageOnSecondPageView.toInt()]
               .name;
+      ///меняем номер страницы в провайдере
       ref.watch(comparisonSecondDebitPageNumStateController.notifier).state =
           currentPageOnSecondPageView.toInt();
       setState(() {});
+      ///костыль чтобы все обновлялось, возможно потом получится убрать
         widget.onScrollPageViews();
 
     });
-
+    ///прослушиваем первый page view
     controllerFirstPageView.addListener(() {
+      /// задаем номер текущей страницы при пролистывании
       currentPageOnFirstPageView = controllerFirstPageView.page!.toDouble();
+      ///меняем имя банка в провайдере в зависимости от текущей страницы
       ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
           widget.debitCardsList[currentPageOnFirstPageView.toInt()].bankDetails!
               .bankName;
+      ///меняем имя банковского продукта в провайдере
       ref.watch(comparisonFirstDebitProductNameStateProvider.notifier).state =
           widget.debitCardsList[currentPageOnFirstPageView.toInt()].name;
+      ///меняем номер страницы в провайдере
       ref.watch(comparisonFirstDebitPageNumStateProvider.notifier).state =
           currentPageOnSecondPageView.toInt();
       setState(() {});
+      ///костыль чтобы все обновлялось, возможно потом получится убрать
         widget.onScrollPageViews();
 
     });
@@ -107,12 +118,14 @@ class _DebitCardsComparisonWidgetState
                   color: ThemeApp.backgroundBlack),
             ),
           ),
+          ///первый page view
           CustomExpandablePageView(
             pageController: controllerFirstPageView,
             children: List.generate(widget.debitCardsList.length, (index) {
               return MiniDebitCardWidget(
                 debitCard: widget.debitCardsList[index],
                 onDelete: () async {
+                  ///удаляем из кэша по id
                   ComparisonDebitCardsData comparisonDebitCardsData =
                       ComparisonDebitCardsData()
                         ..id = widget.debitCardsList[index].id;
@@ -129,9 +142,13 @@ class _DebitCardsComparisonWidgetState
                           .deleteAll()
                       : await isar?.comparisonDebitCardsDatas
                           .put(comparisonDebitCardsData));
-
+                  ///обновляем контроллер чтобы отобразить новый список сравнения
                   ref.refresh(comparisonDebitCardsListControllerProvider);
                   setState(() {
+                    ///воспроизводим анимацию при удалении
+                    ///анимировать надо оба pfge view если они находятся на одной и той же страницу
+                    ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
+                    ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
                     controllerFirstPageView.animateToPage(
                         controllerFirstPageView.page == 0.0 ? -1 : index - 1,
                         duration: const Duration(milliseconds: 300),
@@ -155,6 +172,7 @@ class _DebitCardsComparisonWidgetState
               ? const SizedBox(
                   height: 32,
                 )
+          ///индикатор открытой страницы
               : Padding(
                   padding: const EdgeInsets.only(top: 11, bottom: 30),
                   child: Row(
@@ -180,6 +198,7 @@ class _DebitCardsComparisonWidgetState
                 ),
           widget.debitCardsList.length == 1
               ? const SizedBox.shrink()
+          ///второй page view
               : CustomExpandablePageView(
                   pageController: controllerSecondPageView,
                   children:
@@ -187,6 +206,7 @@ class _DebitCardsComparisonWidgetState
                     return MiniDebitCardWidget(
                       debitCard: widget.debitCardsList[index],
                       onDelete: () async {
+                        ///удаляем из кэша по id
                         ComparisonDebitCardsData comparisonDebitCardsData =
                             ComparisonDebitCardsData()
                               ..id = widget.debitCardsList[index].id;
@@ -203,8 +223,13 @@ class _DebitCardsComparisonWidgetState
                                 .deleteAll()
                             : await isar?.comparisonDebitCardsDatas
                                 .put(comparisonDebitCardsData));
+                        ///обновляем контроллер чтобы отобразить новый список сравнения
                         ref.refresh(comparisonDebitCardsListControllerProvider);
                         setState(() {
+                          ///воспроизводим анимацию при удалении
+                          ///анимировать надо оба pfge view если они находятся на одной и той же страницу
+                          ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
+                          ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
                           controllerSecondPageView.animateToPage(
                               controllerSecondPageView.page == 0.0 ? -1 : index - 1,
                               duration: const Duration(milliseconds: 300),
@@ -225,6 +250,7 @@ class _DebitCardsComparisonWidgetState
                 ),
           widget.debitCardsList.length == 1
               ? const SizedBox.shrink()
+          ///индикатор открытой страницы
               : Padding(
                   padding: const EdgeInsets.only(top: 11, bottom: 30),
                   child: Row(

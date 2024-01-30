@@ -3,34 +3,37 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/presentation/expandable_page_view.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
+import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_controller.dart';
+import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/widgets/credit_cards_page_view_widgets/credit_cards_page_view_widget.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
+import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
+import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_page.dart';
 
-import 'mini_credit_card_widget.dart';
+import 'mini_zaimy_widget.dart';
 
-class CreditCardsComparisonWidget extends ConsumerStatefulWidget {
-  final List<ListCreditCardsModel> creditCardsList;
+class ZaimyPageViewWidget extends ConsumerStatefulWidget {
+  final List<ListZaimyModel> zaimyList;
   final VoidCallback onDeleteFromComparison;
   final VoidCallback onScrollPageViews;
 
-  ///виджет дебетовок в сранении, используется в [ComparisonPage]
-  CreditCardsComparisonWidget({
+  ///виджет займов в сранении, используется в [ComparisonZaimyPage]
+  ///весь функционал полностью копирует кредитки и дебетовки
+  ///поэтому подробная документация находится в [CreditCardsPageViewWidget]
+  const ZaimyPageViewWidget({
     super.key,
-    required this.creditCardsList,
+    required this.zaimyList,
     required this.onDeleteFromComparison,
     required this.onScrollPageViews,
   });
 
   @override
-  ConsumerState<CreditCardsComparisonWidget> createState() =>
-      _CreditCardsComparisonWidgetState();
+  ConsumerState<ZaimyPageViewWidget> createState() =>
+      _ZaimyComparisonWidgetState();
 }
 
-class _CreditCardsComparisonWidgetState
-    extends ConsumerState<CreditCardsComparisonWidget> {
+class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
   final controllerFirstPageView = PageController(
     viewportFraction: 0.9,
   );
@@ -45,13 +48,12 @@ class _CreditCardsComparisonWidgetState
   void didChangeDependencies() {
     controllerSecondPageView.addListener(() {
       currentPageOnSecondPageView = controllerSecondPageView.page!.toDouble();
-      ref.watch(comparisonSecondCreditBankNameStateController.notifier).state =
-          widget.creditCardsList[currentPageOnSecondPageView.toInt()]
-              .bankDetails!.bankName;
-      ref.watch(comparisonSecondCreditProductNameStateController.notifier).state =
-          widget.creditCardsList[currentPageOnSecondPageView.toInt()]
-              .name;
-      ref.watch(comparisonSecondCreditPageNumStateController.notifier).state =
+
+      ///у займов есть только название мфо поэтому вместо названия продукта
+      ///здесь везде название мфо
+      ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =
+          widget.zaimyList[currentPageOnSecondPageView.toInt()].name;
+      ref.watch(comparisonSecondZaimyPageNumStateController.notifier).state =
           currentPageOnSecondPageView.toInt();
       setState(() {});
       widget.onScrollPageViews();
@@ -59,14 +61,13 @@ class _CreditCardsComparisonWidgetState
 
     controllerFirstPageView.addListener(() {
       currentPageOnFirstPageView = controllerFirstPageView.page!.toDouble();
-      ref.watch(comparisonFirstCreditBankNameStateProvider.notifier).state =
-          widget.creditCardsList[currentPageOnFirstPageView.toInt()]
-              .bankDetails!.bankName;
-      ref.watch(comparisonFirstCreditProductNameStateProvider.notifier).state =
-          widget.creditCardsList[currentPageOnFirstPageView.toInt()]
-              .name;
-      ref.watch(comparisonFirstCreditPageNumStateProvider.notifier).state =
-          currentPageOnFirstPageView.toInt();
+
+      ///у займов есть только название мфо поэтому вместо названия продукта
+      ///здесь везде название мфо
+      ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
+          widget.zaimyList[currentPageOnFirstPageView.toInt()].name;
+      ref.watch(comparisonFirstZaimyPageNumStateProvider.notifier).state =
+          currentPageOnSecondPageView.toInt();
       setState(() {});
       widget.onScrollPageViews();
     });
@@ -105,48 +106,47 @@ class _CreditCardsComparisonWidgetState
           ),
           CustomExpandablePageView(
             pageController: controllerFirstPageView,
-            children: List.generate(widget.creditCardsList.length, (index) {
-              return MiniCreditCardWidget(
-                creditCard: widget.creditCardsList[index],
+            children: List.generate(widget.zaimyList.length, (index) {
+              return MiniZaimyWidget(
+                zaimy: widget.zaimyList[index],
                 onDelete: () async {
-                  ComparisonCreditCardsData comparisonCreditCardsData =
-                      ComparisonCreditCardsData()
-                        ..id = widget.creditCardsList[index].id;
+                  ComparisonZaimyData comparisonZaimyData =
+                      ComparisonZaimyData()..id = widget.zaimyList[index].id;
 
                   await isar?.writeTxn(() async => await ref
                           .watch(isarNotifierProvider.notifier)
                           .isItemDuplicateInComparison(
-                            widget.creditCardsList[index].id,
+                            widget.zaimyList[index].id,
                             ref.watch(comparisonProductUrlStateProvider),
                           )
-                      ? await isar?.comparisonCreditCardsDatas
+                      ? await isar?.comparisonZaimyDatas
                           .filter()
-                          .idEqualTo(widget.creditCardsList[index].id)
+                          .idEqualTo(widget.zaimyList[index].id)
                           .deleteAll()
-                      : await isar?.comparisonCreditCardsDatas
-                          .put(comparisonCreditCardsData));
+                      : await isar?.comparisonZaimyDatas
+                          .put(comparisonZaimyData));
 
-                  ref.refresh(comparisonCreditCardsListControllerProvider);
+                  ref.refresh(comparisonZaimyListControllerProvider);
                   setState(() {
                     controllerFirstPageView.animateToPage(
                         controllerFirstPageView.page == 0.0 ? -1 : index - 1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.linear);
-                    if(controllerSecondPageView.positions.isNotEmpty){
                     if (controllerFirstPageView.page ==
                         controllerSecondPageView.page) {
                       controllerSecondPageView.animateToPage(
                           controllerSecondPageView.page == 0.0 ? -1 : index - 1,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.linear);
-                    }}
+                    }
                   });
+                  widget.onScrollPageViews();
                   widget.onDeleteFromComparison();
                 },
               );
             }),
           ),
-          widget.creditCardsList.length == 1
+          widget.zaimyList.length == 1
               ? const SizedBox(
                   height: 32,
                 )
@@ -155,7 +155,7 @@ class _CreditCardsComparisonWidgetState
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
-                      widget.creditCardsList.length,
+                      widget.zaimyList.length,
                       (index) {
                         return Container(
                           margin: const EdgeInsets.only(right: 4),
@@ -173,34 +173,32 @@ class _CreditCardsComparisonWidgetState
                     ),
                   ),
                 ),
-          widget.creditCardsList.length == 1
+          widget.zaimyList.length == 1
               ? const SizedBox.shrink()
               : CustomExpandablePageView(
                   pageController: controllerSecondPageView,
-                  children:
-                      List.generate(widget.creditCardsList.length, (index) {
-                    return MiniCreditCardWidget(
-                      creditCard: widget.creditCardsList[index],
+                  children: List.generate(widget.zaimyList.length, (index) {
+                    return MiniZaimyWidget(
+                      zaimy: widget.zaimyList[index],
                       onDelete: () async {
-                        ComparisonCreditCardsData comparisonCreditCardsData =
-                            ComparisonCreditCardsData()
-                              ..id = widget.creditCardsList[index].id;
+                        ComparisonZaimyData comparisonZaimyData =
+                            ComparisonZaimyData()
+                              ..id = widget.zaimyList[index].id;
 
                         await isar?.writeTxn(() async => await ref
                                 .watch(isarNotifierProvider.notifier)
                                 .isItemDuplicateInComparison(
-                                  widget.creditCardsList[index].id,
+                                  widget.zaimyList[index].id,
                                   ref.watch(comparisonProductUrlStateProvider),
                                 )
-                            ? await isar?.comparisonCreditCardsDatas
+                            ? await isar?.comparisonZaimyDatas
                                 .filter()
-                                .idEqualTo(widget.creditCardsList[index].id)
+                                .idEqualTo(widget.zaimyList[index].id)
                                 .deleteAll()
-                            : await isar?.comparisonCreditCardsDatas
-                                .put(comparisonCreditCardsData));
+                            : await isar?.comparisonZaimyDatas
+                                .put(comparisonZaimyData));
 
-                        ref.refresh(
-                            comparisonCreditCardsListControllerProvider);
+                        ref.refresh(comparisonZaimyListControllerProvider);
                         setState(() {
                           controllerSecondPageView.animateToPage(
                               controllerSecondPageView.page == 0.0
@@ -208,29 +206,32 @@ class _CreditCardsComparisonWidgetState
                                   : index - 1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.linear);
-                          if (controllerFirstPageView.page ==
-                              controllerSecondPageView.page) {
-                            controllerFirstPageView.animateToPage(
-                                controllerFirstPageView.page == 0.0
-                                    ? -1
-                                    : index - 1,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear);
+                          if (controllerSecondPageView.positions.isNotEmpty) {
+                            if (controllerFirstPageView.page ==
+                                controllerSecondPageView.page) {
+                              controllerSecondPageView.animateToPage(
+                                  controllerSecondPageView.page == 0.0
+                                      ? -1
+                                      : index - 1,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.linear);
+                            }
                           }
                         });
+                        widget.onScrollPageViews();
                         widget.onDeleteFromComparison();
                       },
                     );
                   }),
                 ),
-          widget.creditCardsList.length == 1
+          widget.zaimyList.length == 1
               ? const SizedBox.shrink()
               : Padding(
                   padding: const EdgeInsets.only(top: 11, bottom: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
-                      widget.creditCardsList.length,
+                      widget.zaimyList.length,
                       (index) {
                         return Container(
                           margin: const EdgeInsets.only(right: 4),

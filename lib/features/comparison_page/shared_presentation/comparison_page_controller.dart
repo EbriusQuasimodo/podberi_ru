@@ -3,6 +3,7 @@ final comparisonProductUrlStateProvider = StateProvider.autoDispose<String>((ref
   return 'debit_cards';
 });
 
+///дебетовки
 final comparisonFirstDebitBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
 });
@@ -24,7 +25,7 @@ final comparisonSecondDebitPageNumStateController = StateProvider.autoDispose<in
   return 0;
 });
 
-
+///кредитки
 final comparisonFirstCreditBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
 });
@@ -46,7 +47,7 @@ final comparisonSecondCreditPageNumStateController = StateProvider.autoDispose<i
   return 0;
 });
 
-
+///займы
 final comparisonFirstZaimyBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
 });

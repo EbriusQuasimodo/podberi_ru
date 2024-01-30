@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
-
 import 'widgets/credit_cards_comparison_data_table_widget.dart';
-import 'widgets/credit_cards_comparison_widgets/credit_cards_comparison_widget.dart';
+import 'widgets/credit_cards_page_view_widgets/credit_cards_page_view_widget.dart';
 
-class ComparisonCreditCardsWidget extends StatefulWidget {
+class ComparisonCreditCardsPage extends StatefulWidget {
   final List<ListCreditCardsModel> creditCardsInComparison;
   final VoidCallback onScrollPageViews;
 
-  const ComparisonCreditCardsWidget({
+  const ComparisonCreditCardsPage({
     super.key,
     required this.creditCardsInComparison,
     required this.onScrollPageViews,
   });
 
   @override
-  State<ComparisonCreditCardsWidget> createState() =>
-      _ComparisonCreditCardsWidgetState();
+  State<ComparisonCreditCardsPage> createState() =>
+      _ComparisonCreditCardsPageState();
 }
 
-class _ComparisonCreditCardsWidgetState
-    extends State<ComparisonCreditCardsWidget> {
+class _ComparisonCreditCardsPageState
+    extends State<ComparisonCreditCardsPage> {
   @override
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildListDelegate(
         [
-          CreditCardsComparisonWidget(
+          CreditCardsPageViewWidget(
               onScrollPageViews: () {
                 widget.onScrollPageViews();
               },

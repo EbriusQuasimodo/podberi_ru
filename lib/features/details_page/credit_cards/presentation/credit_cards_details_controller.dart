@@ -14,8 +14,7 @@ class CreditCardsDetailsController extends AutoDisposeFamilyAsyncNotifier<ListCr
   }
 }
 
-///контроллер для получения данных о деталях кредитки,
-///используется в [LoadDetailsPageByProductType]
+///контроллер для получения данных о деталях кредитки
 final creditCardsDetailsControllerProvider =
 AutoDisposeAsyncNotifierProvider.family<CreditCardsDetailsController, ListCreditCardsModel, BasicApiPageSettingsModel>(
   CreditCardsDetailsController.new,

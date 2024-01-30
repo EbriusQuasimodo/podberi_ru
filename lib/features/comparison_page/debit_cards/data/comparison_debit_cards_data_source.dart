@@ -3,10 +3,11 @@ import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/comparison_page/debit_cards/data/comparison_debit_cards_repository.dart';
 
 ///получение дебетовок в сравнении, [productType] содержит в себе не только enum [ProductTypeEnum]
 ///но и id продуктов в сравнении
-///вызывается из [comparisonRepositoryProvider]
+///вызывается из [comparisonDebitCardsRepositoryProvider]
 class ComparisonDebitCardsGetDataSource {
   ComparisonDebitCardsGetDataSource({
     required this.dio,

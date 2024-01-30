@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/details_page/credit_cards/presentation/widgets/credit_card_conditions_widget.dart';
 import 'package:podberi_ru/features/details_page/debit_cards/presentation/widgets/debit_card_conditions_widget.dart';
+import 'package:podberi_ru/features/details_page/zaimy/presentation/widgets/zaimy_conditions_widget.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 
 class RowDescriptionWidget extends StatelessWidget {
@@ -9,7 +11,10 @@ class RowDescriptionWidget extends StatelessWidget {
   final String rowDescription;
   final bool isTextWithHtmlTags;
 
-  ///виджет ряда в таблице с основной информацией о банковском продукте, используется в [DebitCardConditionsWidget]
+  ///виджет ряда в таблице с основной информацией о банковском продукте, используется в
+  ///[DebitCardConditionsWidget],
+  ///[CreditCardConditionsWidget],
+  ///[ZaimyConditionsWidget]
   const RowDescriptionWidget({
     super.key,
     required this.rowDescription,

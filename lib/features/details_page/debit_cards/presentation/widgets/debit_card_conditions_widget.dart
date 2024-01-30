@@ -4,6 +4,7 @@ import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_controller.dart';
 
 import '../../../shared_presentation/shared_widgets/row_description_widget.dart';
 
@@ -11,8 +12,8 @@ class DebitCardConditionsWidget extends StatefulWidget {
   final ListDebitCardsModel productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
-  ///виджет с основной информацией о банковском продукте (подробное описание его фукнций и название банка)
-  ///используется в [LoadDetailsPageByProductType]
+  ///виджет с условиями по дебетовке
+  ///используется в [DebitCardsDetailsController]
   const DebitCardConditionsWidget(
       {super.key,
       required this.productInfo,

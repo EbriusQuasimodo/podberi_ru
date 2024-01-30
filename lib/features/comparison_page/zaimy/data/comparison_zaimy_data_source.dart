@@ -3,6 +3,7 @@ import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/features/comparison_page/zaimy/data/comparison_zaimy_repository.dart';
 
 ///получение займов в сравнении, [productType] содержит в себе не только enum [ProductTypeEnum]
 ///но и id продуктов в сравнении

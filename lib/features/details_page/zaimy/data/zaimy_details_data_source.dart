@@ -2,9 +2,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/features/details_page/zaimy/data/zaimy_details_repository.dart';
 
-///получение деталей о займе, принимает в себя тип продукта(катеогорию) и его id
-///используется в [LoadDetailsPageByProductType]
+///получение деталей о займе, принимает в себя id
 ///вызывается из [zaimyDetailsRepositoryProvider]
 class ZaimyDetailsGetDataSource {
   ZaimyDetailsGetDataSource({required this.dio});

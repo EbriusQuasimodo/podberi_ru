@@ -3,13 +3,14 @@ import 'package:flutter_html/flutter_html.dart';
 
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/features/details_page/zaimy/presentation/zaimy_details_page.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 
 class ZaimyDescriptionWidget extends StatelessWidget {
   final ListZaimyModel productInfo;
 
-  ///виджет с подробным описанием условий банковского продукта
-  ///используется в [LoadDetailsPageByProductType]
+  ///виджет с подробным описанием условий займа
+  ///используется в [ZaimyDetailsPage]
   const ZaimyDescriptionWidget({
     super.key,
     required this.productInfo,
@@ -45,7 +46,12 @@ class ZaimyDescriptionWidget extends StatelessWidget {
               child: Html(
                 data: productInfo.allConditionsLink,
                 onLinkTap: (url, _, __) {
-                  Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (BuildContext context){return CustomWebViewPage(url: url!,);}));
+                  Navigator.of(context, rootNavigator: true)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return CustomWebViewPage(
+                      url: url!,
+                    );
+                  }));
                 },
                 style: {
                   "body": Style(

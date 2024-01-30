@@ -27,7 +27,7 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
       return ref.watch(comparisonDebitCardsListControllerProvider).when(
           data: (debitCardsInComparison) {
             return debitCardsInComparison.items.isNotEmpty
-                ? ComparisonDebitCardsWidget(
+                ? ComparisonDebitCardsPage(
               debitCardsInComparison: debitCardsInComparison.items,
               onScrollPageViews: () {
                 setState(() {});
@@ -58,7 +58,7 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
       return ref.watch(comparisonCreditCardsListControllerProvider).when(
           data: (creditCardsInComparison) {
             return creditCardsInComparison.items.isNotEmpty
-                ? ComparisonCreditCardsWidget(
+                ? ComparisonCreditCardsPage(
               creditCardsInComparison: creditCardsInComparison.items,
               onScrollPageViews: () {
                 setState(() {});
@@ -89,7 +89,7 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
       return ref.watch(comparisonZaimyListControllerProvider).when(
           data: (zaimyInComparison) {
             return zaimyInComparison.items.isNotEmpty
-                ? ComparisonZaimyWidget(
+                ? ComparisonZaimyPage(
               zaimyInComparison: zaimyInComparison.items,
               onScrollPageViews: () {
                 setState(() {});

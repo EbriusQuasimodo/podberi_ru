@@ -6,40 +6,38 @@ import 'package:podberi_ru/features/comparison_page/shared_presentation/comparis
 import 'package:podberi_ru/features/comparison_page/zaimy/data/comparison_zaimy_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-
-///контроллер списка сравнения
-class ComparisonZaimyListController extends AutoDisposeAsyncNotifier<
-    ZaimyModel> {
+class ComparisonZaimyListController
+    extends AutoDisposeAsyncNotifier<ZaimyModel> {
   ComparisonZaimyListController();
 
-  String productTypeUrl = '';
+  String productTypeWithQuery = '';
   final isar = Isar.getInstance();
 
   @override
   FutureOr<ZaimyModel> build() async {
-
     List<ComparisonZaimyData> productIdListZaimy = [];
-    productTypeUrl = ref.read(comparisonProductUrlStateProvider);
+    productTypeWithQuery = ref.read(comparisonProductUrlStateProvider);
 
-        await isar?.txn(() async {
-          productIdListZaimy =
+    await isar?.txn(() async {
+      productIdListZaimy =
           (await isar?.comparisonZaimyDatas.where().findAll())!;
-        });
-        productTypeUrl += '?';
-        for (int i = 0; i < productIdListZaimy.length; i++) {
-          productTypeUrl += '_id=${productIdListZaimy[i].id}&';
-        }
+    });
+    productTypeWithQuery += '?';
+    for (int i = 0; i < productIdListZaimy.length; i++) {
+      productTypeWithQuery += '_id=${productIdListZaimy[i].id}&';
+    }
 
-    productTypeUrl = productTypeUrl.substring(0, productTypeUrl.length - 1);
+    productTypeWithQuery =
+        productTypeWithQuery.substring(0, productTypeWithQuery.length - 1);
 
-    final comparisonRepo = ref.read(comparisonZaimyRepositoryProvider);
+    final comparisonZaimyRepo = ref.read(comparisonZaimyRepositoryProvider);
 
-    return await comparisonRepo.fetch(productTypeUrl, ref);
+    return await comparisonZaimyRepo.fetch(productTypeWithQuery, ref);
   }
 }
 
 ///контроллер для получения всех займов в сравнении
-final comparisonZaimyListControllerProvider = AutoDisposeAsyncNotifierProvider<
-    ComparisonZaimyListController, ZaimyModel>(
+final comparisonZaimyListControllerProvider =
+    AutoDisposeAsyncNotifierProvider<ComparisonZaimyListController, ZaimyModel>(
   ComparisonZaimyListController.new,
 );

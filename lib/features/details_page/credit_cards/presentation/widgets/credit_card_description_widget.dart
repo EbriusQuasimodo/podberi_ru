@@ -3,13 +3,14 @@ import 'package:flutter_html/flutter_html.dart';
 
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_page.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 
 class CreditCardDescriptionWidget extends StatefulWidget {
   final ListCreditCardsModel productInfo;
 
-  ///виджет с подробным описанием условий банковского продукта
-  ///используется в [LoadDetailsPageByProductType]
+  ///виджет с подробным описанием кредитки
+  ///используется в [CreditCardsDetailsPage]
   const CreditCardDescriptionWidget({
     super.key,
     required this.productInfo,
