@@ -37,7 +37,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
       list.add(CustomChoiceChip(
         whereFrom: 'comparison',
         onTap: () {
-          setState(() {});
+         // setState(() {});
         },
         categoryName: element,
         selectedCategory: selectedBankProductsFilter,
@@ -53,6 +53,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
 
   String firstProductName = '';
   String secondProductName = '';
+  int comparisonLength =0;
 
   @override
   Widget build(BuildContext context) {
@@ -61,19 +62,22 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
           ref.watch(comparisonFirstDebitProductNameStateProvider);
       secondProductName =
           ref.watch(comparisonSecondDebitProductNameStateController);
+      comparisonLength = ref.watch(comparisonDebitListLengthStateController);
     }
     if (ref.watch(comparisonProductUrlStateProvider) == 'credit_cards') {
       firstProductName =
           ref.watch(comparisonFirstCreditProductNameStateProvider);
       secondProductName =
           ref.watch(comparisonSecondCreditProductNameStateController);
+      comparisonLength = ref.watch(comparisonCreditListLengthStateController);
     }
     if (ref.watch(comparisonProductUrlStateProvider) == 'zaimy') {
       firstProductName = ref.watch(comparisonFirstZaimyBankNameStateProvider);
       secondProductName =
           ref.watch(comparisonSecondZaimyBankNameStateController);
+      comparisonLength = ref.watch(comparisonZaimyListLengthStateController);
     }
-    print(secondProductName);
+
     return Scaffold(
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,
@@ -85,7 +89,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
         },
         child: CustomScrollView(
           slivers: [
-            secondProductName == ''
+            comparisonLength <= 1
                 ? MediaQuery.removePadding(
                     context: context,
                     removeBottom: true,
@@ -114,7 +118,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0)),
                     )),
-            secondProductName != ''
+            comparisonLength > 1
                 ? SliverAppBar(
                     surfaceTintColor: ThemeApp.mainWhite,
                     titleSpacing: 0,
@@ -127,7 +131,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                             margin: EdgeInsets.only(
                               left: 15,
                               bottom: 15,
-                              right: secondProductName == '' ? 15 : 0,
+                              right: comparisonLength < 1 ? 15 : 0,
                             ),
                             height: 40,
                             padding: const EdgeInsets.symmetric(
@@ -155,7 +159,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                         const SizedBox(
                           width: 6,
                         ),
-                        secondProductName != ''
+                        comparisonLength > 1
                             ? Expanded(
                                 child: Container(
                                   margin: const EdgeInsets.only(

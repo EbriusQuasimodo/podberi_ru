@@ -37,10 +37,7 @@ class _DebitCardsComparisonDataTableWidgetState
 
   @override
   Widget build(BuildContext context) {
-    String firstProductDescription =
-        ref.watch(comparisonFirstDebitBankNameStateProvider);
-    String secondProductDescription =
-        ref.watch(comparisonSecondDebitBankNameStateController);
+    int comparisonLength = ref.watch(comparisonDebitListLengthStateController);
     int firstPageNum = ref.watch(comparisonFirstDebitPageNumStateProvider);
     int secondPageNum = ref.watch(comparisonSecondDebitPageNumStateController);
     return Container(
@@ -55,15 +52,15 @@ class _DebitCardsComparisonDataTableWidgetState
           ComparisonRowItemWidget(
             isTextWithHtmlTags: false,
             rowName: 'Банк',
-            firstProductDescription: firstProductDescription,
-            secondProductDescription: secondProductDescription,
+            firstProductDescription:  widget.debitCardsModel[firstPageNum].bankDetails!.bankName,
+            secondProductDescription:comparisonLength >1 ? widget.debitCardsModel[secondPageNum].bankDetails!.bankName :'',
           ),
           ComparisonRowItemWidget(
             isTextWithHtmlTags: false,
             rowName: 'Платежная система',
             firstProductDescription:
                 widget.debitCardsModel[firstPageNum].paymentSystem,
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.debitCardsModel[secondPageNum].paymentSystem
                 : '',
           ),
@@ -72,7 +69,7 @@ class _DebitCardsComparisonDataTableWidgetState
             rowName: 'Валюта карты',
             firstProductDescription:
                 widget.debitCardsModel[firstPageNum].currencies,
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.debitCardsModel[secondPageNum].currencies
                 : '',
           ),
@@ -84,7 +81,7 @@ class _DebitCardsComparisonDataTableWidgetState
                     0
                 ? "От ${widget.debitCardsModel[firstPageNum].minService} до ${widget.debitCardsModel[firstPageNum].maxService} рублей в месяц"
                 : "Бесплатно",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.debitCardsModel[secondPageNum].maxService != 0
                     ? "От ${widget.debitCardsModel[secondPageNum].minService} до ${widget.debitCardsModel[secondPageNum].maxService} рублей в месяц"
                     : "Бесплатно"
@@ -95,7 +92,7 @@ class _DebitCardsComparisonDataTableWidgetState
             rowName: 'Кэшбек',
             firstProductDescription:
                 '${widget.debitCardsModel[firstPageNum].maxCashBack} %',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? '${widget.debitCardsModel[secondPageNum].maxCashBack} %'
                 : '',
           ),
@@ -103,7 +100,7 @@ class _DebitCardsComparisonDataTableWidgetState
             isTextWithHtmlTags: false,
             rowName: 'Формат кэшбека',
             firstProductDescription: cashbackFormat(firstPageNum),
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? cashbackFormat(secondPageNum)
                 : '',
           ),
@@ -112,7 +109,7 @@ class _DebitCardsComparisonDataTableWidgetState
             rowName: 'Максимальный кэшбек',
             firstProductDescription:
                 "${widget.debitCardsModel[firstPageNum].maxCashBack} ${widget.debitCardsModel[firstPageNum].cashbackFormat}",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? "${widget.debitCardsModel[secondPageNum].maxCashBack} ${widget.debitCardsModel[secondPageNum].cashbackFormat}"
                 : '',
           ),
@@ -121,7 +118,7 @@ class _DebitCardsComparisonDataTableWidgetState
             rowName: 'Начисление бонусов',
             firstProductDescription: widget
                 .debitCardsModel[firstPageNum].conditions!.accrualOfBonuses,
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget
                     .debitCardsModel[secondPageNum].conditions!.accrualOfBonuses
                 : '',
@@ -131,7 +128,7 @@ class _DebitCardsComparisonDataTableWidgetState
             rowName: 'Овердрафт',
             firstProductDescription:
                 widget.debitCardsModel[firstPageNum].overdraft ? 'Есть' : 'Нет',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.debitCardsModel[secondPageNum].overdraft
                     ? 'Есть'
                     : 'Нет'
@@ -142,7 +139,7 @@ class _DebitCardsComparisonDataTableWidgetState
             rowName: 'Доставка',
             firstProductDescription:
                 widget.debitCardsModel[firstPageNum].delivery ? 'есть' : 'нет',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.debitCardsModel[secondPageNum].delivery
                     ? 'есть'
                     : 'нет'
@@ -154,7 +151,7 @@ class _DebitCardsComparisonDataTableWidgetState
             firstProductDescription:
                 widget.debitCardsModel[firstPageNum].conditions?.stocks ??
                     'Нет информации',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.debitCardsModel[secondPageNum].conditions?.stocks ??
                     'Нет информации'
                 : '',
@@ -167,7 +164,7 @@ class _DebitCardsComparisonDataTableWidgetState
                     0
                 ? "от ${widget.debitCardsModel[firstPageNum].minSms} до ${widget.debitCardsModel[firstPageNum].maxSms} руб. в месяц"
                 : "Бесплатно",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.debitCardsModel[secondPageNum].maxSms != 0
                     ? "от ${widget.debitCardsModel[secondPageNum].minSms} до ${widget.debitCardsModel[secondPageNum].maxSms} руб. в месяц"
                     : "Бесплатно"
@@ -178,7 +175,7 @@ class _DebitCardsComparisonDataTableWidgetState
             rowName: 'Выпуск и перевыпуск карты',
             firstProductDescription:
                 "Выпуск ${widget.debitCardsModel[firstPageNum].issue} руб.\nПеревыпуск ${widget.debitCardsModel[firstPageNum].reissue} руб.",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription:comparisonLength >1
                 ? "Выпуск ${widget.debitCardsModel[secondPageNum].issue} руб.\nПеревыпуск ${widget.debitCardsModel[secondPageNum].reissue} руб."
                 : '',
           ),
@@ -188,7 +185,7 @@ class _DebitCardsComparisonDataTableWidgetState
             firstProductDescription: widget
                     .debitCardsModel[firstPageNum].conditions?.cashWithdrawal ??
                 'Нет информации',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.debitCardsModel[secondPageNum].conditions
                         ?.cashWithdrawal ??
                     'Нет информации'
@@ -223,7 +220,7 @@ class _DebitCardsComparisonDataTableWidgetState
                   ),
                 ),
               ),
-              secondProductDescription != ''
+              comparisonLength >1
                   ? Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(right: 15, left: 3),

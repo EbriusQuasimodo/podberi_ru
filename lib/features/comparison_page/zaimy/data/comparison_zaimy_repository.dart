@@ -20,14 +20,15 @@ class ComparisonZaimyRepository implements ComparisonZaimyRepositoryImpl {
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'zaimy') {
       List<ListZaimyModel> list = [];
-
+      ref.watch(comparisonZaimyListLengthStateController.notifier).state = 0;
       ///то возвращаем пустой список чтобы отобразить что продуктов в сравнении нет
       return ZaimyModel(items: list, itemsCount: 0);
     } else {
       final response = await GetIt.I<ComparisonZaimyGetDataSource>().fetch(arg);
-
+      ref.watch(comparisonZaimyListLengthStateController.notifier).state = response.itemsCount;
       ///если всего один продукт в сравнении
       if (response.itemsCount == 1) {
+
         ///то у всех провайдеров для второго page view оставляем пустые значения
         ///а для первого заполняем данными
         ref.watch(comparisonSecondZaimyBankNameStateController.notifier).state =

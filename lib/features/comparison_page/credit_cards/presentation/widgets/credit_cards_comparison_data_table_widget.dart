@@ -49,10 +49,8 @@ class _CreditCardsComparisonDataTableWidgetState
 
   @override
   Widget build(BuildContext context) {
-    String firstProductDescription =
-        ref.watch(comparisonFirstCreditBankNameStateProvider);
-    String secondProductDescription =
-        ref.watch(comparisonSecondCreditBankNameStateController);
+
+    int comparisonLength = ref.watch(comparisonCreditListLengthStateController);
     int firstPageNum = ref.watch(comparisonFirstCreditPageNumStateProvider);
     int secondPageNum = ref.watch(comparisonSecondCreditPageNumStateController);
     return Container(
@@ -67,15 +65,15 @@ class _CreditCardsComparisonDataTableWidgetState
           ComparisonRowItemWidget(
             isTextWithHtmlTags: false,
             rowName: 'Банк',
-            firstProductDescription: firstProductDescription,
-            secondProductDescription: secondProductDescription,
+            firstProductDescription: widget.creditCardsModel[firstPageNum].bankDetails!.bankName,
+            secondProductDescription: comparisonLength >1 ?widget.creditCardsModel[secondPageNum].bankDetails!.bankName :'',
           ),
           ComparisonRowItemWidget(
             isTextWithHtmlTags: false,
             rowName: 'Платежная система',
             firstProductDescription:
                 widget.creditCardsModel[firstPageNum].paymentSystem,
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.creditCardsModel[secondPageNum].paymentSystem
                 : '',
           ),
@@ -84,7 +82,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Кредитный лимит',
             firstProductDescription:
                 'До ${widget.creditCardsModel[firstPageNum].creditLimit} руб.',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? 'До ${widget.creditCardsModel[secondPageNum].creditLimit} руб.'
                 : '',
           ),
@@ -92,7 +90,7 @@ class _CreditCardsComparisonDataTableWidgetState
             isTextWithHtmlTags: true,
             rowName: 'Кредитная ставка',
             firstProductDescription: creditRates(firstPageNum),
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? creditRates(secondPageNum)
                 : '',
           ),
@@ -101,7 +99,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Процентная ставка',
             firstProductDescription:
                 'От ${widget.creditCardsModel[firstPageNum].minPercent} до ${widget.creditCardsModel[firstPageNum].maxPercent} %',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? 'От ${widget.creditCardsModel[secondPageNum].minPercent} до ${widget.creditCardsModel[secondPageNum].maxPercent} %'
                 : '',
           ),
@@ -110,7 +108,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Безпроцентный период',
             firstProductDescription:
                 "До ${widget.creditCardsModel[firstPageNum].noPercentPeriod} дней",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? "До ${widget.creditCardsModel[secondPageNum].noPercentPeriod} дней"
                 : '',
           ),
@@ -122,7 +120,7 @@ class _CreditCardsComparisonDataTableWidgetState
                     0
                 ? "От ${widget.creditCardsModel[firstPageNum].minService} до ${widget.creditCardsModel[firstPageNum].maxService} рублей в месяц"
                 : "Бесплатно",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.creditCardsModel[secondPageNum].maxService != 0
                     ? "От ${widget.creditCardsModel[secondPageNum].minService} до ${widget.creditCardsModel[secondPageNum].maxService} рублей в месяц"
                     : "Бесплатно"
@@ -133,7 +131,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Выпуск и перевыпуск карты',
             firstProductDescription:
                 "Выпуск ${widget.creditCardsModel[firstPageNum].issue} руб.\nПеревыпуск ${widget.creditCardsModel[firstPageNum].reissue} руб.",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? "Выпуск ${widget.creditCardsModel[secondPageNum].issue} руб.\nПеревыпуск ${widget.creditCardsModel[secondPageNum].reissue} руб."
                 : '',
           ),
@@ -143,7 +141,7 @@ class _CreditCardsComparisonDataTableWidgetState
             firstProductDescription: widget.creditCardsModel[firstPageNum]
                     .conditions?.cashWithdrawal ??
                 'Нет информации',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.creditCardsModel[secondPageNum].conditions
                         ?.cashWithdrawal ??
                     'Нет информации'
@@ -155,7 +153,7 @@ class _CreditCardsComparisonDataTableWidgetState
             firstProductDescription:
                 widget.creditCardsModel[firstPageNum].conditions?.stocks ??
                     'Нет информации',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.creditCardsModel[secondPageNum].conditions?.stocks ??
                     'Нет информации'
                 : '',
@@ -166,7 +164,7 @@ class _CreditCardsComparisonDataTableWidgetState
             firstProductDescription: widget.creditCardsModel[firstPageNum]
                     .conditions?.addRequirements ??
                 'Отсутствуют',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.creditCardsModel[secondPageNum].conditions
                         ?.addRequirements ??
                     'Отсутствуют'
@@ -177,7 +175,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Минимальный и максимальный возраст',
             firstProductDescription:
                 'От ${widget.creditCardsModel[firstPageNum].minAge} до ${widget.creditCardsModel[firstPageNum].maxAge}',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription:comparisonLength >1
                 ? 'От ${widget.creditCardsModel[secondPageNum].minAge} до ${widget.creditCardsModel[secondPageNum].maxAge}'
                 : '',
           ),
@@ -186,7 +184,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Минимальный доход',
             firstProductDescription:
                 "${widget.creditCardsModel[firstPageNum].minIncome} руб.",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? "${widget.creditCardsModel[secondPageNum].minIncome} руб."
                 : '',
           ),
@@ -195,7 +193,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Стаж работы',
             firstProductDescription:
                 widget.creditCardsModel[firstPageNum].workExp,
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.creditCardsModel[secondPageNum].workExp
                 : '',
           ),
@@ -204,7 +202,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Доставка',
             firstProductDescription:
                 widget.creditCardsModel[firstPageNum].delivery ? 'есть' : 'нет',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.creditCardsModel[secondPageNum].delivery
                     ? 'есть'
                     : 'нет'
@@ -218,7 +216,7 @@ class _CreditCardsComparisonDataTableWidgetState
                     0
                 ? "от ${widget.creditCardsModel[firstPageNum].minSms} до ${widget.creditCardsModel[firstPageNum].maxSms} руб. в месяц"
                 : "Бесплатно",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.creditCardsModel[secondPageNum].maxSms != 0
                     ? "от ${widget.creditCardsModel[secondPageNum].minSms} до ${widget.creditCardsModel[secondPageNum].maxSms} руб. в месяц"
                     : "Бесплатно"
@@ -229,7 +227,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Кэшбек',
             firstProductDescription:
                 '${widget.creditCardsModel[firstPageNum].maxCashBack} %',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? '${widget.creditCardsModel[secondPageNum].maxCashBack} %'
                 : '',
           ),
@@ -237,7 +235,7 @@ class _CreditCardsComparisonDataTableWidgetState
             isTextWithHtmlTags: false,
             rowName: 'Формат кэшбека',
             firstProductDescription: cashbackFormat(firstPageNum),
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? cashbackFormat(secondPageNum)
                 : '',
           ),
@@ -246,7 +244,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Максимальный кэшбек',
             firstProductDescription:
                 "${widget.creditCardsModel[firstPageNum].maxCashBack} ${widget.creditCardsModel[firstPageNum].cashbackFormat}",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? "${widget.creditCardsModel[secondPageNum].maxCashBack} ${widget.creditCardsModel[secondPageNum].cashbackFormat}"
                 : '',
           ),
@@ -255,7 +253,7 @@ class _CreditCardsComparisonDataTableWidgetState
             rowName: 'Условия кэшбека',
             firstProductDescription:
                 widget.creditCardsModel[firstPageNum].conditions!.cashback,
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.creditCardsModel[secondPageNum].conditions!.cashback
                 : '',
           ),
@@ -288,7 +286,7 @@ class _CreditCardsComparisonDataTableWidgetState
                   ),
                 ),
               ),
-              secondProductDescription != ''
+              comparisonLength >1
                   ? Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(right: 15, left: 3),

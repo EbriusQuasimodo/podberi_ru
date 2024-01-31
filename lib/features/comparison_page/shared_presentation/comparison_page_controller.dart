@@ -18,6 +18,10 @@ final comparisonSecondDebitProductNameStateController = StateProvider.autoDispos
   return '';
 });
 
+final comparisonDebitListLengthStateController = StateProvider.autoDispose<int>((ref) {
+  return 0;
+});
+
 final comparisonFirstDebitPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
@@ -47,6 +51,10 @@ final comparisonSecondCreditPageNumStateController = StateProvider.autoDispose<i
   return 0;
 });
 
+final comparisonCreditListLengthStateController = StateProvider.autoDispose<int>((ref) {
+  return 0;
+});
+
 ///займы
 final comparisonFirstZaimyBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
@@ -59,5 +67,9 @@ final comparisonFirstZaimyPageNumStateProvider = StateProvider.autoDispose<int>(
   return 0;
 });
 final comparisonSecondZaimyPageNumStateController = StateProvider.autoDispose<int>((ref) {
+  return 0;
+});
+
+final comparisonZaimyListLengthStateController = StateProvider.autoDispose<int>((ref) {
   return 0;
 });

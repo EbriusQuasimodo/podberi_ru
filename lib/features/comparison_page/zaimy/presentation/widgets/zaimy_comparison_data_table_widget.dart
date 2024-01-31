@@ -24,10 +24,7 @@ class _ZaimyComparisonDataTableWidgetState
     extends ConsumerState<ZaimyComparisonDataTableWidget> {
   @override
   Widget build(BuildContext context) {
-    String firstProductDescription =
-        ref.watch(comparisonFirstZaimyBankNameStateProvider);
-    String secondProductDescription =
-        ref.watch(comparisonSecondZaimyBankNameStateController);
+    int comparisonLength = ref.watch(comparisonZaimyListLengthStateController);
     int firstPageNum = ref.watch(comparisonFirstZaimyPageNumStateProvider);
     int secondPageNum = ref.watch(comparisonSecondZaimyPageNumStateController);
     return Container(
@@ -42,15 +39,15 @@ class _ZaimyComparisonDataTableWidgetState
           ComparisonRowItemWidget(
             isTextWithHtmlTags: false,
             rowName: 'Название МФО',
-            firstProductDescription: firstProductDescription,
-            secondProductDescription: secondProductDescription,
+            firstProductDescription: widget.zaimyModel[firstPageNum].name,
+            secondProductDescription: comparisonLength >1 ? widget.zaimyModel[secondPageNum].name :'',
           ),
           ComparisonRowItemWidget(
             isTextWithHtmlTags: false,
             rowName: 'Сумма займа',
             firstProductDescription:
                 "${widget.zaimyModel[firstPageNum].sum} руб.",
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? "${widget.zaimyModel[secondPageNum].sum} руб."
                 : '',
           ),
@@ -58,7 +55,7 @@ class _ZaimyComparisonDataTableWidgetState
             isTextWithHtmlTags: false,
             rowName: 'Тип займа',
             firstProductDescription: widget.zaimyModel[firstPageNum].type,
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? widget.zaimyModel[secondPageNum].type
                 : '',
           ),
@@ -67,7 +64,7 @@ class _ZaimyComparisonDataTableWidgetState
             rowName: 'Срок займа',
             firstProductDescription:
                 'от ${widget.zaimyModel[firstPageNum].minTerm} до ${widget.zaimyModel[firstPageNum].maxTerm} ${widget.zaimyModel[firstPageNum].termFormat == 'дни' ? "дн." : "мес."}',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? 'от ${widget.zaimyModel[secondPageNum].minTerm} до ${widget.zaimyModel[secondPageNum].maxTerm} ${widget.zaimyModel[secondPageNum].termFormat == 'дни' ? "дн." : "мес."}'
                 : '',
           ),
@@ -76,7 +73,7 @@ class _ZaimyComparisonDataTableWidgetState
             rowName: 'Процентная ставка',
             firstProductDescription:
                 'от ${widget.zaimyModel[firstPageNum].minPercent} до ${widget.zaimyModel[firstPageNum].maxPercent} %',
-            secondProductDescription: secondProductDescription != ''
+            secondProductDescription: comparisonLength >1
                 ? 'от ${widget.zaimyModel[secondPageNum].minPercent} до ${widget.zaimyModel[secondPageNum].maxPercent} %'
                 : '',
           ),
@@ -109,7 +106,7 @@ class _ZaimyComparisonDataTableWidgetState
                   ),
                 ),
               ),
-              secondProductDescription != ''
+              comparisonLength >1
                   ? Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(right: 15, left: 3),

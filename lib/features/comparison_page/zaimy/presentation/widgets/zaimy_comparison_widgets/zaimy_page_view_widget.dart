@@ -35,9 +35,11 @@ class ZaimyPageViewWidget extends ConsumerStatefulWidget {
 
 class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
   final controllerFirstPageView = PageController(
+    initialPage: 0,
     viewportFraction: 0.9,
   );
   final controllerSecondPageView = PageController(
+    initialPage: 0,
     viewportFraction: 0.9,
   );
 
@@ -51,7 +53,7 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
 
       ///у займов есть только название мфо поэтому вместо названия продукта
       ///здесь везде название мфо
-      ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =
+      ref.watch(comparisonSecondZaimyBankNameStateController.notifier).state =
           widget.zaimyList[currentPageOnSecondPageView.toInt()].name;
       ref.watch(comparisonSecondZaimyPageNumStateController.notifier).state =
           currentPageOnSecondPageView.toInt();
@@ -62,12 +64,13 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
     controllerFirstPageView.addListener(() {
       currentPageOnFirstPageView = controllerFirstPageView.page!.toDouble();
 
+
       ///у займов есть только название мфо поэтому вместо названия продукта
       ///здесь везде название мфо
-      ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
+      ref.watch(comparisonFirstZaimyBankNameStateProvider.notifier).state =
           widget.zaimyList[currentPageOnFirstPageView.toInt()].name;
       ref.watch(comparisonFirstZaimyPageNumStateProvider.notifier).state =
-          currentPageOnSecondPageView.toInt();
+          currentPageOnFirstPageView.toInt();
       setState(() {});
       widget.onScrollPageViews();
     });
@@ -127,21 +130,28 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                           .put(comparisonZaimyData));
 
                   ref.refresh(comparisonZaimyListControllerProvider);
-                  setState(() {
+
                     controllerFirstPageView.animateToPage(
-                        controllerFirstPageView.page == 0.0 ? -1 : index - 1,
+                        controllerFirstPageView.page == 0.0
+                            ? -1
+                            : controllerFirstPageView.page!.round() - 1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.linear);
                     if (controllerFirstPageView.page ==
-                        controllerSecondPageView.page) {
+                        controllerSecondPageView.page ||
+                        controllerSecondPageView.page!.round()+1 ==
+                            widget.zaimyList.length) {
                       controllerSecondPageView.animateToPage(
-                          controllerSecondPageView.page == 0.0 ? -1 : index - 1,
+                          controllerSecondPageView.page == 0.0
+                              ? -1
+                              : controllerSecondPageView.page!.round() - 1,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.linear);
+                    }else{
+                      controllerSecondPageView.previousPage(duration: const Duration(milliseconds: 300),
+                          curve: Curves.linear);
                     }
-                  });
-                  widget.onScrollPageViews();
-                  widget.onDeleteFromComparison();
+
                 },
               );
             }),
@@ -199,27 +209,27 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                                 .put(comparisonZaimyData));
 
                         ref.refresh(comparisonZaimyListControllerProvider);
-                        setState(() {
+
                           controllerSecondPageView.animateToPage(
                               controllerSecondPageView.page == 0.0
                                   ? -1
-                                  : index - 1,
+                                  : controllerSecondPageView.page!.round() - 1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.linear);
-                          if (controllerSecondPageView.positions.isNotEmpty) {
-                            if (controllerFirstPageView.page ==
-                                controllerSecondPageView.page) {
-                              controllerSecondPageView.animateToPage(
-                                  controllerSecondPageView.page == 0.0
-                                      ? -1
-                                      : index - 1,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.linear);
-                            }
+                          if (controllerFirstPageView.page ==
+                              controllerSecondPageView.page ||
+                              controllerFirstPageView.page!.round()+1 ==
+                                  widget.zaimyList.length) {
+                            controllerFirstPageView.animateToPage(
+                                controllerFirstPageView.page == 0.0
+                                    ? -1
+                                    : controllerFirstPageView.page!.round() - 1,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.linear);
+                          }else{
+                            controllerFirstPageView.previousPage(duration: const Duration(milliseconds: 300),
+                                curve: Curves.linear);
                           }
-                        });
-                        widget.onScrollPageViews();
-                        widget.onDeleteFromComparison();
                       },
                     );
                   }),

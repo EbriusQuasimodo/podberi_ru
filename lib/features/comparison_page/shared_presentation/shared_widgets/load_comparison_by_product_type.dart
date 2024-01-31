@@ -26,6 +26,7 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
     if (ref.watch(comparisonProductUrlStateProvider) == 'debit_cards') {
       return ref.watch(comparisonDebitCardsListControllerProvider).when(
           data: (debitCardsInComparison) {
+
             return debitCardsInComparison.items.isNotEmpty
                 ? ComparisonDebitCardsPage(
               debitCardsInComparison: debitCardsInComparison.items,

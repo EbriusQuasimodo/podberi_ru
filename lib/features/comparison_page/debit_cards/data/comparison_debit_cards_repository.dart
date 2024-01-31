@@ -21,15 +21,17 @@ class ComparisonDebitCardsRepository
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'debit_cards') {
       List<ListDebitCardsModel> list = [];
-
+      print('dfhsdhsdh');
+      ref.watch(comparisonDebitListLengthStateController.notifier).state = 0;
       ///то возвращаем пустой список чтобы отобразить что продуктов в сравнении нет
       return DebitCardsModel(items: list, itemsCount: 0);
     } else {
       final response =
           await GetIt.I<ComparisonDebitCardsGetDataSource>().fetch(arg);
-
+      ref.watch(comparisonDebitListLengthStateController.notifier).state = response.itemsCount;
       ///если всего один продукт в сравнении
       if (response.itemsCount == 1) {
+        print('dfsogkpsodfkhg');
         ///то у всех провайдеров для второго page view оставляем пустые значения
         ///а для первого заполняем данными
         ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =

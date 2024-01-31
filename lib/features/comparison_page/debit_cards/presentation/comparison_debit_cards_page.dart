@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'widgets/debit_cards_comparison_data_table_widget.dart';
 import 'widgets/debit_cards_page_view_widgets/debit_cards_page_view_widget.dart';
 
-class ComparisonDebitCardsPage extends StatefulWidget {
+class ComparisonDebitCardsPage extends ConsumerStatefulWidget {
   final List<ListDebitCardsModel> debitCardsInComparison;
   final VoidCallback onScrollPageViews;
 
@@ -14,12 +15,13 @@ class ComparisonDebitCardsPage extends StatefulWidget {
   });
 
   @override
-  State<ComparisonDebitCardsPage> createState() =>
+  ConsumerState<ComparisonDebitCardsPage> createState() =>
       _ComparisonDebitCardsPageState();
 }
 
 class _ComparisonDebitCardsPageState
-    extends State<ComparisonDebitCardsPage> {
+    extends ConsumerState<ComparisonDebitCardsPage> {
+
   @override
   Widget build(BuildContext context) {
     return SliverList(
@@ -31,10 +33,10 @@ class _ComparisonDebitCardsPageState
               },
               debitCardsList: widget.debitCardsInComparison,
               onDeleteFromComparisonTwo: () {
-                setState(() {});
+              //  setState(() {});
               },
               onDeleteFromComparison: () {
-                setState(() {});
+              //  setState(() {});
               }),
           DebitCardsComparisonDataTableWidget(
             debitCardsModel: widget.debitCardsInComparison,

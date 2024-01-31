@@ -33,9 +33,11 @@ class CreditCardsPageViewWidget extends ConsumerStatefulWidget {
 class _CreditCardsComparisonWidgetState
     extends ConsumerState<CreditCardsPageViewWidget> {
   final controllerFirstPageView = PageController(
+    initialPage: 0,
     viewportFraction: 0.9,
   );
   final controllerSecondPageView = PageController(
+    initialPage: 0,
     viewportFraction: 0.9,
   );
 
@@ -124,6 +126,7 @@ class _CreditCardsComparisonWidgetState
                   color: ThemeApp.backgroundBlack),
             ),
           ),
+
           ///первый page view
           CustomExpandablePageView(
             pageController: controllerFirstPageView,
@@ -151,25 +154,31 @@ class _CreditCardsComparisonWidgetState
 
                   ///обновляем контроллер чтобы отобразить новый список сравнения
                   ref.refresh(comparisonCreditCardsListControllerProvider);
-                  setState(() {
-                    ///воспроизводим анимацию при удалении
-                    ///анимировать надо оба pfge view если они находятся на одной и той же страницу
-                    ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
-                    ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
-                    controllerFirstPageView.animateToPage(
-                        controllerFirstPageView.page == 0.0 ? -1 : index - 1,
+
+                  ///воспроизводим анимацию при удалении
+                  ///анимировать надо оба pfge view если они находятся на одной и той же страницу
+                  ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
+                  ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
+                  controllerFirstPageView.animateToPage(
+                      controllerFirstPageView.page == 0.0
+                          ? -1
+                          : controllerFirstPageView.page!.round() - 1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.linear);
+                  if (controllerFirstPageView.page ==
+                          controllerSecondPageView.page ||
+                      controllerSecondPageView.page!.round()+1 ==
+                          widget.creditCardsList.length) {
+                    controllerSecondPageView.animateToPage(
+                        controllerSecondPageView.page == 0.0
+                            ? -1
+                            : controllerSecondPageView.page!.round() - 1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.linear);
-                    if (controllerSecondPageView.positions.isNotEmpty &&
-                        controllerFirstPageView.page ==
-                            controllerSecondPageView.page) {
-                      controllerSecondPageView.animateToPage(
-                          controllerSecondPageView.page == 0.0 ? -1 : index - 1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    }
-                  });
-                  widget.onDeleteFromComparison();
+                  }else{
+                    controllerSecondPageView.previousPage(duration: const Duration(milliseconds: 300),
+                        curve: Curves.linear);
+                  }
                 },
               );
             }),
@@ -178,7 +187,8 @@ class _CreditCardsComparisonWidgetState
               ? const SizedBox(
                   height: 32,
                 )
-          ///индикатор открытой страницы
+
+              ///индикатор открытой страницы
               : Padding(
                   padding: const EdgeInsets.only(top: 11, bottom: 30),
                   child: Row(
@@ -204,7 +214,8 @@ class _CreditCardsComparisonWidgetState
                 ),
           widget.creditCardsList.length == 1
               ? const SizedBox.shrink()
-          ///второй page view
+
+              ///второй page view
               : CustomExpandablePageView(
                   pageController: controllerSecondPageView,
                   children:
@@ -233,35 +244,39 @@ class _CreditCardsComparisonWidgetState
                         ///обновляем контроллер чтобы отобразить новый список сравнения
                         ref.refresh(
                             comparisonCreditCardsListControllerProvider);
-                        setState(() {
-                          ///воспроизводим анимацию при удалении
-                          ///анимировать надо оба pfge view если они находятся на одной и той же страницу
-                          ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
-                          ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
-                          controllerSecondPageView.animateToPage(
-                              controllerSecondPageView.page == 0.0
+
+                        ///воспроизводим анимацию при удалении
+                        ///анимировать надо оба pfge view если они находятся на одной и той же страницу
+                        ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
+                        ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
+                        controllerSecondPageView.animateToPage(
+                            controllerSecondPageView.page == 0.0
+                                ? -1
+                                : controllerSecondPageView.page!.round() - 1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.linear);
+                        if (controllerFirstPageView.page ==
+                                controllerSecondPageView.page ||
+                            controllerFirstPageView.page!.round()+1 ==
+                                widget.creditCardsList.length) {
+                          controllerFirstPageView.animateToPage(
+                              controllerFirstPageView.page == 0.0
                                   ? -1
-                                  : index - 1,
+                                  : controllerFirstPageView.page!.round() - 1,
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.linear);
-                          if (controllerFirstPageView.page ==
-                              controllerSecondPageView.page) {
-                            controllerFirstPageView.animateToPage(
-                                controllerFirstPageView.page == 0.0
-                                    ? -1
-                                    : index - 1,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear);
-                          }
-                        });
-                        widget.onDeleteFromComparison();
+                        }else{
+                          controllerFirstPageView.previousPage(duration: const Duration(milliseconds: 300),
+                              curve: Curves.linear);
+                        }
                       },
                     );
                   }),
                 ),
           widget.creditCardsList.length == 1
               ? const SizedBox.shrink()
-          ///индикатор открытой страницы
+
+              ///индикатор открытой страницы
               : Padding(
                   padding: const EdgeInsets.only(top: 11, bottom: 30),
                   child: Row(

@@ -20,12 +20,15 @@ class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepository
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'credit_cards') {
       List<ListCreditCardsModel> list = [];
+      ref.watch(comparisonCreditListLengthStateController.notifier).state = 0;
       ///то возвращаем пустой список чтобы отобразить что продуктов в сравнении нет
       return CreditCardsModel(items: list, itemsCount: 0);
     } else {
       final response = await GetIt.I<ComparisonCreditCardsGetDataSource>().fetch(arg);
+      ref.watch(comparisonCreditListLengthStateController.notifier).state = response.itemsCount;
       ///если всего один продукт в сравнении
       if (response.itemsCount == 1) {
+
         ///то у всех провайдеров для второго page view оставляем пустые значения
         ///а для первого заполняем данными
         ref
