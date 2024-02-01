@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:podberi_ru/core/presentation/expandable_page_view.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
@@ -64,7 +63,6 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
     controllerFirstPageView.addListener(() {
       currentPageOnFirstPageView = controllerFirstPageView.page!.toDouble();
 
-
       ///у займов есть только название мфо поэтому вместо названия продукта
       ///здесь везде название мфо
       ref.watch(comparisonFirstZaimyBankNameStateProvider.notifier).state =
@@ -107,29 +105,31 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                   color: ThemeApp.backgroundBlack),
             ),
           ),
-          CustomExpandablePageView(
-            pageController: controllerFirstPageView,
-            children: List.generate(widget.zaimyList.length, (index) {
-              return MiniZaimyWidget(
-                zaimy: widget.zaimyList[index],
-                onDelete: () async {
-                  ComparisonZaimyData comparisonZaimyData =
-                      ComparisonZaimyData()..id = widget.zaimyList[index].id;
+          SizedBox(
+            height: 91,
+            child: PageView(
+              controller: controllerFirstPageView,
+              children: List.generate(widget.zaimyList.length, (index) {
+                return MiniZaimyWidget(
+                  zaimy: widget.zaimyList[index],
+                  onDelete: () async {
+                    ComparisonZaimyData comparisonZaimyData =
+                        ComparisonZaimyData()..id = widget.zaimyList[index].id;
 
-                  await isar?.writeTxn(() async => await ref
-                          .watch(isarNotifierProvider.notifier)
-                          .isItemDuplicateInComparison(
-                            widget.zaimyList[index].id,
-                            ref.watch(comparisonProductUrlStateProvider),
-                          )
-                      ? await isar?.comparisonZaimyDatas
-                          .filter()
-                          .idEqualTo(widget.zaimyList[index].id)
-                          .deleteAll()
-                      : await isar?.comparisonZaimyDatas
-                          .put(comparisonZaimyData));
+                    await isar?.writeTxn(() async => await ref
+                            .watch(isarNotifierProvider.notifier)
+                            .isItemDuplicateInComparison(
+                              widget.zaimyList[index].id,
+                              ref.watch(comparisonProductUrlStateProvider),
+                            )
+                        ? await isar?.comparisonZaimyDatas
+                            .filter()
+                            .idEqualTo(widget.zaimyList[index].id)
+                            .deleteAll()
+                        : await isar?.comparisonZaimyDatas
+                            .put(comparisonZaimyData));
 
-                  ref.refresh(comparisonZaimyListControllerProvider);
+                    ref.refresh(comparisonZaimyListControllerProvider);
 
                     controllerFirstPageView.animateToPage(
                         controllerFirstPageView.page == 0.0
@@ -138,8 +138,8 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.linear);
                     if (controllerFirstPageView.page ==
-                        controllerSecondPageView.page ||
-                        controllerSecondPageView.page!.round()+1 ==
+                            controllerSecondPageView.page ||
+                        controllerSecondPageView.page!.round() + 1 ==
                             widget.zaimyList.length) {
                       controllerSecondPageView.animateToPage(
                           controllerSecondPageView.page == 0.0
@@ -147,14 +147,15 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                               : controllerSecondPageView.page!.round() - 1,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.linear);
-                    }else{
-                      controllerSecondPageView.previousPage(duration: const Duration(milliseconds: 300),
+                    } else {
+                      controllerSecondPageView.previousPage(
+                          duration: const Duration(milliseconds: 300),
                           curve: Curves.linear);
                     }
-
-                },
-              );
-            }),
+                  },
+                );
+              }),
+            ),
           ),
           widget.zaimyList.length == 1
               ? const SizedBox(
@@ -185,30 +186,33 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                 ),
           widget.zaimyList.length == 1
               ? const SizedBox.shrink()
-              : CustomExpandablePageView(
-                  pageController: controllerSecondPageView,
-                  children: List.generate(widget.zaimyList.length, (index) {
-                    return MiniZaimyWidget(
-                      zaimy: widget.zaimyList[index],
-                      onDelete: () async {
-                        ComparisonZaimyData comparisonZaimyData =
-                            ComparisonZaimyData()
-                              ..id = widget.zaimyList[index].id;
+              : SizedBox(
+                  height: 91,
+                  child: PageView(
+                    controller: controllerSecondPageView,
+                    children: List.generate(widget.zaimyList.length, (index) {
+                      return MiniZaimyWidget(
+                        zaimy: widget.zaimyList[index],
+                        onDelete: () async {
+                          ComparisonZaimyData comparisonZaimyData =
+                              ComparisonZaimyData()
+                                ..id = widget.zaimyList[index].id;
 
-                        await isar?.writeTxn(() async => await ref
-                                .watch(isarNotifierProvider.notifier)
-                                .isItemDuplicateInComparison(
-                                  widget.zaimyList[index].id,
-                                  ref.watch(comparisonProductUrlStateProvider),
-                                )
-                            ? await isar?.comparisonZaimyDatas
-                                .filter()
-                                .idEqualTo(widget.zaimyList[index].id)
-                                .deleteAll()
-                            : await isar?.comparisonZaimyDatas
-                                .put(comparisonZaimyData));
+                          await isar?.writeTxn(() async => await ref
+                                  .watch(isarNotifierProvider.notifier)
+                                  .isItemDuplicateInComparison(
+                                    widget.zaimyList[index].id,
+                                    ref.watch(
+                                        comparisonProductUrlStateProvider),
+                                  )
+                              ? await isar?.comparisonZaimyDatas
+                                  .filter()
+                                  .idEqualTo(widget.zaimyList[index].id)
+                                  .deleteAll()
+                              : await isar?.comparisonZaimyDatas
+                                  .put(comparisonZaimyData));
 
-                        ref.refresh(comparisonZaimyListControllerProvider);
+                          ref.refresh(comparisonZaimyListControllerProvider);
 
                           controllerSecondPageView.animateToPage(
                               controllerSecondPageView.page == 0.0
@@ -217,8 +221,8 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.linear);
                           if (controllerFirstPageView.page ==
-                              controllerSecondPageView.page ||
-                              controllerFirstPageView.page!.round()+1 ==
+                                  controllerSecondPageView.page ||
+                              controllerFirstPageView.page!.round() + 1 ==
                                   widget.zaimyList.length) {
                             controllerFirstPageView.animateToPage(
                                 controllerFirstPageView.page == 0.0
@@ -226,13 +230,15 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                                     : controllerFirstPageView.page!.round() - 1,
                                 duration: const Duration(milliseconds: 300),
                                 curve: Curves.linear);
-                          }else{
-                            controllerFirstPageView.previousPage(duration: const Duration(milliseconds: 300),
+                          } else {
+                            controllerFirstPageView.previousPage(
+                                duration: const Duration(milliseconds: 300),
                                 curve: Curves.linear);
                           }
-                      },
-                    );
-                  }),
+                        },
+                      );
+                    }),
+                  ),
                 ),
           widget.zaimyList.length == 1
               ? const SizedBox.shrink()

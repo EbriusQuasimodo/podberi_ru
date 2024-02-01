@@ -17,6 +17,8 @@ class ComparisonDebitCardsRepository
   @override
   Future<DebitCardsModel> fetch(
       String arg, AutoDisposeAsyncNotifierProviderRef ref) async {
+    int firstPageNum = ref.read(comparisonFirstDebitPageNumStateProvider);
+    int secondPageNum = ref.read(comparisonSecondDebitPageNumStateController);
     ///если передали квери только из одного типа продукта
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'debit_cards') {
@@ -37,26 +39,26 @@ class ComparisonDebitCardsRepository
         ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =
             '';
         ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
-            response.items[0].bankDetails!.bankName;
+            response.items[firstPageNum].bankDetails!.bankName;
 
         ref
             .watch(comparisonSecondDebitProductNameStateController.notifier)
             .state = '';
         ref.watch(comparisonFirstDebitProductNameStateProvider.notifier).state =
-            response.items[0].name;
+            response.items[firstPageNum].name;
       } else {
         ///если в респонсе больше одного продукта
         ///то все провайдеры для каждого pfge view заполняем данными
         ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
-            response.items[0].bankDetails!.bankName;
+            response.items[firstPageNum].bankDetails!.bankName;
         ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =
-            response.items[0].bankDetails!.bankName;
+            response.items[secondPageNum].bankDetails!.bankName;
 
         ref.watch(comparisonFirstDebitProductNameStateProvider.notifier).state =
-            response.items[0].name;
+            response.items[firstPageNum].name;
         ref
             .watch(comparisonSecondDebitProductNameStateController.notifier)
-            .state = response.items[0].name;
+            .state = response.items[secondPageNum].name;
       }
       return response;
     }

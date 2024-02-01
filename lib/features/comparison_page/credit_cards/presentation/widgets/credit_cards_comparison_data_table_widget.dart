@@ -49,7 +49,6 @@ class _CreditCardsComparisonDataTableWidgetState
 
   @override
   Widget build(BuildContext context) {
-
     int comparisonLength = ref.watch(comparisonCreditListLengthStateController);
     int firstPageNum = ref.watch(comparisonFirstCreditPageNumStateProvider);
     int secondPageNum = ref.watch(comparisonSecondCreditPageNumStateController);

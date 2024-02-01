@@ -21,7 +21,7 @@ class FavoriteCreditCardWidget extends ConsumerStatefulWidget {
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
-  FavoriteCreditCardWidget({
+  const FavoriteCreditCardWidget({
     super.key,
     required this.productRating,
     this.productInfo,

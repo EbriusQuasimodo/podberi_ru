@@ -16,6 +16,8 @@ class ComparisonZaimyRepository implements ComparisonZaimyRepositoryImpl {
   @override
   Future<ZaimyModel> fetch(
       String arg, AutoDisposeAsyncNotifierProviderRef ref) async {
+    int firstPageNum = ref.read(comparisonFirstZaimyPageNumStateProvider);
+    int secondPageNum = ref.read(comparisonSecondZaimyPageNumStateController);
     ///если передали квери только из одного типа продукта
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'zaimy') {
@@ -34,14 +36,14 @@ class ComparisonZaimyRepository implements ComparisonZaimyRepositoryImpl {
         ref.watch(comparisonSecondZaimyBankNameStateController.notifier).state =
             '';
         ref.watch(comparisonFirstZaimyBankNameStateProvider.notifier).state =
-            response.items[0].name;
+            response.items[firstPageNum].name;
       } else {
         ///если в респонсе больше одного продукта
         ///то все провайдеры для каждого pfge view заполняем данными
         ref.watch(comparisonFirstZaimyBankNameStateProvider.notifier).state =
-            response.items[0].name;
+            response.items[firstPageNum].name;
         ref.watch(comparisonSecondZaimyBankNameStateController.notifier).state =
-            response.items[0].name;
+            response.items[secondPageNum].name;
       }
       return response;
     }

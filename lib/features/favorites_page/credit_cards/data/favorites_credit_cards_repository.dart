@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
 
 import 'favorites_credit_cards_data_source.dart';
 
@@ -29,7 +30,7 @@ class FavoritesCreditCardsRepository implements FavoritesCreditCardsRepositoryIm
   }
 }
 
-///репозиторий для получения всех банковских продуктов которые находятся в избранном
+///репозиторий для получения всех кредиток которые находятся в избранном
 /// здесь формируется uri для запроса (productType),
 ///он наполняется типом продукта и id
 ///вызывается из [favoritesCreditCardsListControllerProvider]

@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
+import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/favorites_controller.dart';
+
 final customChoiceChipControllerProvider = StateNotifierProvider.autoDispose<
     CustomChoiceChipControllerNotifier, String>(CustomChoiceChipControllerNotifier.new);
 class CustomChoiceChipControllerNotifier extends StateNotifier<String>{

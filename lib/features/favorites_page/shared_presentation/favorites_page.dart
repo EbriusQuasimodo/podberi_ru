@@ -4,11 +4,11 @@ import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_chip.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/widgets/load_favorites_by_product_type.dart';
+import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
+import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
+import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
-import 'controllers/favorites_credit_cards_controller.dart';
-import 'controllers/favorites_debit_cards_controller.dart';
-import 'controllers/favorites_zaimy_controller.dart';
+import 'shared_widgets/load_favorites_by_product_type.dart';
 
 class FavoritesPage extends ConsumerStatefulWidget {
   ///страница избранного

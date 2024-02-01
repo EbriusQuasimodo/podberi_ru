@@ -2,19 +2,20 @@ import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
-import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/features/favorites_page/credit_cards/data/favorites_credit_cards_repository.dart';
 
-///получение всех избранных продуктов, [productType] содержит в себе не только enum [ProductTypeEnum]
-///но и id избранных продуктов
-///вызывается из [favoritesZaimyRepositoryProvider]
-class FavoritesZaimyGetDataSource {
-  FavoritesZaimyGetDataSource({
+///получение всех кредиток в избранном, [productType] содержит в себе не только enum [ProductTypeEnum]
+///но и id
+///вызывается из [favoritesCreditCardsRepositoryProvider]
+class FavoritesCreditCardsGetDataSource {
+  FavoritesCreditCardsGetDataSource({
     required this.dio,
   });
 
   final Dio dio;
 
-  Future<ZaimyModel> fetch(String productType) async {
+  Future<CreditCardsModel> fetch(String productType) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
 
@@ -22,10 +23,9 @@ class FavoritesZaimyGetDataSource {
         final re = await dio.get(
           '/$productType',
         );
-        print(re.realUri);
         switch (re.statusCode) {
           case 200:
-            return ZaimyModel.fromJson(re.data);
+            return CreditCardsModel.fromJson(re.data);
 
           case 404:
             throw PageNotFoundException().message;

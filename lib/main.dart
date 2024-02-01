@@ -11,7 +11,7 @@ import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_card
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/features/catalog_page/data/credit_cards_data/credit_cards_data_source.dart';
-import 'package:podberi_ru/features/favorites_page/data/zaimy/favorites_zaimy_data_source.dart';
+import 'package:podberi_ru/features/favorites_page/zaimy/data/favorites_zaimy_data_source.dart';
 import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_data_source.dart';
 
 import 'core/constants/urls.dart';
@@ -27,8 +27,8 @@ import 'features/comparison_page/zaimy/data/comparison_zaimy_data_source.dart';
 import 'features/details_page/credit_cards/data/credit_cards_details_data_source.dart';
 import 'features/details_page/debit_cards/data/debit_cards_details_data_source.dart';
 import 'features/details_page/zaimy/data/zaimy_details_data_source.dart';
-import 'features/favorites_page/data/credit_cards/favorites_credit_cards_data_source.dart';
-import 'features/favorites_page/data/debit_cards/favorites_debit_cards_data_source.dart';
+import 'features/favorites_page/credit_cards/data/favorites_credit_cards_data_source.dart';
+import 'features/favorites_page/debit_cards/data/favorites_debit_cards_data_source.dart';
 import 'features/home_page/data/best_credit_cards_data/best_credit_cards_data_source.dart';
 import 'features/home_page/data/best_debit_cards_data/best_debit_cards_data_source.dart';
 import 'internal/app.dart';

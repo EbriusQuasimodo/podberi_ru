@@ -6,14 +6,15 @@ import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_zaimy_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/favorites_controller.dart';
+import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'favorite_zaimy_widget.dart';
+import 'favorites_zaimy_controller.dart';
 
 class FavoritesZaimyList extends ConsumerWidget {
   final int itemsCount;
 
+  ///страница-список всех займов в избранном
   const FavoritesZaimyList({
     super.key,
     required this.itemsCount,

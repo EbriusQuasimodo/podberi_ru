@@ -42,9 +42,10 @@ class MiniZaimyWidget extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                  Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 5, bottom: 24),
+                  padding: const EdgeInsets.only(left: 15, right: 5),
                   child: Text(
                     zaimy.name,
                     maxLines: 1,
@@ -54,7 +55,7 @@ class MiniZaimyWidget extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         color: ThemeApp.mainWhite),
                   ),
-                ),
+                                 ),
               ],
             ),
           ),

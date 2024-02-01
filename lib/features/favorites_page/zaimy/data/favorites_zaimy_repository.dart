@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
 import 'favorites_zaimy_data_source.dart';
 
@@ -29,7 +30,7 @@ class FavoritesZaimyRepository implements FavoritesZaimyRepositoryImpl {
   }
 }
 
-///репозиторий для получения всех банковских продуктов которые находятся в избранном
+///репозиторий для получения всех займов которые находятся в избранном
 /// здесь формируется uri для запроса (productType),
 ///он наполняется типом продукта и id
 ///вызывается из [favoritesZaimyListControllerProvider]

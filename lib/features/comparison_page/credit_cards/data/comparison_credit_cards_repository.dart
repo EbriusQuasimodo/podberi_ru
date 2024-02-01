@@ -16,6 +16,8 @@ class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepository
   @override
   Future<CreditCardsModel> fetch(
       String arg, AutoDisposeAsyncNotifierProviderRef ref) async {
+    int firstPageNum = ref.read(comparisonFirstCreditPageNumStateProvider);
+    int secondPageNum = ref.read(comparisonSecondCreditPageNumStateController);
     ///если передали квери только из одного типа продукта
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'credit_cards') {
@@ -36,30 +38,30 @@ class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepository
             .state = '';
         ref
             .watch(comparisonFirstCreditBankNameStateProvider.notifier)
-            .state = response.items[0].bankDetails!.bankName;
+            .state = response.items[firstPageNum].bankDetails!.bankName;
 
         ref
             .watch(comparisonSecondCreditProductNameStateController.notifier)
             .state = '';
         ref
             .watch(comparisonFirstCreditProductNameStateProvider.notifier)
-            .state = response.items[0].name;
+            .state = response.items[firstPageNum].name;
       } else {
         ///если в респонсе больше одного продукта
         ///то все провайдеры для каждого pfge view заполняем данными
         ref
             .watch(comparisonFirstCreditBankNameStateProvider.notifier)
-            .state = response.items[0].bankDetails!.bankName;
+            .state = response.items[firstPageNum].bankDetails!.bankName;
         ref
             .watch(comparisonSecondCreditBankNameStateController.notifier)
-            .state = response.items[0].bankDetails!.bankName;
+            .state = response.items[secondPageNum].bankDetails!.bankName;
 
         ref
             .watch(comparisonFirstCreditProductNameStateProvider.notifier)
-            .state = response.items[0].name;
+            .state = response.items[firstPageNum].name;
         ref
             .watch(comparisonSecondCreditProductNameStateController.notifier)
-            .state = response.items[0].name;
+            .state = response.items[secondPageNum].name;
       }
       return response;
     }

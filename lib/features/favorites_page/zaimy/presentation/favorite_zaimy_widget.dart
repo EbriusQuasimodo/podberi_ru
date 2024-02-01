@@ -21,7 +21,7 @@ class FavoriteZaimyWidget extends ConsumerStatefulWidget {
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
-  FavoriteZaimyWidget({
+  const FavoriteZaimyWidget({
     super.key,
     required this.productRating,
     this.productInfo,

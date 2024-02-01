@@ -6,14 +6,14 @@ import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
 import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_credit_cards_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_debit_cards_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/controllers/favorites_zaimy_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/favorites_controller.dart';
-import 'package:podberi_ru/features/favorites_page/presentation/widgets/debit_cards/favorites_debit_cards_list_widget.dart';
+import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
+import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
+import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_list_widget.dart';
+import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
+import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
-import 'credit_cards/favorites_credit_cards_list_widget.dart';
-import 'zaimy/favorites_zaimy_list_widget.dart';
+import '../../credit_cards/presentation/favorites_credit_cards_list_widget.dart';
+import '../../zaimy/presentation/favorites_zaimy_list_widget.dart';
 
 class LoadFavoritesByProductType extends ConsumerWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
@@ -34,7 +34,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
             ?FavoritesDebitCardsList(
           itemsCount: debitCards.itemsCount,
 
-        ) : FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
+        ) : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
       }, error: (error, _) {
         return SliverFillRemaining(
           hasScrollBody: false,
@@ -62,7 +62,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
             ? FavoritesCreditCardsList(
                 itemsCount: creditCards.itemsCount,
               )
-            : FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
+            : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
       }, error: (error, _) {
         return SliverFillRemaining(
           hasScrollBody: false,
@@ -90,7 +90,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
             ? FavoritesZaimyList(
                 itemsCount: zaimy.itemsCount,
               )
-            : FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
+            : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
       }, error: (error, _) {
         return SliverFillRemaining(
           hasScrollBody: false,
