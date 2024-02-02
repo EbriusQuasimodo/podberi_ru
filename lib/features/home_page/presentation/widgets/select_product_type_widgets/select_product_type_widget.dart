@@ -47,11 +47,7 @@ class SelectProductTypeWidget extends ConsumerWidget {
                           productTypeUrl: ProductTypeEnum.debit_cards.name,
                           pageName: 'Дебетовые карты',
                           whereFrom: AppRoute.homePage.name,
-                          filtersModel: FiltersModel(
-                            banks: [],
-                            paySystem: [],
-                            cashBack: [],
-                          ),
+
                         ),
                       );
                 }),
@@ -68,11 +64,7 @@ class SelectProductTypeWidget extends ConsumerWidget {
                           productTypeUrl: ProductTypeEnum.credit_cards.name,
                           pageName: 'Кредитные карты',
                           whereFrom: AppRoute.homePage.name,
-                          filtersModel: FiltersModel(
-                            banks: [],
-                            paySystem: [],
-                            cashBack: [],
-                          ),
+
                         ),
                       );
                 }),
@@ -89,11 +81,7 @@ class SelectProductTypeWidget extends ConsumerWidget {
                           productTypeUrl: ProductTypeEnum.zaimy.name,
                           pageName: 'Микрозаймы',
                           whereFrom: AppRoute.homePage.name,
-                          filtersModel: FiltersModel(
-                            banks: [],
-                            paySystem: [],
-                            cashBack: [],
-                          ),
+
                         ),
                       );
                 }),
@@ -110,11 +98,7 @@ class SelectProductTypeWidget extends ConsumerWidget {
                           productTypeUrl: ProductTypeEnum.rko.name,
                           pageName: 'РКО',
                           whereFrom: AppRoute.homePage.name,
-                          filtersModel: FiltersModel(
-                            banks: [],
-                            paySystem: [],
-                            cashBack: [],
-                          ),
+
                         ),
                       );
                 }),

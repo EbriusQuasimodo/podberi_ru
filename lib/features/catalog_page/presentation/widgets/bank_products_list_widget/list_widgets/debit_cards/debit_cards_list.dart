@@ -26,22 +26,29 @@ class DebitCardsListWidget extends ConsumerStatefulWidget {
 }
 
 class _DebitCardsListWidgetState extends ConsumerState<DebitCardsListWidget> {
-  final isar = Isar.getInstance();
-
+  static const pageSize = 10;
   @override
   Widget build(BuildContext context) {
     return SliverList(
-      delegate: SliverChildBuilderDelegate(childCount: widget.itemsCount,(BuildContext context, int index) {
+      delegate: SliverChildBuilderDelegate(childCount: widget.itemsCount,
+          (BuildContext context, int index) {
+            final page = index ~/ pageSize+1;
+            final indexInPage = index % pageSize;
+            widget.basicApiPageSettingsModel.page=page;
         return ref
-            .watch(debitCardsControllerProvider(
-                widget.basicApiPageSettingsModel))
+            .watch(
+                debitCardsControllerProvider(widget.basicApiPageSettingsModel))
             .when(data: (debitCards) {
+          print(debitCards.items.length);
+              if(indexInPage >=debitCards.items.length){
+                return SizedBox.shrink();
+              }
           return DebitCardWidgetWithButtons(
               onTap: () {
                 setState(() {});
               },
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-              productInfo: debitCards.items[index],
+              productInfo: debitCards.items[indexInPage],
               productRating: '4.8');
         }, error: (error, _) {
           return SliverFillRemaining(
@@ -58,11 +65,7 @@ class _DebitCardsListWidgetState extends ConsumerState<DebitCardsListWidget> {
                 }),
           );
         }, loading: () {
-         return  const SliverFillRemaining(
-            child: CustomLoadingCardWidget(
-              bottomPadding: 72,
-            ),
-          );
+          return const CircularProgressIndicator();
         });
       }),
     );

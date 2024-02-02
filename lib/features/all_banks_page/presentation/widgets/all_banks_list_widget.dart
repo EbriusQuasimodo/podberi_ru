@@ -1,3 +1,4 @@
+import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,85 +42,92 @@ class AllBanksListWidget extends ConsumerWidget {
             ),
           ),
         ),
-        SliverPadding(
-          padding:
-              const EdgeInsets.only(top: 15, right: 15, left: 15, bottom: 9),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: allBanks.length,
-              (context, index) => Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    ref
-                        .watch(productTypeUrlFromAllBanksStateProvider.notifier)
-                        .state = 'debit_cards';
-                    ref.watch(goRouterProvider).push(RouteConstants.catalog,
-                        extra: BasicApiPageSettingsModel(
-                            bankDetailsModel: BankListDetailsModel(
-                                logo: allBanks[index].logo,
-                                bankName: allBanks[index].bankName),
-                            filtersModel: FiltersModel(
-                                banks: [allBanks[index].bankName],
-                                paySystem: [],
-                                cashBack: []),
-                            whereFrom: AppRoute.allBanksPage.name,
-                            productTypeUrl: ProductTypeEnum.debit_cards.name,
-                            pageName: 'Каталог'));
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 6),
-                    padding: const EdgeInsets.only(
-                        top: 15, left: 15, bottom: 15, right: 20),
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Color(int.parse('0xffef3124')),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 50, width: 50,
-                          padding: const EdgeInsets.only(
-                              top: 9, right: 7, left: 7, bottom: 9),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: ThemeApp.mainWhite,
-                          ),
-                          child: Image.network(
-                            '${Urls.api.files}/${allBanks[index].logo}',
-                            errorBuilder: (BuildContext context,
-                                Object exception, StackTrace? stackTrace) {
-                              return SvgPicture.asset(
-                                'assets/icons/photo_not_found.svg',
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Text(
-                          allBanks[index].bankName,
-                          style: const TextStyle(
+        SliverContainer(
+          margin: const EdgeInsets.only(top: 2, bottom: 72),
+          background: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: ThemeApp.mainWhite,
+            ),
+
+          ),
+          sliver: SliverPadding(
+            padding:
+                const EdgeInsets.only(top: 15, right: 15, left: 15, bottom: 9),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: allBanks.length,
+                (context, index) => Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      ref
+                          .watch(productTypeUrlFromAllBanksStateProvider.notifier)
+                          .state = 'debit_cards';
+                      ref.watch(goRouterProvider).push(RouteConstants.catalog,
+                          extra: BasicApiPageSettingsModel(
+                              bankDetailsModel: BankListDetailsModel(
+                                  logo: allBanks[index].logo,
+                                  bankName: allBanks[index].bankName),
+                              banks: [allBanks[index].bankName],
+                              whereFrom: AppRoute.allBanksPage.name,
+                              productTypeUrl: ProductTypeEnum.debit_cards.name,
+                              pageName: 'Каталог'));
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      padding: const EdgeInsets.only(
+                          top: 15, left: 15, bottom: 15, right: 20),
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Color(int.parse('0xff${allBanks[index].color}')),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 50, width: 50,
+                            padding: const EdgeInsets.only(
+                                top: 9, right: 7, left: 7, bottom: 9),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
                               color: ThemeApp.mainWhite,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        const Spacer(),
-                        const Icon(
-                          Icons.star,
-                          color: ThemeApp.mainWhite,
-                          size: 20,
-                        ),
-                        const Text(
-                          '4.8',
-                          style: TextStyle(
-                              color: ThemeApp.mainWhite,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20),
-                        )
-                      ],
+                            ),
+                            child: Image.network(
+                              '${Urls.api.files}/${allBanks[index].logo}',
+                              errorBuilder: (BuildContext context,
+                                  Object exception, StackTrace? stackTrace) {
+                                return SvgPicture.asset(
+                                  'assets/icons/photo_not_found.svg',
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            allBanks[index].bankName,
+                            style: const TextStyle(
+                                color: ThemeApp.mainWhite,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          // const Spacer(),
+                          // const Icon(
+                          //   Icons.star,
+                          //   color: ThemeApp.mainWhite,
+                          //   size: 20,
+                          // ),
+                          // const Text(
+                          //   '4.8',
+                          //   style: TextStyle(
+                          //       color: ThemeApp.mainWhite,
+                          //       fontWeight: FontWeight.w500,
+                          //       fontSize: 20),
+                          // )
+                        ],
+                      ),
                     ),
                   ),
                 ),

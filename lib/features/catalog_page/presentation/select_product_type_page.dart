@@ -72,11 +72,6 @@ class SelectProductTypePage extends ConsumerWidget {
                                       pageName: 'Дебетовые карты',
                                       whereFrom:
                                           AppRoute.selectProductPage.name,
-                                      filtersModel: FiltersModel(
-                                        banks: [],
-                                        paySystem: [],
-                                        cashBack: [],
-                                      ),
                                     ),
                                   );
                             }),
@@ -95,11 +90,7 @@ class SelectProductTypePage extends ConsumerWidget {
                                       pageName: 'Кредитные карты',
                                       whereFrom:
                                           AppRoute.selectProductPage.name,
-                                      filtersModel: FiltersModel(
-                                        banks: [],
-                                        paySystem: [],
-                                        cashBack: [],
-                                      ),
+
                                     ),
                                   );
                             }),
@@ -118,11 +109,7 @@ class SelectProductTypePage extends ConsumerWidget {
                                       pageName: 'Микрозаймы',
                                       whereFrom:
                                           AppRoute.selectProductPage.name,
-                                      filtersModel: FiltersModel(
-                                        banks: [],
-                                        paySystem: [],
-                                        cashBack: [],
-                                      ),
+
                                     ),
                                   );
                             }),
@@ -140,11 +127,7 @@ class SelectProductTypePage extends ConsumerWidget {
                                       pageName: 'РКО',
                                       whereFrom:
                                           AppRoute.selectProductPage.name,
-                                      filtersModel: FiltersModel(
-                                        banks: [],
-                                        paySystem: [],
-                                        cashBack: [],
-                                      ),
+
                                     ),
                                   );
                             }),

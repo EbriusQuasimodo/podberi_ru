@@ -81,11 +81,7 @@ class BestDebitCardsWidget extends ConsumerWidget {
                             productTypeUrl: ProductTypeEnum.debit_cards.name,
                             pageName: 'Дебетовые карты',
                             whereFrom: AppRoute.homePage.name,
-                            filtersModel: FiltersModel(
-                              banks: [],
-                              paySystem: [],
-                              cashBack: [],
-                            ),
+
                           ),
                         );
                   },

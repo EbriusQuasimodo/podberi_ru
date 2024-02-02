@@ -25,22 +25,22 @@ class ZaimyController extends AutoDisposeFamilyAsyncNotifier<ZaimyModel,
     ///(из выбора категории продука, с главной страницы или со страницы всех банков)
     switch (arg.whereFrom) {
       case 'selectProductPage':
-        arg.filtersModel!.term =
+        arg.term =
             ref.watch(zaimyFilterTermFromSelectProductPageStateProvider);
-        arg.filtersModel?.percents =
+        arg.percents =
             ref.watch(zaimyFilterPercentsFromSelectProductPageStateProvider);
-        arg.filtersModel?.sum =
+        arg.sum =
             ref.watch(zaimyFilterSumFromSelectProductPageStateProvider);
-        arg.filtersModel?.sort =
+        arg.sort =
             ref.watch(sortFromSelectProductPageStateProvider);
         break;
       case 'homePage':
-        arg.filtersModel?.sort = ref.watch(sortFromHomePageStateProvider);
-        arg.filtersModel!.term =
+        arg.sort = ref.watch(sortFromHomePageStateProvider);
+        arg.term =
             ref.watch(zaimyFilterTermFromHomePageStateProvider);
-        arg.filtersModel?.percents =
+        arg.percents =
             ref.watch(zaimyFilterPercentsFromHomePageStateProvider);
-        arg.filtersModel?.sum =
+        arg.sum =
             ref.watch(zaimyFilterSumFromHomePageStateProvider);
 
       case "allBanksPage":
@@ -55,51 +55,51 @@ class ZaimyController extends AutoDisposeFamilyAsyncNotifier<ZaimyModel,
 
     final zaimyRepo = ref.read(zaimyRepositoryProvider);
 
-    if (arg.filtersModel!.percents != 0) {
+    if (arg.percents != 0) {
       ///ищем займы у которых макс процент находится в диапазоне min - max
       productTypeWithQuery +=
-          '&min_percent%24lte=${arg.filtersModel!.percents}&max_percent%24gte=${arg.filtersModel!.percents}';
+          '&min_percent%24lte=${arg.percents}&max_percent%24gte=${arg.percents}';
     }
-    if (arg.filtersModel!.banks!.isNotEmpty) {
-      for (int i = 0; i < arg.filtersModel!.banks!.length; i++) {
+    if (arg.banks !=null) {
+      for (int i = 0; i < arg.banks!.length; i++) {
         productTypeWithQuery +=
-            '&bank_details.bank_name=${arg.filtersModel?.banks?[i]}';
+            '&bank_details.bank_name=${arg.banks?[i]}';
       }
     }
 
     ///фильтр по безпроцентному периоду
-    if (arg.filtersModel?.term != null) {
+    if (arg.term != null) {
       ///ищем в диапазоне где min term меньше либо равно выбранному периоду
       ///а max  term больше либо равно выбраному периоду
-      if (arg.filtersModel?.term == 'от 30 дней') {
+      if (arg.term == 'от 30 дней') {
         productTypeWithQuery += '&min_term%24lte=30&max_term%24gte=30';
-      } else if (arg.filtersModel?.term == 'от 60 дней') {
+      } else if (arg.term == 'от 60 дней') {
         productTypeWithQuery += '&min_term%24lte=60&max_term%24gte=60';
-      } else if (arg.filtersModel?.term == 'от 90 дней') {
+      } else if (arg.term == 'от 90 дней') {
         productTypeWithQuery += '&min_term%24lte=90&max_term%24gte=90';
-      } else if (arg.filtersModel?.term == 'от 120 дней') {
+      } else if (arg.term == 'от 120 дней') {
         productTypeWithQuery += '&min_term%24lte=120&max_term%24gte=120';
-      } else if (arg.filtersModel?.term == 'от 200 дней') {
+      } else if (arg.term == 'от 200 дней') {
         productTypeWithQuery += '&min_term%24lte=200&max_term%24gte=200';
       }
     }
 
     ///фильтр по сумме займа
-    if (arg.filtersModel?.sum != null) {
-      productTypeWithQuery += '&sum%24gte=${arg.filtersModel?.sum}';
+    if (arg.sum != null) {
+      productTypeWithQuery += '&sum%24gte=${arg.sum}';
     }
 
     ///сортировка
-    if (arg.filtersModel?.sort != '') {
-      if (arg.filtersModel?.sort == 'По сумме займа') {
+    if (arg.sort != '') {
+      if (arg.sort == 'По сумме займа') {
         productTypeWithQuery += '&sort\$sum=-1';
-      } else if (arg.filtersModel?.sort == 'По ставке') {
+      } else if (arg.sort == 'По ставке') {
         productTypeWithQuery += '&sort\$max_percent=1';
-      } else if (arg.filtersModel?.sort == 'По сроку') {
+      } else if (arg.sort == 'По сроку') {
         productTypeWithQuery += '&sort\$max_term=-1';
       }
     }
-    arg.page = '1';
+
     return await zaimyRepo.fetch(productTypeWithQuery, ref);
   }
 }

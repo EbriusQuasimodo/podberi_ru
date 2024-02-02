@@ -25,26 +25,26 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
     ///(из выбора категории продука, с главной страницы или со страницы банков)
     switch (arg.whereFrom) {
       case 'selectProductPage':
-        arg.filtersModel?.noPercentPeriod = ref.watch(
+        arg.noPercentPeriod = ref.watch(
             creditCardsFilterNoPercentPeriodFromSelectProductPageStateProvider);
-        arg.filtersModel?.percents = ref
+        arg.percents = ref
             .watch(creditCardsFilterPercentsFromSelectProductPageStateProvider);
-        arg.filtersModel?.features = ref.watch(
+        arg.features = ref.watch(
             creditCardsFilterAdditionalConditionsFromSelectProductPageStateProvider);
-        arg.filtersModel?.creditLimit = ref.watch(
+        arg.creditLimit = ref.watch(
             creditCardsFilterCreditLimitFromSelectProductPageStateProvider);
-        arg.filtersModel!.sort =
+        arg.sort =
             ref.watch(sortFromSelectProductPageStateProvider);
         break;
       case 'homePage':
-        arg.filtersModel!.sort = ref.watch(sortFromHomePageStateProvider);
-        arg.filtersModel?.noPercentPeriod = ref
+        arg.sort = ref.watch(sortFromHomePageStateProvider);
+        arg.noPercentPeriod = ref
             .watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider);
-        arg.filtersModel?.percents =
+        arg.percents =
             ref.watch(creditCardsFilterPercentsFromHomePageStateProvider);
-        arg.filtersModel?.features = ref.watch(
+        arg.features = ref.watch(
             creditCardsFilterAdditionalConditionsFromHomePageStateProvider);
-        arg.filtersModel?.creditLimit =
+        arg.creditLimit =
             ref.watch(creditCardsFilterCreditLimitFromHomePageStateProvider);
         ///если открыли со страницы банков то единственный фильтр это банк который выбрали
       case 'allBanksPage':
@@ -57,58 +57,58 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
     productTypeWithQuery += '?fetch=10&page=1';
 
     ///фильтр по банкам
-    if (arg.filtersModel!.banks!.isNotEmpty) {
-      for (int i = 0; i < arg.filtersModel!.banks!.length; i++) {
-        productTypeWithQuery += '&bank_details.bank_name=${arg.filtersModel?.banks?[i]}';
+    if (arg.banks !=null) {
+      for (int i = 0; i < arg.banks!.length; i++) {
+        productTypeWithQuery += '&bank_details.bank_name=${arg.banks?[i]}';
       }
     }
 
     ///фильтр по безпроцентному периоду
-    if (arg.filtersModel!.noPercentPeriod != null) {
-      if (arg.filtersModel!.noPercentPeriod == 'от 30 дней') {
+    if (arg.noPercentPeriod != null) {
+      if (arg.noPercentPeriod == 'от 30 дней') {
         productTypeWithQuery += '&no_percent_period%24gte=30';
-      } else if (arg.filtersModel!.noPercentPeriod == 'от 60 дней') {
+      } else if (arg.noPercentPeriod == 'от 60 дней') {
         productTypeWithQuery += '&no_percent_period%24gte=60';
-      } else if (arg.filtersModel!.noPercentPeriod == 'от 90 дней') {
+      } else if (arg.noPercentPeriod == 'от 90 дней') {
         productTypeWithQuery += '&no_percent_period%24gte=90';
-      } else if (arg.filtersModel!.noPercentPeriod == 'от 120 дней') {
+      } else if (arg.noPercentPeriod == 'от 120 дней') {
         productTypeWithQuery += '&no_percent_period%24gte=120';
-      } else if (arg.filtersModel!.noPercentPeriod == 'от 200 дней') {
+      } else if (arg.noPercentPeriod == 'от 200 дней') {
         productTypeWithQuery += '&no_percent_period%24gte=200';
       }
     }
 
     ///фильтр про ставке
-    if (arg.filtersModel!.percents != 0) {
+    if (arg.percents != 0) {
       ///ищем кредитки у которых макс процент находится в диапазоне min - max
       productTypeWithQuery +=
-          '&min_percent%24lte=${arg.filtersModel!.percents}&max_percent%24gte=${arg.filtersModel!.percents}';
+          '&min_percent%24lte=${arg.percents}&max_percent%24gte=${arg.percents}';
     }
 
     ///фильтр по кредитному лимиту
-    if (arg.filtersModel?.creditLimit != null) {
-      productTypeWithQuery += '&credit_limit%24gte=${arg.filtersModel?.creditLimit}';
+    if (arg.creditLimit != null) {
+      productTypeWithQuery += '&credit_limit%24gte=${arg.creditLimit}';
     }
 
     ///фильтр по фичам
-    if (arg.filtersModel!.features != null) {
-      for (int i = 0; i < arg.filtersModel!.features!.length; i++) {
-        productTypeWithQuery += '&features=${arg.filtersModel?.features?[i]}';
+    if (arg.features != null) {
+      for (int i = 0; i < arg.features!.length; i++) {
+        productTypeWithQuery += '&features=${arg.features?[i]}';
       }
     }
 
     ///сортировка
-    if (arg.filtersModel!.sort != '') {
-      if (arg.filtersModel!.sort == 'По льготному периоду') {
+    if (arg.sort != '') {
+      if (arg.sort == 'По льготному периоду') {
         productTypeWithQuery += '&sort\$no_percent_period=-1';
-      } else if (arg.filtersModel!.sort == 'По лимиту') {
+      } else if (arg.sort == 'По лимиту') {
         productTypeWithQuery += '&sort\$credit_limit=-1';
-      } else if (arg.filtersModel!.sort == 'По ставке') {
+      } else if (arg.sort == 'По ставке') {
         productTypeWithQuery += '&sort\$max_percent=1';
       }
     }
 
-    arg.page = '1';
+
     return await creditCardsRepo.fetch(productTypeWithQuery, ref);
   }
 }

@@ -36,18 +36,25 @@ class _BankProductsListWidgetState
   Widget listOfProducts() {
     if (widget.basicApiPageSettingsModel.productTypeUrl == 'debit_cards') {
       return DebitCardsListWidget(
-          basicApiPageSettingsModel: widget.basicApiPageSettingsModel, itemsCount: widget.itemsCount,);
+        basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
+        itemsCount: widget.itemsCount,
+      );
     } else if (widget.basicApiPageSettingsModel.productTypeUrl ==
         'credit_cards') {
       return CreditCardsListWidget(
-        basicApiPageSettingsModel: widget.basicApiPageSettingsModel,itemsCount: widget.itemsCount,
+        basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
+        itemsCount: widget.itemsCount,
       );
-    } else if (widget.basicApiPageSettingsModel.productTypeUrl ==
-        'zaimy') {
+    } else if (widget.basicApiPageSettingsModel.productTypeUrl == 'zaimy') {
       return ZaimyListWidget(
-          basicApiPageSettingsModel: widget.basicApiPageSettingsModel,itemsCount: widget.itemsCount,);
-    }else{
-      return OnErrorWidget(error: NothingFoundException().message, onGoBackButtonTap: (){}, onRefreshButtonTap: (){});
+        basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
+        itemsCount: widget.itemsCount,
+      );
+    } else {
+      return OnErrorWidget(
+          error: NothingFoundException().message,
+          onGoBackButtonTap: () {},
+          onRefreshButtonTap: () {});
     }
   }
 

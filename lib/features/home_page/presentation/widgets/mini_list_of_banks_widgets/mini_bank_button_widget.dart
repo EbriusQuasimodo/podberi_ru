@@ -35,11 +35,9 @@ class MiniBankButtonWidget extends ConsumerWidget {
               productTypeUrl: ProductTypeEnum.debit_cards.name,
               pageName: 'Каталог',
               whereFrom: 'homePageBanks',
-              filtersModel: FiltersModel(
+
                 banks: [banksModel.bankName],
-                paySystem: [],
-                cashBack: [],
-              ),
+
             ),
           );
         },

@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.4.5 #стейт менеджер и управление темой
-  riverpod_generator: ^2.3.5 #генератор кода
   riverpod_annotation: ^2.3.0
 
   isar: ^3.1.0+1 #локальное хранилище
@@ -44,7 +43,7 @@ dev_dependencies:
   json_serializable: 6.6.2
   freezed: ^2.4.5 # генерация кода
   isar_generator: ^3.1.0+1
-
+  riverpod_generator: ^2.3.5 #генератор кода
   flutter_lints: ^3.0.0
 
 flutter:

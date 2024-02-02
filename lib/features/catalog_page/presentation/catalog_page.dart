@@ -34,84 +34,87 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
           return ref.refresh(
               debitCardsControllerProvider(widget.basicApiPageSettingsModel));
         },
-        child: CustomScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              scrolledUnderElevation: 0,
-              backgroundColor: ThemeApp.mainWhite,
-              pinned: true,
-              title: Text(widget.basicApiPageSettingsModel.pageName!),
-              leading: IconButton(
-                onPressed: () {
-                  if (widget.basicApiPageSettingsModel.whereFrom ==
-                      AppRoute.homePage.name) {
-                    ref
-                        .watch(sortFromHomePageStateProvider
-                        .notifier)
-                        .state ='По умолчанию';
-                  } else if (widget
-                      .basicApiPageSettingsModel.whereFrom ==
-                      AppRoute.selectProductPage.name) {
-                    ref
-                        .watch(
-                        sortFromSelectProductPageStateProvider
-                            .notifier)
-                        .state = 'По умолчанию';
-                  }
-                  ref.read(goRouterProvider).pop();
-                },
-                icon: const Icon(Icons.arrow_back_ios),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                margin: const EdgeInsets.only(top: 2),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: ThemeApp.mainWhite,
+        child: SizedBox(
+         // height: MediaQuery.of(context).size.height - 72,
+          child: CustomScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                scrolledUnderElevation: 0,
+                backgroundColor: ThemeApp.mainWhite,
+                pinned: true,
+                title: Text(widget.basicApiPageSettingsModel.pageName!),
+                leading: IconButton(
+                  onPressed: () {
+                    if (widget.basicApiPageSettingsModel.whereFrom ==
+                        AppRoute.homePage.name) {
+                      ref
+                          .watch(sortFromHomePageStateProvider
+                          .notifier)
+                          .state ='По умолчанию';
+                    } else if (widget
+                        .basicApiPageSettingsModel.whereFrom ==
+                        AppRoute.selectProductPage.name) {
+                      ref
+                          .watch(
+                          sortFromSelectProductPageStateProvider
+                              .notifier)
+                          .state = 'По умолчанию';
+                    }
+                    ref.read(goRouterProvider).pop();
+                  },
+                  icon: const Icon(Icons.arrow_back_ios),
                 ),
-
-                ///if came from all banks then show bank and product type widget else show sort and filter widget
-                child: widget.basicApiPageSettingsModel.whereFrom ==
-                            AppRoute.allBanksPage.name ||
-                        widget.basicApiPageSettingsModel.whereFrom ==
-                            'homePageBanks'
-                    ? BankAndProductTypeWidget(
-                        basicApiPageSettingsModel:
-                            widget.basicApiPageSettingsModel,
-                        onTap: () {
-                          setState(() {});
-                        },
-                      )
-                    : SortAndFilterWidget(
-                  basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-                        onSortButtonTap: () {
-                          showModalBottomSheet(
-                              useRootNavigator:true,
-                              constraints: const BoxConstraints(minWidth: double.infinity,maxHeight: 360),
-                              context: context,
-                              builder: (context) {
-                                return LoadSortByProductType(basicApiPageSettingsModel: widget.basicApiPageSettingsModel);
-                              });
-
-                        },
-                        onFiltersButtonTap: () {
-                          Navigator.of(context, rootNavigator: true).push(
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                            return FiltersPage(
-                              basicApiPageSettingsModel:
-                                  widget.basicApiPageSettingsModel,
-                            );
-                          }));
-                        },
-                      ),
               ),
-            ),
-            LoadProductListByProductType(
-                basicApiPageSettingsModel: widget.basicApiPageSettingsModel),
-          ],
+              SliverToBoxAdapter(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 2),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ThemeApp.mainWhite,
+                  ),
+
+                  ///if came from all banks then show bank and product type widget else show sort and filter widget
+                  child: widget.basicApiPageSettingsModel.whereFrom ==
+                              AppRoute.allBanksPage.name ||
+                          widget.basicApiPageSettingsModel.whereFrom ==
+                              'homePageBanks'
+                      ? BankAndProductTypeWidget(
+                          basicApiPageSettingsModel:
+                              widget.basicApiPageSettingsModel,
+                          onTap: () {
+                            setState(() {});
+                          },
+                        )
+                      : SortAndFilterWidget(
+                    basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
+                          onSortButtonTap: () {
+                            showModalBottomSheet(
+                                useRootNavigator:true,
+                                constraints: const BoxConstraints(minWidth: double.infinity,maxHeight: 360),
+                                context: context,
+                                builder: (context) {
+                                  return LoadSortByProductType(basicApiPageSettingsModel: widget.basicApiPageSettingsModel);
+                                });
+
+                          },
+                          onFiltersButtonTap: () {
+                            Navigator.of(context, rootNavigator: true).push(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                              return FiltersPage(
+                                basicApiPageSettingsModel:
+                                    widget.basicApiPageSettingsModel,
+                              );
+                            }));
+                          },
+                        ),
+                ),
+              ),
+              LoadProductListByProductType(
+                  basicApiPageSettingsModel: widget.basicApiPageSettingsModel),
+            ],
+          ),
         ),
       ),
     );

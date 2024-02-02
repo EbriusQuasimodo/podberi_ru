@@ -11,6 +11,13 @@ import 'package:podberi_ru/features/home_page/presentation/home_page_controller.
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+final debitCardsPageFromHomePageStateProvider = StateProvider.autoDispose<int>((ref) {
+  return 1;
+});
+final debitCardsPageFromSelectProductPageStateProvider = StateProvider.autoDispose<int>((ref) {
+  return 1;
+});
+
 ///bank products controller. used for fetch list of products. have required params (product type) which used in [DebitCardsRepository]
 class DebitCardsController extends AutoDisposeFamilyAsyncNotifier<
     DebitCardsModel, BasicApiPageSettingsModel> {
@@ -24,24 +31,25 @@ class DebitCardsController extends AutoDisposeFamilyAsyncNotifier<
     ///(из выбора категории продука, с главной страницы или со страницы всех банков)
     switch (arg.whereFrom) {
       case 'selectProductPage':
-        arg.filtersModel?.banks =
+
+        arg.banks =
             ref.watch(debitCardsFilterBanksFromSelectProductPageStateProvider);
-        arg.filtersModel!.paySystem = ref
+        arg.paySystem = ref
             .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider);
         // filterCashBack =
         //     ref.watch(debitCardsFilterCashBackFromSelectProductPageStateProvider);
-        arg.filtersModel?.sort = ref.watch(sortFromSelectProductPageStateProvider);
-        arg.filtersModel?.features = ref.watch(
+        arg.sort = ref.watch(sortFromSelectProductPageStateProvider);
+        arg.features = ref.watch(
             debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider);
         break;
       case 'homePage':
-        arg.filtersModel?.sort = ref.watch(sortFromHomePageStateProvider);
-        arg.filtersModel?.banks =
+        arg.sort = ref.watch(sortFromHomePageStateProvider);
+        arg.banks =
             ref.watch(debitCardsFilterBanksFromHomePageStateProvider);
-        arg.filtersModel!.paySystem =
+        arg.paySystem =
             ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider);
         // filterCashBack = ref.watch(debitCardsFilterCashBackFromHomePageStateProvider);
-        arg.filtersModel?.features = ref.watch(
+        arg.features = ref.watch(
             debitCardsFilterAdditionalConditionsFromHomePageStateProvider);
       case "allBanksPage":
         productTypeWithQuery = ref.read(productTypeUrlFromAllBanksStateProvider);
@@ -49,13 +57,13 @@ class DebitCardsController extends AutoDisposeFamilyAsyncNotifier<
       case 'homePageBanks':
         productTypeWithQuery = ref.read(productTypeUrlFromHomeBanksStateProvider);
     }
-    productTypeWithQuery += '?fetch=10&page=1';
+    productTypeWithQuery += '?fetch=10&page=${arg.page}';
     final debitCardsRepo = ref.read(debitCardsRepositoryProvider);
 
     ///если фильтр по банкам не пустой
-    if (arg.filtersModel!.banks!.isNotEmpty) {
-      for (int i = 0; i < arg.filtersModel!.banks!.length; i++) {
-        productTypeWithQuery += '&bank_details.bank_name=${arg.filtersModel?.banks?[i]}';
+    if (arg.banks !=null) {
+      for (int i = 0; i < arg.banks!.length; i++) {
+        productTypeWithQuery += '&bank_details.bank_name=${arg.banks?[i]}';
       }
     }
 
@@ -72,27 +80,27 @@ class DebitCardsController extends AutoDisposeFamilyAsyncNotifier<
     // } else {
     //   arg.filtersModel?.cashBack?.clear();
     // }
-    if (arg.filtersModel!.paySystem!.isNotEmpty &&
-        !arg.filtersModel!.paySystem!.contains('Не важно')) {
-      for (int i = 0; i < arg.filtersModel!.paySystem!.length; i++) {
-        productTypeWithQuery += '&payment_system=${arg.filtersModel?.paySystem?[i]}';
+    if (arg.paySystem!.isNotEmpty &&
+        !arg.paySystem!.contains('Не важно')) {
+      for (int i = 0; i < arg.paySystem!.length; i++) {
+        productTypeWithQuery += '&payment_system=${arg.paySystem?[i]}';
       }
     }
-    if (arg.filtersModel!.features != null) {
-      for (int i = 0; i < arg.filtersModel!.features!.length; i++) {
-        productTypeWithQuery += '&features=${arg.filtersModel?.features?[i]}';
+    if (arg.features != null) {
+      for (int i = 0; i < arg.features!.length; i++) {
+        productTypeWithQuery += '&features=${arg.features?[i]}';
       }
     }
 
     ///если сортировка  не пустая
-    if (arg.filtersModel?.sort != '') {
-      if (arg.filtersModel?.sort == 'По кэшбеку') {
+    if (arg.sort != '') {
+      if (arg.sort == 'По кэшбеку') {
         productTypeWithQuery += '&sort\$max_cashback=-1';
-      } else if (arg.filtersModel?.sort == 'По обслуживанию') {
+      } else if (arg.sort == 'По обслуживанию') {
         productTypeWithQuery += '&sort\$max_service=1';
       }
     }
-    arg.page = '1';
+    print(productTypeWithQuery);
     return await debitCardsRepo.fetch(productTypeWithQuery, ref);
   }
 }

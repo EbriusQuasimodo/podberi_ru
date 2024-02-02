@@ -75,11 +75,7 @@ class BestCreditCardsWidget extends ConsumerWidget {
                               productTypeUrl: ProductTypeEnum.credit_cards.name,
                               pageName: 'Кредитные карты',
                               whereFrom: AppRoute.homePage.name,
-                              filtersModel: FiltersModel(
-                                banks: [],
-                                paySystem: [],
-                                cashBack: [],
-                              ),
+
                             ),);
                       },
                       child: const Text(

@@ -6,27 +6,29 @@ import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
+import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/catalog_page/presentation/controllers/page_controllers/debit_cards_controller.dart';
 
 class DebitCardWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
-  final ListDebitCardsModel? productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
+  final ListDebitCardsModel productInfo;
   final VoidCallback onTap;
-
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
   DebitCardWidgetWithButtons({
     super.key,
     required this.productRating,
-    this.productInfo,
     required this.basicApiPageSettingsModel,
     required this.onTap,
+    required this.productInfo,
   });
 
   @override
@@ -39,10 +41,14 @@ class _DebitCardWidgetWithButtonsState
   List<Widget> list() {
     var list = <Widget>[];
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0;
+    widget.productInfo.features.length <= 4
+            ? i < widget.productInfo.features.length
+            : i < 4;
+        i++) {
       list.add(
         Text(
-          "${widget.productInfo!.features[i]}",
+          "${widget.productInfo.features[i]}",
           textAlign: TextAlign.left,
           style: const TextStyle(
               color: ThemeApp.mainWhite,
@@ -56,14 +62,13 @@ class _DebitCardWidgetWithButtonsState
   }
 
   final isar = Isar.getInstance();
-
   @override
   Widget build(BuildContext context) {
-    return Container(
+      return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color(int.parse(
-           '0xff${widget.productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
+            '0xff${widget.productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
       ),
       width: 280,
       height: 190,
@@ -76,7 +81,8 @@ class _DebitCardWidgetWithButtonsState
             top: 16,
             right: 16,
             child: Container(
-              height: 50,width: 50,
+              height: 50,
+              width: 50,
               padding:
                   const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
               decoration: BoxDecoration(
@@ -85,8 +91,8 @@ class _DebitCardWidgetWithButtonsState
               ),
               child: Image.network(
                 '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
-                errorBuilder: (BuildContext context,
-                    Object exception, StackTrace? stackTrace) {
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
                   return SvgPicture.asset(
                     'assets/icons/photo_not_found.svg',
                   );
