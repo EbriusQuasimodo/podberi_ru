@@ -2,21 +2,23 @@ import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/all_banks_page/domain/pagination_params_model.dart';
+import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class ShowMoreBanksPage extends ConsumerStatefulWidget {
-  final List<BankListDetailsModel> banksList;
+  final int itemCount;
   final AutoDisposeStateProvider<List<String>> providerName;
   final List<String> filters;
   final VoidCallback onTapTrashButton;
   final VoidCallback onTapSaveButton;
+
   ///страница с полным списком всех банков в фильтрах
   ShowMoreBanksPage({
     super.key,
     required this.filters,
-    required this.banksList,
+    required this.itemCount,
     required this.onTapSaveButton,
     required this.onTapTrashButton,
     required this.providerName,
@@ -27,6 +29,8 @@ class ShowMoreBanksPage extends ConsumerStatefulWidget {
 }
 
 class _ShowMorePageState extends ConsumerState<ShowMoreBanksPage> {
+  static const pageSize = 20;
+  int page = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +71,7 @@ class _ShowMorePageState extends ConsumerState<ShowMoreBanksPage> {
                     borderRadius: BorderRadius.circular(20),
                     color: ThemeApp.mainWhite,
                   ),
-                  child:  const Padding(
+                  child: const Padding(
                     padding: EdgeInsets.only(top: 30, right: 15, left: 15),
                     child: Text(
                       'Банк',
@@ -85,64 +89,85 @@ class _ShowMorePageState extends ConsumerState<ShowMoreBanksPage> {
                       top: 64, right: 15, left: 15, bottom: 9),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
-                      childCount: widget.banksList.length,
-                      (context, index) => Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: ThemeApp.grey,
-                            borderRadius: BorderRadius.circular(14)),
-                        margin: const EdgeInsets.only(bottom: 6),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(12),
-                            onTap: () {
-                              setState(() {
-                                if (!widget.filters.contains(widget.banksList[index].bankName)) {
-                                  //widget.filters.clear();
-                                  widget.filters.add(widget.banksList[index].bankName);
-                                } else {
-                                 widget.filters.removeWhere((String name) {
-                                    return name == widget.banksList[index].bankName;
+                        childCount: widget.itemCount, (context, index) {
+                      page = index ~/ pageSize + 1;
+                      final indexInPage = index % pageSize;
+                      return ref
+                          .watch(allBanksControllerProvider(
+                              PaginationParamsModel(fetch:pageSize, page: page)))
+                          .when(
+                        data: (allBanks) {
+                          return Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: ThemeApp.grey,
+                                borderRadius: BorderRadius.circular(14)),
+                            margin: const EdgeInsets.only(bottom: 6),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(12),
+                                onTap: () {
+                                  setState(() {
+                                    if (!widget.filters.contains(
+                                        allBanks.items[indexInPage].bankName)) {
+                                      //widget.filters.clear();
+                                      widget.filters
+                                          .add(allBanks.items[indexInPage].bankName);
+                                    } else {
+                                      widget.filters.removeWhere((String name) {
+                                        return name ==
+                                            allBanks.items[indexInPage].bankName;
+                                      });
+                                    }
+                                    //ref.watch(widget.providerName.notifier).state = widget.filters;
                                   });
-                                }
-                                //ref.watch(widget.providerName.notifier).state = widget.filters;
-                              });
-
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Text(widget.banksList[index].bankName,
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          color: ThemeApp.backgroundBlack)),
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Text(
+                                          allBanks.items[indexInPage].bankName,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: ThemeApp.backgroundBlack)),
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: ThemeApp.mainWhite,
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      padding: const EdgeInsets.all(5),
+                                      margin: const EdgeInsets.only(
+                                          right: 15, top: 15, bottom: 15),
+                                      child: SvgPicture.asset(
+                                        'assets/icons/filer_check_icon.svg',
+                                        height: 16,
+                                        width: 16,
+                                        color: widget.filters.contains(
+                                                allBanks.items[indexInPage].bankName)
+                                            ? ThemeApp.mainBlue
+                                            : Colors.transparent,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: ThemeApp.mainWhite,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.all(5),
-                                  margin: const EdgeInsets.only(
-                                      right: 15, top: 15, bottom: 15),
-                                  child: SvgPicture.asset(
-                                    'assets/icons/filer_check_icon.svg',
-                                    height: 16,
-                                    width: 16,
-                                    color: widget.filters.contains(widget.banksList[index].bankName)
-                                        ? ThemeApp.mainBlue
-                                        : Colors.transparent,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
+                          );
+                        },
+                        error: (error, _) {
+                          return SizedBox.shrink();
+                        },
+                        loading: () {
+                          return SizedBox.shrink();
+                        },
+                      );
+                    }),
                   ),
                 ),
               ),
@@ -197,7 +222,6 @@ class _ShowMorePageState extends ConsumerState<ShowMoreBanksPage> {
                     setState(() {
                       widget.filters.clear();
                     });
-
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(13),

@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/features/all_banks_page/data/all_banks_data_source.dart';
 import 'package:podberi_ru/features/all_banks_page/data/all_banks_repository.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/all_banks_page/domain/pagination_params_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 final bankNameFromAllBanksStateProvider = StateProvider.autoDispose<String>((ref) {
@@ -16,18 +16,18 @@ final productTypeUrlFromAllBanksStateProvider = StateProvider.autoDispose<String
   return '';
 });
 
-class AllBanksController extends AutoDisposeAsyncNotifier<BanksDetailsModel> {
+class AllBanksController extends AutoDisposeFamilyAsyncNotifier<BanksDetailsModel, PaginationParamsModel> {
   AllBanksController();
   @override
-  FutureOr<BanksDetailsModel> build() async {
+  FutureOr<BanksDetailsModel> build(PaginationParamsModel arg) async {
     final eventRepo = ref.read(allBanksRepositoryProvider);
-    return await eventRepo.fetch(ref);
+    return await eventRepo.fetch(arg.page, arg.fetch);
   }
 }
 
 ///контроллер для страницы всех банков, вызывает получение данных о всех банках в [AllBanksGetDataSource]
 ///используется в [MiniListOfBanksWidget], [AllBanksPage] и [FiltersPage]
 final allBanksControllerProvider =
-AutoDisposeAsyncNotifierProvider<AllBanksController, BanksDetailsModel>(
+AutoDisposeAsyncNotifierProvider.family<AllBanksController, BanksDetailsModel, PaginationParamsModel>(
   AllBanksController.new,
 );

@@ -5,6 +5,7 @@ import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/error_widgets/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/all_banks_page/domain/pagination_params_model.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/widgets/all_banks_list_widget.dart';
 import 'package:podberi_ru/features/catalog_page/shared_presentation/catalog_page.dart';
@@ -18,7 +19,7 @@ class AllBanksPage extends ConsumerWidget {
     return Scaffold(
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,
-        onRefresh: () => ref.refresh(allBanksControllerProvider.future),
+        onRefresh: () => ref.refresh(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1)).future),
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -33,10 +34,10 @@ class AllBanksPage extends ConsumerWidget {
                 icon: const Icon(Icons.arrow_back_ios),
               ),
             ),
-            ref.watch(allBanksControllerProvider).when(
+            ref.watch(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1))).when(
               data: (allBanks) {
                 return AllBanksListWidget(
-                  allBanks: allBanks.items,
+                  itemCount: allBanks.itemsCount,
                 );
               },
               error: (error, _) {
@@ -49,7 +50,7 @@ class AllBanksPage extends ConsumerWidget {
                         ref.watch(goRouterProvider).pop();
                       },
                       onRefreshButtonTap: () {
-                        ref.refresh(allBanksControllerProvider);
+                        ref.refresh(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1)));
                       }),
                 );
               },

@@ -29,6 +29,7 @@ import 'features/details_page/debit_cards/data/debit_cards_details_data_source.d
 import 'features/details_page/zaimy/data/zaimy_details_data_source.dart';
 import 'features/favorites_page/credit_cards/data/favorites_credit_cards_data_source.dart';
 import 'features/favorites_page/debit_cards/data/favorites_debit_cards_data_source.dart';
+import 'features/home_page/data/best_banks_data/best_banks_data_source.dart';
 import 'features/home_page/data/best_credit_cards_data/best_credit_cards_data_source.dart';
 import 'features/home_page/data/best_debit_cards_data/best_debit_cards_data_source.dart';
 import 'internal/app.dart';
@@ -74,6 +75,7 @@ void main() async {
   GetIt.I.registerLazySingleton(() => BestCreditCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => BestDebitCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => AllBanksGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => BestBanksGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => FavoritesDebitCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => FavoritesCreditCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => FavoritesZaimyGetDataSource(dio: dio));

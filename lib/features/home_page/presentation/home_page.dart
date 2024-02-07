@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_credit_cards_widget/best_credit_cards_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_debit_cards_widget/best_debit_cards_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/blog_widgets/blog_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/promocodes_ads_widgets/promocodes_ads_widget.dart';
 
+import 'controllers/best_banks_controller.dart';
 import 'controllers/best_offer_controller.dart';
 import 'controllers/best_credit_cards_controller.dart';
 import 'controllers/best_debit_cards_controller.dart';
@@ -35,7 +35,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ref.refresh(bestOfferControllerProvider.future);
           ref.refresh(bestCreditCardsControllerProvider.future);
           ref.refresh(bestDebitCardsControllerProvider.future);
-          ref.refresh(allBanksControllerProvider.future);
+          ref.refresh(bestBanksControllerProvider.future);
         },
         child: CustomScrollView(
           slivers: [
@@ -96,7 +96,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ));
               },
             ),
-            ref.watch(allBanksControllerProvider).when(
+            ref.watch(bestBanksControllerProvider).when(
               data: (banksModel) {
                 return MiniListOfBanksWidget(
                   banksModel: banksModel.items,

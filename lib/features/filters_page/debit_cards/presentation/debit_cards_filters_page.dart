@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/all_banks_page/domain/pagination_params_model.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/choice_chip_with_many_choice_item.dart';
@@ -96,7 +97,7 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: () => ref.refresh(allBanksControllerProvider.future),
+        onRefresh: () => ref.refresh(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1)).future),
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -157,7 +158,7 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                         //   height: 1,
                         //   width: double.infinity,
                         // ),
-                        ref.watch(allBanksControllerProvider).when(
+                        ref.watch(allBanksControllerProvider(PaginationParamsModel(fetch: 6, page: 1))).when(
                           data: (allBanks) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +185,7 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                                                     'selectProductPage'
                                                 ? debitCardsFilterBanksFromSelectProductPageStateProvider
                                                 : debitCardsFilterBanksFromHomePageStateProvider,
-                                            banksList: allBanks.items);
+                                            itemCount: allBanks.itemsCount);
                                       }));
                                     },
                                     child: const Row(
