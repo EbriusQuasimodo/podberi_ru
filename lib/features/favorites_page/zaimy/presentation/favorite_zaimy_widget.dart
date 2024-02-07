@@ -6,6 +6,7 @@ import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
@@ -121,6 +122,8 @@ class _FavoriteZaimyWidget
                 onTap: () {
                   ref.watch(goRouterProvider).push(RouteConstants.details,
                       extra: BasicApiPageSettingsModel(
+                          page: 1,
+                          filters: FiltersModel(),
                           productTypeUrl:
                           widget.basicApiPageSettingsModel.productTypeUrl,
                           pageName: widget.basicApiPageSettingsModel.pageName,

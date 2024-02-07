@@ -7,7 +7,8 @@ import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/product_type_card.dart';
+import 'package:podberi_ru/features/catalog_page/shared_presentation/widgets/product_type_card.dart';
+import 'package:podberi_ru/features/filters_page/credit_cards/presentation/credit_cards_filters_page_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class SelectProductTypePage extends ConsumerWidget {
@@ -67,6 +68,8 @@ class SelectProductTypePage extends ConsumerWidget {
                               ref.watch(goRouterProvider).push(
                                     RouteConstants.catalog,
                                     extra: BasicApiPageSettingsModel(
+                                      filters: FiltersModel(),
+                                      page: 1,
                                       productTypeUrl:
                                           ProductTypeEnum.debit_cards.name,
                                       pageName: 'Дебетовые карты',
@@ -82,9 +85,12 @@ class SelectProductTypePage extends ConsumerWidget {
                             imageAsset: 'assets/images/credit_card_image.png',
                             productName: 'Кредитные карты',
                             onTap: () {
+                              print(ref.watch(creditCardsFilterPercentsFromSelectProductPageStateProvider));
                               ref.watch(goRouterProvider).push(
                                     RouteConstants.catalog,
                                     extra: BasicApiPageSettingsModel(
+                                      filters: FiltersModel(),
+                                      page: 1,
                                       productTypeUrl:
                                           ProductTypeEnum.credit_cards.name,
                                       pageName: 'Кредитные карты',
@@ -104,6 +110,8 @@ class SelectProductTypePage extends ConsumerWidget {
                               ref.watch(goRouterProvider).push(
                                     RouteConstants.catalog,
                                     extra: BasicApiPageSettingsModel(
+                                      filters: FiltersModel(),
+                                      page: 1,
                                       productTypeUrl:
                                           ProductTypeEnum.zaimy.name,
                                       pageName: 'Микрозаймы',
@@ -121,8 +129,11 @@ class SelectProductTypePage extends ConsumerWidget {
                             productName: 'РКО',
                             onTap: () {
                               ref.watch(goRouterProvider).push(
+
                                     RouteConstants.catalog,
                                     extra: BasicApiPageSettingsModel(
+                                      filters: FiltersModel(),
+                                      page: 1,
                                       productTypeUrl: ProductTypeEnum.rko.name,
                                       pageName: 'РКО',
                                       whereFrom:

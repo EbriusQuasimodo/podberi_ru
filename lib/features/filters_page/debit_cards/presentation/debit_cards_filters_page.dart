@@ -5,7 +5,7 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/page_controllers/debit_cards_controller.dart';
+import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/choice_chip_with_many_choice_item.dart';
 import 'package:podberi_ru/features/filters_page/debit_cards/presentation/widgets/show_more_banks_page.dart';
 import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/save_button_widget.dart';
@@ -66,127 +66,25 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
 
   @override
   void didChangeDependencies() {
-    switch (widget.basicApiPageSettingsModel.whereFrom) {
-      case 'homePage':
-        selectedBanks = ref
-            .watch(debitCardsFilterBanksFromHomePageStateProvider.notifier)
-            .state;
-
-        // if (ref
-        //     .watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier)
-        //     .state
-        //     .isNotEmpty) {
-        //   selectedCashBack = ref.watch(debitCardsFilterCashBackFromHomePageStateProvider);
-        // }
-
-        selectedPaySystem =
-            ref.watch(debitCardsFilterPaySystemFromHomePageStateProvider);
-
-        selectedAdditionalConditions = ref.watch(
-            debitCardsFilterAdditionalConditionsFromHomePageStateProvider);
-
-        break;
-      case 'selectProductPage':
-        selectedBanks = ref
-            .watch(debitCardsFilterBanksFromSelectProductPageStateProvider
-                .notifier)
-            .state;
-
-        // if (ref
-        //     .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider.notifier)
-        //     .state
-        //     .isNotEmpty) {
-        //   selectedCashBack =
-        //       ref.watch(debitCardsFilterCashBackFromSelectProductPageStateProvider);
-        // }
-
-        selectedPaySystem = ref
-            .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider);
-
-        selectedAdditionalConditions = ref.watch(
-            debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider);
-
-        break;
-    }
+    selectedAdditionalConditions=widget.basicApiPageSettingsModel.filters.features ??[];
+    selectedBanks= widget.basicApiPageSettingsModel.filters.banks??[];
+    selectedPaySystem= widget.basicApiPageSettingsModel.filters.paySystem??[];
     super.didChangeDependencies();
   }
 
   void saveFilters() {
     setState(() {
-      if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
-        ref
-            .watch(debitCardsFilterBanksFromHomePageStateProvider.notifier)
-            .state = selectedBanks;
-        // ref.watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier).state =
-        //     selectedCashBack;
-
-        ref
-            .watch(debitCardsFilterPaySystemFromHomePageStateProvider.notifier)
-            .state = selectedPaySystem;
-        ref
-            .watch(debitCardsFilterAdditionalConditionsFromHomePageStateProvider
-                .notifier)
-            .state = selectedAdditionalConditions;
-      }
-      if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
-        ref
-            .watch(debitCardsFilterBanksFromSelectProductPageStateProvider
-                .notifier)
-            .state = selectedBanks;
-
-        // ref
-        //     .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider.notifier)
-        //     .state = selectedCashBack;
-
-        ref
-            .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider
-                .notifier)
-            .state = selectedPaySystem;
-        ref
-            .watch(
-                debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider
-                    .notifier)
-            .state = selectedAdditionalConditions;
-      }
+      widget.basicApiPageSettingsModel.filters.features=selectedAdditionalConditions;
+      widget.basicApiPageSettingsModel.filters.banks=selectedBanks;
+      widget.basicApiPageSettingsModel.filters.paySystem=selectedPaySystem;
     });
   }
 
   void clearFilters() {
     setState(() {
-      if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
-        ref
-            .watch(debitCardsFilterBanksFromHomePageStateProvider.notifier)
-            .state = [];
-        ref
-            .watch(debitCardsFilterCashBackFromHomePageStateProvider.notifier)
-            .state = [];
-        ref
-            .watch(debitCardsFilterPaySystemFromHomePageStateProvider.notifier)
-            .state = [];
-        ref
-            .watch(debitCardsFilterAdditionalConditionsFromHomePageStateProvider
-                .notifier)
-            .state = [];
-      }
-      if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
-        ref
-            .watch(debitCardsFilterBanksFromSelectProductPageStateProvider
-                .notifier)
-            .state = [];
-        ref
-            .watch(debitCardsFilterCashBackFromSelectProductPageStateProvider
-                .notifier)
-            .state = [];
-        ref
-            .watch(debitCardsFilterPaySystemFromSelectProductPageStateProvider
-                .notifier)
-            .state = [];
-        ref
-            .watch(
-                debitCardsFilterAdditionalConditionsFromSelectProductPageStateProvider
-                    .notifier)
-            .state = [];
-      }
+      widget.basicApiPageSettingsModel.filters.features?.clear();
+      widget.basicApiPageSettingsModel.filters.banks?.clear();
+      widget.basicApiPageSettingsModel.filters.paySystem?.clear();
       selectedBanks.clear();
       //  selectedCashBack.clear();
       selectedPaySystem.clear();
@@ -207,12 +105,11 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
               pinned: true,
               title: const Text('Фильтры'),
               leading: IconButton(
-                  onPressed: () {
+                  onPressed: ()  {
                     saveFilters();
                     Navigator.of(context).pop();
                     ///костыль благодаря которому обновляется экран дебетовок если выбран фильтр в доп услугах)))
-                    ref.refresh(debitCardsControllerProvider(
-                        widget.basicApiPageSettingsModel));
+                    ref.refresh(debitCardsControllerProvider( widget.basicApiPageSettingsModel));
                   },
                   icon: const Icon(Icons.arrow_back_ios_new)),
             ),

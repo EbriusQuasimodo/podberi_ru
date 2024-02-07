@@ -51,6 +51,8 @@ class BestCreditCardsWidget extends ConsumerWidget {
                             onTap: () {
                               ref.watch(goRouterProvider).push(RouteConstants.details,
                                   extra:BasicApiPageSettingsModel(
+                                      page: 1,
+                                      filters: FiltersModel(),
                                       productTypeUrl: 'credit_cards',
                                       pageName: 'Кредитные карты',
                                       productId: creditCards[index].id,
@@ -72,6 +74,8 @@ class BestCreditCardsWidget extends ConsumerWidget {
                       onTap: () {
                         ref.watch(goRouterProvider).push(RouteConstants.catalog,
                             extra:BasicApiPageSettingsModel(
+                              page: 1,
+                              filters: FiltersModel(),
                               productTypeUrl: ProductTypeEnum.credit_cards.name,
                               pageName: 'Кредитные карты',
                               whereFrom: AppRoute.homePage.name,

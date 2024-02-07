@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
+import 'package:podberi_ru/features/catalog_page/shared_presentation/catalog_page.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_page.dart';
 
 import 'custom_choice_chip_controller.dart';

@@ -29,6 +29,7 @@ class MiniBankButtonWidget extends ConsumerWidget {
           ref.watch(goRouterProvider).push(
             RouteConstants.catalog,
             extra: BasicApiPageSettingsModel(
+              page: 1,
               bankDetailsModel: BankListDetailsModel(
                   logo: banksModel.logo,
                   bankName: banksModel.bankName),
@@ -36,7 +37,7 @@ class MiniBankButtonWidget extends ConsumerWidget {
               pageName: 'Каталог',
               whereFrom: 'homePageBanks',
 
-                banks: [banksModel.bankName],
+                filters: FiltersModel(banks: [banksModel.bankName]),
 
             ),
           );

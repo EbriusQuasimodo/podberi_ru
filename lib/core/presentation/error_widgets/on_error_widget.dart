@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
-import 'package:podberi_ru/core/presentation/custom_error_card_widget.dart';
+import 'package:podberi_ru/core/presentation/error_widgets/custom_error_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class OnErrorWidget extends StatelessWidget {

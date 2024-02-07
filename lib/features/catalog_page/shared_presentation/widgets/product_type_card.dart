@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/select_product_type_page.dart';
 
 class CatalogProductTypeCardWidget extends StatelessWidget {
   final String productName;

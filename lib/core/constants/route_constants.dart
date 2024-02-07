@@ -1,6 +1,5 @@
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/select_product_type_page.dart';
+import 'package:podberi_ru/features/catalog_page/shared_presentation/catalog_page.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_page.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_page.dart';

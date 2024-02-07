@@ -9,7 +9,6 @@ import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widg
 import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/show_more_page.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import 'credit_cards_filters_page_controller.dart';
 
 class CreditCardsFiltersPage extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
@@ -60,200 +59,44 @@ class _CreditCardsFiltersPageState
 
   @override
   void didChangeDependencies() {
-    switch (widget.basicApiPageSettingsModel.whereFrom) {
-      case 'homePage':
-        print(ref
-            .watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider
-                .notifier)
-            .state);
-        selectedNoPercentPeriod.add(ref
-            .watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider
-                .notifier)
-            .state);
-
-        selectedPercents = ref
-            .watch(creditCardsFilterPercentsFromHomePageStateProvider.notifier)
-            .state
-            .toDouble();
-
-        selectedAdditionalConditions = ref
-            .watch(
-                creditCardsFilterAdditionalConditionsFromHomePageStateProvider
-                    .notifier)
-            .state;
-
-        selectedCreditLimit.text = ref
-            .watch(
-                creditCardsFilterCreditLimitFromHomePageStateProvider.notifier)
-            .state
-            .toString();
-
-        break;
-      case 'selectProductPage':
-        selectedNoPercentPeriod.add(ref
-            .watch(
-                creditCardsFilterNoPercentPeriodFromSelectProductPageStateProvider
-                    .notifier)
-            .state);
-
-        selectedPercents = ref
-            .watch(creditCardsFilterPercentsFromSelectProductPageStateProvider
-                .notifier)
-            .state
-            .toDouble();
-
-        selectedAdditionalConditions = ref
-            .watch(
-                creditCardsFilterAdditionalConditionsFromSelectProductPageStateProvider
-                    .notifier)
-            .state;
-
-        selectedCreditLimit.text = ref
-            .watch(
-                creditCardsFilterCreditLimitFromSelectProductPageStateProvider
-                    .notifier)
-            .state
-            .toString();
-
-        break;
-    }
+    selectedPercents=widget.basicApiPageSettingsModel.filters.percents!.toDouble();
+    selectedNoPercentPeriod.add(widget.basicApiPageSettingsModel.filters.noPercentPeriod ?? '');
+    selectedCreditLimit.text=widget.basicApiPageSettingsModel.filters.creditLimit.toString();
+    selectedAdditionalConditions=widget.basicApiPageSettingsModel.filters.features ?? [];
     super.didChangeDependencies();
   }
 
   void saveFilters() {
-    print('sadjkfjklas');
     setState(() {
-      if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
-        if (selectedNoPercentPeriod.isNotEmpty) {
-          ref
-              .watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider
-                  .notifier)
-              .state = selectedNoPercentPeriod.first;
-        } else {
-          ref
-              .watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider
-                  .notifier)
-              .state = '';
-        }
-        if (selectedPercents != 0) {
-          ref
-              .watch(
-                  creditCardsFilterPercentsFromHomePageStateProvider.notifier)
-              .state = selectedPercents.round();
-        } else {
-          ref
-              .watch(
-                  creditCardsFilterPercentsFromHomePageStateProvider.notifier)
-              .state = 0;
-        }
-        if (selectedCreditLimit.text.isNotEmpty) {
-          ref
-              .watch(creditCardsFilterCreditLimitFromHomePageStateProvider
-                  .notifier)
-              .state = int.parse(selectedCreditLimit.text);
-        } else {
-          ref
-              .watch(creditCardsFilterCreditLimitFromHomePageStateProvider
-                  .notifier)
-              .state = 0;
-        }
-        ref
-            .watch(
-                creditCardsFilterAdditionalConditionsFromHomePageStateProvider
-                    .notifier)
-            .state = selectedAdditionalConditions;
-      }
-      if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
-        if (selectedNoPercentPeriod.isNotEmpty) {
-          ref
-              .watch(
-                  creditCardsFilterNoPercentPeriodFromSelectProductPageStateProvider
-                      .notifier)
-              .state = selectedNoPercentPeriod.first;
-        } else {
-          ref
-              .watch(
-                  creditCardsFilterNoPercentPeriodFromSelectProductPageStateProvider
-                      .notifier)
-              .state = '';
-        }
-        if (selectedPercents != 0) {
-          ref
-              .watch(creditCardsFilterPercentsFromSelectProductPageStateProvider
-                  .notifier)
-              .state = selectedPercents.round();
-        } else {
-          ref
-              .watch(creditCardsFilterPercentsFromSelectProductPageStateProvider
-                  .notifier)
-              .state = 0;
-        }
-        if (selectedCreditLimit.text.isNotEmpty) {
-          ref
-              .watch(
-                  creditCardsFilterCreditLimitFromSelectProductPageStateProvider
-                      .notifier)
-              .state = int.parse(selectedCreditLimit.text);
-        } else {
-          ref
-              .watch(
-                  creditCardsFilterCreditLimitFromSelectProductPageStateProvider
-                      .notifier)
-              .state = 0;
-        }
 
-        ref
-            .watch(
-                creditCardsFilterAdditionalConditionsFromSelectProductPageStateProvider
-                    .notifier)
-            .state = selectedAdditionalConditions;
+      if (selectedNoPercentPeriod.isNotEmpty) {
+        widget.basicApiPageSettingsModel.filters.noPercentPeriod= selectedNoPercentPeriod.first;
+
+      } else {
+        widget.basicApiPageSettingsModel.filters.noPercentPeriod= '';
       }
+      if (selectedPercents != 0) {
+
+        widget.basicApiPageSettingsModel.filters.percents= selectedPercents.round();
+      } else {
+
+        widget.basicApiPageSettingsModel.filters.percents= 0;
+      }
+      if (selectedCreditLimit.text.isNotEmpty) {
+        widget.basicApiPageSettingsModel.filters.creditLimit= int.parse(selectedCreditLimit.text);
+      } else {
+        widget.basicApiPageSettingsModel.filters.creditLimit= 0;
+      }
+      widget.basicApiPageSettingsModel.filters.features= selectedAdditionalConditions;
     });
   }
 
   void clearFilters() {
     setState(() {
-      if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
-        ref
-            .watch(creditCardsFilterNoPercentPeriodFromHomePageStateProvider
-                .notifier)
-            .state = '';
-        ref
-            .watch(creditCardsFilterPercentsFromHomePageStateProvider.notifier)
-            .state = 0;
-        ref
-            .watch(
-                creditCardsFilterAdditionalConditionsFromHomePageStateProvider
-                    .notifier)
-            .state
-            .clear();
-        ref
-            .watch(
-                creditCardsFilterCreditLimitFromHomePageStateProvider.notifier)
-            .state = 0;
-      }
-      if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
-        ref
-            .watch(
-                creditCardsFilterNoPercentPeriodFromSelectProductPageStateProvider
-                    .notifier)
-            .state = '';
-        ref
-            .watch(creditCardsFilterPercentsFromSelectProductPageStateProvider
-                .notifier)
-            .state = 0;
-        ref
-            .watch(
-                creditCardsFilterAdditionalConditionsFromSelectProductPageStateProvider
-                    .notifier)
-            .state
-            .clear();
-        ref
-            .watch(
-                creditCardsFilterCreditLimitFromSelectProductPageStateProvider
-                    .notifier)
-            .state = 0;
-      }
+      widget.basicApiPageSettingsModel.filters.percents= 0;
+      widget.basicApiPageSettingsModel.filters.noPercentPeriod= '';
+      widget.basicApiPageSettingsModel.filters.creditLimit= 0;
+      widget.basicApiPageSettingsModel.filters.features?.clear();
       selectedNoPercentPeriod.clear();
       selectedPercents = 0;
       selectedAdditionalConditions.clear();

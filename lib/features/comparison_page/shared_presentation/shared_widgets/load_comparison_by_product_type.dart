@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
+import 'package:podberi_ru/core/presentation/error_widgets/on_error_widget.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
-import 'package:podberi_ru/core/presentation/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';

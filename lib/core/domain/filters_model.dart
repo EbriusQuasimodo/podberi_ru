@@ -7,19 +7,19 @@ class FiltersModel {
     this.noPercentPeriod,
     this.features,
     this.term,
-    this.sum,
-    this.creditLimit,
+    this.sum =0,
+    this.creditLimit=0,
     this.sort,
   });
 
   List<String>? banks;
-  final List<String>? cashBack;
+  List<String>? cashBack;
   List<String>? paySystem;
   List<String>? features = [];
-  int percents = 0;
+  int? percents = 0;
   String? noPercentPeriod;
-  int? creditLimit;
-  int? sum;
+  int? creditLimit=0;
+  int? sum =0;
   String? term;
   String? sort;
 

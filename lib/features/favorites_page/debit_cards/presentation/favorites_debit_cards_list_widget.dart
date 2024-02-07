@@ -2,8 +2,9 @@ import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
-import 'package:podberi_ru/core/presentation/on_error_widget.dart';
+import 'package:podberi_ru/core/presentation/error_widgets/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
@@ -61,6 +62,8 @@ class FavoritesDebitCardsList extends ConsumerWidget {
                       },
                       productInfo: favoritesDebitCards.items[index],
                       basicApiPageSettingsModel: BasicApiPageSettingsModel(
+                        page: 1,
+                        filters: FiltersModel(),
                         productTypeUrl:
                             ref.watch(favoritesProductUrlStateProvider),
                         pageName: 'Избранное',

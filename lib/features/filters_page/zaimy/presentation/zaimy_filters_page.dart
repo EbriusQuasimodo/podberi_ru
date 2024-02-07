@@ -8,7 +8,6 @@ import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widg
 import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/save_button_widget.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import 'zaimy_filters_page_controller.dart';
 
 class ZaimyFiltersPage extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
@@ -36,108 +35,40 @@ class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
 
   @override
   void didChangeDependencies() {
-    switch (widget.basicApiPageSettingsModel.whereFrom) {
-      case 'homePage':
-        selectedTerm.add(
-            ref.watch(zaimyFilterTermFromHomePageStateProvider.notifier).state);
-
-        selectedSum.text = ref
-            .watch(zaimyFilterSumFromHomePageStateProvider.notifier)
-            .state
-            .toString();
-
-        selectedPercents =
-            ref.watch(zaimyFilterPercentsFromHomePageStateProvider).toDouble();
-
-        break;
-      case 'selectProductPage':
-        selectedTerm.add(ref
-            .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
-            .state);
-
-        selectedSum.text = ref
-            .watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier)
-            .state
-            .toString();
-
-        selectedPercents = ref
-            .watch(zaimyFilterPercentsFromSelectProductPageStateProvider)
-            .toDouble();
-
-        break;
-    }
+    selectedTerm.add(widget.basicApiPageSettingsModel.filters.term ?? '');
+    selectedSum.text = widget.basicApiPageSettingsModel.filters.sum.toString();
+    selectedPercents = widget.basicApiPageSettingsModel.filters.percents!.toDouble();
     super.didChangeDependencies();
   }
 
   void saveFilters() {
     setState(() {
-      if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
         if (selectedTerm.isNotEmpty) {
-          ref.watch(zaimyFilterTermFromHomePageStateProvider.notifier).state =
+          widget.basicApiPageSettingsModel.filters.term =
               selectedTerm.first;
         } else {
-          ref.watch(zaimyFilterTermFromHomePageStateProvider.notifier).state =
+          widget.basicApiPageSettingsModel.filters.term =
               '';
         }
         if (selectedSum.text.isNotEmpty) {
-          ref.watch(zaimyFilterSumFromHomePageStateProvider.notifier).state =
+          widget.basicApiPageSettingsModel.filters.sum =
               int.parse(selectedSum.text);
         } else {
-          ref.watch(zaimyFilterSumFromHomePageStateProvider.notifier).state =
+          widget.basicApiPageSettingsModel.filters.sum =
               0;
         }
 
-        ref.watch(zaimyFilterPercentsFromHomePageStateProvider.notifier).state =
+        widget.basicApiPageSettingsModel.filters.percents =
             selectedPercents.round();
-      }
-      if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
-        if (selectedTerm.isNotEmpty) {
-          ref
-              .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
-              .state = selectedTerm.first;
-        } else {
-          ref
-              .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
-              .state = '';
-        }
-        if (selectedSum.text.isNotEmpty) {
-          ref
-              .watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier)
-              .state = int.parse(selectedSum.text);
-        } else {
-          ref
-              .watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier)
-              .state = 0;
-        }
-
-        ref
-            .watch(
-                zaimyFilterPercentsFromSelectProductPageStateProvider.notifier)
-            .state = selectedPercents.round();
-      }
     });
   }
 
   void clearFilters() {
     setState(() {
-      if (widget.basicApiPageSettingsModel.whereFrom == "homePage") {
-        ref.watch(zaimyFilterTermFromHomePageStateProvider.notifier).state = '';
-        ref.watch(zaimyFilterSumFromHomePageStateProvider.notifier).state = 0;
-        ref.watch(zaimyFilterPercentsFromHomePageStateProvider.notifier).state =
+        widget.basicApiPageSettingsModel.filters.term = '';
+        widget.basicApiPageSettingsModel.filters.sum = 0;
+        widget.basicApiPageSettingsModel.filters.percents =
             0;
-      }
-      if (widget.basicApiPageSettingsModel.whereFrom == "selectProductPage") {
-        ref
-            .watch(zaimyFilterTermFromSelectProductPageStateProvider.notifier)
-            .state = '';
-        ref
-            .watch(zaimyFilterSumFromSelectProductPageStateProvider.notifier)
-            .state = 0;
-        ref
-            .watch(
-                zaimyFilterPercentsFromSelectProductPageStateProvider.notifier)
-            .state = 0;
-      }
       selectedTerm.clear();
       selectedSum.clear();
       selectedPercents = 0;

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/catalog_page.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/select_product_type_page.dart';
+import 'package:podberi_ru/features/catalog_page/shared_presentation/catalog_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page.dart';
 
 class CustomAppBarWithSearch extends StatelessWidget {

@@ -52,6 +52,8 @@ class BestDebitCardsWidget extends ConsumerWidget {
                                 ref.watch(goRouterProvider).push(
                                     RouteConstants.details,
                                     extra: BasicApiPageSettingsModel(
+                                        page: 1,
+                                        filters: FiltersModel(),
                                         productTypeUrl: 'debit_cards',
                                         pageName: 'Дебетовые карты',
                                         productId: debitCards[index].id,
@@ -78,6 +80,8 @@ class BestDebitCardsWidget extends ConsumerWidget {
                     ref.watch(goRouterProvider).push(
                           RouteConstants.catalog,
                           extra: BasicApiPageSettingsModel(
+                            page: 1,
+                            filters: FiltersModel(),
                             productTypeUrl: ProductTypeEnum.debit_cards.name,
                             pageName: 'Дебетовые карты',
                             whereFrom: AppRoute.homePage.name,

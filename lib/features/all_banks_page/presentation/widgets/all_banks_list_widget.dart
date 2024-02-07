@@ -66,10 +66,11 @@ class AllBanksListWidget extends ConsumerWidget {
                           .state = 'debit_cards';
                       ref.watch(goRouterProvider).push(RouteConstants.catalog,
                           extra: BasicApiPageSettingsModel(
+                            page: 1,
                               bankDetailsModel: BankListDetailsModel(
                                   logo: allBanks[index].logo,
                                   bankName: allBanks[index].bankName),
-                              banks: [allBanks[index].bankName],
+                              filters:FiltersModel(banks: [allBanks[index].bankName]),
                               whereFrom: AppRoute.allBanksPage.name,
                               productTypeUrl: ProductTypeEnum.debit_cards.name,
                               pageName: 'Каталог'));

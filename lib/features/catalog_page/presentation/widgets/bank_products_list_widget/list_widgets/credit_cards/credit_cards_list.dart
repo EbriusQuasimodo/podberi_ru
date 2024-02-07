@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
-import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
-import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/catalog_page/presentation/controllers/page_controllers/credit_cards_controller.dart';
-import 'package:podberi_ru/core/presentation/on_error_widget.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/page_controllers/debit_cards_controller.dart';
 
 import 'credit_card_button_widget.dart';
 
@@ -27,44 +22,34 @@ class CreditCardsListWidget extends ConsumerStatefulWidget {
 }
 
 class _CreditCardsListWidgetState extends ConsumerState<CreditCardsListWidget> {
-  final isar = Isar.getInstance();
-
+  static const pageSize = 10;
+  int page = 1;
   @override
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(childCount: widget.itemsCount,
           (BuildContext context, int index) {
+            page = index ~/ pageSize+1;
+            final indexInPage = index % pageSize;
         return ref
             .watch(
-                creditCardsControllerProvider(widget.basicApiPageSettingsModel))
+                creditCardsControllerProvider(widget.basicApiPageSettingsModel..page=page))
             .when(data: (creditCards) {
+          if (indexInPage >= creditCards.items.length) {
+            return const SizedBox.shrink();
+          } else {
+            final creditCard = creditCards.items[indexInPage];
           return CreditCardWidgetWithButtons(
               onTap: () {
                 setState(() {});
               },
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
-              productInfo: creditCards.items[index],
-              productRating: '4.8');
+              productInfo: creditCard,
+              productRating: '4.8');}
         }, error: (error, _) {
-          return SliverFillRemaining(
-            hasScrollBody: false,
-            fillOverscroll: true,
-            child: OnErrorWidget(
-                error: error.toString(),
-                onGoBackButtonTap: () {
-                  ref.watch(goRouterProvider).pop();
-                },
-                onRefreshButtonTap: () {
-                  ref.refresh(debitCardsControllerProvider(
-                      widget.basicApiPageSettingsModel));
-                }),
-          );
+          return SizedBox.shrink();
         }, loading: () {
-          return const SliverFillRemaining(
-            child: CustomLoadingCardWidget(
-              bottomPadding: 72,
-            ),
-          );
+          return SizedBox.shrink();
         });
       }),
     );

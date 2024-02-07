@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_chip.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
@@ -97,6 +98,8 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
             ),
            LoadFavoritesByProductType(
                     basicApiPageSettingsModel: BasicApiPageSettingsModel(
+                        page: 1,
+                        filters: FiltersModel(),
                         productTypeUrl: 'debit_cards'),
                   ),
 
