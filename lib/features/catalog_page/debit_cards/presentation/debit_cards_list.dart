@@ -27,12 +27,13 @@ class _DebitCardsListWidgetState extends ConsumerState<DebitCardsListWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return SliverList(
       delegate: SliverChildBuilderDelegate(childCount: widget.itemsCount,
           (BuildContext context, int index) {
         page = index ~/ pageSize+1;
         final indexInPage = index % pageSize;
+        print(
+            "dsfgsdghf    ${index}");
         widget.basicApiPageSettingsModel.page=page;
         return ref
             .watch(debitCardsControllerProvider(widget.basicApiPageSettingsModel))
@@ -43,6 +44,7 @@ class _DebitCardsListWidgetState extends ConsumerState<DebitCardsListWidget> {
             final debitCard = debitCards.items[indexInPage];
             return DebitCardWidgetWithButtons(
                 onTap: () {
+
                   setState(() {});
                 },
                 basicApiPageSettingsModel: widget.basicApiPageSettingsModel,

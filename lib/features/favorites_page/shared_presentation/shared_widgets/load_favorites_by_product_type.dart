@@ -9,33 +9,42 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_list_widget.dart';
+import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
 import '../../credit_cards/presentation/favorites_credit_cards_list_widget.dart';
 import '../../zaimy/presentation/favorites_zaimy_list_widget.dart';
 
-class LoadFavoritesByProductType extends ConsumerWidget {
+class LoadFavoritesByProductType extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
   ///виджет для загрузки списка избранного по выбранному типу продукта
-  const LoadFavoritesByProductType({
+  LoadFavoritesByProductType({
     super.key,
     required this.basicApiPageSettingsModel,
   });
+  @override
+  ConsumerState<LoadFavoritesByProductType> createState() => _LoadFavoritesByProductTypeState();
+}
+
+class _LoadFavoritesByProductTypeState extends ConsumerState<LoadFavoritesByProductType> {
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     if (ref.watch(favoritesProductUrlStateProvider) == 'debit_cards') {
 
       return ref
-          .watch(favoritesDebitCardsListControllerProvider).when(data: (debitCards) {
+          .watch(favoritesDebitCardsListControllerProvider(IsarPaginationParamsModel(offset:-1, limit: -1))).when(data: (debitCards) {
+           int itemsCount = ref.watch(itemsCountFavoritesStateProvider);
         return debitCards.items.isNotEmpty
-            ?FavoritesDebitCardsList(
-          itemsCount: debitCards.itemsCount,
+          ? FavoritesDebitCardsList(
+          itemsCount:debitCards.itemsCount,
 
-        ) : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
+        )
+    : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
       }, error: (error, _) {
+            print(_);
         return SliverFillRemaining(
           hasScrollBody: false,
           fillOverscroll: true,
@@ -45,7 +54,7 @@ class LoadFavoritesByProductType extends ConsumerWidget {
                 ref.watch(goRouterProvider).pop();
               },
               onRefreshButtonTap: () {
-                ref.refresh(favoritesDebitCardsListControllerProvider);
+                ref.refresh(favoritesDebitCardsListControllerProvider(IsarPaginationParamsModel(offset: -1, limit: -1)));
               }),
         );
       }, loading: () {

@@ -10,7 +10,7 @@ import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/all_banks_page/domain/pagination_params_model.dart';
+import 'package:podberi_ru/core/domain/pagination_params_model.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -63,6 +63,9 @@ class AllBanksListWidget extends ConsumerWidget {
                 final indexInPage = index % pageSize;
                 return ref.watch(allBanksControllerProvider(PaginationParamsModel(fetch: pageSize, page: page))).when(
                   data: (allBanks) {
+    if (indexInPage >= allBanks.items.length) {
+    return const SizedBox.shrink();
+    } else {
                     return Material(
                       color: Colors.transparent,
                       child: InkWell(
@@ -146,7 +149,7 @@ class AllBanksListWidget extends ConsumerWidget {
                           ),
                         ),
                       ),
-                    );
+                    );}
                   },
                   error: (error, _) {
                     return SizedBox.shrink();

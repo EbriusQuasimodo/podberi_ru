@@ -14,15 +14,16 @@ class FavoritesDebitCardsRepository implements FavoritesDebitCardsRepositoryImpl
   FavoritesDebitCardsRepository();
 
   @override
-  Future<DebitCardsModel> fetch(String arg,
+  Future<DebitCardsModel> fetch(String url,
       AutoDisposeAsyncNotifierProviderRef ref) async {
 
-    if(arg == 'debit_cards'){
+    if(url == 'debit_cards'){
       List<ListDebitCardsModel> list = [];
       return DebitCardsModel(itemsCount: 0,items: list);
     }else{
       final response =
-      await GetIt.I<FavoritesDebitCardsGetDataSource>().fetch(arg);
+      await GetIt.I<FavoritesDebitCardsGetDataSource>().fetch(url,);
+      ref.keepAlive();
       return response;
     }
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/all_banks_page/domain/pagination_params_model.dart';
+import 'package:podberi_ru/core/domain/pagination_params_model.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
@@ -97,6 +97,9 @@ class _ShowMorePageState extends ConsumerState<ShowMoreBanksPage> {
                               PaginationParamsModel(fetch:pageSize, page: page)))
                           .when(
                         data: (allBanks) {
+    if (indexInPage >= allBanks.items.length) {
+    return const SizedBox.shrink();
+    } else {
                           return Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -158,7 +161,7 @@ class _ShowMorePageState extends ConsumerState<ShowMoreBanksPage> {
                                 ),
                               ),
                             ),
-                          );
+                          );}
                         },
                         error: (error, _) {
                           return SizedBox.shrink();

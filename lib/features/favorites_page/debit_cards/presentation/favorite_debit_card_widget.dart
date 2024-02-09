@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
-import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
@@ -18,7 +17,8 @@ class FavoriteDebitCardWidget extends ConsumerStatefulWidget {
   final String productRating;
   final ListDebitCardsModel? productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  final VoidCallback onTap;
+  final VoidCallback deleteFromFavorites;
+  final VoidCallback tapOnComparisonButton;
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
@@ -27,7 +27,8 @@ class FavoriteDebitCardWidget extends ConsumerStatefulWidget {
     required this.productRating,
     this.productInfo,
     required this.basicApiPageSettingsModel,
-    required this.onTap,
+    required this.deleteFromFavorites,
+    required this.tapOnComparisonButton,
   });
 
   @override
@@ -37,24 +38,24 @@ class FavoriteDebitCardWidget extends ConsumerStatefulWidget {
 
 class _FavoriteDebitCardWidget
     extends ConsumerState<FavoriteDebitCardWidget> {
-  List<Widget> list() {
-    var list = <Widget>[];
-
-    for (int i = 0; i < 4; i++) {
-      list.add(
-        Text(
-          "${widget.productInfo!.features[i]}",
-          textAlign: TextAlign.left,
-          style: const TextStyle(
-              color: ThemeApp.mainWhite,
-              fontSize: 12,
-              fontWeight: FontWeight.w500),
-        ),
-      );
-    }
-
-    return list;
-  }
+  // List<Widget> list() {
+  //   var list = <Widget>[];
+  //
+  //   for (int i = 0; i < 4; i++) {
+  //     list.add(
+  //       Text(
+  //         "${widget.productInfo!.features[i]}",
+  //         textAlign: TextAlign.left,
+  //         style: const TextStyle(
+  //             color: ThemeApp.mainWhite,
+  //             fontSize: 12,
+  //             fontWeight: FontWeight.w500),
+  //       ),
+  //     );
+  //   }
+  //
+  //   return list;
+  // }
 
   final isar = Isar.getInstance();
 
@@ -74,28 +75,28 @@ class _FavoriteDebitCardWidget
       ),
       child: Stack(
         children: [
-          Positioned(
-            top: 16,
-            right: 16,
-            child: Container(
-              height: 50, width: 50,
-              padding:
-              const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: ThemeApp.mainWhite,
-              ),
-              child: Image.network(
-                '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
-                errorBuilder: (BuildContext context,
-                    Object exception, StackTrace? stackTrace) {
-                  return SvgPicture.asset(
-                    'assets/icons/photo_not_found.svg',
-                  );
-                },
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 16,
+          //   right: 16,
+          //   child: Container(
+          //     height: 50, width: 50,
+          //     padding:
+          //     const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(12),
+          //       color: ThemeApp.mainWhite,
+          //     ),
+          //     child: Image.network(
+          //       '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
+          //       errorBuilder: (BuildContext context,
+          //           Object exception, StackTrace? stackTrace) {
+          //         return SvgPicture.asset(
+          //           'assets/icons/photo_not_found.svg',
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
           Positioned(
             left: 16,
             top: 16,
@@ -109,16 +110,16 @@ class _FavoriteDebitCardWidget
                   fontSize: 14),
             ),
           ),
-          widget.productInfo!.features.isNotEmpty
-              ? Positioned(
-            left: 16,
-            bottom: 16,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: list(),
-            ),
-          )
-              : const SizedBox.shrink(),
+          // widget.productInfo!.features.isNotEmpty
+          //     ? Positioned(
+          //   left: 16,
+          //   bottom: 16,
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: list(),
+          //   ),
+          // )
+          //     : const SizedBox.shrink(),
           Positioned(
               right: 16,
               bottom: 70,
@@ -190,7 +191,7 @@ class _FavoriteDebitCardWidget
                             : await isar?.comparisonDebitCardsDatas
                             .put(comparisonDebitCardsData));
 
-                        widget.onTap();
+                        widget.tapOnComparisonButton();
                       },
                       child: FutureBuilder(
                           future: ref
@@ -244,7 +245,7 @@ class _FavoriteDebitCardWidget
                             : await isar?.favoritesDebitCardsDatas
                             .put(favoritesDebitCardsData));
 
-                        widget.onTap();
+                        widget.deleteFromFavorites();
                       },
                       child: FutureBuilder(
                           future: ref

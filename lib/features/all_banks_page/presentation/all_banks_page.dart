@@ -5,7 +5,7 @@ import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/error_widgets/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/all_banks_page/domain/pagination_params_model.dart';
+import 'package:podberi_ru/core/domain/pagination_params_model.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/widgets/all_banks_list_widget.dart';
 import 'package:podberi_ru/features/catalog_page/shared_presentation/catalog_page.dart';

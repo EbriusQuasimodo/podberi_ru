@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
+import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
@@ -9,7 +10,6 @@ import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_ca
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class IsarNotifier extends ChangeNotifier {
   final isar = Isar.getInstance();
@@ -29,15 +29,10 @@ class IsarNotifier extends ChangeNotifier {
             .idContains(id)
             .count();
       case 'zaimy':
-        count = await isar?.comparisonZaimyDatas
-            .filter()
-            .idContains(id)
-            .count();
+        count =
+            await isar?.comparisonZaimyDatas.filter().idContains(id).count();
       case 'rko':
-        count = await isar?.comparisonRkoDatas
-            .filter()
-            .idContains(id)
-            .count();
+        count = await isar?.comparisonRkoDatas.filter().idContains(id).count();
     }
     return count! > 0;
   }
@@ -57,17 +52,37 @@ class IsarNotifier extends ChangeNotifier {
             .idContains(id)
             .count();
       case 'zaimy':
-        count = await isar?.favoritesZaimyDatas
-            .filter()
-            .idContains(id)
-            .count();
+        count = await isar?.favoritesZaimyDatas.filter().idContains(id).count();
       case 'rko':
-        count = await isar?.favoritesRkoDatas
-            .filter()
-            .idContains(id)
-            .count();
+        count = await isar?.favoritesRkoDatas.filter().idContains(id).count();
     }
     return count! > 0;
+  }
+
+  Future<List<String>> paginatedLoad(
+      String productTypeUrl, int limit, int offset) async {
+    List<FavoritesDebitCardsData> count = [];
+    if (productTypeUrl == ProductTypeEnum.debit_cards.name) {
+      await isar?.txn(() async {
+        if (limit != -1 && offset != -1) {
+          count = (await isar?.favoritesDebitCardsDatas
+              .where()
+              .offset(offset)
+              .limit(limit)
+              .findAll())!;
+        }else {
+          count =
+          (await isar?.favoritesDebitCardsDatas.where().findAll())!;
+        }
+      });
+      List<String> idList = [];
+      for (int i = 0; i < count.length; i++) {
+        idList.add(count[i].id!);
+      }
+      return idList;
+    } else {
+      return [];
+    }
   }
 }
 
