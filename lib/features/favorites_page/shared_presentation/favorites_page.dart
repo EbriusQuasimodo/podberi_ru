@@ -7,7 +7,6 @@ import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_ch
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
-import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
 import 'shared_widgets/load_favorites_by_product_type.dart';
@@ -39,6 +38,8 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
     for (var element in bankProductsNamesList) {
       list.add(CustomChoiceChip(
           onTap: () {
+            ref.watch(favoritesDebitCardsListStateProvider.notifier).state.clear();
+            ref.invalidate(favoritesDebitCardsListControllerProvider);
             setState(() {});
           },
           categoryName: element,
@@ -60,28 +61,19 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
   }
 
   final isar = Isar.getInstance();
-  ScrollController scrollController=ScrollController();
-  @override
-  void initState() {
-    scrollController.addListener(() {  if (scrollController.position.pixels >=
-        scrollController.position.maxScrollExtent) {
-      ref.watch(offsetStateProvider.notifier).state +=10;
-    }});
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,
         onRefresh: () async {
-          ref.refresh(favoritesDebitCardsListControllerProvider(
-              IsarPaginationParamsModel(offset: -1, limit: -1)).future);
+          ref.invalidate(favoritesDebitCardsListControllerProvider);
           ref.refresh(favoritesCreditCardsListControllerProvider.future);
           ref.refresh(favoritesZaimyListControllerProvider.future);
         },
         child: CustomScrollView(
-          controller: scrollController,
+
           slivers: [
             const SliverAppBar(
               scrolledUnderElevation: 0,

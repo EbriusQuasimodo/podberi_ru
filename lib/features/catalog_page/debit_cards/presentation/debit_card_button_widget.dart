@@ -13,20 +13,24 @@ import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_ca
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
 
 class DebitCardWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   final ListDebitCardsModel productInfo;
-  final VoidCallback onTap;
+  final VoidCallback onTapFavorites;
+  final VoidCallback onTapComparison;
+
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
   DebitCardWidgetWithButtons({
     super.key,
     required this.productRating,
     required this.basicApiPageSettingsModel,
-    required this.onTap,
+    required this.onTapFavorites,
     required this.productInfo,
+    required this.onTapComparison,
   });
 
   @override
@@ -40,7 +44,7 @@ class _DebitCardWidgetWithButtonsState
     var list = <Widget>[];
 
     for (int i = 0;
-    widget.productInfo.features.length <= 4
+        widget.productInfo.features.length <= 4
             ? i < widget.productInfo.features.length
             : i < 4;
         i++) {
@@ -60,9 +64,10 @@ class _DebitCardWidgetWithButtonsState
   }
 
   final isar = Isar.getInstance();
+
   @override
   Widget build(BuildContext context) {
-      return Container(
+    return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color(int.parse(
@@ -152,8 +157,8 @@ class _DebitCardWidgetWithButtonsState
                 onTap: () {
                   ref.watch(goRouterProvider).push(RouteConstants.details,
                       extra: BasicApiPageSettingsModel(
-                        filters: FiltersModel(),
-                        page: 1,
+                          filters: FiltersModel(),
+                          page: 1,
                           productTypeUrl:
                               widget.basicApiPageSettingsModel.productTypeUrl,
                           pageName: widget.basicApiPageSettingsModel.pageName,
@@ -191,8 +196,8 @@ class _DebitCardWidgetWithButtonsState
                                 .deleteAll()
                             : await isar?.comparisonDebitCardsDatas
                                 .put(comparisonDebitCardsData));
-
-                        widget.onTap();
+                        setState(() {});
+                        //widget.onTapComparison();
                       },
                       child: FutureBuilder(
                           future: ref
@@ -241,12 +246,15 @@ class _DebitCardWidgetWithButtonsState
                                         .productTypeUrl!)
                             ? await isar?.favoritesDebitCardsDatas
                                 .filter()
-                                .idEqualTo(widget.productInfo?.id)
+                                .idEqualTo(widget.productInfo.id)
                                 .deleteAll()
                             : await isar?.favoritesDebitCardsDatas
                                 .put(favoritesDebitCardsData));
-
-                        widget.onTap();
+                        ref.watch(favoritesDebitCardsListStateProvider.notifier).state.clear();
+                        ref.invalidate(favoritesDebitCardsListControllerProvider);
+                        // ref.invalidate(
+                        //     favoritesDebitCardsListControllerProvider);
+                        setState(() {});
                       },
                       child: FutureBuilder(
                           future: ref

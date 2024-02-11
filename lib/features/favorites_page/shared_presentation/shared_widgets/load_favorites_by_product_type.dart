@@ -24,27 +24,32 @@ class LoadFavoritesByProductType extends ConsumerStatefulWidget {
     super.key,
     required this.basicApiPageSettingsModel,
   });
+
   @override
-  ConsumerState<LoadFavoritesByProductType> createState() => _LoadFavoritesByProductTypeState();
+  ConsumerState<LoadFavoritesByProductType> createState() =>
+      _LoadFavoritesByProductTypeState();
 }
 
-class _LoadFavoritesByProductTypeState extends ConsumerState<LoadFavoritesByProductType> {
-
+class _LoadFavoritesByProductTypeState
+    extends ConsumerState<LoadFavoritesByProductType> {
   @override
   Widget build(BuildContext context) {
     if (ref.watch(favoritesProductUrlStateProvider) == 'debit_cards') {
-
       return ref
-          .watch(favoritesDebitCardsListControllerProvider(IsarPaginationParamsModel(offset:-1, limit: -1))).when(data: (debitCards) {
-           int itemsCount = ref.watch(itemsCountFavoritesStateProvider);
+          .watch(favoritesDebitCardsListControllerProvider(
+              IsarPaginationParamsModel(offset: -1, limit: -1)))
+          .when(data: (debitCards) {
+        int itemsCount = ref.watch(itemsCountStateProvider);
         return debitCards.items.isNotEmpty
-          ? FavoritesDebitCardsList(
-          itemsCount:debitCards.itemsCount,
-
-        )
-    : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
+            ? FavoritesDebitCardsList(
+                itemsCount: debitCards.itemsCount,
+              )
+            : const FavoritesOrComparisonIsEmpty(
+                error:
+                    'У вас пока нет продуктов в избранном по данной категории.',
+              );
       }, error: (error, _) {
-            print(_);
+        print(_);
         return SliverFillRemaining(
           hasScrollBody: false,
           fillOverscroll: true,
@@ -54,7 +59,8 @@ class _LoadFavoritesByProductTypeState extends ConsumerState<LoadFavoritesByProd
                 ref.watch(goRouterProvider).pop();
               },
               onRefreshButtonTap: () {
-                ref.refresh(favoritesDebitCardsListControllerProvider(IsarPaginationParamsModel(offset: -1, limit: -1)));
+                ref.refresh(favoritesDebitCardsListControllerProvider(
+                    IsarPaginationParamsModel(offset: -1, limit: -1)));
               }),
         );
       }, loading: () {
@@ -71,7 +77,10 @@ class _LoadFavoritesByProductTypeState extends ConsumerState<LoadFavoritesByProd
             ? FavoritesCreditCardsList(
                 itemsCount: creditCards.itemsCount,
               )
-            : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
+            : const FavoritesOrComparisonIsEmpty(
+                error:
+                    'У вас пока нет продуктов в избранном по данной категории.',
+              );
       }, error: (error, _) {
         return SliverFillRemaining(
           hasScrollBody: false,
@@ -99,7 +108,10 @@ class _LoadFavoritesByProductTypeState extends ConsumerState<LoadFavoritesByProd
             ? FavoritesZaimyList(
                 itemsCount: zaimy.itemsCount,
               )
-            : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в избранном по данной категории.',);
+            : const FavoritesOrComparisonIsEmpty(
+                error:
+                    'У вас пока нет продуктов в избранном по данной категории.',
+              );
       }, error: (error, _) {
         return SliverFillRemaining(
           hasScrollBody: false,

@@ -7,26 +7,32 @@ import 'favorites_debit_cards_data_source.dart';
 
 abstract class FavoritesDebitCardsRepositoryImpl {
   Future<void> fetch(
-      String arg, AutoDisposeAsyncNotifierProviderRef ref);
+      String arg, int offset, AutoDisposeAsyncNotifierProviderRef ref);
 }
 
-class FavoritesDebitCardsRepository implements FavoritesDebitCardsRepositoryImpl {
+class FavoritesDebitCardsRepository
+    implements FavoritesDebitCardsRepositoryImpl {
   FavoritesDebitCardsRepository();
 
   @override
-  Future<DebitCardsModel> fetch(String url,
-      AutoDisposeAsyncNotifierProviderRef ref) async {
-
-    if(url == 'debit_cards'){
+  Future<DebitCardsModel> fetch(
+      String url, int offset, AutoDisposeAsyncNotifierProviderRef ref) async {
+    if (url == 'debit_cards') {
       List<ListDebitCardsModel> list = [];
-      return DebitCardsModel(itemsCount: 0,items: list);
-    }else{
-      final response =
-      await GetIt.I<FavoritesDebitCardsGetDataSource>().fetch(url,);
+      return DebitCardsModel(itemsCount: 0, items: list);
+    } else {
+      final response = await GetIt.I<FavoritesDebitCardsGetDataSource>().fetch(
+        url,
+      );
+      if (response.itemsCount <= 10) {
+        ref
+            .watch(favoritesDebitCardsListStateProvider.notifier)
+            .state
+            .addAll(response.items);
+      }
       ref.keepAlive();
       return response;
     }
-
   }
 }
 

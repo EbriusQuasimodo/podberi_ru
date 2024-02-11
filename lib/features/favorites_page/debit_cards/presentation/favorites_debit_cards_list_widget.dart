@@ -29,14 +29,10 @@ class FavoritesDebitCardsList extends ConsumerStatefulWidget {
 class _FavoritesDebitCardsListState
     extends ConsumerState<FavoritesDebitCardsList> {
   static const pageSize = 10;
-  int offset = 0;
-  int page = 0;
   final controller = ScrollController();
 
   @override
-  void initState() {
-    super.initState();
-
+  void didChangeDependencies() {
     controller.addListener(() {
       if (controller.position.pixels >= controller.position.maxScrollExtent &&
           !loading) {
@@ -44,30 +40,24 @@ class _FavoritesDebitCardsListState
       }
     });
     _loadMore();
-  }
- @override
-  void didChangeDependencies() {
-    if(ref.watch(itemsCountFavoritesStateProvider.notifier).state != 0){
-      setState(() {
-        widget.itemsCount = ref.watch(itemsCountFavoritesStateProvider);
-      });
-    }
     super.didChangeDependencies();
   }
+
   bool loading = false;
+
   Future<void> _loadMore() async {
     if (favoritesDebitCardsList.length < widget.itemsCount) {
       try {
         loading = true;
-        final newPackages = await ref.read(
-            favoritesDebitCardsListControllerProvider(IsarPaginationParamsModel(
+        await ref.read(favoritesDebitCardsListControllerProvider(
+                IsarPaginationParamsModel(
                     offset: favoritesDebitCardsList.length ~/ pageSize,
                     limit: pageSize))
-                .future);
+            .future);
         if (mounted) {
-          print(newPackages.items.length);
           setState(() {
-            favoritesDebitCardsList.addAll(newPackages.items);
+            favoritesDebitCardsList =
+                ref.watch(favoritesDebitCardsListStateProvider);
           });
         }
       } finally {
@@ -76,14 +66,17 @@ class _FavoritesDebitCardsListState
     }
   }
 
-  Future<void> _deleteFromFavorites(int index) async {
+  Future<void> _deleteFromFavorites(String id) async {
     try {
       loading = true;
+     // ref.invalidate(debitCardsControllerProvider);
       setState(() {
-        favoritesDebitCardsList.removeAt(index);
+        ref
+            .watch(favoritesDebitCardsListStateProvider.notifier)
+            .state
+            .removeWhere((element) => element.id == id);
         widget.itemsCount--;
       });
-ref.watch(itemsCountFavoritesStateProvider.notifier).state = widget.itemsCount;
     } finally {
       loading = false;
     }
@@ -92,15 +85,13 @@ ref.watch(itemsCountFavoritesStateProvider.notifier).state = widget.itemsCount;
   Future<void> _tapOnComparisonButton(int index) async {
     try {
       loading = true;
-      final newPackages = await ref.read(
-          favoritesDebitCardsListControllerProvider(IsarPaginationParamsModel(
+      await ref.read(favoritesDebitCardsListControllerProvider(
+              IsarPaginationParamsModel(
                   offset: favoritesDebitCardsList.length ~/ pageSize,
                   limit: pageSize))
-              .future);
+          .future);
       if (mounted) {
-        setState(() {
-          // favoritesDebitCardsList.addAll(newPackages.items);
-        });
+        setState(() {});
       }
     } finally {
       loading = false;
@@ -111,8 +102,10 @@ ref.watch(itemsCountFavoritesStateProvider.notifier).state = widget.itemsCount;
 
   @override
   Widget build(BuildContext context) {
-    print("favoritesDebitCardsList.length ${favoritesDebitCardsList.length}");
-    print("widget.itemsCount ${widget.itemsCount}");
+    favoritesDebitCardsList =
+        ref.watch(favoritesDebitCardsListStateProvider);
+    print('widget.itemsCount${widget.itemsCount}');
+    print("favoritesDebitCardsList.length${favoritesDebitCardsList.length}");
     if (favoritesDebitCardsList.isNotEmpty) {
       return SliverStack(
         insetOnOverlap: true,
@@ -147,14 +140,18 @@ ref.watch(itemsCountFavoritesStateProvider.notifier).state = widget.itemsCount;
                 ),
                 sliver: SliverToBoxAdapter(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 242,
+                    height: MediaQuery.of(context).size.height - 272,
                     child: MediaQuery.removePadding(
                       context: context,
                       removeBottom: true,
                       removeTop: true,
                       child: ListView.builder(
-                          padding: EdgeInsets.only(top: 15, bottom: 10),
-                          itemCount: favoritesDebitCardsList.length,
+                          key: const PageStorageKey<String>('favoritesDebitCardsList'),
+                          padding: const EdgeInsets.only(top: 15),
+                          itemCount: favoritesDebitCardsList.length >=
+                                  widget.itemsCount
+                              ? widget.itemsCount
+                              : favoritesDebitCardsList.length,
                           controller: controller,
                           itemBuilder: (context, index) {
                             return FavoriteDebitCardWidget(
@@ -162,7 +159,7 @@ ref.watch(itemsCountFavoritesStateProvider.notifier).state = widget.itemsCount;
                                 _tapOnComparisonButton(index);
                               },
                               deleteFromFavorites: () {
-                                _deleteFromFavorites(index);
+                                _deleteFromFavorites(favoritesDebitCardsList[index].id);
                               },
                               productInfo: favoritesDebitCardsList[index],
                               basicApiPageSettingsModel:
@@ -195,6 +192,7 @@ ref.watch(itemsCountFavoritesStateProvider.notifier).state = widget.itemsCount;
         ),
       );
     } else {
+      _loadMore();
       return const FavoritesOrComparisonIsEmpty(
         error: 'У вас пока нет продуктов в избранном по данной категории.',
       );

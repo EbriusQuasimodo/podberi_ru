@@ -30,22 +30,36 @@ class _DebitCardsListWidgetState extends ConsumerState<DebitCardsListWidget> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(childCount: widget.itemsCount,
           (BuildContext context, int index) {
-        page = index ~/ pageSize+1;
+        page = index ~/ pageSize + 1;
         final indexInPage = index % pageSize;
-        print(
-            "dsfgsdghf    ${index}");
-        widget.basicApiPageSettingsModel.page=page;
+        widget.basicApiPageSettingsModel.page = page;
         return ref
-            .watch(debitCardsControllerProvider(widget.basicApiPageSettingsModel))
+            .watch(
+                debitCardsControllerProvider(widget.basicApiPageSettingsModel))
             .when(data: (debitCards) {
           if (indexInPage >= debitCards.items.length) {
             return const SizedBox.shrink();
           } else {
             final debitCard = debitCards.items[indexInPage];
             return DebitCardWidgetWithButtons(
-                onTap: () {
-
+                onTapComparison: () {
                   setState(() {});
+                },
+                onTapFavorites: () async {
+
+                  // await ref
+                  //         .read(isarNotifierProvider.notifier)
+                  //         .isItemDuplicateInFavorites(debitCard.id,
+                  //             widget.basicApiPageSettingsModel.productTypeUrl!)
+                  //     ? ref
+                  //         .watch(favoritesDebitCardsListStateProvider.notifier)
+                  //         .state
+                  //         .removeWhere((element) => element.id == debitCard.id)
+                  //     : ref
+                  //         .watch(favoritesDebitCardsListStateProvider.notifier)
+                  //         .state
+                  //         .insert(0,debitCard);
+                  //ref.invalidate(favoritesDebitCardsListControllerProvider);
                 },
                 basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
                 productInfo: debitCard,

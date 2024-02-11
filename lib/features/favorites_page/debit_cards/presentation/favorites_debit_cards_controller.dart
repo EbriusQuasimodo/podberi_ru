@@ -6,13 +6,17 @@ import 'package:podberi_ru/features/favorites_page/debit_cards/data/favorites_de
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-final offsetStateProvider = StateProvider.autoDispose<int>((ref) {
+final itemsCountStateProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
-final itemsCountFavoritesStateProvider = StateProvider.autoDispose<int>((ref) {
-  return 0;
+final favoritesDebitCardsListStateProvider = StateProvider.autoDispose<List<ListDebitCardsModel>>((ref) {
+  return [];
 });
 
+
+final favoritesDebitCardsIsarListStateProvider = StateProvider.autoDispose<List<FavoritesDebitCardsData>>((ref) {
+  return [];
+});
 ///контроллер списка дебетовок в  избранном
 class FavoritesDebitCardsListController extends AutoDisposeFamilyAsyncNotifier<
     DebitCardsModel, IsarPaginationParamsModel> {
@@ -23,20 +27,20 @@ class FavoritesDebitCardsListController extends AutoDisposeFamilyAsyncNotifier<
 
   @override
   FutureOr<DebitCardsModel> build(IsarPaginationParamsModel arg) async {
-    List<FavoritesDebitCardsData> productIdListDebitCards = [];
+    List<FavoritesDebitCardsData> productIdListDebitCards =[];
     productTypeWithQuery = ref.read(favoritesProductUrlStateProvider);
 
     print("arg.offset ${arg.offset}");
     await isar?.txn(() async {
       if (arg.limit != -1 && arg.offset != -1) {
         productIdListDebitCards = (await isar?.favoritesDebitCardsDatas
-            .where()
+            .where(sort: Sort.desc).anyIsarId()
             .offset(arg.offset*10)
             .limit(arg.limit)
             .findAll())!;
       } else {
         productIdListDebitCards =
-            (await isar?.favoritesDebitCardsDatas.where().findAll())!;
+            (await isar?.favoritesDebitCardsDatas.where(sort: Sort.desc).anyIsarId().findAll())!;
       }
     });
     productTypeWithQuery += '?';
@@ -51,7 +55,7 @@ class FavoritesDebitCardsListController extends AutoDisposeFamilyAsyncNotifier<
         ref.read(favoritesDebitCardsRepositoryProvider);
     ref.keepAlive();
     return await favoritesDebitCardsRepo.fetch(
-        productTypeWithQuery, ref);
+        productTypeWithQuery,arg.offset, ref);
   }
 }
 
