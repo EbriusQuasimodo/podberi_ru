@@ -143,7 +143,7 @@ class _FavoritesCreditCardsList
                       removeBottom: true,
                       removeTop: true,
                       child: ListView.builder(
-                          key: const PageStorageKey<String>('favoritesDebitCardsList'),
+                          key: const PageStorageKey<String>('favoritesCreditCardsList'),
                           padding: const EdgeInsets.only(top: 15),
                           itemCount: favoritesCreditCardsList.length >=
                               widget.itemsCount
