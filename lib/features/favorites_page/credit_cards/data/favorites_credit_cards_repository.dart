@@ -24,6 +24,13 @@ class FavoritesCreditCardsRepository implements FavoritesCreditCardsRepositoryIm
     }else{
       final response =
       await GetIt.I<FavoritesCreditCardsGetDataSource>().fetch(arg);
+      if (response.itemsCount <= 10) {
+        ref
+            .watch(favoritesCreditCardsListStateProvider.notifier)
+            .state
+            .addAll(response.items);
+      }
+      ref.keepAlive();
       return response;
     }
 

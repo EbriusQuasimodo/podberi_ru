@@ -24,6 +24,13 @@ class FavoritesZaimyRepository implements FavoritesZaimyRepositoryImpl {
     }else{
       final response =
       await GetIt.I<FavoritesZaimyGetDataSource>().fetch(arg);
+      if (response.itemsCount <= 10) {
+        ref
+            .watch(favoritesZaimyListStateProvider.notifier)
+            .state
+            .addAll(response.items);
+      }
+      ref.keepAlive();
       return response;
     }
 

@@ -18,7 +18,8 @@ class FavoriteCreditCardWidget extends ConsumerStatefulWidget {
   final String productRating;
   final ListCreditCardsModel? productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  final VoidCallback onTap;
+  final VoidCallback deleteFromFavorites;
+  final VoidCallback tapOnComparisonButton;
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
@@ -27,7 +28,8 @@ class FavoriteCreditCardWidget extends ConsumerStatefulWidget {
     required this.productRating,
     this.productInfo,
     required this.basicApiPageSettingsModel,
-    required this.onTap,
+    required this.deleteFromFavorites,
+    required this.tapOnComparisonButton,
   });
 
   @override
@@ -189,7 +191,7 @@ class _FavoriteCreditCardWidget
                             : await isar?.comparisonCreditCardsDatas
                             .put(comparisonCreditCardsData));
 
-                        widget.onTap();
+                        widget.tapOnComparisonButton();
                       },
                       child: FutureBuilder(
                           future: ref
@@ -243,7 +245,7 @@ class _FavoriteCreditCardWidget
                             : await isar?.favoritesCreditCardsDatas
                             .put(favoritesCreditCardsData));
 
-                        widget.onTap();
+                        widget.deleteFromFavorites();
                       },
                       child: FutureBuilder(
                           future: ref

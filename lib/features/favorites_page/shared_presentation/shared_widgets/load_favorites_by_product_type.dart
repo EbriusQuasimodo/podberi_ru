@@ -39,7 +39,6 @@ class _LoadFavoritesByProductTypeState
           .watch(favoritesDebitCardsListControllerProvider(
               IsarPaginationParamsModel(offset: -1, limit: -1)))
           .when(data: (debitCards) {
-        int itemsCount = ref.watch(itemsCountStateProvider);
         return debitCards.items.isNotEmpty
             ? FavoritesDebitCardsList(
                 itemsCount: debitCards.itemsCount,
@@ -71,7 +70,8 @@ class _LoadFavoritesByProductTypeState
         );
       });
     } else if (ref.watch(favoritesProductUrlStateProvider) == 'credit_cards') {
-      return ref.watch(favoritesCreditCardsListControllerProvider).when(
+      return ref.watch(favoritesCreditCardsListControllerProvider(
+          IsarPaginationParamsModel(offset: -1, limit: -1))).when(
           data: (creditCards) {
         return creditCards.items.isNotEmpty
             ? FavoritesCreditCardsList(
@@ -88,10 +88,11 @@ class _LoadFavoritesByProductTypeState
           child: OnErrorWidget(
               error: error.toString(),
               onGoBackButtonTap: () {
-                ref.refresh(favoritesCreditCardsListControllerProvider);
+                ref.watch(goRouterProvider).pop();
               },
               onRefreshButtonTap: () {
-                ref.refresh(favoritesCreditCardsListControllerProvider);
+                ref.refresh(favoritesCreditCardsListControllerProvider(
+                    IsarPaginationParamsModel(offset: -1, limit: -1)));
               }),
         );
       }, loading: () {
@@ -102,7 +103,8 @@ class _LoadFavoritesByProductTypeState
         );
       });
     } else if (ref.watch(favoritesProductUrlStateProvider) == 'zaimy') {
-      return ref.watch(favoritesZaimyListControllerProvider).when(
+      return ref.watch(favoritesZaimyListControllerProvider(
+          IsarPaginationParamsModel(offset: -1, limit: -1))).when(
           data: (zaimy) {
         return zaimy.items.isNotEmpty
             ? FavoritesZaimyList(
@@ -119,10 +121,11 @@ class _LoadFavoritesByProductTypeState
           child: OnErrorWidget(
               error: error.toString(),
               onGoBackButtonTap: () {
-                ref.refresh(favoritesCreditCardsListControllerProvider);
+                ref.watch(goRouterProvider).pop();
               },
               onRefreshButtonTap: () {
-                ref.refresh(favoritesZaimyListControllerProvider);
+                ref.refresh(favoritesZaimyListControllerProvider(
+                    IsarPaginationParamsModel(offset: -1, limit: -1)));
               }),
         );
       }, loading: () {

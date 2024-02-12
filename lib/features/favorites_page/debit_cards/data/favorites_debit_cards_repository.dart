@@ -7,7 +7,7 @@ import 'favorites_debit_cards_data_source.dart';
 
 abstract class FavoritesDebitCardsRepositoryImpl {
   Future<void> fetch(
-      String arg, int offset, AutoDisposeAsyncNotifierProviderRef ref);
+      String arg, AutoDisposeAsyncNotifierProviderRef ref);
 }
 
 class FavoritesDebitCardsRepository
@@ -16,7 +16,7 @@ class FavoritesDebitCardsRepository
 
   @override
   Future<DebitCardsModel> fetch(
-      String url, int offset, AutoDisposeAsyncNotifierProviderRef ref) async {
+      String url, AutoDisposeAsyncNotifierProviderRef ref) async {
     if (url == 'debit_cards') {
       List<ListDebitCardsModel> list = [];
       return DebitCardsModel(itemsCount: 0, items: list);

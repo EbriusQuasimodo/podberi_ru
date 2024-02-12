@@ -40,6 +40,8 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
           onTap: () {
             ref.watch(favoritesDebitCardsListStateProvider.notifier).state.clear();
             ref.invalidate(favoritesDebitCardsListControllerProvider);
+            ref.watch(favoritesCreditCardsListStateProvider.notifier).state.clear();
+            ref.invalidate(favoritesCreditCardsListControllerProvider);
             setState(() {});
           },
           categoryName: element,
@@ -69,8 +71,8 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
         color: ThemeApp.mainBlue,
         onRefresh: () async {
           ref.invalidate(favoritesDebitCardsListControllerProvider);
-          ref.refresh(favoritesCreditCardsListControllerProvider.future);
-          ref.refresh(favoritesZaimyListControllerProvider.future);
+          ref.invalidate(favoritesCreditCardsListControllerProvider);
+          ref.invalidate(favoritesZaimyListControllerProvider);
         },
         child: CustomScrollView(
 

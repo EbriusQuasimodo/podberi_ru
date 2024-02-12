@@ -237,11 +237,11 @@ class _DebitCardWidgetWithButtonsState
                       onTap: () async {
                         FavoritesDebitCardsData favoritesDebitCardsData =
                             FavoritesDebitCardsData()
-                              ..id = widget.productInfo?.id;
+                              ..id = widget.productInfo.id;
                         await isar?.writeTxn(() async => await ref
                                 .watch(isarNotifierProvider.notifier)
                                 .isItemDuplicateInFavorites(
-                                    widget.productInfo!.id,
+                                    widget.productInfo.id,
                                     widget.basicApiPageSettingsModel
                                         .productTypeUrl!)
                             ? await isar?.favoritesDebitCardsDatas
