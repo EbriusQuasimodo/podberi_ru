@@ -18,7 +18,8 @@ class FavoriteZaimyWidget extends ConsumerStatefulWidget {
   final String productRating;
   final ListZaimyModel? productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  final VoidCallback onTap;
+  final VoidCallback deleteFromFavorites;
+  final VoidCallback tapOnComparisonButton;
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
@@ -27,7 +28,8 @@ class FavoriteZaimyWidget extends ConsumerStatefulWidget {
     required this.productRating,
     this.productInfo,
     required this.basicApiPageSettingsModel,
-    required this.onTap,
+    required this.deleteFromFavorites,
+    required this.tapOnComparisonButton,
   });
 
   @override
@@ -162,7 +164,7 @@ class _FavoriteZaimyWidget
                             : await isar?.comparisonZaimyDatas
                             .put(comparisonZaimyData));
 
-                        widget.onTap();
+                        widget.tapOnComparisonButton();
                       },
                       child: FutureBuilder(
                           future: ref
@@ -216,7 +218,7 @@ class _FavoriteZaimyWidget
                             : await isar?.favoritesZaimyDatas
                             .put(favoritesZaimyData));
 
-                        widget.onTap();
+                        widget.deleteFromFavorites();
                       },
                       child: FutureBuilder(
                           future: ref

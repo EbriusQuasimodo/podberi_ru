@@ -13,6 +13,7 @@ import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
 
 class CreditCardWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
@@ -243,7 +244,8 @@ class _CreditCardWidgetWithButtonsState
                                 .deleteAll()
                             : await isar?.favoritesCreditCardsDatas
                                 .put(favoritesCreditCardsData));
-
+                        ref.watch(favoritesCreditCardsListStateProvider.notifier).state.clear();
+                        ref.invalidate(favoritesCreditCardsListControllerProvider);
                         widget.onTap();
                       },
                       child: FutureBuilder(

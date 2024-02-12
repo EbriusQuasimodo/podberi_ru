@@ -12,6 +12,7 @@ import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dar
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
 class ZaimyWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
@@ -218,7 +219,8 @@ class _ZaimyWidgetWithButtonsState
                             .deleteAll()
                             : await isar?.favoritesZaimyDatas
                             .put(favoritesZaimyData));
-
+                        ref.watch(favoritesZaimyListStateProvider.notifier).state.clear();
+                        ref.invalidate(favoritesZaimyListControllerProvider);
                         widget.onTap();
                       },
                       child: FutureBuilder(

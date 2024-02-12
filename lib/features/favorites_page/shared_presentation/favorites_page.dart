@@ -42,6 +42,8 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
             ref.invalidate(favoritesDebitCardsListControllerProvider);
             ref.watch(favoritesCreditCardsListStateProvider.notifier).state.clear();
             ref.invalidate(favoritesCreditCardsListControllerProvider);
+            ref.watch(favoritesZaimyListStateProvider.notifier).state.clear();
+            ref.invalidate(favoritesZaimyListControllerProvider);
             setState(() {});
           },
           categoryName: element,
