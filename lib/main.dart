@@ -20,6 +20,7 @@ import 'core/utils/comparison/rko/comparison_rko_data.dart';
 import 'core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'features/all_banks_page/data/all_banks_data_source.dart';
 import 'features/catalog_page/debit_cards/data/debit_cards_data_source.dart';
+import 'features/catalog_page/rko/data/rko_data_source.dart';
 import 'features/catalog_page/zaimy/data/zaimy_data_source.dart';
 import 'features/comparison_page/credit_cards/data/comparison_credit_cards_data_source.dart';
 import 'features/comparison_page/debit_cards/data/comparison_debit_cards_data_source.dart';
@@ -68,6 +69,7 @@ void main() async {
   GetIt.I.registerLazySingleton(() => DebitCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => CreditCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => ZaimyGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => RkoGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => DebitCardsDetailsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => CreditCardsDetailsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => ZaimyDetailsGetDataSource(dio: dio));

@@ -2,101 +2,83 @@ import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/pagination_params_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/core/domain/pagination_params_model.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
-import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_controller.dart';
-import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/choice_chip_with_many_choice_item.dart';
+import 'package:podberi_ru/features/catalog_page/credit_cards/presentation/credit_cards_controller.dart';
+import 'package:podberi_ru/features/catalog_page/rko/presentation/rko_controller.dart';
 import 'package:podberi_ru/features/filters_page/debit_cards/presentation/widgets/show_more_banks_page.dart';
+import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/choice_chip_with_many_choice_item.dart';
 import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/save_button_widget.dart';
 import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/show_more_page.dart';
-
 import 'package:sliver_tools/sliver_tools.dart';
 
 
-class DebitCardsFiltersPage extends ConsumerStatefulWidget {
+class RkoFiltersPage extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
   ///страница с фильтрами
-  const DebitCardsFiltersPage(
+  const RkoFiltersPage(
       {super.key, required this.basicApiPageSettingsModel});
 
   @override
-  ConsumerState<DebitCardsFiltersPage> createState() =>
-      _DebitCardsFiltersPageState();
+  ConsumerState<RkoFiltersPage> createState() =>
+      _RkoFiltersPageState();
 }
 
-class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
-  ///todo разобраться с кэшбеком (нет поля по которому я могу фильтроваться)
-//   final List<String> cashBackNamesList = [
-//     'Баллы', //баллов
-//     'Рубли', //рублей
-//     'Не важно',
-//     'Мили', //милей
-//   ];
-
-  final List<String> paySystemNamesList = [
-    'Не важно',
-    'МИР',
-    'Mastercard',
-    'VISA',
-    'Union Pay',
-  ];
+class _RkoFiltersPageState
+    extends ConsumerState<RkoFiltersPage> {
   final List<String> additionalConditionsNamesList = [
-    'Бесплатное обслуживание',
-    'Виртуальная карта',
-    'Моментальный выпуск',
-    'Бесконтактная оплата',
-    'Доступно с 14 лет',
-    'Детская карта',
-    'Samsung Pay',
-    'Mir Pay',
-    'Выпуск за день',
-    'Выпуск допкарты',
-    'Рассрочка на покупки',
-    'Снятие наличных везде',
-    'Мультивалютная карта',
+    'Мобильное приложение',
+    'Кэшбэк по карте',
+    'Для ИП',
+    'Для ООО',
+    'Зарплатный проект',
+    'Выпуск бизнес-карты',
+    'Выпуск КЭП',
+    'Онлайн-бухгалтерия',
+    'Персональный менеджер',
+    'Банковские гарантии',
+    'Валютный счет',
+    'Дистанционная поддержка',
+    'Проверка контрагентов',
+    'Для ИП и ООО',
   ];
-  List<String> selectedBanks = [];
-
-  //List<String> selectedCashBack = [];
-  List<String> selectedPaySystem = [];
   List<String> selectedAdditionalConditions = [];
-
+  List<String> selectedBanks = [];
   @override
   void didChangeDependencies() {
-    selectedAdditionalConditions=widget.basicApiPageSettingsModel.filters.features ??[];
     selectedBanks= widget.basicApiPageSettingsModel.filters.banks??[];
-    selectedPaySystem= widget.basicApiPageSettingsModel.filters.paySystem??[];
+    selectedAdditionalConditions=widget.basicApiPageSettingsModel.filters.features ?? [];
     super.didChangeDependencies();
   }
 
   void saveFilters() {
     setState(() {
-      widget.basicApiPageSettingsModel.filters.features=selectedAdditionalConditions;
+
       widget.basicApiPageSettingsModel.filters.banks=selectedBanks;
-      widget.basicApiPageSettingsModel.filters.paySystem=selectedPaySystem;
+      widget.basicApiPageSettingsModel.filters.features= selectedAdditionalConditions;
     });
   }
 
   void clearFilters() {
     setState(() {
-      widget.basicApiPageSettingsModel.filters.features?.clear();
       widget.basicApiPageSettingsModel.filters.banks?.clear();
-      widget.basicApiPageSettingsModel.filters.paySystem?.clear();
-      selectedBanks.clear();
-      //  selectedCashBack.clear();
-      selectedPaySystem.clear();
+      widget.basicApiPageSettingsModel.filters.features?.clear();
       selectedAdditionalConditions.clear();
+      selectedBanks.clear();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: () => ref.refresh(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1)).future),
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -105,11 +87,12 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
               pinned: true,
               title: const Text('Фильтры'),
               leading: IconButton(
-                  onPressed: ()  {
+                  onPressed: () {
                     saveFilters();
                     Navigator.of(context).pop();
-                    ///костыль благодаря которому обновляется экран дебетовок если выбран фильтр в доп услугах)))
-                    ref.refresh(debitCardsControllerProvider( widget.basicApiPageSettingsModel));
+
+                    ///костыль благодаря которому обновляется экран кредиток если выбран фильтр в доп услугах)))
+                    ref.invalidate(rkoControllerProvider);
                   },
                   icon: const Icon(Icons.arrow_back_ios_new)),
             ),
@@ -140,23 +123,46 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                   sliver: SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        // const Padding(
-                        //   padding: EdgeInsets.only(top: 30, bottom: 20),
-                        //   child: Center(
-                        //     child: Text(
-                        //       'Найдено по запросу (2)',
-                        //       style: TextStyle(
-                        //           color: ThemeApp.backgroundBlack,
-                        //           fontSize: 14,
-                        //           fontWeight: FontWeight.w400),
+                        // ref
+                        //     .watch(creditCardsControllerProvider(
+                        //         widget.basicApiPageSettingsModel))
+                        //     .when(data: (creditCards) {
+                        //   return Padding(
+                        //     padding: EdgeInsets.only(top: 30, bottom: 20),
+                        //     child: Center(
+                        //       child: Text(
+                        //         'Найдено по запросу (${creditCards.itemsCount})',
+                        //         style: TextStyle(
+                        //             color: ThemeApp.backgroundBlack,
+                        //             fontSize: 14,
+                        //             fontWeight: FontWeight.w400),
+                        //       ),
                         //     ),
-                        //   ),
-                        // ),
+                        //   );
+                        // }, error: (error, _) {
+                        //   return const Padding(
+                        //     padding: EdgeInsets.only(top: 30, bottom: 20),
+                        //     child: Center(
+                        //       child: Text(
+                        //         'Найдено по запросу (0)',
+                        //         style: TextStyle(
+                        //             color: ThemeApp.backgroundBlack,
+                        //             fontSize: 14,
+                        //             fontWeight: FontWeight.w400),
+                        //       ),
+                        //     ),
+                        //   );
+                        // }, loading: () {
+                        //   return CircularProgressIndicator();
+                        // }),
+                        //
                         // Container(
                         //   color: ThemeApp.darkestGrey,
                         //   height: 1,
                         //   width: double.infinity,
                         // ),
+
+
                         ref.watch(allBanksControllerProvider(PaginationParamsModel(fetch: 6, page: 1))).when(
                           data: (allBanks) {
                             return Column(
@@ -169,17 +175,17 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                                     onTap: () {
                                       Navigator.of(context, rootNavigator: true)
                                           .push(MaterialPageRoute(
-                                              builder: (BuildContext context) {
-                                        return ShowMoreBanksPage(
-                                            onTapSaveButton: () {
-                                              saveFilters();
-                                            },
-                                            onTapTrashButton: () {
-                                              clearFilters();
-                                            },
-                                            filters: selectedBanks,
-                                            itemCount: allBanks.itemsCount);
-                                      }));
+                                          builder: (BuildContext context) {
+                                            return ShowMoreBanksPage(
+                                                onTapSaveButton: () {
+                                                  saveFilters();
+                                                },
+                                                onTapTrashButton: () {
+                                                  clearFilters();
+                                                },
+                                                filters: selectedBanks,
+                                                itemCount: allBanks.itemsCount);
+                                          }));
                                     },
                                     child: const Row(
                                       children: [
@@ -269,53 +275,6 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
                             return const CustomLoadingCardWidget(
                               bottomPadding: 2,
                             );
-                          },
-                        ),
-                        Container(
-                          color: ThemeApp.darkestGrey,
-                          height: 1,
-                          width: double.infinity,
-                        ),
-                        // const Padding(
-                        //   padding: EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                        //   child: Text(
-                        //     'Кэшбек',
-                        //     style: TextStyle(
-                        //         color: ThemeApp.backgroundBlack,
-                        //         fontWeight: FontWeight.w500,
-                        //         fontSize: 14),
-                        //   ),
-                        // ),
-                        // ChoiceChipWithManyChoiceItem(
-                        //     onTap: () {
-                        //       setState(() {
-                        //       });
-                        //     },
-                        //     length: cashBackNamesList.length,
-                        //     itemsNames: cashBackNamesList,
-                        //     filters: selectedCashBack),
-                        // Container(
-                        //   color: ThemeApp.darkestGrey,
-                        //   height: 1,
-                        //   width: double.infinity,
-                        // ),
-                        const Padding(
-                          padding:
-                              EdgeInsets.only(top: 26, bottom: 15, left: 15),
-                          child: Text(
-                            'Платежная система',
-                            style: TextStyle(
-                                color: ThemeApp.backgroundBlack,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14),
-                          ),
-                        ),
-                        ChoiceChipWithManyChoiceItem(
-                          length: paySystemNamesList.length,
-                          itemsNames: paySystemNamesList,
-                          filters: selectedPaySystem,
-                          onTap: () {
-                            setState(() {});
                           },
                         ),
                         Container(

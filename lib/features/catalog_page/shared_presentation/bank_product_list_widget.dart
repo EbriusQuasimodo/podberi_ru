@@ -1,7 +1,6 @@
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/catalog_is_empty.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
@@ -12,6 +11,8 @@ import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_contro
 import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_list.dart';
 import 'package:podberi_ru/features/catalog_page/credit_cards/presentation/credit_cards_controller.dart';
+import 'package:podberi_ru/features/catalog_page/rko/presentation/rko_controller.dart';
+import 'package:podberi_ru/features/catalog_page/rko/presentation/rko_list.dart';
 import 'package:podberi_ru/features/catalog_page/zaimy/presentation/zaimy_controller.dart';
 import 'package:podberi_ru/features/catalog_page/zaimy/presentation/zaimy_list.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
@@ -61,8 +62,6 @@ class _BankProductsListWidgetState
           itemCount =
               ref.watch(itemsCountFromSelectProductPageStateProvider);
         }
-
-        print("list fgklsg ${itemCount}");
         return debitCards.items.isNotEmpty
             ?SliverStack(
                 insetOnOverlap: true,
@@ -350,14 +349,105 @@ class _BankProductsListWidgetState
         );
       });
     } else {
-      return SliverFillRemaining(
-        hasScrollBody: false,
-        fillOverscroll: true,
-        child: OnErrorWidget(
-            error: NothingFoundException().message,
-            onGoBackButtonTap: () {},
-            onRefreshButtonTap: () {}),
-      );
+      return ref
+          .watch(rkoControllerProvider(widget.basicApiPageSettingsModel))
+          .when(data: (rko) {
+        if (widget.basicApiPageSettingsModel.whereFrom ==
+            AppRoute.homePage.name ||
+            widget.basicApiPageSettingsModel.whereFrom == 'homePageBanks') {
+          itemCount = ref.watch(itemsCountFromHomePageStateProvider);
+        } else if (widget.basicApiPageSettingsModel.whereFrom ==
+            AppRoute.selectProductPage.name ||
+            widget.basicApiPageSettingsModel.whereFrom ==
+                AppRoute.allBanksPage.name) {
+          itemCount =
+              ref.watch(itemsCountFromSelectProductPageStateProvider);
+        }
+        return rko.items.isNotEmpty
+            ? SliverStack(
+          insetOnOverlap: true,
+          children: [
+            SliverPositioned.fill(
+              child: SliverFillRemaining(
+                hasScrollBody: false,
+                fillOverscroll: true,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 2, bottom: 72),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ThemeApp.mainWhite,
+                  ),
+                ),
+              ),
+            ),
+            SliverContainer(
+              margin: const EdgeInsets.only(top: 2, bottom: 72),
+              background: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: ThemeApp.mainWhite,
+                ),
+                child: widget.basicApiPageSettingsModel.whereFrom ==
+                    AppRoute.allBanksPage.name ||
+                    widget.basicApiPageSettingsModel.whereFrom ==
+                        'homePageBanks'
+                    ? const SizedBox.shrink()
+                    : Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 17),
+                  child: Text(
+                    'Найдено (${itemCount} шт.)',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: ThemeApp.darkestGrey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              sliver: SliverPadding(
+                  padding: EdgeInsets.only(
+                    top: widget.basicApiPageSettingsModel.whereFrom ==
+                        AppRoute.allBanksPage.name ||
+                        widget.basicApiPageSettingsModel.whereFrom ==
+                            'homePageBanks'
+                        ? 15
+                        : 47,
+                    right: 15,
+                    left: 15,
+                    bottom: 5,
+                  ),
+                  sliver: RkoListWidget(
+                    basicApiPageSettingsModel:
+                    widget.basicApiPageSettingsModel,
+                    itemsCount: itemCount,
+                  )),
+            ),
+          ],
+        )
+            : CatalogIsEmpty(itemsCount: itemCount);
+      }, error: (error, _) {
+            print(_);
+        return SliverFillRemaining(
+          hasScrollBody: false,
+          fillOverscroll: true,
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(
+                    rkoControllerProvider(widget.basicApiPageSettingsModel));
+              }),
+        );
+      }, loading: () {
+        return const SliverFillRemaining(
+          child: CustomLoadingCardWidget(
+            bottomPadding: 72,
+          ),
+        );
+      });
     }
   }
 }

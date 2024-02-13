@@ -23,6 +23,7 @@ class ListZaimyModel with _$ListZaimyModel {
     @Default('') @JsonKey(name: '_id') String id,
     @Default('') @JsonKey(name: 'all_conditions_link') String allConditionsLink,
     @Default(false) bool best,
+    @Default('') String color,
     @Default(false) bool enable,
     @Default('') String image,
     @Default(0) @JsonKey(name: 'max_percent') int maxPercent,

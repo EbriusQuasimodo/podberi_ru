@@ -200,6 +200,7 @@ mixin _$ListZaimyModel {
   @JsonKey(name: 'all_conditions_link')
   String get allConditionsLink => throw _privateConstructorUsedError;
   bool get best => throw _privateConstructorUsedError;
+  String get color => throw _privateConstructorUsedError;
   bool get enable => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_percent')
@@ -238,6 +239,7 @@ abstract class $ListZaimyModelCopyWith<$Res> {
       {@JsonKey(name: '_id') String id,
       @JsonKey(name: 'all_conditions_link') String allConditionsLink,
       bool best,
+      String color,
       bool enable,
       String image,
       @JsonKey(name: 'max_percent') int maxPercent,
@@ -270,6 +272,7 @@ class _$ListZaimyModelCopyWithImpl<$Res, $Val extends ListZaimyModel>
     Object? id = null,
     Object? allConditionsLink = null,
     Object? best = null,
+    Object? color = null,
     Object? enable = null,
     Object? image = null,
     Object? maxPercent = null,
@@ -298,6 +301,10 @@ class _$ListZaimyModelCopyWithImpl<$Res, $Val extends ListZaimyModel>
           ? _value.best
           : best // ignore: cast_nullable_to_non_nullable
               as bool,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
       enable: null == enable
           ? _value.enable
           : enable // ignore: cast_nullable_to_non_nullable
@@ -370,6 +377,7 @@ abstract class _$$ListZaimyModelImplCopyWith<$Res>
       {@JsonKey(name: '_id') String id,
       @JsonKey(name: 'all_conditions_link') String allConditionsLink,
       bool best,
+      String color,
       bool enable,
       String image,
       @JsonKey(name: 'max_percent') int maxPercent,
@@ -400,6 +408,7 @@ class __$$ListZaimyModelImplCopyWithImpl<$Res>
     Object? id = null,
     Object? allConditionsLink = null,
     Object? best = null,
+    Object? color = null,
     Object? enable = null,
     Object? image = null,
     Object? maxPercent = null,
@@ -428,6 +437,10 @@ class __$$ListZaimyModelImplCopyWithImpl<$Res>
           ? _value.best
           : best // ignore: cast_nullable_to_non_nullable
               as bool,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
       enable: null == enable
           ? _value.enable
           : enable // ignore: cast_nullable_to_non_nullable
@@ -495,6 +508,7 @@ class _$ListZaimyModelImpl implements _ListZaimyModel {
       {@JsonKey(name: '_id') this.id = '',
       @JsonKey(name: 'all_conditions_link') this.allConditionsLink = '',
       this.best = false,
+      this.color = '',
       this.enable = false,
       this.image = '',
       @JsonKey(name: 'max_percent') this.maxPercent = 0,
@@ -522,6 +536,9 @@ class _$ListZaimyModelImpl implements _ListZaimyModel {
   @override
   @JsonKey()
   final bool best;
+  @override
+  @JsonKey()
+  final String color;
   @override
   @JsonKey()
   final bool enable;
@@ -567,7 +584,7 @@ class _$ListZaimyModelImpl implements _ListZaimyModel {
 
   @override
   String toString() {
-    return 'ListZaimyModel(id: $id, allConditionsLink: $allConditionsLink, best: $best, enable: $enable, image: $image, maxPercent: $maxPercent, maxTerm: $maxTerm, minPercent: $minPercent, minTerm: $minTerm, name: $name, popular: $popular, refLink: $refLink, signInGosuslugi: $signInGosuslugi, slug: $slug, sum: $sum, termFormat: $termFormat, type: $type)';
+    return 'ListZaimyModel(id: $id, allConditionsLink: $allConditionsLink, best: $best, color: $color, enable: $enable, image: $image, maxPercent: $maxPercent, maxTerm: $maxTerm, minPercent: $minPercent, minTerm: $minTerm, name: $name, popular: $popular, refLink: $refLink, signInGosuslugi: $signInGosuslugi, slug: $slug, sum: $sum, termFormat: $termFormat, type: $type)';
   }
 
   @override
@@ -579,6 +596,7 @@ class _$ListZaimyModelImpl implements _ListZaimyModel {
             (identical(other.allConditionsLink, allConditionsLink) ||
                 other.allConditionsLink == allConditionsLink) &&
             (identical(other.best, best) || other.best == best) &&
+            (identical(other.color, color) || other.color == color) &&
             (identical(other.enable, enable) || other.enable == enable) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.maxPercent, maxPercent) ||
@@ -606,6 +624,7 @@ class _$ListZaimyModelImpl implements _ListZaimyModel {
       id,
       allConditionsLink,
       best,
+      color,
       enable,
       image,
       maxPercent,
@@ -641,6 +660,7 @@ abstract class _ListZaimyModel implements ListZaimyModel {
       {@JsonKey(name: '_id') final String id,
       @JsonKey(name: 'all_conditions_link') final String allConditionsLink,
       final bool best,
+      final String color,
       final bool enable,
       final String image,
       @JsonKey(name: 'max_percent') final int maxPercent,
@@ -667,6 +687,8 @@ abstract class _ListZaimyModel implements ListZaimyModel {
   String get allConditionsLink;
   @override
   bool get best;
+  @override
+  String get color;
   @override
   bool get enable;
   @override

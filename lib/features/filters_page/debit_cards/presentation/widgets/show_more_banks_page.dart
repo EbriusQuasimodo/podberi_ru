@@ -9,7 +9,6 @@ import 'package:sliver_tools/sliver_tools.dart';
 
 class ShowMoreBanksPage extends ConsumerStatefulWidget {
   final int itemCount;
-  final AutoDisposeStateProvider<List<String>> providerName;
   final List<String> filters;
   final VoidCallback onTapTrashButton;
   final VoidCallback onTapSaveButton;
@@ -21,7 +20,6 @@ class ShowMoreBanksPage extends ConsumerStatefulWidget {
     required this.itemCount,
     required this.onTapSaveButton,
     required this.onTapTrashButton,
-    required this.providerName,
   });
 
   @override
