@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
-import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/details_page/zaimy/data/zaimy_details_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

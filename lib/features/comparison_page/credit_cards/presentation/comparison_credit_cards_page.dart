@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 import 'widgets/credit_cards_comparison_data_table_widget.dart';
 import 'widgets/credit_cards_page_view_widgets/credit_cards_page_view_widget.dart';
 

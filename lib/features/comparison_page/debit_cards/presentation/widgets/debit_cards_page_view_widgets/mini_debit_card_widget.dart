@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
+import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_page.dart';
 
 class MiniDebitCardWidget extends StatelessWidget {

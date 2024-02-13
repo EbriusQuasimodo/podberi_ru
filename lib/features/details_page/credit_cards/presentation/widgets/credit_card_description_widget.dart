@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_page.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 

@@ -5,7 +5,7 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_controller.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/sort_controllers/debit_cards_sort_controller.dart';
+import 'package:podberi_ru/features/catalog_page/sorting/debit_cards/debit_cards_sort_controller.dart';
 
 class DebitCardsSortBottomSheetWidget extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;

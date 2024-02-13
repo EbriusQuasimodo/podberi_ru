@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/home_page/data/best_offer_data/best_offer_repository.dart';
 
 ///получение списка лучших предложений

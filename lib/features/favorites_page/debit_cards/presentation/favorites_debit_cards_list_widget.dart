@@ -2,10 +2,10 @@ import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -104,8 +104,6 @@ class _FavoritesDebitCardsListState
   Widget build(BuildContext context) {
     favoritesDebitCardsList =
         ref.watch(favoritesDebitCardsListStateProvider);
-    print('widget.itemsCount${widget.itemsCount}');
-    print("favoritesDebitCardsList.length${favoritesDebitCardsList.length}");
     if (favoritesDebitCardsList.isNotEmpty) {
       return SliverStack(
         insetOnOverlap: true,

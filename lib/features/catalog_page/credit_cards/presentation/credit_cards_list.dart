@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/page_controllers/credit_cards_controller.dart';
+import 'package:podberi_ru/features/catalog_page/credit_cards/presentation/credit_cards_controller.dart';
 
 import 'credit_card_button_widget.dart';
 

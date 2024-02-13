@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
 
 import 'favorites_debit_cards_data_source.dart';

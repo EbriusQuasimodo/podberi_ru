@@ -4,11 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_page.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 

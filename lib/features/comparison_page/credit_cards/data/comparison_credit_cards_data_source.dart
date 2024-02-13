@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 
 ///получение всех кредиток в сравнении, [productType] содержит в себе не только enum [ProductTypeEnum]
 ///но и id продуктов в сравнении

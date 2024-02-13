@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_and_product_type_widget.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/bank_product_list_widget.dart';
+import 'package:podberi_ru/features/catalog_page/shared_presentation/bank_product_list_widget.dart';
 import 'package:podberi_ru/features/catalog_page/sorting/load_sort_by_product_type.dart';
 import 'package:podberi_ru/features/filters_page/shared_presentation/filters_page.dart';
 
-import '../presentation/controllers/sort_controllers/debit_cards_sort_controller.dart';
+import '../sorting/debit_cards/debit_cards_sort_controller.dart';
+import 'widgets/bank_and_product_type_widget/bank_and_product_type_widget.dart';
 import 'widgets/sort_and_filter_widget.dart';
 
 class CatalogPage extends ConsumerStatefulWidget {

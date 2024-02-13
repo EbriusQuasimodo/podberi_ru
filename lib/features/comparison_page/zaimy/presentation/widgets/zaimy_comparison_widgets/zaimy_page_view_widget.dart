@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
+import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
-import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/widgets/credit_cards_page_view_widgets/credit_cards_page_view_widget.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
@@ -42,35 +42,29 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
     viewportFraction: 0.9,
   );
 
-  double currentPageOnFirstPageView = 0;
-  double currentPageOnSecondPageView = 0;
+  int currentPageOnFirstPageView = 0;
+  int currentPageOnSecondPageView = 0;
 
   @override
   void didChangeDependencies() {
     controllerSecondPageView.addListener(() {
-      currentPageOnSecondPageView = controllerSecondPageView.page!.toDouble();
+      ref.watch(comparisonSecondZaimyPageNumStateProvider.notifier).state = controllerSecondPageView.page!.toInt();
 
       ///у займов есть только название мфо поэтому вместо названия продукта
       ///здесь везде название мфо
       ref.watch(comparisonSecondZaimyBankNameStateController.notifier).state =
           widget.zaimyList[currentPageOnSecondPageView.toInt()].name;
-      ref.watch(comparisonSecondZaimyPageNumStateController.notifier).state =
-          currentPageOnSecondPageView.toInt();
-      setState(() {});
-      widget.onScrollPageViews();
+
     });
 
     controllerFirstPageView.addListener(() {
-      currentPageOnFirstPageView = controllerFirstPageView.page!.toDouble();
+      ref.watch(comparisonFirstZaimyPageNumStateProvider.notifier).state = controllerFirstPageView.page!.toInt();
 
       ///у займов есть только название мфо поэтому вместо названия продукта
       ///здесь везде название мфо
       ref.watch(comparisonFirstZaimyBankNameStateProvider.notifier).state =
           widget.zaimyList[currentPageOnFirstPageView.toInt()].name;
-      ref.watch(comparisonFirstZaimyPageNumStateProvider.notifier).state =
-          currentPageOnFirstPageView.toInt();
-      setState(() {});
-      widget.onScrollPageViews();
+
     });
     super.didChangeDependencies();
   }
@@ -86,6 +80,8 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    currentPageOnFirstPageView = ref.watch(comparisonFirstZaimyPageNumStateProvider);
+   currentPageOnSecondPageView = ref.watch(comparisonFirstZaimyPageNumStateProvider);
     return Container(
       margin: const EdgeInsets.only(top: 2),
       decoration: BoxDecoration(
@@ -108,6 +104,7 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
           SizedBox(
             height: 91,
             child: PageView(
+              key: const PageStorageKey<String>('comparisonZaimyPageViewFirst'),
               controller: controllerFirstPageView,
               children: List.generate(widget.zaimyList.length, (index) {
                 return MiniZaimyWidget(
@@ -129,7 +126,7 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                         : await isar?.comparisonZaimyDatas
                             .put(comparisonZaimyData));
 
-                    ref.refresh(comparisonZaimyListControllerProvider);
+                    ref.invalidate(comparisonZaimyListControllerProvider);
 
                     controllerFirstPageView.animateToPage(
                         controllerFirstPageView.page == 0.0
@@ -189,6 +186,7 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
               : SizedBox(
                   height: 91,
                   child: PageView(
+                    key: const PageStorageKey<String>('comparisonZaimyPageViewSecond'),
                     controller: controllerSecondPageView,
                     children: List.generate(widget.zaimyList.length, (index) {
                       return MiniZaimyWidget(
@@ -212,7 +210,7 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                               : await isar?.comparisonZaimyDatas
                                   .put(comparisonZaimyData));
 
-                          ref.refresh(comparisonZaimyListControllerProvider);
+                          ref.invalidate(comparisonZaimyListControllerProvider);
 
                           controllerSecondPageView.animateToPage(
                               controllerSecondPageView.page == 0.0

@@ -37,7 +37,9 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
       list.add(CustomChoiceChip(
         whereFrom: 'comparison',
         onTap: () {
-         // setState(() {});
+          ref.invalidate(comparisonDebitCardsListControllerProvider);
+          ref.invalidate(comparisonCreditCardsListControllerProvider);
+          ref.invalidate(comparisonZaimyListControllerProvider);
         },
         categoryName: element,
         selectedCategory: selectedBankProductsFilter,
@@ -61,7 +63,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
       firstProductName =
           ref.watch(comparisonFirstDebitProductNameStateProvider);
       secondProductName =
-          ref.watch(comparisonSecondDebitProductNameStateController);
+          ref.watch(comparisonSecondDebitProductNameStateProvider);
       comparisonLength = ref.watch(comparisonDebitListLengthStateController);
     }
     if (ref.watch(comparisonProductUrlStateProvider) == 'credit_cards') {
@@ -82,9 +84,9 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,
         onRefresh: () async {
-          ref.refresh(comparisonDebitCardsListControllerProvider.future);
-          ref.refresh(comparisonCreditCardsListControllerProvider.future);
-          ref.refresh(comparisonZaimyListControllerProvider.future);
+          ref.invalidate(comparisonDebitCardsListControllerProvider);
+          ref.invalidate(comparisonCreditCardsListControllerProvider);
+          ref.invalidate(comparisonZaimyListControllerProvider);
           //ref.refresh(banksControllerProvider.future);
         },
         child: CustomScrollView(

@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/credit_cards/data/credit_cards_details_repository.dart';
 
 ///получение деталей о кредитке, принимает в себя id

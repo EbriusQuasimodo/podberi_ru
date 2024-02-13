@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/shared_widgets/comparison_row_item.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
@@ -51,7 +51,7 @@ class _CreditCardsComparisonDataTableWidgetState
   Widget build(BuildContext context) {
     int comparisonLength = ref.watch(comparisonCreditListLengthStateController);
     int firstPageNum = ref.watch(comparisonFirstCreditPageNumStateProvider);
-    int secondPageNum = ref.watch(comparisonSecondCreditPageNumStateController);
+    int secondPageNum = ref.watch(comparisonSecondCreditPageNumStateProvider);
     return Container(
       padding: const EdgeInsets.only(top: 43, bottom: 30),
       margin: const EdgeInsets.only(top: 2, bottom: 72),

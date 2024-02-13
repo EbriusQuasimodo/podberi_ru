@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_chip.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_and_product_type_widget/bank_info_card.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
+
+import 'bank_info_card.dart';
 
 class BankAndProductTypeWidget extends ConsumerStatefulWidget {
   final VoidCallback onTap;

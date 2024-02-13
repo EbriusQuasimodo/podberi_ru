@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
+import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 
 
 

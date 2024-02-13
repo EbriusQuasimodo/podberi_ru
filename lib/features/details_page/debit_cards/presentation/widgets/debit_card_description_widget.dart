@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
 
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_details_page.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 

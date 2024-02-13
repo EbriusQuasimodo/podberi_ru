@@ -7,14 +7,14 @@ final comparisonProductUrlStateProvider = StateProvider.autoDispose<String>((ref
 final comparisonFirstDebitBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
 });
-final comparisonSecondDebitBankNameStateController = StateProvider.autoDispose<String>((ref) {
+final comparisonSecondDebitBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
 });
 
 final comparisonFirstDebitProductNameStateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
 });
-final comparisonSecondDebitProductNameStateController = StateProvider.autoDispose<String>((ref) {
+final comparisonSecondDebitProductNameStateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
 });
 
@@ -25,7 +25,7 @@ final comparisonDebitListLengthStateController = StateProvider.autoDispose<int>(
 final comparisonFirstDebitPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
-final comparisonSecondDebitPageNumStateController = StateProvider.autoDispose<int>((ref) {
+final comparisonSecondDebitPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
 
@@ -47,7 +47,7 @@ final comparisonSecondCreditProductNameStateController = StateProvider.autoDispo
 final comparisonFirstCreditPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
-final comparisonSecondCreditPageNumStateController = StateProvider.autoDispose<int>((ref) {
+final comparisonSecondCreditPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
 
@@ -66,7 +66,7 @@ final comparisonSecondZaimyBankNameStateController = StateProvider.autoDispose<S
 final comparisonFirstZaimyPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
-final comparisonSecondZaimyPageNumStateController = StateProvider.autoDispose<int>((ref) {
+final comparisonSecondZaimyPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
 

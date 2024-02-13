@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
 
 import 'comparison_zaimy_data_source.dart';
 
 abstract class ComparisonZaimyRepositoryImpl {
-  Future<void> fetch(String arg, AutoDisposeAsyncNotifierProviderRef ref);
+  Future<void> fetch(String arg, int firstPageNum, int secondPageNum,AutoDisposeAsyncNotifierProviderRef ref);
 }
 
 class ComparisonZaimyRepository implements ComparisonZaimyRepositoryImpl {
@@ -15,9 +15,8 @@ class ComparisonZaimyRepository implements ComparisonZaimyRepositoryImpl {
 
   @override
   Future<ZaimyModel> fetch(
-      String arg, AutoDisposeAsyncNotifierProviderRef ref) async {
-    int firstPageNum = ref.read(comparisonFirstZaimyPageNumStateProvider);
-    int secondPageNum = ref.read(comparisonSecondZaimyPageNumStateController);
+      String arg,int firstPageNum, int secondPageNum, AutoDisposeAsyncNotifierProviderRef ref) async {
+
     ///если передали квери только из одного типа продукта
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'zaimy') {
@@ -45,6 +44,7 @@ class ComparisonZaimyRepository implements ComparisonZaimyRepositoryImpl {
         ref.watch(comparisonSecondZaimyBankNameStateController.notifier).state =
             response.items[secondPageNum].name;
       }
+
       return response;
     }
   }

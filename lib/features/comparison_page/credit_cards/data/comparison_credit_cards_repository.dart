@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 
 import 'comparison_credit_cards_data_source.dart';
 
 abstract class ComparisonCreditCardsRepositoryImpl {
-  Future<void> fetch(String arg, AutoDisposeAsyncNotifierProviderRef ref);
+  Future<void> fetch(String arg,int firstPageNum, int secondPageNum, AutoDisposeAsyncNotifierProviderRef ref);
 }
 
 class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepositoryImpl {
@@ -15,9 +15,7 @@ class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepository
 
   @override
   Future<CreditCardsModel> fetch(
-      String arg, AutoDisposeAsyncNotifierProviderRef ref) async {
-    int firstPageNum = ref.read(comparisonFirstCreditPageNumStateProvider);
-    int secondPageNum = ref.read(comparisonSecondCreditPageNumStateController);
+      String arg,int firstPageNum, int secondPageNum, AutoDisposeAsyncNotifierProviderRef ref) async {
     ///если передали квери только из одного типа продукта
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'credit_cards') {
@@ -63,6 +61,7 @@ class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepository
             .watch(comparisonSecondCreditProductNameStateController.notifier)
             .state = response.items[secondPageNum].name;
       }
+
       return response;
     }
   }

@@ -36,6 +36,7 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
             )
                 : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в сравнении по данной категории.',);
           }, error: (error, _) {
+            print(_);
         return SliverFillRemaining(
           hasScrollBody: false,
           fillOverscroll: true,

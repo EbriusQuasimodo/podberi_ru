@@ -11,13 +11,13 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
 import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_list.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/page_controllers/credit_cards_controller.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/page_controllers/zaimy_controller.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/widgets/bank_products_list_widget/list_widgets/zaimy/zaimy_list.dart';
+import 'package:podberi_ru/features/catalog_page/credit_cards/presentation/credit_cards_controller.dart';
+import 'package:podberi_ru/features/catalog_page/zaimy/presentation/zaimy_controller.dart';
+import 'package:podberi_ru/features/catalog_page/zaimy/presentation/zaimy_list.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import 'list_widgets/credit_cards/credit_cards_list.dart';
+import '../credit_cards/presentation/credit_cards_list.dart';
 
 class BankProductsListWidget extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;

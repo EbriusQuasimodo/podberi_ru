@@ -5,13 +5,13 @@ import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
 
 class FavoriteDebitCardWidget extends ConsumerStatefulWidget {
   final String productRating;

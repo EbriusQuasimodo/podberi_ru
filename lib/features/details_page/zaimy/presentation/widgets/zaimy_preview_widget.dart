@@ -4,11 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
-import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/details_page/zaimy/presentation/zaimy_details_page.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 

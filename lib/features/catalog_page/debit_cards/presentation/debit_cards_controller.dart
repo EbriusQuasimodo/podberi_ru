@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
-import 'package:podberi_ru/features/catalog_page/data/debit_cards_data/debit_cards_repository.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/sort_controllers/debit_cards_sort_controller.dart';
+import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/catalog_page/debit_cards/data/debit_cards_repository.dart';
+import 'package:podberi_ru/features/catalog_page/sorting/debit_cards/debit_cards_sort_controller.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page_controller.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';

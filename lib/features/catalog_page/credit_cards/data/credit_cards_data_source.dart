@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
-import 'package:podberi_ru/features/catalog_page/data/credit_cards_data/credit_cards_repository.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
+import 'package:podberi_ru/features/catalog_page/credit_cards/data/credit_cards_repository.dart';
 
 ///получение кредиток. [productType] содержит в себе не только enum [ProductTypeEnum]
 ///но и фильтры, имя банка, сортировку и тд

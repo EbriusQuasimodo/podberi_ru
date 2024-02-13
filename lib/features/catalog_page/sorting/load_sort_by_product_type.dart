@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/catalog_page/presentation/controllers/sort_controllers/debit_cards_sort_controller.dart';
+import 'package:podberi_ru/features/catalog_page/sorting/debit_cards/debit_cards_sort_controller.dart';
 import 'package:podberi_ru/features/catalog_page/sorting/credit_cards/credit_cards_sort_bottom_sheet_widget.dart';
 import 'package:podberi_ru/features/catalog_page/sorting/debit_cards/debit_cards_sort_bottom_sheet_widget.dart';
 import 'package:podberi_ru/features/catalog_page/sorting/zaimy/zaimy_sort_bottom_sheet_widget.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
+import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
-import 'package:podberi_ru/features/catalog_page/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/features/favorites_page/credit_cards/data/favorites_credit_cards_repository.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';

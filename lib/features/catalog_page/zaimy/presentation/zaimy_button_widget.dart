@@ -6,12 +6,13 @@ import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
+import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
-import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+
 import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
 class ZaimyWidgetWithButtons extends ConsumerStatefulWidget {

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:podberi_ru/core/domain/product_type_enum.dart';
-import 'package:podberi_ru/features/catalog_page/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/features/favorites_page/zaimy/data/favorites_zaimy_repository.dart';
 
 ///получение всех займов в избранном, [productType] содержит в себе не только enum [ProductTypeEnum]

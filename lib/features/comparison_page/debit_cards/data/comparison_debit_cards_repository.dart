@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:podberi_ru/features/catalog_page/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 
 import 'comparison_debit_cards_data_source.dart';
 
 abstract class ComparisonDebitCardsRepositoryImpl {
-  Future<void> fetch(String arg, AutoDisposeAsyncNotifierProviderRef ref);
+  Future<void> fetch(String arg, int firstPageNum, int secondPageNum,AutoDisposeAsyncNotifierProviderRef ref);
 }
 
 class ComparisonDebitCardsRepository
@@ -16,14 +16,12 @@ class ComparisonDebitCardsRepository
 
   @override
   Future<DebitCardsModel> fetch(
-      String arg, AutoDisposeAsyncNotifierProviderRef ref) async {
-    int firstPageNum = ref.read(comparisonFirstDebitPageNumStateProvider);
-    int secondPageNum = ref.read(comparisonSecondDebitPageNumStateController);
+      String arg,int firstPageNum, int secondPageNum, AutoDisposeAsyncNotifierProviderRef ref) async {
+
     ///если передали квери только из одного типа продукта
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'debit_cards') {
       List<ListDebitCardsModel> list = [];
-      print('dfhsdhsdh');
       ref.watch(comparisonDebitListLengthStateController.notifier).state = 0;
       ///то возвращаем пустой список чтобы отобразить что продуктов в сравнении нет
       return DebitCardsModel(items: list, itemsCount: 0);
@@ -33,16 +31,16 @@ class ComparisonDebitCardsRepository
       ref.watch(comparisonDebitListLengthStateController.notifier).state = response.itemsCount;
       ///если всего один продукт в сравнении
       if (response.itemsCount == 1) {
-        print('dfsogkpsodfkhg');
+
         ///то у всех провайдеров для второго page view оставляем пустые значения
         ///а для первого заполняем данными
-        ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =
+        ref.watch(comparisonSecondDebitBankNameStateProvider.notifier).state =
             '';
         ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
             response.items[firstPageNum].bankDetails!.bankName;
 
         ref
-            .watch(comparisonSecondDebitProductNameStateController.notifier)
+            .watch(comparisonSecondDebitProductNameStateProvider.notifier)
             .state = '';
         ref.watch(comparisonFirstDebitProductNameStateProvider.notifier).state =
             response.items[firstPageNum].name;
@@ -51,15 +49,16 @@ class ComparisonDebitCardsRepository
         ///то все провайдеры для каждого pfge view заполняем данными
         ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
             response.items[firstPageNum].bankDetails!.bankName;
-        ref.watch(comparisonSecondDebitBankNameStateController.notifier).state =
+        ref.watch(comparisonSecondDebitBankNameStateProvider.notifier).state =
             response.items[secondPageNum].bankDetails!.bankName;
 
         ref.watch(comparisonFirstDebitProductNameStateProvider.notifier).state =
             response.items[firstPageNum].name;
         ref
-            .watch(comparisonSecondDebitProductNameStateController.notifier)
+            .watch(comparisonSecondDebitProductNameStateProvider.notifier)
             .state = response.items[secondPageNum].name;
       }
+
       return response;
     }
   }
