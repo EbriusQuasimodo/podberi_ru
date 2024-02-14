@@ -38,7 +38,7 @@ class ZaimyController extends AutoDisposeFamilyAsyncNotifier<ZaimyModel,
     }
     productTypeWithQuery += '?fetch=10&page=${arg.page}';
 
-    final zaimyRepo = ref.read(zaimyRepositoryProvider);
+    final zaimyRepo = ref.watch(zaimyRepositoryProvider);
 
     if (arg.filters.percents != 0) {
       ///ищем займы у которых макс процент находится в диапазоне min - max

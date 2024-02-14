@@ -23,7 +23,7 @@ class DebitCardsRepository implements DebitCardsRepositoryImpl {
     }else if(whereFrom == AppRoute.selectProductPage.name ||whereFrom ==  AppRoute.allBanksPage.name){
       ref.watch(itemsCountFromSelectProductPageStateProvider.notifier).state =response.itemsCount;
     }
-    //ref.keepAlive();
+
     return response;
   }
 }

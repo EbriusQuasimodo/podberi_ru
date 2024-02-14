@@ -9,7 +9,7 @@ class DebitCardsListWidget extends ConsumerStatefulWidget {
   final int itemsCount;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
-  ///list of debit cards. when press on card - go to [LoadDetailsPageByProductType]
+  ///list of debit cards. when press on card
   const DebitCardsListWidget({
     super.key,
     required this.basicApiPageSettingsModel,
@@ -32,6 +32,7 @@ class _DebitCardsListWidgetState extends ConsumerState<DebitCardsListWidget> {
           (BuildContext context, int index) {
         page = index ~/ pageSize + 1;
         final indexInPage = index % pageSize;
+        //print(page);
         widget.basicApiPageSettingsModel.page = page;
         return ref
             .watch(

@@ -35,7 +35,7 @@ class CreditCardsController extends AutoDisposeFamilyAsyncNotifier<
         productTypeWithQuery = ref.read(productTypeUrlFromHomeBanksStateProvider);
     }
 
-    final creditCardsRepo = ref.read(creditCardsRepositoryProvider);
+    final creditCardsRepo = ref.watch(creditCardsRepositoryProvider);
     productTypeWithQuery += '?fetch=10&page=${arg.page}';
 
     ///фильтр по банкам

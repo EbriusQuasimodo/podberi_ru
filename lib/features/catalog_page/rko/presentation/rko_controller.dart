@@ -33,7 +33,7 @@ class RkoController extends AutoDisposeFamilyAsyncNotifier<
         productTypeWithQuery = ref.read(productTypeUrlFromHomeBanksStateProvider);
     }
     productTypeWithQuery += '?fetch=10&page=${arg.page}';
-    final rkoRepo = ref.read(rkoRepositoryProvider);
+    final rkoRepo = ref.watch(rkoRepositoryProvider);
 
     ///если фильтр по банкам не пустой
     if (arg.filters.banks !=null) {
