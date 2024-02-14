@@ -6,6 +6,8 @@ import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.da
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
+import 'package:podberi_ru/features/comparison_page/rko/presentation/comparison_rko_controller.dart';
+import 'package:podberi_ru/features/comparison_page/rko/presentation/comparison_rko_page.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_page.dart';
@@ -87,12 +89,43 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
           ),
         );
       });
-    } else {
+    } else if(ref.watch(comparisonProductUrlStateProvider) == 'zaimy') {
       return ref.watch(comparisonZaimyListControllerProvider).when(
           data: (zaimyInComparison) {
             return zaimyInComparison.items.isNotEmpty
                 ? ComparisonZaimyPage(
               zaimyInComparison: zaimyInComparison.items,
+              onScrollPageViews: () {
+                setState(() {});
+              },
+            )
+                : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в сравнении по данной категории.',);
+          }, error: (error, _) {
+        return SliverFillRemaining(
+          hasScrollBody: false,
+          fillOverscroll: true,
+          child: OnErrorWidget(
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(comparisonZaimyListControllerProvider);
+              }),
+        );
+      }, loading: () {
+        return const SliverFillRemaining(
+          child: CustomLoadingCardWidget(
+            bottomPadding: 72,
+          ),
+        );
+      });
+    }else{
+      return ref.watch(comparisonRkoListControllerProvider).when(
+          data: (rkoInComparison) {
+            return rkoInComparison.items.isNotEmpty
+                ? ComparisonRkoPage(
+              rkoInComparison: rkoInComparison.items,
               onScrollPageViews: () {
                 setState(() {});
               },

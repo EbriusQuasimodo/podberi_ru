@@ -24,6 +24,7 @@ import 'features/catalog_page/rko/data/rko_data_source.dart';
 import 'features/catalog_page/zaimy/data/zaimy_data_source.dart';
 import 'features/comparison_page/credit_cards/data/comparison_credit_cards_data_source.dart';
 import 'features/comparison_page/debit_cards/data/comparison_debit_cards_data_source.dart';
+import 'features/comparison_page/rko/data/comparison_rko_data_source.dart';
 import 'features/comparison_page/zaimy/data/comparison_zaimy_data_source.dart';
 import 'features/details_page/credit_cards/data/credit_cards_details_data_source.dart';
 import 'features/details_page/debit_cards/data/debit_cards_details_data_source.dart';
@@ -88,5 +89,6 @@ void main() async {
   GetIt.I.registerLazySingleton(() => ComparisonDebitCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => ComparisonCreditCardsGetDataSource(dio: dio));
   GetIt.I.registerLazySingleton(() => ComparisonZaimyGetDataSource(dio: dio));
+  GetIt.I.registerLazySingleton(() => ComparisonRkoGetDataSource(dio: dio));
   runApp(const ProviderScope(child: App()));
 }

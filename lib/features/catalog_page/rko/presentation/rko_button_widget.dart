@@ -13,6 +13,7 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/comparison_page/rko/presentation/comparison_rko_controller.dart';
 import 'package:podberi_ru/features/favorites_page/rko/presentation/favorites_rko_controller.dart';
 
 class RkoWidgetWithButtons extends ConsumerStatefulWidget {
@@ -192,8 +193,7 @@ class _RkoWidgetWithButtonsState
                                 .deleteAll()
                             : await isar?.comparisonRkoDatas
                                 .put(comparisonRkoData));
-                        // ref.watch(comparisonRkoListStateProvider.notifier).state.clear();
-                        // ref.invalidate(comparisonRkoListControllerProvider);
+                        ref.invalidate(comparisonRkoListControllerProvider);
                         setState(() {});
                       },
                       child: FutureBuilder(

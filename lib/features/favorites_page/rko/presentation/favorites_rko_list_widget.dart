@@ -6,6 +6,7 @@ import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/comparison_page/rko/presentation/comparison_rko_controller.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -90,7 +91,7 @@ class _FavoritesRkoListState
                   offset: favoritesRkoList.length ~/ pageSize,
                   limit: pageSize))
           .future);
-      //ref.invalidate(comparisonRkoListControllerProvider);
+      ref.invalidate(comparisonRkoListControllerProvider);
       if (mounted) {
         setState(() {});
       }

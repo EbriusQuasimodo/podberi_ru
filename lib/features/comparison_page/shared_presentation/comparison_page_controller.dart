@@ -55,6 +55,32 @@ final comparisonCreditListLengthStateController = StateProvider.autoDispose<int>
   return 0;
 });
 
+///rko
+final comparisonFirstRkoBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
+  return '';
+});
+final comparisonSecondRkoBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
+  return '';
+});
+
+final comparisonFirstRkoProductNameStateProvider = StateProvider.autoDispose<String>((ref) {
+  return '';
+});
+final comparisonSecondRkoProductNameStateProvider = StateProvider.autoDispose<String>((ref) {
+  return '';
+});
+
+final comparisonRkoListLengthStateController = StateProvider.autoDispose<int>((ref) {
+  return 0;
+});
+
+final comparisonFirstRkoPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
+  return 0;
+});
+final comparisonSecondRkoPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
+  return 0;
+});
+
 ///займы
 final comparisonFirstZaimyBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
   return '';
