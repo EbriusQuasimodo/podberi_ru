@@ -6,6 +6,7 @@ import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart'
 import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -90,6 +91,7 @@ class _FavoritesDebitCardsListState
                   offset: favoritesDebitCardsList.length ~/ pageSize,
                   limit: pageSize))
           .future);
+      ref.invalidate(comparisonDebitCardsListControllerProvider);
       if (mounted) {
         setState(() {});
       }
@@ -138,14 +140,14 @@ class _FavoritesDebitCardsListState
                 ),
                 sliver: SliverToBoxAdapter(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 272,
+                    height: MediaQuery.of(context).size.height - 240,
                     child: MediaQuery.removePadding(
                       context: context,
                       removeBottom: true,
                       removeTop: true,
                       child: ListView.builder(
                           key: const PageStorageKey<String>('favoritesDebitCardsList'),
-                          padding: const EdgeInsets.only(top: 15),
+                          padding: const EdgeInsets.only(top: 15,bottom: 10),
                           itemCount: favoritesDebitCardsList.length >=
                                   widget.itemsCount
                               ? widget.itemsCount

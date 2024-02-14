@@ -10,13 +10,10 @@ import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
-import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
-import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
-import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
+import 'package:podberi_ru/features/favorites_page/rko/presentation/favorites_rko_controller.dart';
 
 class RkoWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
@@ -161,11 +158,11 @@ class _RkoWidgetWithButtonsState
                           productTypeUrl:
                               widget.basicApiPageSettingsModel.productTypeUrl,
                           pageName: widget.basicApiPageSettingsModel.pageName,
-                          productId: widget.productInfo?.id,
+                          productId: widget.productInfo.id,
                           bankDetailsModel: BankListDetailsModel(
                               bankName:
-                                  widget.productInfo!.bankDetails!.bankName,
-                              logo: widget.productInfo!.bankDetails!.logo)));
+                                  widget.productInfo.bankDetails!.bankName,
+                              logo: widget.productInfo.bankDetails!.logo)));
                 },
               ),
             ),
@@ -182,21 +179,22 @@ class _RkoWidgetWithButtonsState
                       onTap: () async {
                         ComparisonRkoData comparisonRkoData =
                             ComparisonRkoData()
-                              ..id = widget.productInfo?.id;
+                              ..id = widget.productInfo.id;
                         await isar?.writeTxn(() async => await ref
                                 .watch(isarNotifierProvider.notifier)
                                 .isItemDuplicateInComparison(
-                                    widget.productInfo!.id,
+                                    widget.productInfo.id,
                                     widget.basicApiPageSettingsModel
                                         .productTypeUrl!)
                             ? await isar?.comparisonRkoDatas
                                 .filter()
-                                .idEqualTo(widget.productInfo?.id)
+                                .idEqualTo(widget.productInfo.id)
                                 .deleteAll()
                             : await isar?.comparisonRkoDatas
                                 .put(comparisonRkoData));
+                        // ref.watch(comparisonRkoListStateProvider.notifier).state.clear();
+                        // ref.invalidate(comparisonRkoListControllerProvider);
                         setState(() {});
-                        //widget.onTapComparison();
                       },
                       child: FutureBuilder(
                           future: ref
@@ -249,8 +247,8 @@ class _RkoWidgetWithButtonsState
                                 .deleteAll()
                             : await isar?.favoritesRkoDatas
                                 .put(favoritesRkoData));
-                        // ref.watch(favoritesRkoListStateProvider.notifier).state.clear();
-                        // ref.invalidate(favoritesRkoListControllerProvider);
+                        ref.watch(favoritesRkoListStateProvider.notifier).state.clear();
+                        ref.invalidate(favoritesRkoListControllerProvider);
 
                         setState(() {});
                       },

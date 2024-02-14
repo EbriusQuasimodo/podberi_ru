@@ -7,6 +7,7 @@ import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_ch
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
+import 'package:podberi_ru/features/favorites_page/rko/presentation/favorites_rko_controller.dart';
 import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
 import 'shared_widgets/load_favorites_by_product_type.dart';
@@ -44,6 +45,8 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
             ref.invalidate(favoritesCreditCardsListControllerProvider);
             ref.watch(favoritesZaimyListStateProvider.notifier).state.clear();
             ref.invalidate(favoritesZaimyListControllerProvider);
+            ref.watch(favoritesRkoListStateProvider.notifier).state.clear();
+            ref.invalidate(favoritesRkoListControllerProvider);
             setState(() {});
           },
           categoryName: element,
@@ -75,6 +78,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
           ref.invalidate(favoritesDebitCardsListControllerProvider);
           ref.invalidate(favoritesCreditCardsListControllerProvider);
           ref.invalidate(favoritesZaimyListControllerProvider);
+          ref.invalidate(favoritesRkoListControllerProvider);
         },
         child: CustomScrollView(
 

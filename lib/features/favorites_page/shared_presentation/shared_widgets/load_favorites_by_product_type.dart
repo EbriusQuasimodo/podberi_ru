@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/error_widgets/on_error_widget.dart';
@@ -9,6 +8,8 @@ import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_list_widget.dart';
+import 'package:podberi_ru/features/favorites_page/rko/presentation/favorites_rko_controller.dart';
+import 'package:podberi_ru/features/favorites_page/rko/presentation/favorites_rko_list_widget.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
@@ -48,7 +49,6 @@ class _LoadFavoritesByProductTypeState
                     'У вас пока нет продуктов в избранном по данной категории.',
               );
       }, error: (error, _) {
-        print(_);
         return SliverFillRemaining(
           hasScrollBody: false,
           fillOverscroll: true,
@@ -136,13 +136,38 @@ class _LoadFavoritesByProductTypeState
         );
       });
     } else {
-      return SliverFillRemaining(
+      return ref.watch(favoritesRkoListControllerProvider(
+          IsarPaginationParamsModel(offset: -1, limit: -1))).when(
+          data: (rko) {
+            return rko.items.isNotEmpty
+                ? FavoritesRkoList(
+              itemsCount: rko.itemsCount,
+            )
+                : const FavoritesOrComparisonIsEmpty(
+              error:
+              'У вас пока нет продуктов в избранном по данной категории.',
+            );
+          }, error: (error, _) {
+        return SliverFillRemaining(
           hasScrollBody: false,
           fillOverscroll: true,
           child: OnErrorWidget(
-              error: NothingFoundException().message,
-              onGoBackButtonTap: () {},
-              onRefreshButtonTap: () {}));
+              error: error.toString(),
+              onGoBackButtonTap: () {
+                ref.watch(goRouterProvider).pop();
+              },
+              onRefreshButtonTap: () {
+                ref.refresh(favoritesRkoListControllerProvider(
+                    IsarPaginationParamsModel(offset: -1, limit: -1)));
+              }),
+        );
+      }, loading: () {
+        return const SliverFillRemaining(
+          child: CustomLoadingCardWidget(
+            bottomPadding: 72,
+          ),
+        );
+      });
     }
   }
 }

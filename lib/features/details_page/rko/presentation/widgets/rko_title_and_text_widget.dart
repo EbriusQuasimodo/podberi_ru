@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 class RkoTitleAndTextWidget extends StatelessWidget {
-  final ListDebitCardsModel productInfo;
   final String title;
   final String description;
 
   const RkoTitleAndTextWidget({
     super.key,
-    required this.productInfo,
     required this.title,
     required this.description,
   });

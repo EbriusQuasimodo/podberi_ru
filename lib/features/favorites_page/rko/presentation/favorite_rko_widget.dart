@@ -6,39 +6,56 @@ import 'package:podberi_ru/core/constants/route_constants.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
-import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
-import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
+import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
+import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
-import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
 
-import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
-
-class ZaimyWidgetWithButtons extends ConsumerStatefulWidget {
+class FavoriteRkoWidget extends ConsumerStatefulWidget {
   final String productRating;
-  final ListZaimyModel? productInfo;
+  final ListRkoModel? productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  final VoidCallback onTap;
+  final VoidCallback deleteFromFavorites;
+  final VoidCallback tapOnComparisonButton;
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
-  ZaimyWidgetWithButtons({
+  const FavoriteRkoWidget({
     super.key,
     required this.productRating,
     this.productInfo,
     required this.basicApiPageSettingsModel,
-    required this.onTap,
+    required this.deleteFromFavorites,
+    required this.tapOnComparisonButton,
   });
 
   @override
-  ConsumerState<ZaimyWidgetWithButtons> createState() =>
-      _ZaimyWidgetWithButtonsState();
+  ConsumerState<FavoriteRkoWidget> createState() =>
+      _FavoriteRkoWidget();
 }
 
-class _ZaimyWidgetWithButtonsState
-    extends ConsumerState<ZaimyWidgetWithButtons> {
+class _FavoriteRkoWidget
+    extends ConsumerState<FavoriteRkoWidget> {
+  // List<Widget> list() {
+  //   var list = <Widget>[];
+  //
+  //   for (int i = 0; i < 4; i++) {
+  //     list.add(
+  //       Text(
+  //         "${widget.productInfo!.features[i]}",
+  //         textAlign: TextAlign.left,
+  //         style: const TextStyle(
+  //             color: ThemeApp.mainWhite,
+  //             fontSize: 12,
+  //             fontWeight: FontWeight.w500),
+  //       ),
+  //     );
+  //   }
+  //
+  //   return list;
+  // }
 
   final isar = Isar.getInstance();
 
@@ -47,9 +64,9 @@ class _ZaimyWidgetWithButtonsState
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: widget.productInfo != null ? Colors.green : ThemeApp.darkestGrey,
-        //color: Color(int.parse(
-        //   '0xff${productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
+
+        color: Color(int.parse(
+          '0xff${widget.productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
       ),
       width: 280,
       height: 190,
@@ -62,6 +79,7 @@ class _ZaimyWidgetWithButtonsState
           //   top: 16,
           //   right: 16,
           //   child: Container(
+          //     height: 50, width: 50,
           //     padding:
           //     const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
           //     decoration: BoxDecoration(
@@ -70,14 +88,10 @@ class _ZaimyWidgetWithButtonsState
           //     ),
           //     child: Image.network(
           //       '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
-          //       height: 32,
-          //       width: 36,
-          //       errorBuilder: (BuildContext context, Object exception,
-          //           StackTrace? stackTrace) {
-          //         return const Icon(
-          //           Icons.error,
-          //           size: 51,
-          //           color: ThemeApp.backgroundBlack,
+          //       errorBuilder: (BuildContext context,
+          //           Object exception, StackTrace? stackTrace) {
+          //         return SvgPicture.asset(
+          //           'assets/icons/photo_not_found.svg',
           //         );
           //       },
           //     ),
@@ -88,7 +102,7 @@ class _ZaimyWidgetWithButtonsState
             top: 16,
             right: 86,
             child: Text(
-              "${widget.productInfo?.name}",
+              "${widget.productInfo?.ratesName}",
               maxLines: 3,
               style: const TextStyle(
                   color: ThemeApp.mainWhite,
@@ -96,6 +110,16 @@ class _ZaimyWidgetWithButtonsState
                   fontSize: 14),
             ),
           ),
+          // widget.productInfo!.features.isNotEmpty
+          //     ? Positioned(
+          //   left: 16,
+          //   bottom: 16,
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: list(),
+          //   ),
+          // )
+          //     : const SizedBox.shrink(),
           Positioned(
               right: 16,
               bottom: 70,
@@ -128,14 +152,15 @@ class _ZaimyWidgetWithButtonsState
                   ref.watch(goRouterProvider).push(RouteConstants.details,
                       extra: BasicApiPageSettingsModel(
                           filters: FiltersModel(),
-                        page: 1,
+                          page: 1,
                           productTypeUrl:
                           widget.basicApiPageSettingsModel.productTypeUrl,
                           pageName: widget.basicApiPageSettingsModel.pageName,
                           productId: widget.productInfo?.id,
                           bankDetailsModel: BankListDetailsModel(
-                              bankName:'',
-                              logo: '')));
+                              bankName:
+                              widget.productInfo!.bankDetails!.bankName,
+                              logo: widget.productInfo!.bankDetails!.logo)));
                 },
               ),
             ),
@@ -150,25 +175,23 @@ class _ZaimyWidgetWithButtonsState
                   child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () async {
-                        ComparisonZaimyData comparisonZaimyData =
-                        ComparisonZaimyData()
+                        ComparisonRkoData comparisonRkoData =
+                        ComparisonRkoData()
                           ..id = widget.productInfo?.id;
-                        await isar?.writeTxn(() async =>
-                        await ref
+                        await isar?.writeTxn(() async => await ref
                             .watch(isarNotifierProvider.notifier)
                             .isItemDuplicateInComparison(
                             widget.productInfo!.id,
                             widget.basicApiPageSettingsModel
                                 .productTypeUrl!)
-                            ? await isar?.comparisonZaimyDatas
+                            ? await isar?.comparisonRkoDatas
                             .filter()
                             .idEqualTo(widget.productInfo?.id)
                             .deleteAll()
-                            : await isar?.comparisonZaimyDatas
-                            .put(comparisonZaimyData));
-                        ref.invalidate(comparisonZaimyListControllerProvider);
-                        setState(() {});
-                        //widget.onTap();
+                            : await isar?.comparisonRkoDatas
+                            .put(comparisonRkoData));
+
+                        widget.tapOnComparisonButton();
                       },
                       child: FutureBuilder(
                           future: ref
@@ -206,25 +229,23 @@ class _ZaimyWidgetWithButtonsState
                   child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () async {
-                        FavoritesZaimyData favoritesZaimyData =
-                        FavoritesZaimyData()
+                        FavoritesRkoData favoritesRkoData =
+                        FavoritesRkoData()
                           ..id = widget.productInfo?.id;
-                        await isar?.writeTxn(() async =>
-                        await ref
+                        await isar?.writeTxn(() async => await ref
                             .watch(isarNotifierProvider.notifier)
                             .isItemDuplicateInFavorites(
                             widget.productInfo!.id,
                             widget.basicApiPageSettingsModel
                                 .productTypeUrl!)
-                            ? await isar?.favoritesZaimyDatas
+                            ? await isar?.favoritesRkoDatas
                             .filter()
                             .idEqualTo(widget.productInfo?.id)
                             .deleteAll()
-                            : await isar?.favoritesZaimyDatas
-                            .put(favoritesZaimyData));
-                        ref.watch(favoritesZaimyListStateProvider.notifier).state.clear();
-                        ref.invalidate(favoritesZaimyListControllerProvider);
-                        widget.onTap();
+                            : await isar?.favoritesRkoDatas
+                            .put(favoritesRkoData));
+
+                        widget.deleteFromFavorites();
                       },
                       child: FutureBuilder(
                           future: ref

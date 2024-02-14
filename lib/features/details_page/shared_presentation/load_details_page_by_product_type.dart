@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/data/api_exception.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/presentation/error_widgets/on_error_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_controller.dart';
 import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_controller.dart';
+import 'package:podberi_ru/features/details_page/rko/presentation/rko_controller.dart';
+import 'package:podberi_ru/features/details_page/rko/presentation/rko_details_page.dart';
 import 'package:podberi_ru/features/details_page/zaimy/presentation/zaimy_controller.dart';
 
 import '../credit_cards/presentation/credit_cards_details_page.dart';
@@ -87,8 +88,27 @@ class LoadDetailsPageByProductType extends ConsumerWidget {
         );
       });
     }else{
-      return OnErrorWidget(error: NothingFoundException().message, onGoBackButtonTap: (){}, onRefreshButtonTap: (){});
+      return ref
+          .watch(rkoDetailsControllerProvider(basicApiPageSettingsModel))
+          .when(data: (rko) {
+        return RkoDetailsPage(
+          detailsInfo: rko, basicApiPageSettingsModel: basicApiPageSettingsModel,
 
+        );
+      }, error: (error, _) {
+        return OnErrorWidget(
+            error: error.toString(),
+            onGoBackButtonTap: () {
+              ref.watch(goRouterProvider).pop();
+            },
+            onRefreshButtonTap: () {
+              ref.refresh(rkoDetailsControllerProvider(basicApiPageSettingsModel));
+            });
+      }, loading: () {
+        return const CustomLoadingCardWidget(
+          bottomPadding: 72,
+        );
+      });
     }
 
   }

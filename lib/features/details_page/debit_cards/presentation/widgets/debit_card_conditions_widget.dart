@@ -65,7 +65,7 @@ class _DebitCardConditionsWidgetState extends State<DebitCardConditionsWidget> {
                   padding: const EdgeInsets.only(
                       top: 10.5, bottom: 11.5, right: 8.63, left: 9.16),
                   child: Image.network(
-                    '${Urls.api.files}/${widget.basicApiPageSettingsModel.bankDetailsModel?.logo}',
+                    '${Urls.api.files}/${widget.productInfo.bankDetails?.logo}',
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
                       return SvgPicture.asset(

@@ -13,6 +13,7 @@ import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_ca
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
 
 class DebitCardWidgetWithButtons extends ConsumerStatefulWidget {
@@ -24,7 +25,7 @@ class DebitCardWidgetWithButtons extends ConsumerStatefulWidget {
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
-  DebitCardWidgetWithButtons({
+  const DebitCardWidgetWithButtons({
     super.key,
     required this.productRating,
     required this.basicApiPageSettingsModel,
@@ -50,7 +51,7 @@ class _DebitCardWidgetWithButtonsState
         i++) {
       list.add(
         Text(
-          "${widget.productInfo.features[i]}",
+          widget.productInfo.features[i],
           textAlign: TextAlign.left,
           style: const TextStyle(
               color: ThemeApp.mainWhite,
@@ -71,7 +72,7 @@ class _DebitCardWidgetWithButtonsState
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color(int.parse(
-            '0xff${widget.productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
+            '0xff${widget.productInfo.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
       ),
       width: 280,
       height: 190,
@@ -93,7 +94,7 @@ class _DebitCardWidgetWithButtonsState
                 color: ThemeApp.mainWhite,
               ),
               child: Image.network(
-                '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
+                '${Urls.api.files}/${widget.productInfo.bankDetails?.logo}',
                 errorBuilder: (BuildContext context, Object exception,
                     StackTrace? stackTrace) {
                   return SvgPicture.asset(
@@ -108,7 +109,7 @@ class _DebitCardWidgetWithButtonsState
             top: 16,
             right: 86,
             child: Text(
-              "${widget.productInfo?.name}",
+              "${widget.productInfo.name}",
               maxLines: 3,
               style: const TextStyle(
                   color: ThemeApp.mainWhite,
@@ -116,7 +117,7 @@ class _DebitCardWidgetWithButtonsState
                   fontSize: 14),
             ),
           ),
-          widget.productInfo!.features.isNotEmpty
+          widget.productInfo.features.isNotEmpty
               ? Positioned(
                   left: 16,
                   bottom: 16,
@@ -162,11 +163,11 @@ class _DebitCardWidgetWithButtonsState
                           productTypeUrl:
                               widget.basicApiPageSettingsModel.productTypeUrl,
                           pageName: widget.basicApiPageSettingsModel.pageName,
-                          productId: widget.productInfo?.id,
+                          productId: widget.productInfo.id,
                           bankDetailsModel: BankListDetailsModel(
                               bankName:
-                                  widget.productInfo!.bankDetails!.bankName,
-                              logo: widget.productInfo!.bankDetails!.logo)));
+                                  widget.productInfo.bankDetails!.bankName,
+                              logo: widget.productInfo.bankDetails!.logo)));
                 },
               ),
             ),
@@ -183,19 +184,20 @@ class _DebitCardWidgetWithButtonsState
                       onTap: () async {
                         ComparisonDebitCardsData comparisonDebitCardsData =
                             ComparisonDebitCardsData()
-                              ..id = widget.productInfo?.id;
+                              ..id = widget.productInfo.id;
                         await isar?.writeTxn(() async => await ref
                                 .watch(isarNotifierProvider.notifier)
                                 .isItemDuplicateInComparison(
-                                    widget.productInfo!.id,
+                                    widget.productInfo.id,
                                     widget.basicApiPageSettingsModel
                                         .productTypeUrl!)
                             ? await isar?.comparisonDebitCardsDatas
                                 .filter()
-                                .idEqualTo(widget.productInfo?.id)
+                                .idEqualTo(widget.productInfo.id)
                                 .deleteAll()
                             : await isar?.comparisonDebitCardsDatas
                                 .put(comparisonDebitCardsData));
+                        ref.invalidate(comparisonDebitCardsListControllerProvider);
                         setState(() {});
                         //widget.onTapComparison();
                       },
@@ -203,7 +205,7 @@ class _DebitCardWidgetWithButtonsState
                           future: ref
                               .watch(isarNotifierProvider.notifier)
                               .isItemDuplicateInComparison(
-                                  widget.productInfo!.id,
+                                  widget.productInfo.id,
                                   widget.basicApiPageSettingsModel
                                       .productTypeUrl!),
                           builder: (context, AsyncSnapshot snapshot) {
@@ -260,7 +262,7 @@ class _DebitCardWidgetWithButtonsState
                           future: ref
                               .watch(isarNotifierProvider.notifier)
                               .isItemDuplicateInFavorites(
-                                  widget.productInfo!.id,
+                                  widget.productInfo.id,
                                   widget.basicApiPageSettingsModel
                                       .productTypeUrl!),
                           builder: (context, AsyncSnapshot snapshot) {

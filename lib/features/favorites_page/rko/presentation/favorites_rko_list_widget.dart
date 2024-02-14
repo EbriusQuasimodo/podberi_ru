@@ -3,30 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
-import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'favorite_zaimy_widget.dart';
-import 'favorites_zaimy_controller.dart';
+import 'favorite_rko_widget.dart';
+import 'favorites_rko_controller.dart';
 
-class FavoritesZaimyList extends ConsumerStatefulWidget {
+class FavoritesRkoList extends ConsumerStatefulWidget {
   int itemsCount;
 
-  ///страница-список всех займов в избранном
-  FavoritesZaimyList({
+  ///список - страница всех рко в избранном
+  FavoritesRkoList({
     super.key,
     required this.itemsCount,
   });
 
   @override
-  ConsumerState<FavoritesZaimyList> createState() => _FavoritesZaimyListState();
+  ConsumerState<FavoritesRkoList> createState() =>
+      _FavoritesRkoListState();
 }
 
-class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
+class _FavoritesRkoListState
+    extends ConsumerState<FavoritesRkoList> {
   static const pageSize = 10;
   final controller = ScrollController();
 
@@ -45,17 +46,18 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
   bool loading = false;
 
   Future<void> _loadMore() async {
-    if (favoritesZaimyList.length < widget.itemsCount) {
+    if (favoritesRkoList.length < widget.itemsCount) {
       try {
         loading = true;
-        await ref.read(favoritesZaimyListControllerProvider(
+        await ref.read(favoritesRkoListControllerProvider(
                 IsarPaginationParamsModel(
-                    offset: favoritesZaimyList.length ~/ pageSize,
+                    offset: favoritesRkoList.length ~/ pageSize,
                     limit: pageSize))
             .future);
         if (mounted) {
           setState(() {
-            favoritesZaimyList = ref.watch(favoritesZaimyListStateProvider);
+            favoritesRkoList =
+                ref.watch(favoritesRkoListStateProvider);
           });
         }
       } finally {
@@ -67,10 +69,10 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
   Future<void> _deleteFromFavorites(String id) async {
     try {
       loading = true;
-      // ref.invalidate(debitCardsControllerProvider);
+     // ref.invalidate(debitCardsControllerProvider);
       setState(() {
         ref
-            .watch(favoritesZaimyListStateProvider.notifier)
+            .watch(favoritesRkoListStateProvider.notifier)
             .state
             .removeWhere((element) => element.id == id);
         widget.itemsCount--;
@@ -83,12 +85,12 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
   Future<void> _tapOnComparisonButton(int index) async {
     try {
       loading = true;
-      await ref.read(favoritesZaimyListControllerProvider(
+      await ref.read(favoritesRkoListControllerProvider(
               IsarPaginationParamsModel(
-                  offset: favoritesZaimyList.length ~/ pageSize,
+                  offset: favoritesRkoList.length ~/ pageSize,
                   limit: pageSize))
           .future);
-      ref.invalidate(comparisonZaimyListControllerProvider);
+      //ref.invalidate(comparisonRkoListControllerProvider);
       if (mounted) {
         setState(() {});
       }
@@ -97,12 +99,13 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
     }
   }
 
-  List<ListZaimyModel> favoritesZaimyList = [];
+  List<ListRkoModel> favoritesRkoList = [];
 
   @override
   Widget build(BuildContext context) {
-    favoritesZaimyList = ref.watch(favoritesZaimyListStateProvider);
-    if (favoritesZaimyList.isNotEmpty) {
+    favoritesRkoList =
+        ref.watch(favoritesRkoListStateProvider);
+    if (favoritesRkoList.isNotEmpty) {
       return SliverStack(
         insetOnOverlap: true,
         children: [
@@ -120,7 +123,9 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
             ),
           ),
           SliverContainer(
-            margin: const EdgeInsets.only(top: 2, bottom: 72),
+            margin: const EdgeInsets.only(
+              top: 2,
+            ),
             background: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -140,28 +145,28 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
                       removeBottom: true,
                       removeTop: true,
                       child: ListView.builder(
-                          key: const PageStorageKey<String>('favoritesZaimyList'),
+                          key: const PageStorageKey<String>('favoritesRkoList'),
                           padding: const EdgeInsets.only(top: 15,bottom: 10),
-                          itemCount: favoritesZaimyList.length >=
-                              widget.itemsCount
+                          itemCount: favoritesRkoList.length >=
+                                  widget.itemsCount
                               ? widget.itemsCount
-                              : favoritesZaimyList.length,
+                              : favoritesRkoList.length,
                           controller: controller,
                           itemBuilder: (context, index) {
-                            return FavoriteZaimyWidget(
+                            return FavoriteRkoWidget(
                               tapOnComparisonButton: () {
                                 _tapOnComparisonButton(index);
                               },
                               deleteFromFavorites: () {
-                                _deleteFromFavorites(favoritesZaimyList[index].id);
+                                _deleteFromFavorites(favoritesRkoList[index].id);
                               },
-                              productInfo: favoritesZaimyList[index],
+                              productInfo: favoritesRkoList[index],
                               basicApiPageSettingsModel:
-                              BasicApiPageSettingsModel(
+                                  BasicApiPageSettingsModel(
                                 page: 1,
                                 filters: FiltersModel(),
                                 productTypeUrl:
-                                ref.watch(favoritesProductUrlStateProvider),
+                                    ref.watch(favoritesProductUrlStateProvider),
                                 pageName: 'Избранное',
                               ),
                               productRating: '4.8',
