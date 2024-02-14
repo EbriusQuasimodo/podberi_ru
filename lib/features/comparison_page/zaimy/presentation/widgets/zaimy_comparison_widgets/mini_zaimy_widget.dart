@@ -16,7 +16,8 @@ class MiniZaimyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: const Color(0xffFFBE0B), borderRadius: BorderRadius.circular(14)),
+          color: Color(int.parse(
+              '0xff${zaimy.color}')), borderRadius: BorderRadius.circular(14)),
       margin: const EdgeInsets.only(right: 3, left: 3),
       child: Row(
         children: [

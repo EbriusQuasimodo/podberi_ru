@@ -47,10 +47,9 @@ class _FavoriteZaimyWidget
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: widget.productInfo != null ? Colors.green : ThemeApp.darkestGrey,
-        //color: Color(int.parse(
-        //   '0xff${productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
-      ),
+        color: Color(int.parse(
+            '0xff${widget.productInfo?.color}')),
+           ),
       width: 280,
       height: 190,
       margin: const EdgeInsets.only(

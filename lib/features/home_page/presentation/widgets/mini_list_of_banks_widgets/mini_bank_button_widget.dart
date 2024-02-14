@@ -17,8 +17,8 @@ class MiniBankButtonWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 3, left: 3),
+    return Container(
+      margin: const EdgeInsets.only(right: 3, left: 3),
       child: MaterialButton(
         padding: EdgeInsets.zero,
         onPressed: () {
@@ -45,7 +45,8 @@ class MiniBankButtonWidget extends ConsumerWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        color: Color(int.parse('0xffef3124')),
+        color: Color(int.parse(
+            '0xff${banksModel.color}')),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +80,7 @@ class MiniBankButtonWidget extends ConsumerWidget {
               const EdgeInsets.only(right: 12, left: 12, bottom: 16),
               child: Text(
                banksModel.bankName,
-                maxLines: 3,
+                maxLines: 1,
                 style: const TextStyle(
                     color: ThemeApp.mainWhite,
                     fontWeight: FontWeight.w500,
