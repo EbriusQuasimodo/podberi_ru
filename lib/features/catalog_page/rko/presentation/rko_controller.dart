@@ -42,25 +42,7 @@ class RkoController extends AutoDisposeFamilyAsyncNotifier<
       }
     }
 
-    // ///если фильтр по кэшбеку не пустой
-    // if (filterCashBack.isNotEmpty) {
-    //   ///то очищаем полученые фильтры из модели BasicApiPageSettingsModel
-    //   ///и добавляем в эту же модель новые фильтры из filterCashBack
-    //   arg.filtersModel?.cashBack?.clear();
-    //   for (int i = 0; i < filterCashBack.length; i++) {
-    //     if (!filterCashBack.contains('Не важно')) {
-    //       arg.filtersModel?.cashBack?.add(filterCashBack[i]);
-    //     }
-    //   }
-    // } else {
-    //   arg.filtersModel?.cashBack?.clear();
-    // }
-    if (arg.filters.paySystem != null &&
-        !arg.filters.paySystem!.contains('Не важно')) {
-      for (int i = 0; i < arg.filters.paySystem!.length; i++) {
-        productTypeWithQuery += '&payment_system=${arg.filters.paySystem?[i]}';
-      }
-    }
+
     if (arg.filters.features != null) {
       for (int i = 0; i < arg.filters.features!.length; i++) {
         productTypeWithQuery += '&features=${arg.filters.features?[i]}';
@@ -69,9 +51,7 @@ class RkoController extends AutoDisposeFamilyAsyncNotifier<
 
     ///если сортировка  не пустая
     if (arg.filters.sort != '') {
-      if (arg.filters.sort == 'По кэшбеку') {
-        productTypeWithQuery += '&sort\$max_cashback=-1';
-      } else if (arg.filters.sort == 'По обслуживанию') {
+     if (arg.filters.sort == 'По обслуживанию') {
         productTypeWithQuery += '&sort\$max_service=1';
       }
     }

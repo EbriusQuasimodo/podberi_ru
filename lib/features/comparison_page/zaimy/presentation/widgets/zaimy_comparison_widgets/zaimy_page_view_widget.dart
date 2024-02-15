@@ -5,10 +5,12 @@ import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/catalog_page/zaimy/presentation/zaimy_controller.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/widgets/credit_cards_page_view_widgets/credit_cards_page_view_widget.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
 import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_page.dart';
+import 'package:podberi_ru/features/details_page/zaimy/presentation/zaimy_controller.dart';
 
 import 'mini_zaimy_widget.dart';
 
@@ -127,7 +129,8 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                             .put(comparisonZaimyData));
 
                     ref.invalidate(comparisonZaimyListControllerProvider);
-
+                    ref.invalidate(zaimyControllerProvider);
+                    ref.invalidate(zaimyDetailsControllerProvider);
                     controllerFirstPageView.animateToPage(
                         controllerFirstPageView.page == 0.0
                             ? -1
@@ -211,7 +214,8 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                                   .put(comparisonZaimyData));
 
                           ref.invalidate(comparisonZaimyListControllerProvider);
-
+                          ref.invalidate(zaimyControllerProvider);
+                          ref.invalidate(zaimyDetailsControllerProvider);
                           controllerSecondPageView.animateToPage(
                               controllerSecondPageView.page == 0.0
                                   ? -1

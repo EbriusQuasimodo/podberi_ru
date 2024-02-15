@@ -45,9 +45,6 @@ class _RkoDetailsPageState extends ConsumerState<RkoDetailsPage> {
               title: Text(widget.basicApiPageSettingsModel.pageName!),
             ),
             RkoPreviewWidget(
-              onFavoritesOrComparisonTap: () {
-                setState(() {});
-              },
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
               productInfo: widget.detailsInfo,
             ),

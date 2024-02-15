@@ -49,13 +49,13 @@ class AllBanksPage extends ConsumerWidget {
                       onGoBackButtonTap: () {
                         ref.watch(goRouterProvider).pop();
                       },
-                      onRefreshButtonTap: () {
-                        ref.refresh(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1)));
-                      }),
+                      onRefreshButtonTap: () =>
+                        ref.refresh(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1)))
+                      ),
                 );
               },
               loading: () {
-                return SliverFillRemaining(
+                return const SliverFillRemaining(
                     child: CustomLoadingCardWidget(
                   bottomPadding: 72,
                 ));

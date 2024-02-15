@@ -4,7 +4,6 @@ import 'package:podberi_ru/core/presentation/custom_choice_chip/custom_choice_ch
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
-import 'package:podberi_ru/features/comparison_page/rko/presentation/comparison_rko_controller.dart';
 import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
 
 import 'comparison_page_controller.dart';
@@ -23,7 +22,6 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
     'Дебетовые карты',
     'Кредитные карты',
     'Микрозаймы',
-    'РКО'
   ];
 
   List<String> selectedBankProductsFilter = ['Дебетовые карты'];
@@ -41,7 +39,6 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
           ref.invalidate(comparisonDebitCardsListControllerProvider);
           ref.invalidate(comparisonCreditCardsListControllerProvider);
           ref.invalidate(comparisonZaimyListControllerProvider);
-          ref.invalidate(comparisonRkoListControllerProvider);
         },
         categoryName: element,
         selectedCategory: selectedBankProductsFilter,
@@ -94,7 +91,6 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
           ref.invalidate(comparisonDebitCardsListControllerProvider);
           ref.invalidate(comparisonCreditCardsListControllerProvider);
           ref.invalidate(comparisonZaimyListControllerProvider);
-          ref.invalidate(comparisonRkoListControllerProvider);
         },
         child: CustomScrollView(
           slivers: [

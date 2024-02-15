@@ -40,16 +40,13 @@ class _CreditCardsListWidgetState extends ConsumerState<CreditCardsListWidget> {
           } else {
             final creditCard = creditCards.items[indexInPage];
           return CreditCardWidgetWithButtons(
-              onTap: () {
-                setState(() {});
-              },
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
               productInfo: creditCard,
               productRating: '4.8');}
         }, error: (error, _) {
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         }, loading: () {
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         });
       }),
     );

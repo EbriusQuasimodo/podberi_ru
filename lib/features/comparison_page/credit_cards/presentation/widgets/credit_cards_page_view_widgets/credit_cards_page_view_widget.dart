@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/domain/credit_cards_model/credit_cards_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/catalog_page/credit_cards/presentation/credit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_page.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
+import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_controller.dart';
 
 import 'mini_credit_card_widget.dart';
 
@@ -143,7 +145,8 @@ class _CreditCardsComparisonWidgetState
 
                     ///обновляем контроллер чтобы отобразить новый список сравнения
                     ref.invalidate(comparisonCreditCardsListControllerProvider);
-
+                    ref.invalidate(creditCardsControllerProvider);
+                    ref.invalidate(creditCardsDetailsControllerProvider);
                     ///воспроизводим анимацию при удалении
                     ///анимировать надо оба pfge view если они находятся на одной и той же страницу
                     ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
@@ -239,7 +242,8 @@ class _CreditCardsComparisonWidgetState
                           ///обновляем контроллер чтобы отобразить новый список сравнения
                           ref.invalidate(
                               comparisonCreditCardsListControllerProvider);
-
+                          ref.invalidate(creditCardsControllerProvider);
+                          ref.invalidate(creditCardsDetailsControllerProvider);
                           ///воспроизводим анимацию при удалении
                           ///анимировать надо оба pfge view если они находятся на одной и той же страницу
                           ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)

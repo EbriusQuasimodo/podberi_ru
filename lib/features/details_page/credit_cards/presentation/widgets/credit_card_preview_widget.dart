@@ -9,20 +9,20 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/credit_cards/comparison_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/credit_cards/favorites_credit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_controller.dart';
 import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_page.dart';
+import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 
 class CreditCardPreviewWidget extends ConsumerStatefulWidget {
   final ListCreditCardsModel productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  final VoidCallback onFavoritesOrComparisonTap;
 
   ///виджет с превью кредитки (фото, название, кнопка Заказать), используется в [CreditCardsDetailsPage]
   const CreditCardPreviewWidget({
     super.key,
     required this.productInfo,
     required this.basicApiPageSettingsModel,
-    required this.onFavoritesOrComparisonTap,
   });
 
   @override
@@ -119,8 +119,8 @@ padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                               .deleteAll()
                           : await isar?.favoritesCreditCardsDatas
                               .put(favoritesCreditCardsData));
-
-                      widget.onFavoritesOrComparisonTap();
+                      ref.invalidate(favoritesCreditCardsListControllerProvider);
+                      setState(() {});
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(13),
@@ -181,8 +181,8 @@ padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                                 .deleteAll()
                             : await isar?.comparisonCreditCardsDatas
                                 .put(comparisonCreditCardsData));
-
-                        widget.onFavoritesOrComparisonTap();
+                        ref.invalidate(comparisonCreditCardsListControllerProvider);
+                        setState(() {});
                       },
                       child: Padding(
                           padding: const EdgeInsets.all(13),

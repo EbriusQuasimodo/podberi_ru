@@ -7,6 +7,7 @@ import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
+import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -70,6 +71,7 @@ class _FavoritesDebitCardsListState
   Future<void> _deleteFromFavorites(String id) async {
     try {
       loading = true;
+      ref.invalidate(debitCardsDetailsControllerProvider);
      // ref.invalidate(debitCardsControllerProvider);
       setState(() {
         ref
@@ -91,6 +93,7 @@ class _FavoritesDebitCardsListState
                   offset: favoritesDebitCardsList.length ~/ pageSize,
                   limit: pageSize))
           .future);
+      ref.invalidate(debitCardsDetailsControllerProvider);
       ref.invalidate(comparisonDebitCardsListControllerProvider);
       if (mounted) {
         setState(() {});

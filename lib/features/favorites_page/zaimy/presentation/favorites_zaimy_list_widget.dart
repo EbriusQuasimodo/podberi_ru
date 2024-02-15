@@ -7,6 +7,7 @@ import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
+import 'package:podberi_ru/features/details_page/zaimy/presentation/zaimy_controller.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -67,6 +68,7 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
   Future<void> _deleteFromFavorites(String id) async {
     try {
       loading = true;
+      ref.invalidate(zaimyDetailsControllerProvider);
       // ref.invalidate(debitCardsControllerProvider);
       setState(() {
         ref
@@ -88,6 +90,7 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
                   offset: favoritesZaimyList.length ~/ pageSize,
                   limit: pageSize))
           .future);
+      ref.invalidate(zaimyDetailsControllerProvider);
       ref.invalidate(comparisonZaimyListControllerProvider);
       if (mounted) {
         setState(() {});

@@ -42,9 +42,6 @@ class _ZaimyDetailsPageState extends ConsumerState<ZaimyDetailsPage> {
               title: Text(widget.basicApiPageSettingsModel.pageName!),
             ),
             ZaimyPreviewWidget(
-              onFavoritesOrComparisonTap: () {
-                setState(() {});
-              },
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
               productInfo: widget.detailsInfo,
             ),

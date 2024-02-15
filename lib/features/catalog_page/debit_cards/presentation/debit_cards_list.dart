@@ -32,7 +32,6 @@ class _DebitCardsListWidgetState extends ConsumerState<DebitCardsListWidget> {
           (BuildContext context, int index) {
         page = index ~/ pageSize + 1;
         final indexInPage = index % pageSize;
-        //print(page);
         widget.basicApiPageSettingsModel.page = page;
         return ref
             .watch(
@@ -43,33 +42,14 @@ class _DebitCardsListWidgetState extends ConsumerState<DebitCardsListWidget> {
           } else {
             final debitCard = debitCards.items[indexInPage];
             return DebitCardWidgetWithButtons(
-                onTapComparison: () {
-                  setState(() {});
-                },
-                onTapFavorites: () async {
-
-                  // await ref
-                  //         .read(isarNotifierProvider.notifier)
-                  //         .isItemDuplicateInFavorites(debitCard.id,
-                  //             widget.basicApiPageSettingsModel.productTypeUrl!)
-                  //     ? ref
-                  //         .watch(favoritesDebitCardsListStateProvider.notifier)
-                  //         .state
-                  //         .removeWhere((element) => element.id == debitCard.id)
-                  //     : ref
-                  //         .watch(favoritesDebitCardsListStateProvider.notifier)
-                  //         .state
-                  //         .insert(0,debitCard);
-                  //ref.invalidate(favoritesDebitCardsListControllerProvider);
-                },
                 basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
                 productInfo: debitCard,
                 productRating: '4.8');
           }
         }, error: (error, _) {
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         }, loading: () {
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         });
       }),
     );

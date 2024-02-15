@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:isar/isar.dart';
 import 'package:podberi_ru/core/constants/route_constants.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/bank_details_model/bank_details_model.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/filters_model.dart';
@@ -20,7 +21,6 @@ class ZaimyWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
   final ListZaimyModel? productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  final VoidCallback onTap;
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
@@ -29,7 +29,6 @@ class ZaimyWidgetWithButtons extends ConsumerStatefulWidget {
     required this.productRating,
     this.productInfo,
     required this.basicApiPageSettingsModel,
-    required this.onTap,
   });
 
   @override
@@ -57,31 +56,27 @@ class _ZaimyWidgetWithButtonsState
       ),
       child: Stack(
         children: [
-          // Positioned(
-          //   top: 16,
-          //   right: 16,
-          //   child: Container(
-          //     padding:
-          //     const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(12),
-          //       color: ThemeApp.mainWhite,
-          //     ),
-          //     child: Image.network(
-          //       '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
-          //       height: 32,
-          //       width: 36,
-          //       errorBuilder: (BuildContext context, Object exception,
-          //           StackTrace? stackTrace) {
-          //         return const Icon(
-          //           Icons.error,
-          //           size: 51,
-          //           color: ThemeApp.backgroundBlack,
-          //         );
-          //       },
-          //     ),
-          //   ),
-          // ),
+          Positioned(
+            top: 16,
+            right: 16,
+            child: Container(
+              height: 50,
+              width: 50,
+              padding:
+              const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: ThemeApp.mainWhite,
+              ),
+              child: Image.network(
+                '${Urls.api.files}/${widget.productInfo?.image}',
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return SvgPicture.asset('assets/icons/photo_not_found.svg');
+                },
+              ),
+            ),
+          ),
           Positioned(
             left: 16,
             top: 16,
@@ -167,7 +162,6 @@ class _ZaimyWidgetWithButtonsState
                             .put(comparisonZaimyData));
                         ref.invalidate(comparisonZaimyListControllerProvider);
                         setState(() {});
-                        //widget.onTap();
                       },
                       child: FutureBuilder(
                           future: ref
@@ -223,7 +217,7 @@ class _ZaimyWidgetWithButtonsState
                             .put(favoritesZaimyData));
                         ref.watch(favoritesZaimyListStateProvider.notifier).state.clear();
                         ref.invalidate(favoritesZaimyListControllerProvider);
-                        widget.onTap();
+                        setState(() {});
                       },
                       child: FutureBuilder(
                           future: ref

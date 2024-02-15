@@ -9,7 +9,6 @@ import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/core/utils/comparison/rko/comparison_rko_data.dart';
 import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 
@@ -18,7 +17,6 @@ class FavoriteRkoWidget extends ConsumerStatefulWidget {
   final ListRkoModel? productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   final VoidCallback deleteFromFavorites;
-  final VoidCallback tapOnComparisonButton;
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
@@ -28,7 +26,6 @@ class FavoriteRkoWidget extends ConsumerStatefulWidget {
     this.productInfo,
     required this.basicApiPageSettingsModel,
     required this.deleteFromFavorites,
-    required this.tapOnComparisonButton,
   });
 
   @override
@@ -168,117 +165,59 @@ class _FavoriteRkoWidget
           Positioned(
             right: 16,
             bottom: 16,
-            child: Row(
-              children: [
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: () async {
-                        ComparisonRkoData comparisonRkoData =
-                        ComparisonRkoData()
-                          ..id = widget.productInfo?.id;
-                        await isar?.writeTxn(() async => await ref
-                            .watch(isarNotifierProvider.notifier)
-                            .isItemDuplicateInComparison(
-                            widget.productInfo!.id,
-                            widget.basicApiPageSettingsModel
-                                .productTypeUrl!)
-                            ? await isar?.comparisonRkoDatas
-                            .filter()
-                            .idEqualTo(widget.productInfo?.id)
-                            .deleteAll()
-                            : await isar?.comparisonRkoDatas
-                            .put(comparisonRkoData));
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () async {
+                    FavoritesRkoData favoritesRkoData =
+                    FavoritesRkoData()
+                      ..id = widget.productInfo?.id;
+                    await isar?.writeTxn(() async => await ref
+                        .watch(isarNotifierProvider.notifier)
+                        .isItemDuplicateInFavorites(
+                        widget.productInfo!.id,
+                        widget.basicApiPageSettingsModel
+                            .productTypeUrl!)
+                        ? await isar?.favoritesRkoDatas
+                        .filter()
+                        .idEqualTo(widget.productInfo?.id)
+                        .deleteAll()
+                        : await isar?.favoritesRkoDatas
+                        .put(favoritesRkoData));
 
-                        widget.tapOnComparisonButton();
-                      },
-                      child: FutureBuilder(
-                          future: ref
-                              .watch(isarNotifierProvider.notifier)
-                              .isItemDuplicateInComparison(
-                              widget.productInfo!.id,
-                              widget.basicApiPageSettingsModel
-                                  .productTypeUrl!),
-                          builder: (context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              if (snapshot.data) {
-                                return SvgPicture.asset(
-                                  'assets/icons/comparison_select.svg',
-                                  color: ThemeApp.mainWhite,
-                                  height: 32,
-                                  width: 32,
-                                );
-                              } else {
-                                return SvgPicture.asset(
-                                  'assets/icons/nav_bar_icons/comparison_page.svg',
-                                  color: ThemeApp.mainWhite,
-                                  height: 32,
-                                  width: 32,
-                                );
-                              }
-                            }
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height - 72,
+                    widget.deleteFromFavorites();
+                  },
+                  child: FutureBuilder(
+                      future: ref
+                          .watch(isarNotifierProvider.notifier)
+                          .isItemDuplicateInFavorites(
+                          widget.productInfo!.id,
+                          widget.basicApiPageSettingsModel
+                              .productTypeUrl!),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          if (snapshot.data) {
+                            return SvgPicture.asset(
+                              'assets/icons/favorites_select.svg',
+                              color: ThemeApp.mainWhite,
+                              height: 32,
+                              width: 32,
                             );
-                          })),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: () async {
-                        FavoritesRkoData favoritesRkoData =
-                        FavoritesRkoData()
-                          ..id = widget.productInfo?.id;
-                        await isar?.writeTxn(() async => await ref
-                            .watch(isarNotifierProvider.notifier)
-                            .isItemDuplicateInFavorites(
-                            widget.productInfo!.id,
-                            widget.basicApiPageSettingsModel
-                                .productTypeUrl!)
-                            ? await isar?.favoritesRkoDatas
-                            .filter()
-                            .idEqualTo(widget.productInfo?.id)
-                            .deleteAll()
-                            : await isar?.favoritesRkoDatas
-                            .put(favoritesRkoData));
-
-                        widget.deleteFromFavorites();
-                      },
-                      child: FutureBuilder(
-                          future: ref
-                              .watch(isarNotifierProvider.notifier)
-                              .isItemDuplicateInFavorites(
-                              widget.productInfo!.id,
-                              widget.basicApiPageSettingsModel
-                                  .productTypeUrl!),
-                          builder: (context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              if (snapshot.data) {
-                                return SvgPicture.asset(
-                                  'assets/icons/favorites_select.svg',
-                                  color: ThemeApp.mainWhite,
-                                  height: 32,
-                                  width: 32,
-                                );
-                              } else {
-                                return SvgPicture.asset(
-                                  'assets/icons/nav_bar_icons/favorites_page.svg',
-                                  color: ThemeApp.mainWhite,
-                                  height: 32,
-                                  width: 32,
-                                );
-                              }
-                            }
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height - 72,
+                          } else {
+                            return SvgPicture.asset(
+                              'assets/icons/nav_bar_icons/favorites_page.svg',
+                              color: ThemeApp.mainWhite,
+                              height: 32,
+                              width: 32,
                             );
-                          })),
-                ),
-              ],
+                          }
+                        }
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height - 72,
+                        );
+                      })),
             ),
           ),
         ],

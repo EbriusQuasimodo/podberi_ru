@@ -20,8 +20,6 @@ class DebitCardWidgetWithButtons extends ConsumerStatefulWidget {
   final String productRating;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
   final ListDebitCardsModel productInfo;
-  final VoidCallback onTapFavorites;
-  final VoidCallback onTapComparison;
 
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
@@ -29,9 +27,7 @@ class DebitCardWidgetWithButtons extends ConsumerStatefulWidget {
     super.key,
     required this.productRating,
     required this.basicApiPageSettingsModel,
-    required this.onTapFavorites,
     required this.productInfo,
-    required this.onTapComparison,
   });
 
   @override
@@ -72,7 +68,7 @@ class _DebitCardWidgetWithButtonsState
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color(int.parse(
-            '0xff${widget.productInfo.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
+            '0xff${widget.productInfo.bankDetails?.color}')),
       ),
       width: 280,
       height: 190,

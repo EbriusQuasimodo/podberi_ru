@@ -9,20 +9,20 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/zaimy/comparison_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
 import 'package:podberi_ru/features/details_page/zaimy/presentation/zaimy_details_page.dart';
+import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 
 class ZaimyPreviewWidget extends ConsumerStatefulWidget {
   final ListZaimyModel productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  final VoidCallback onFavoritesOrComparisonTap;
 
   ///виджет с превью займа (фото, название, кнопка Заказать), используется в [ZaimyDetailsPage]
   const ZaimyPreviewWidget({
     super.key,
     required this.productInfo,
     required this.basicApiPageSettingsModel,
-    required this.onFavoritesOrComparisonTap,
   });
 
   @override
@@ -116,7 +116,8 @@ class _ZaimyPreviewWidgetState extends ConsumerState<ZaimyPreviewWidget> {
                           : await isar?.favoritesZaimyDatas
                               .put(favoritesZaimyData));
 
-                      widget.onFavoritesOrComparisonTap();
+                      ref.invalidate(favoritesZaimyListControllerProvider);
+                      setState(() {});
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(13),
@@ -177,7 +178,8 @@ class _ZaimyPreviewWidgetState extends ConsumerState<ZaimyPreviewWidget> {
                             : await isar?.comparisonZaimyDatas
                                 .put(comparisonZaimyData));
 
-                        widget.onFavoritesOrComparisonTap();
+                        ref.invalidate(comparisonZaimyListControllerProvider);
+                        setState(() {});
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(13),

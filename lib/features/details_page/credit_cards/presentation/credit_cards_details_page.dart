@@ -45,9 +45,6 @@ class _CreditCardsDetailsPageState extends ConsumerState<CreditCardsDetailsPage>
               title: Text(widget.basicApiPageSettingsModel.pageName!),
             ),
             CreditCardPreviewWidget(
-              onFavoritesOrComparisonTap: () {
-                setState(() {});
-              },
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
               productInfo: widget.detailsInfo,
             ),

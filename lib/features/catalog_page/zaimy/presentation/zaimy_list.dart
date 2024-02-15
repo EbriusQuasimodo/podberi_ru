@@ -40,9 +40,6 @@ class _ZaimyListWidgetState extends ConsumerState<ZaimyListWidget> {
           } else {
             final zaimy = zaimyCards.items[indexInPage];
             return ZaimyWidgetWithButtons(
-              onTap: () {
-                setState(() {});
-              },
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
               productInfo: zaimy,
               productRating: '4.8');}

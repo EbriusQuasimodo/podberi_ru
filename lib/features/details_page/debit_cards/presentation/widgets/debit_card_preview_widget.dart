@@ -9,20 +9,20 @@ import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_details_page.dart';
+import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
 import 'package:podberi_ru/features/web_view_widget.dart';
 
 class DebitCardPreviewWidget extends ConsumerStatefulWidget {
   final ListDebitCardsModel productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
-  final VoidCallback onFavoritesOrComparisonTap;
 
   ///виджет с превью дебетовки (фото, название, кнопка Заказать), используется в [DebitCardsDetailsPage]
   const DebitCardPreviewWidget({
     super.key,
     required this.productInfo,
     required this.basicApiPageSettingsModel,
-    required this.onFavoritesOrComparisonTap,
   });
 
   @override
@@ -118,8 +118,8 @@ class _DebitCardPreviewWidgetState
                               .deleteAll()
                           : await isar?.favoritesDebitCardsDatas
                               .put(favoritesDebitCardsData));
-
-                      widget.onFavoritesOrComparisonTap();
+ref.invalidate(favoritesDebitCardsListControllerProvider);
+                      setState(() {});
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(13),
@@ -182,7 +182,8 @@ class _DebitCardPreviewWidgetState
                             : await isar?.comparisonDebitCardsDatas
                                 .put(comparisonDebitCardsData));
 
-                        widget.onFavoritesOrComparisonTap();
+                        ref.invalidate(comparisonDebitCardsListControllerProvider);
+                        setState(() {});
                       },
                       child: Padding(
                           padding: const EdgeInsets.all(13),

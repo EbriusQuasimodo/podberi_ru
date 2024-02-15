@@ -7,6 +7,7 @@ import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_controller.dart';
+import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_controller.dart';
 import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_controller.dart';
@@ -70,6 +71,7 @@ class _FavoritesCreditCardsList
   Future<void> _deleteFromFavorites(String id) async {
     try {
       loading = true;
+      ref.invalidate(creditCardsDetailsControllerProvider);
       setState(() {
         ref
             .watch(favoritesCreditCardsListStateProvider.notifier)
@@ -90,6 +92,7 @@ class _FavoritesCreditCardsList
                   offset: favoritesCreditCardsList.length ~/ pageSize,
                   limit: pageSize))
           .future);
+      ref.invalidate(creditCardsDetailsControllerProvider);
       ref.invalidate(comparisonCreditCardsListControllerProvider);
       if (mounted) {
         setState(() {});

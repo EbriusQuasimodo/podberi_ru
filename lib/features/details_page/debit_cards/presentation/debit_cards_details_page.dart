@@ -45,9 +45,6 @@ class _DebitCardsDetailsPageState extends ConsumerState<DebitCardsDetailsPage> {
               title: Text(widget.basicApiPageSettingsModel.pageName!),
             ),
             DebitCardPreviewWidget(
-              onFavoritesOrComparisonTap: () {
-                setState(() {});
-              },
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
               productInfo: widget.detailsInfo,
             ),

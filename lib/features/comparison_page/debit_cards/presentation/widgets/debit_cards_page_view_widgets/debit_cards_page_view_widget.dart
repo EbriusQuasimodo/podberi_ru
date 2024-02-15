@@ -5,9 +5,11 @@ import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart'
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/core/utils/comparison/debit_cards/comparison_debit_cards_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
+import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_page.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
+import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_controller.dart';
 
 import 'mini_debit_card_widget.dart';
 
@@ -145,7 +147,8 @@ class _DebitCardsComparisonWidgetState
 
                     ///обновляем контроллер чтобы отобразить новый список сравнения
                     ref.invalidate(comparisonDebitCardsListControllerProvider);
-
+                    ref.invalidate(debitCardsControllerProvider);
+                    ref.invalidate(debitCardsDetailsControllerProvider);
                     ///воспроизводим анимацию при удалении
                     ///анимировать надо оба pfge view если они находятся на одной и той же страницу
                     ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
@@ -239,7 +242,8 @@ class _DebitCardsComparisonWidgetState
 
                           ///обновляем контроллер чтобы отобразить новый список сравнения
                           ref.invalidate(comparisonDebitCardsListControllerProvider);
-
+                          ref.invalidate(debitCardsControllerProvider);
+                          ref.invalidate(debitCardsDetailsControllerProvider);
                           ///воспроизводим анимацию при удалении
                           ///анимировать надо оба pfge view если они находятся на одной и той же страницу
                           ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
