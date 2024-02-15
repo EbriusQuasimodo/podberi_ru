@@ -13,9 +13,8 @@ import 'package:podberi_ru/features/comparison_page/shared_presentation/comparis
 import 'package:podberi_ru/features/details_page/shared_presentation/load_details_page_by_product_type.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_page.dart';
 import 'package:podberi_ru/features/home_page/presentation/home_page.dart';
-import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_page.dart';
-import 'package:podberi_ru/features/promo_codes_pages/presentation/select_category_promo_codes_page.dart';
-import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_code_details_page.dart';
+
+///промокодов временно не будет ( планируется добавить после релиза мвп)
 
 ///энум со всеми маршрутами в приложении
 enum AppRoute {
@@ -25,16 +24,16 @@ enum AppRoute {
   catalogPage,
   detailsPage,
   favoritesPage,
-  selectCategoryPromoCodesPage,
-  promoCodesPage,
-  promoCodesDetailsPage,
+  // selectCategoryPromoCodesPage,
+  // promoCodesPage,
+  // promoCodesDetailsPage,
   comparisonPage
 }
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
 final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
-final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
+//final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
 final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 final _shellNavigatorFKey = GlobalKey<NavigatorState>(debugLabel: 'shellF');
 ///навигатор по приложению
@@ -126,39 +125,39 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                 ),
               ],
             ),
-            StatefulShellBranch(
-              navigatorKey: _shellNavigatorCKey,
-              routes: [
-                GoRoute(
-                  path: RouteConstants.selectCategoryPromocodes,
-                  name: AppRoute.selectCategoryPromoCodesPage.name,
-                  pageBuilder: (context, state) => const NoTransitionPage(
-                    child: SelectCategoryPromoCodesPage(),
-                  ),
-                  routes: const [],
-                ),
-                GoRoute(
-                  path: RouteConstants.promocodes,
-                  name: AppRoute.promoCodesPage.name,
-                  pageBuilder: (context, state) {
-                    return const NoTransitionPage(
-                      child: PromoCodesPage(),
-                    );
-                  },
-                  routes: const [],
-                ),
-                GoRoute(
-                  path: RouteConstants.promocodesDetails,
-                  name: AppRoute.promoCodesDetailsPage.name,
-                  pageBuilder: (context, state) {
-                    return NoTransitionPage(
-                      child: PromoCodesDetailsPage(),
-                    );
-                  },
-                  routes: const [],
-                ),
-              ],
-            ),
+            // StatefulShellBranch(
+            //   navigatorKey: _shellNavigatorCKey,
+            //   routes: [
+            //     GoRoute(
+            //       path: RouteConstants.selectCategoryPromocodes,
+            //       name: AppRoute.selectCategoryPromoCodesPage.name,
+            //       pageBuilder: (context, state) => const NoTransitionPage(
+            //         child: SelectCategoryPromoCodesPage(),
+            //       ),
+            //       routes: const [],
+            //     ),
+            //     GoRoute(
+            //       path: RouteConstants.promocodes,
+            //       name: AppRoute.promoCodesPage.name,
+            //       pageBuilder: (context, state) {
+            //         return const NoTransitionPage(
+            //           child: PromoCodesPage(),
+            //         );
+            //       },
+            //       routes: const [],
+            //     ),
+            //     GoRoute(
+            //       path: RouteConstants.promocodesDetails,
+            //       name: AppRoute.promoCodesDetailsPage.name,
+            //       pageBuilder: (context, state) {
+            //         return NoTransitionPage(
+            //           child: PromoCodesDetailsPage(),
+            //         );
+            //       },
+            //       routes: const [],
+            //     ),
+            //   ],
+            // ),
             StatefulShellBranch(
               navigatorKey: _shellNavigatorFKey,
               routes: [
@@ -213,8 +212,8 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
                   'assets/icons/nav_bar_icons/catalog_page.svg', 'Каталог'),
               bottomNavigationItem(
                   'assets/icons/nav_bar_icons/favorites_page.svg', 'Избранное'),
-              bottomNavigationItem(
-                  'assets/icons/nav_bar_icons/promocodes_page.svg', 'Бонусы'),
+              // bottomNavigationItem(
+              //     'assets/icons/nav_bar_icons/promocodes_page.svg', 'Бонусы'),
               bottomNavigationItem(
                   'assets/icons/nav_bar_icons/comparison_page.svg',
                   'Сравнение'),

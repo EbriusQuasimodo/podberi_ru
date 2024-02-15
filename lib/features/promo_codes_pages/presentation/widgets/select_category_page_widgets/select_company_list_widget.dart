@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/promo_codes_pages/domain/promocodes_company_filters_model.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_controller.dart';
-
+///промокодов временно не будет ( планируется добавить после релиза мвп)
 class CompaniesFilterListWidget extends ConsumerStatefulWidget {
   final VoidCallback onTap;
   final PromoCodesAllCompaniesFilters promoCodesAllFilters;

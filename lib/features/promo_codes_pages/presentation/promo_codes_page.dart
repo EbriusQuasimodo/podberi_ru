@@ -7,7 +7,7 @@ import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_c
 import 'package:podberi_ru/features/promo_codes_pages/presentation/widgets/promocodes_page_widgets/promocodes_list_widget.dart';
 
 import 'widgets/select_category_page_widgets/select_company_list_widget.dart';
-
+///промокодов временно не будет ( планируется добавить после релиза мвп)
 class PromoCodesPage extends ConsumerStatefulWidget {
   const PromoCodesPage({super.key});
 

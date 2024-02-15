@@ -1,13 +1,11 @@
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/constants/route_constants.dart';
-import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/promo_codes_pages/domain/promocodes_category_filters_model.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-
+///промокодов временно не будет ( планируется добавить после релиза мвп)
 class CategoryListWidget extends ConsumerWidget {
   CategoryListWidget({super.key});
 
@@ -88,9 +86,9 @@ class CategoryListWidget extends ConsumerWidget {
                                       .state =
                                   categoryPromoCodesFiltersModel
                                       .promoCodesAllCategories[index].category;
-                              ref
-                                  .watch(goRouterProvider)
-                                  .push(RouteConstants.promocodes);
+                              // ref
+                              //     .watch(goRouterProvider)
+                              //     .push(RouteConstants.promocodes);
                             },
                           ),
                         ),

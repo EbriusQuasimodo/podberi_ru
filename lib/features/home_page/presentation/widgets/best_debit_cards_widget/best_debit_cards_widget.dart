@@ -21,7 +21,7 @@ class BestDebitCardsWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SliverToBoxAdapter(
       child: Container(
-        margin: const EdgeInsets.only(top: 2),
+        margin: const EdgeInsets.only(top: 2, bottom: 72),
         padding: const EdgeInsets.only(top: 30, bottom: 21),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(

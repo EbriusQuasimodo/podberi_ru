@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:podberi_ru/core/constants/route_constants.dart';
-import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-
+///промокодов временно не будет ( планируется добавить после релиза мвп)
 class CanvasBackground extends ConsumerStatefulWidget {
   ///канвас для рисования изогнутой линии в карточке промокодлов на главной странице
   const CanvasBackground({super.key});
@@ -42,9 +40,9 @@ class _CanvasBackgroundState extends ConsumerState<CanvasBackground> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
                   onTap: () {
-                    ref
-                        .watch(goRouterProvider)
-                        .go(RouteConstants.selectCategoryPromocodes);
+                    // ref
+                    //     .watch(goRouterProvider)
+                    //     .go(RouteConstants.selectCategoryPromocodes);
                   },
                   child: Text(
                     'Подробнее',

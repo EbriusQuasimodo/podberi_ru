@@ -2,9 +2,6 @@ import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_page.d
 import 'package:podberi_ru/features/catalog_page/shared_presentation/catalog_page.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page.dart';
 import 'package:podberi_ru/features/favorites_page/shared_presentation/favorites_page.dart';
-import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_page.dart';
-import 'package:podberi_ru/features/promo_codes_pages/presentation/select_category_promo_codes_page.dart';
-import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_code_details_page.dart';
 
 class RouteConstants {
   ///главная страница [HomePage]
@@ -27,13 +24,15 @@ class RouteConstants {
   ///страница избранного [FavoritesPage]
   static const String favorites = '/favorites';
 
-  ///страница выбора категории промокодов [SelectCategoryPromoCodesPage]
-  static const String selectCategoryPromocodes = '/selectCategoryPromocodes';
-
-  ///страница промокодов [PromoCodesPage]
-  static const String promocodes = '/promocodes';
-  ///страница деталей промокода [PromoCodesDetailsPage]
-  static const String promocodesDetails = '/promocodesDetails';
+  ///промокодов временно не будет ( планируется добавить после релиза мвп)
+  //
+  // ///страница выбора категории промокодов [SelectCategoryPromoCodesPage]
+  // static const String selectCategoryPromocodes = '/selectCategoryPromocodes';
+  //
+  // ///страница промокодов [PromoCodesPage]
+  // static const String promocodes = '/promocodes';
+  // ///страница деталей промокода [PromoCodesDetailsPage]
+  // static const String promocodesDetails = '/promocodesDetails';
 
   ///страница сравнения [ComparisonPage]
   static const String comparison = '/comparison';

@@ -5,7 +5,7 @@ import 'package:podberi_ru/features/promo_codes_pages/presentation/promo_codes_c
 import 'package:podberi_ru/features/promo_codes_pages/presentation/widgets/promo_code_details_page_widgets/promo_code_action_deadline_widget.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/widgets/promo_code_details_page_widgets/promo_code_conditions_widget.dart';
 import 'package:podberi_ru/features/promo_codes_pages/presentation/widgets/promo_code_details_page_widgets/promo_code_preview_widget.dart';
-
+///промокодов временно не будет ( планируется добавить после релиза мвп)
 class PromoCodesDetailsPage extends ConsumerWidget {
   PromoCodesDetailsPage({super.key});
 

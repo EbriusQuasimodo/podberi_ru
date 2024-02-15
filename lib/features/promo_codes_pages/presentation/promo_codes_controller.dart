@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/features/promo_codes_pages/domain/promocodes_category_filters_model.dart';
 import 'package:podberi_ru/features/promo_codes_pages/domain/promocodes_company_filters_model.dart';
-
+///промокодов временно не будет ( планируется добавить после релиза мвп)
 final promoCodesCategoryStateProvider =
     StateProvider.autoDispose<String>((ref) {
   return '';

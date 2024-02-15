@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 
 import 'canvas_background.dart';
-
+///промокодов временно не будет ( планируется добавить после релиза мвп)
 class PromoCodesAdsWidget extends StatelessWidget {
   ///виджет с рекламой нашей страницы промокодов
   const PromoCodesAdsWidget({super.key});

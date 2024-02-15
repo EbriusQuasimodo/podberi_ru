@@ -4,8 +4,6 @@ import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_credit_cards_widget/best_credit_cards_widget.dart';
 import 'package:podberi_ru/features/home_page/presentation/widgets/best_debit_cards_widget/best_debit_cards_widget.dart';
-import 'package:podberi_ru/features/home_page/presentation/widgets/blog_widgets/blog_widget.dart';
-import 'package:podberi_ru/features/home_page/presentation/widgets/promocodes_ads_widgets/promocodes_ads_widget.dart';
 
 import 'controllers/best_banks_controller.dart';
 import 'controllers/best_offer_controller.dart';
@@ -131,8 +129,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ));
               },
             ),
-            const PromoCodesAdsWidget(),
-            const BlogWidget(),
+            ///промокодов временно не будет ( планируется добавить после релиза мвп)
+            // const PromoCodesAdsWidget(),
+            ///блога временно не будет ( возможно сделаю пока будут тестировать мобилку)
+            // const BlogWidget(),
           ],
         ),
       ),

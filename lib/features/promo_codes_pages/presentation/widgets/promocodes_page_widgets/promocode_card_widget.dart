@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:podberi_ru/core/constants/route_constants.dart';
-import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-
+///промокодов временно не будет ( планируется добавить после релиза мвп)
 class PromoCodesCardWidget extends ConsumerWidget {
   final String productName;
   final String productShortDescription;
@@ -91,9 +89,9 @@ class PromoCodesCardWidget extends ConsumerWidget {
                 minWidth: 40,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 onPressed: () {
-                  ref
-                      .watch(goRouterProvider)
-                      .push(RouteConstants.promocodesDetails);
+                  // ref
+                  //     .watch(goRouterProvider)
+                  //     .push(RouteConstants.promocodesDetails);
                 },
                 child: Icon(Icons.arrow_forward_ios)
               )),
