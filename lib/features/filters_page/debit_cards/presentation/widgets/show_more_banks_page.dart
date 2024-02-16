@@ -33,6 +33,7 @@ class _ShowMorePageState extends ConsumerState<ShowMoreBanksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        physics: new ClampingScrollPhysics(),
         slivers: [
           SliverAppBar(
             scrolledUnderElevation: 0,

@@ -48,7 +48,7 @@ class FavoritesZaimyListController extends AutoDisposeFamilyAsyncNotifier<
 
     final favoritesZaimyRepo = ref.read(favoritesZaimyRepositoryProvider);
     ref.keepAlive();
-    return await favoritesZaimyRepo.fetch(productTypeWithQuery, ref);
+    return await favoritesZaimyRepo.fetch(productTypeWithQuery, productIdListZaimy,ref);
   }
 }
 

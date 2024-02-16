@@ -66,9 +66,23 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
     selectedBankProducts.add('Дебетовые карты');
     super.didChangeDependencies();
   }
+  final GlobalKey key = GlobalKey();
+  Size? redboxSize;
 
+  @override
+  void initState() {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      setState(() {
+        redboxSize = getRedBoxSize(key.currentContext!);
+      });
+    });
+    super.initState();
+  }
   final isar = Isar.getInstance();
-
+  Size getRedBoxSize(BuildContext context) {
+    final box = context.findRenderObject() as RenderBox;
+    return box.size;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +95,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
           ref.invalidate(favoritesRkoListControllerProvider);
         },
         child: CustomScrollView(
-
+          physics: new ClampingScrollPhysics(),
           slivers: [
             const SliverAppBar(
               scrolledUnderElevation: 0,
@@ -91,6 +105,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
             ),
             SliverToBoxAdapter(
               child: Container(
+                key: key,
                 margin: const EdgeInsets.only(top: 2),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -108,6 +123,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
               ),
             ),
            LoadFavoritesByProductType(
+             choiceChipSize: redboxSize,
                     basicApiPageSettingsModel: BasicApiPageSettingsModel(
                         page: 1,
                         filters: FiltersModel(),

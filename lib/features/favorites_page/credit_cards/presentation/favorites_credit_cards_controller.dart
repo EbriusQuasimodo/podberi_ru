@@ -50,7 +50,7 @@ class FavoritesCreditCardsListController extends AutoDisposeFamilyAsyncNotifier<
     final favoritesCreditCardsRepo =
         ref.read(favoritesCreditCardsRepositoryProvider);
     ref.keepAlive();
-    return await favoritesCreditCardsRepo.fetch(productTypeWithQuery, ref);
+    return await favoritesCreditCardsRepo.fetch(productTypeWithQuery,productIdListCreditCards, ref);
   }
 }
 

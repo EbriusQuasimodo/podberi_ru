@@ -16,11 +16,13 @@ import 'favorite_credit_card_widget.dart';
 
 class FavoritesCreditCardsList extends ConsumerStatefulWidget {
   int itemsCount;
+  final Size? choiceChipSize;
 
   ///страница-список всех кредиток в избранном
   FavoritesCreditCardsList({
     super.key,
     required this.itemsCount,
+    required this.choiceChipSize,
   });
 
   @override
@@ -116,7 +118,8 @@ class _FavoritesCreditCardsList
               hasScrollBody: false,
               fillOverscroll: true,
               child: Container(
-                margin: const EdgeInsets.only(top: 2, bottom: 72),
+                margin: EdgeInsets.only(
+                    top: 2, bottom: MediaQuery.of(context).padding.bottom),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: ThemeApp.mainWhite,
@@ -125,7 +128,8 @@ class _FavoritesCreditCardsList
             ),
           ),
           SliverContainer(
-            margin: const EdgeInsets.only(top: 2, bottom: 72),
+            margin: EdgeInsets.only(
+                top: 2, bottom: MediaQuery.of(context).padding.bottom),
             background: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -139,40 +143,42 @@ class _FavoritesCreditCardsList
                 ),
                 sliver: SliverToBoxAdapter(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 240,
-                    child: MediaQuery.removePadding(
-                      context: context,
-                      removeBottom: true,
-                      removeTop: true,
-                      child: ListView.builder(
-                          key: const PageStorageKey<String>('favoritesCreditCardsList'),
-                          padding: const EdgeInsets.only(top: 15,bottom: 10),
-                          itemCount: favoritesCreditCardsList.length >=
-                              widget.itemsCount
-                              ? widget.itemsCount
-                              : favoritesCreditCardsList.length,
-                          controller: controller,
-                          itemBuilder: (context, index) {
-                            return FavoriteCreditCardWidget(
-                              tapOnComparisonButton: () {
-                                _tapOnComparisonButton(index);
-                              },
-                              deleteFromFavorites: () {
-                                _deleteFromFavorites(favoritesCreditCardsList[index].id);
-                              },
-                              productInfo: favoritesCreditCardsList[index],
-                              basicApiPageSettingsModel:
-                              BasicApiPageSettingsModel(
-                                page: 1,
-                                filters: FiltersModel(),
-                                productTypeUrl:
-                                ref.watch(favoritesProductUrlStateProvider),
-                                pageName: 'Избранное',
-                              ),
-                              productRating: '4.8',
-                            );
-                          }),
-                    ),
+                    height: MediaQuery.of(context).size.height -
+                        (kToolbarHeight +
+                            widget.choiceChipSize!.height +
+                            MediaQuery.of(context).padding.bottom +
+                            7 +
+                            MediaQuery.of(context).padding.top),
+                    child: ListView.builder(
+                        key: const PageStorageKey<String>(
+                            'favoritesCreditCardsList'),
+                        padding: const EdgeInsets.only(top: 15, bottom: 5),
+                        itemCount:
+                            favoritesCreditCardsList.length >= widget.itemsCount
+                                ? widget.itemsCount
+                                : favoritesCreditCardsList.length,
+                        controller: controller,
+                        itemBuilder: (context, index) {
+                          return FavoriteCreditCardWidget(
+                            tapOnComparisonButton: () {
+                              _tapOnComparisonButton(index);
+                            },
+                            deleteFromFavorites: () {
+                              _deleteFromFavorites(
+                                  favoritesCreditCardsList[index].id);
+                            },
+                            productInfo: favoritesCreditCardsList[index],
+                            basicApiPageSettingsModel:
+                                BasicApiPageSettingsModel(
+                              page: 1,
+                              filters: FiltersModel(),
+                              productTypeUrl:
+                                  ref.watch(favoritesProductUrlStateProvider),
+                              pageName: 'Избранное',
+                            ),
+                            productRating: '4.8',
+                          );
+                        }),
                   ),
                 )),
           ),
@@ -183,7 +189,8 @@ class _FavoritesCreditCardsList
         hasScrollBody: false,
         fillOverscroll: true,
         child: Container(
-          margin: const EdgeInsets.only(top: 2, bottom: 72),
+          margin: EdgeInsets.only(
+              top: 2, bottom: MediaQuery.of(context).padding.bottom),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: ThemeApp.mainWhite,

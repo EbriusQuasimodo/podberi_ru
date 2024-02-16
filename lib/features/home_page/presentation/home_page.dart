@@ -36,6 +36,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ref.refresh(bestBanksControllerProvider.future);
         },
         child: CustomScrollView(
+          physics: new ClampingScrollPhysics(),
           slivers: [
             ///custom app bar with search widget
             const SliverAppBar(

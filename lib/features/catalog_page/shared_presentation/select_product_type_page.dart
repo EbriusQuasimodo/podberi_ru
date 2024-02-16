@@ -20,6 +20,7 @@ class SelectProductTypePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: CustomScrollView(
+        physics: new ClampingScrollPhysics(),
         slivers: [
           SliverAppBar(
             title: const Text(
@@ -37,7 +38,7 @@ class SelectProductTypePage extends ConsumerWidget {
                   hasScrollBody: false,
                   fillOverscroll: true,
                   child: Container(
-                    margin: EdgeInsets.only(top: 2, bottom: 72),
+                    margin: EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: ThemeApp.mainWhite,
@@ -46,7 +47,7 @@ class SelectProductTypePage extends ConsumerWidget {
                 ),
               ),
               SliverContainer(
-                margin: const EdgeInsets.only(top: 2, bottom: 72),
+                margin: EdgeInsets.only(top: 2, bottom:MediaQuery.of(context).padding.bottom),
                 background: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),

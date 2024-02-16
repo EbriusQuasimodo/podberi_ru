@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:podberi_ru/core/domain/zaimy_model/zaimy_model.dart';
+import 'package:podberi_ru/core/utils/favorites/zaimy/favorites_zaimy_data.dart';
 import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
 import 'favorites_zaimy_data_source.dart';
@@ -8,14 +9,14 @@ import 'favorites_zaimy_data_source.dart';
 
 abstract class FavoritesZaimyRepositoryImpl {
   Future<void> fetch(
-      String arg, AutoDisposeAsyncNotifierProviderRef ref);
+      String arg, List<FavoritesZaimyData> isarData,AutoDisposeAsyncNotifierProviderRef ref);
 }
 
 class FavoritesZaimyRepository implements FavoritesZaimyRepositoryImpl {
   FavoritesZaimyRepository();
 
   @override
-  Future<ZaimyModel> fetch(String arg,
+  Future<ZaimyModel> fetch(String arg,List<FavoritesZaimyData> isarData,
       AutoDisposeAsyncNotifierProviderRef ref) async {
 
     if(arg == 'zaimy'){
@@ -25,10 +26,20 @@ class FavoritesZaimyRepository implements FavoritesZaimyRepositoryImpl {
       final response =
       await GetIt.I<FavoritesZaimyGetDataSource>().fetch(arg);
       if (response.itemsCount <= 10) {
+        ///создаем список с айдишниками из изара - по нему будем сортироваться
+        List<String> idListFromIsar = [];
+        for (int i = 0; i < isarData.length; i++) {
+          idListFromIsar.add(isarData[i].id!);
+        }
+        ///сортируем респонс по idListFromIsar
+        final List<ListZaimyModel> sortedResponse =
+        List.from(response.items)
+          ..sort((a, b) => idListFromIsar.indexOf(a.id) - idListFromIsar.indexOf(b.id));
+
         ref
             .watch(favoritesZaimyListStateProvider.notifier)
             .state
-            .addAll(response.items);
+            .addAll(sortedResponse);
       }
       ref.keepAlive();
       return response;

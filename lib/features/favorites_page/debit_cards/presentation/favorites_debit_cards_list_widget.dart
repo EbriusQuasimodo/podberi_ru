@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,11 +18,13 @@ import 'favorites_debit_cards_controller.dart';
 
 class FavoritesDebitCardsList extends ConsumerStatefulWidget {
   int itemsCount;
+  final Size? choiceChipSize;
 
   ///список - страница всех дебетовок в избранном
   FavoritesDebitCardsList({
     super.key,
     required this.itemsCount,
+    required this.choiceChipSize,
   });
 
   @override
@@ -35,6 +39,13 @@ class _FavoritesDebitCardsListState
 
   @override
   void didChangeDependencies() {
+    double padd = kToolbarHeight +
+        widget.choiceChipSize!.height +
+        MediaQuery.of(context).padding.bottom +
+        7 +
+        25;
+    print(padd);
+    print(widget.choiceChipSize);
     controller.addListener(() {
       if (controller.position.pixels >= controller.position.maxScrollExtent &&
           !loading) {
@@ -72,7 +83,7 @@ class _FavoritesDebitCardsListState
     try {
       loading = true;
       ref.invalidate(debitCardsDetailsControllerProvider);
-     // ref.invalidate(debitCardsControllerProvider);
+      // ref.invalidate(debitCardsControllerProvider);
       setState(() {
         ref
             .watch(favoritesDebitCardsListStateProvider.notifier)
@@ -107,8 +118,10 @@ class _FavoritesDebitCardsListState
 
   @override
   Widget build(BuildContext context) {
-    favoritesDebitCardsList =
-        ref.watch(favoritesDebitCardsListStateProvider);
+    double topPadding = MediaQuery.of(context).padding.top;
+    double bottomPadding = MediaQuery.of(context).padding.bottom;
+
+    favoritesDebitCardsList = ref.watch(favoritesDebitCardsListStateProvider);
     if (favoritesDebitCardsList.isNotEmpty) {
       return SliverStack(
         insetOnOverlap: true,
@@ -118,7 +131,8 @@ class _FavoritesDebitCardsListState
               hasScrollBody: false,
               fillOverscroll: true,
               child: Container(
-                margin: const EdgeInsets.only(top: 2, bottom: 72),
+                margin: EdgeInsets.only(
+                    top: 2, bottom: MediaQuery.of(context).padding.bottom),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: ThemeApp.mainWhite,
@@ -127,9 +141,8 @@ class _FavoritesDebitCardsListState
             ),
           ),
           SliverContainer(
-            margin: const EdgeInsets.only(
-              top: 2,
-            ),
+            margin: EdgeInsets.only(
+                top: 2, bottom: MediaQuery.of(context).padding.bottom),
             background: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -143,40 +156,41 @@ class _FavoritesDebitCardsListState
                 ),
                 sliver: SliverToBoxAdapter(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 240,
-                    child: MediaQuery.removePadding(
-                      context: context,
-                      removeBottom: true,
-                      removeTop: true,
-                      child: ListView.builder(
-                          key: const PageStorageKey<String>('favoritesDebitCardsList'),
-                          padding: const EdgeInsets.only(top: 15,bottom: 10),
-                          itemCount: favoritesDebitCardsList.length >=
-                                  widget.itemsCount
-                              ? widget.itemsCount
-                              : favoritesDebitCardsList.length,
-                          controller: controller,
-                          itemBuilder: (context, index) {
-                            return FavoriteDebitCardWidget(
-                              tapOnComparisonButton: () {
-                                _tapOnComparisonButton(index);
-                              },
-                              deleteFromFavorites: () {
-                                _deleteFromFavorites(favoritesDebitCardsList[index].id);
-                              },
-                              productInfo: favoritesDebitCardsList[index],
-                              basicApiPageSettingsModel:
-                                  BasicApiPageSettingsModel(
-                                page: 1,
-                                filters: FiltersModel(),
-                                productTypeUrl:
-                                    ref.watch(favoritesProductUrlStateProvider),
-                                pageName: 'Избранное',
-                              ),
-                              productRating: '4.8',
-                            );
-                          }),
-                    ),
+                    height: MediaQuery.of(context).size.height -
+                        (kToolbarHeight +
+                            widget.choiceChipSize!.height +
+                            MediaQuery.of(context).padding.bottom +
+                            7 + MediaQuery.of(context).padding.top),
+                    child: ListView.builder(
+                        key: const PageStorageKey<String>(
+                            'favoritesDebitCardsList'),
+                        padding: const EdgeInsets.only(top: 15,bottom: 5),
+                        itemCount: favoritesDebitCardsList.length >=
+                                widget.itemsCount
+                            ? widget.itemsCount
+                            : favoritesDebitCardsList.length,
+                        controller: controller,
+                        itemBuilder: (context, index) {
+                          return FavoriteDebitCardWidget(
+                            tapOnComparisonButton: () {
+                              _tapOnComparisonButton(index);
+                            },
+                            deleteFromFavorites: () {
+                              _deleteFromFavorites(
+                                  favoritesDebitCardsList[index].id);
+                            },
+                            productInfo: favoritesDebitCardsList[index],
+                            basicApiPageSettingsModel:
+                                BasicApiPageSettingsModel(
+                              page: 1,
+                              filters: FiltersModel(),
+                              productTypeUrl:
+                                  ref.watch(favoritesProductUrlStateProvider),
+                              pageName: 'Избранное',
+                            ),
+                            productRating: '4.8',
+                          );
+                        }),
                   ),
                 )),
           ),
@@ -187,7 +201,8 @@ class _FavoritesDebitCardsListState
         hasScrollBody: false,
         fillOverscroll: true,
         child: Container(
-          margin: const EdgeInsets.only(top: 2, bottom: 72),
+          margin: EdgeInsets.only(
+              top: 2, bottom: MediaQuery.of(context).padding.bottom),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: ThemeApp.mainWhite,

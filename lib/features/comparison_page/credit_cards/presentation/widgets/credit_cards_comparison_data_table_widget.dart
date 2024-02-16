@@ -54,7 +54,7 @@ class _CreditCardsComparisonDataTableWidgetState
     int secondPageNum = ref.watch(comparisonSecondCreditPageNumStateProvider);
     return Container(
       padding: const EdgeInsets.only(top: 43, bottom: 30),
-      margin: const EdgeInsets.only(top: 2, bottom: 72),
+      margin: EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: ThemeApp.mainWhite,

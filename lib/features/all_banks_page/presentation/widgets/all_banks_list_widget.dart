@@ -37,7 +37,7 @@ class AllBanksListWidget extends ConsumerWidget {
             fillOverscroll: true,
             hasScrollBody: false,
             child: Container(
-              margin: const EdgeInsets.only(top: 2, bottom: 72),
+              margin:  EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: ThemeApp.mainWhite,
@@ -46,7 +46,7 @@ class AllBanksListWidget extends ConsumerWidget {
           ),
         ),
         SliverContainer(
-          margin: const EdgeInsets.only(top: 2, bottom: 72),
+          margin: EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
           background: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),

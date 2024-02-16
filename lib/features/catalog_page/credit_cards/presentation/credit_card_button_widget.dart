@@ -21,7 +21,6 @@ class CreditCardWidgetWithButtons extends ConsumerStatefulWidget {
   final ListCreditCardsModel? productInfo;
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
 
-
   ///кастомный виджет с карточкой банковсвкого продукта
   ///(отличительные особенности - есть кнопки добавить в избранное и сравнение)
   CreditCardWidgetWithButtons({
@@ -64,9 +63,9 @@ class _CreditCardWidgetWithButtonsState
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-       // color: widget.productInfo != null ? Colors.green : ThemeApp.darkestGrey,
+        // color: widget.productInfo != null ? Colors.green : ThemeApp.darkestGrey,
         color: Color(int.parse(
-           '0xff${widget.productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
+            '0xff${widget.productInfo?.bankDetails?.color}')), //int.parse('0xff${productInfo?.bankDetails?.color}')
       ),
       width: 280,
       height: 190,
@@ -79,7 +78,8 @@ class _CreditCardWidgetWithButtonsState
             top: 16,
             right: 16,
             child: Container(
-              height: 50, width: 50,
+              height: 50,
+              width: 50,
               padding:
                   const EdgeInsets.only(top: 9, right: 7, left: 7, bottom: 9),
               decoration: BoxDecoration(
@@ -88,8 +88,8 @@ class _CreditCardWidgetWithButtonsState
               ),
               child: Image.network(
                 '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
-                errorBuilder: (BuildContext context,
-                    Object exception, StackTrace? stackTrace) {
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
                   return SvgPicture.asset(
                     'assets/icons/photo_not_found.svg',
                   );
@@ -152,7 +152,7 @@ class _CreditCardWidgetWithButtonsState
                   ref.watch(goRouterProvider).push(RouteConstants.details,
                       extra: BasicApiPageSettingsModel(
                           filters: FiltersModel(),
-                        page: 1,
+                          page: 1,
                           productTypeUrl:
                               widget.basicApiPageSettingsModel.productTypeUrl,
                           pageName: widget.basicApiPageSettingsModel.pageName,
@@ -190,7 +190,8 @@ class _CreditCardWidgetWithButtonsState
                                 .deleteAll()
                             : await isar?.comparisonCreditCardsDatas
                                 .put(comparisonCreditCardsData));
-                        ref.invalidate(comparisonCreditCardsListControllerProvider);
+                        ref.invalidate(
+                            comparisonCreditCardsListControllerProvider);
                         setState(() {});
                       },
                       child: FutureBuilder(
@@ -244,9 +245,14 @@ class _CreditCardWidgetWithButtonsState
                                 .deleteAll()
                             : await isar?.favoritesCreditCardsDatas
                                 .put(favoritesCreditCardsData));
-                        ref.watch(favoritesCreditCardsListStateProvider.notifier).state.clear();
-                        ref.invalidate(favoritesCreditCardsListControllerProvider);
-
+                        ref
+                            .watch(
+                                favoritesCreditCardsListStateProvider.notifier)
+                            .state
+                            .clear();
+                        ref.invalidate(
+                            favoritesCreditCardsListControllerProvider);
+                        setState(() {});
                       },
                       child: FutureBuilder(
                           future: ref

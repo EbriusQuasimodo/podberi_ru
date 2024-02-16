@@ -36,6 +36,7 @@ final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
 //final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
 final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 final _shellNavigatorFKey = GlobalKey<NavigatorState>(debugLabel: 'shellF');
+
 ///навигатор по приложению
 final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
   return GoRouter(
@@ -55,8 +56,8 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                 GoRoute(
                   path: RouteConstants.home,
                   name: AppRoute.homePage.name,
-                  pageBuilder: (context, state) => const NoTransitionPage(
-                     child: HomePage()),
+                  pageBuilder: (context, state) =>
+                      const NoTransitionPage(child: HomePage()),
                 ),
               ],
             ),
@@ -83,9 +84,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
                       ),
                     );
                   },
-
                 ),
-
                 GoRoute(
                   path: RouteConstants.details,
                   name: AppRoute.detailsPage.name,
@@ -196,30 +195,33 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
       extendBody: true,
       body: navigationShell,
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.only(top: 2),
+        //padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+        margin:  EdgeInsets.only(top: 2,),
         color: Colors.transparent,
-        height: 70,
+        height: 70+MediaQuery.of(context).padding.bottom,
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
               topRight: Radius.circular(20), topLeft: Radius.circular(20)),
           child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: navigationShell.currentIndex,
-            items: [
-              bottomNavigationItem(
-                  'assets/icons/nav_bar_icons/home_page.svg', 'Главная'),
-              bottomNavigationItem(
-                  'assets/icons/nav_bar_icons/catalog_page.svg', 'Каталог'),
-              bottomNavigationItem(
-                  'assets/icons/nav_bar_icons/favorites_page.svg', 'Избранное'),
-              // bottomNavigationItem(
-              //     'assets/icons/nav_bar_icons/promocodes_page.svg', 'Бонусы'),
-              bottomNavigationItem(
-                  'assets/icons/nav_bar_icons/comparison_page.svg',
-                  'Сравнение'),
-            ],
-            onTap: _goBranch,
-          ),
+                  type: BottomNavigationBarType.fixed,
+                  currentIndex: navigationShell.currentIndex,
+                  items: [
+                    bottomNavigationItem(
+                        'assets/icons/nav_bar_icons/home_page.svg', 'Главная'),
+                    bottomNavigationItem(
+                        'assets/icons/nav_bar_icons/catalog_page.svg',
+                        'Каталог'),
+                    bottomNavigationItem(
+                        'assets/icons/nav_bar_icons/favorites_page.svg',
+                        'Избранное'),
+                    // bottomNavigationItem(
+                    //     'assets/icons/nav_bar_icons/promocodes_page.svg', 'Бонусы'),
+                    bottomNavigationItem(
+                        'assets/icons/nav_bar_icons/comparison_page.svg',
+                        'Сравнение'),
+                  ],
+                  onTap: _goBranch,
+                ),
         ),
       ),
     );

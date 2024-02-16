@@ -20,7 +20,7 @@ class ZaimyDescriptionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        margin: const EdgeInsets.only(top: 2, bottom: 72),
+        margin: const EdgeInsets.only(top: 2, bottom: kBottomNavigationBarHeight+3),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),

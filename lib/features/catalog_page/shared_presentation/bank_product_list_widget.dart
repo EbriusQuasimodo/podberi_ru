@@ -71,7 +71,7 @@ class _BankProductsListWidgetState
                       hasScrollBody: false,
                       fillOverscroll: true,
                       child: Container(
-                        margin: const EdgeInsets.only(top: 2, bottom: 72),
+                        margin:  EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: ThemeApp.mainWhite,
@@ -80,7 +80,7 @@ class _BankProductsListWidgetState
                     ),
                   ),
                   SliverContainer(
-                    margin: const EdgeInsets.only(top: 2, bottom: 72),
+                    margin:  EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
                     background: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -140,9 +140,9 @@ class _BankProductsListWidgetState
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return  SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });
@@ -173,7 +173,7 @@ class _BankProductsListWidgetState
                       hasScrollBody: false,
                       fillOverscroll: true,
                       child: Container(
-                        margin: const EdgeInsets.only(top: 2, bottom: 72),
+                        margin:  EdgeInsets.only(top: 2, bottom:MediaQuery.of(context).padding.bottom),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: ThemeApp.mainWhite,
@@ -182,7 +182,7 @@ class _BankProductsListWidgetState
                     ),
                   ),
                   SliverContainer(
-                    margin: const EdgeInsets.only(top: 2, bottom: 72),
+                    margin:  EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
                     background: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -243,9 +243,9 @@ class _BankProductsListWidgetState
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return  SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });
@@ -273,7 +273,7 @@ class _BankProductsListWidgetState
                       hasScrollBody: false,
                       fillOverscroll: true,
                       child: Container(
-                        margin: const EdgeInsets.only(top: 2, bottom: 72),
+                        margin:  EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: ThemeApp.mainWhite,
@@ -282,7 +282,7 @@ class _BankProductsListWidgetState
                     ),
                   ),
                   SliverContainer(
-                    margin: const EdgeInsets.only(top: 2, bottom: 72),
+                    margin:  EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
                     background: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -342,9 +342,9 @@ class _BankProductsListWidgetState
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return  SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });
@@ -372,7 +372,7 @@ class _BankProductsListWidgetState
                 hasScrollBody: false,
                 fillOverscroll: true,
                 child: Container(
-                  margin: const EdgeInsets.only(top: 2, bottom: 72),
+                  margin:  EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: ThemeApp.mainWhite,
@@ -381,7 +381,7 @@ class _BankProductsListWidgetState
               ),
             ),
             SliverContainer(
-              margin: const EdgeInsets.only(top: 2, bottom: 72),
+              margin:  EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
               background: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -442,9 +442,9 @@ class _BankProductsListWidgetState
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });

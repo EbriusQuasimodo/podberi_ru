@@ -37,6 +37,7 @@ class _CreditCardsDetailsPageState extends ConsumerState<CreditCardsDetailsPage>
                 widget.basicApiPageSettingsModel)
             .future),
         child: CustomScrollView(
+          physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,

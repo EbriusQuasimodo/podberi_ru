@@ -28,11 +28,19 @@ class FavoritesDebitCardsRepository
         url,
       );
       if (response.itemsCount <= 10) {
-
+        ///создаем список с айдишниками из изара - по нему будем сортироваться
+        List<String> idListFromIsar = [];
+        for (int i = 0; i < isarData.length; i++) {
+          idListFromIsar.add(isarData[i].id!);
+        }
+        ///сортируем респонс по idListFromIsar
+        final List<ListDebitCardsModel> sortedResponse =
+            List.from(response.items)
+              ..sort((a, b) => idListFromIsar.indexOf(a.id) - idListFromIsar.indexOf(b.id));
         ref
             .watch(favoritesDebitCardsListStateProvider.notifier)
             .state
-            .addAll(response.items);
+            .addAll(sortedResponse);
       }
       ref.keepAlive();
       return response;

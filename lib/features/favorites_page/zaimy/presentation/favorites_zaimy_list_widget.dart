@@ -16,11 +16,13 @@ import 'favorites_zaimy_controller.dart';
 
 class FavoritesZaimyList extends ConsumerStatefulWidget {
   int itemsCount;
+  final Size? choiceChipSize;
 
   ///страница-список всех займов в избранном
   FavoritesZaimyList({
     super.key,
     required this.itemsCount,
+    required this.choiceChipSize,
   });
 
   @override
@@ -114,7 +116,8 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
               hasScrollBody: false,
               fillOverscroll: true,
               child: Container(
-                margin: const EdgeInsets.only(top: 2, bottom: 72),
+                margin: EdgeInsets.only(
+                    top: 2, bottom: MediaQuery.of(context).padding.bottom),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: ThemeApp.mainWhite,
@@ -123,7 +126,8 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
             ),
           ),
           SliverContainer(
-            margin: const EdgeInsets.only(top: 2, bottom: 72),
+            margin: EdgeInsets.only(
+                top: 2, bottom: MediaQuery.of(context).padding.bottom),
             background: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -137,40 +141,41 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
                 ),
                 sliver: SliverToBoxAdapter(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 240,
-                    child: MediaQuery.removePadding(
-                      context: context,
-                      removeBottom: true,
-                      removeTop: true,
-                      child: ListView.builder(
-                          key: const PageStorageKey<String>('favoritesZaimyList'),
-                          padding: const EdgeInsets.only(top: 15,bottom: 10),
-                          itemCount: favoritesZaimyList.length >=
-                              widget.itemsCount
-                              ? widget.itemsCount
-                              : favoritesZaimyList.length,
-                          controller: controller,
-                          itemBuilder: (context, index) {
-                            return FavoriteZaimyWidget(
-                              tapOnComparisonButton: () {
-                                _tapOnComparisonButton(index);
-                              },
-                              deleteFromFavorites: () {
-                                _deleteFromFavorites(favoritesZaimyList[index].id);
-                              },
-                              productInfo: favoritesZaimyList[index],
-                              basicApiPageSettingsModel:
-                              BasicApiPageSettingsModel(
-                                page: 1,
-                                filters: FiltersModel(),
-                                productTypeUrl:
-                                ref.watch(favoritesProductUrlStateProvider),
-                                pageName: 'Избранное',
-                              ),
-                              productRating: '4.8',
-                            );
-                          }),
-                    ),
+                    height: MediaQuery.of(context).size.height -
+                        (kToolbarHeight +
+                            widget.choiceChipSize!.height +
+                            MediaQuery.of(context).padding.bottom +
+                            7 +
+                            MediaQuery.of(context).padding.top),
+                    child: ListView.builder(
+                        key: const PageStorageKey<String>('favoritesZaimyList'),
+                        padding: const EdgeInsets.only(top: 15, bottom: 5),
+                        itemCount:
+                            favoritesZaimyList.length >= widget.itemsCount
+                                ? widget.itemsCount
+                                : favoritesZaimyList.length,
+                        controller: controller,
+                        itemBuilder: (context, index) {
+                          return FavoriteZaimyWidget(
+                            tapOnComparisonButton: () {
+                              _tapOnComparisonButton(index);
+                            },
+                            deleteFromFavorites: () {
+                              _deleteFromFavorites(
+                                  favoritesZaimyList[index].id);
+                            },
+                            productInfo: favoritesZaimyList[index],
+                            basicApiPageSettingsModel:
+                                BasicApiPageSettingsModel(
+                              page: 1,
+                              filters: FiltersModel(),
+                              productTypeUrl:
+                                  ref.watch(favoritesProductUrlStateProvider),
+                              pageName: 'Избранное',
+                            ),
+                            productRating: '4.8',
+                          );
+                        }),
                   ),
                 )),
           ),
@@ -181,7 +186,8 @@ class _FavoritesZaimyListState extends ConsumerState<FavoritesZaimyList> {
         hasScrollBody: false,
         fillOverscroll: true,
         child: Container(
-          margin: const EdgeInsets.only(top: 2, bottom: 72),
+          margin: EdgeInsets.only(
+              top: 2, bottom: MediaQuery.of(context).padding.bottom),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: ThemeApp.mainWhite,

@@ -113,6 +113,7 @@ class _CreditCardsFiltersPageState
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: CustomScrollView(
+          physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,

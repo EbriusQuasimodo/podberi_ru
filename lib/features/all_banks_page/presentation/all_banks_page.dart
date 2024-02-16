@@ -21,6 +21,7 @@ class AllBanksPage extends ConsumerWidget {
         color: ThemeApp.mainBlue,
         onRefresh: () => ref.refresh(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1)).future),
         child: CustomScrollView(
+          physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,
@@ -55,9 +56,9 @@ class AllBanksPage extends ConsumerWidget {
                 );
               },
               loading: () {
-                return const SliverFillRemaining(
+                return  SliverFillRemaining(
                     child: CustomLoadingCardWidget(
-                  bottomPadding: 72,
+                  bottomPadding: kBottomNavigationBarHeight+3 +MediaQuery.of(context).padding.bottom,
                 ));
               },
             ),

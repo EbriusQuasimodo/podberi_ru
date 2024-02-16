@@ -39,6 +39,7 @@ class _CreditCardsSortBottomSheetWidgetState
         padding:
             const EdgeInsets.only(top: 12, left: 15, right: 15, bottom: 65),
         child: CustomScrollView(
+          physics: new ClampingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
               child: Container(

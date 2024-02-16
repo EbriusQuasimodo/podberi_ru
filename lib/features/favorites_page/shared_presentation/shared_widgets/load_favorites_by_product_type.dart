@@ -19,11 +19,13 @@ import '../../zaimy/presentation/favorites_zaimy_list_widget.dart';
 
 class LoadFavoritesByProductType extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
+  Size? choiceChipSize;
 
   ///виджет для загрузки списка избранного по выбранному типу продукта
   LoadFavoritesByProductType({
     super.key,
     required this.basicApiPageSettingsModel,
+    required this.choiceChipSize,
   });
 
   @override
@@ -42,6 +44,7 @@ class _LoadFavoritesByProductTypeState
           .when(data: (debitCards) {
         return debitCards.items.isNotEmpty
             ? FavoritesDebitCardsList(
+                choiceChipSize: widget.choiceChipSize,
                 itemsCount: debitCards.itemsCount,
               )
             : const FavoritesOrComparisonIsEmpty(
@@ -49,6 +52,7 @@ class _LoadFavoritesByProductTypeState
                     'У вас пока нет продуктов в избранном по данной категории.',
               );
       }, error: (error, _) {
+        print(_);
         return SliverFillRemaining(
           hasScrollBody: false,
           fillOverscroll: true,
@@ -63,18 +67,20 @@ class _LoadFavoritesByProductTypeState
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });
     } else if (ref.watch(favoritesProductUrlStateProvider) == 'credit_cards') {
-      return ref.watch(favoritesCreditCardsListControllerProvider(
-          IsarPaginationParamsModel(offset: -1, limit: -1))).when(
-          data: (creditCards) {
+      return ref
+          .watch(favoritesCreditCardsListControllerProvider(
+              IsarPaginationParamsModel(offset: -1, limit: -1)))
+          .when(data: (creditCards) {
         return creditCards.items.isNotEmpty
             ? FavoritesCreditCardsList(
+                choiceChipSize: widget.choiceChipSize,
                 itemsCount: creditCards.itemsCount,
               )
             : const FavoritesOrComparisonIsEmpty(
@@ -96,18 +102,20 @@ class _LoadFavoritesByProductTypeState
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });
     } else if (ref.watch(favoritesProductUrlStateProvider) == 'zaimy') {
-      return ref.watch(favoritesZaimyListControllerProvider(
-          IsarPaginationParamsModel(offset: -1, limit: -1))).when(
-          data: (zaimy) {
+      return ref
+          .watch(favoritesZaimyListControllerProvider(
+              IsarPaginationParamsModel(offset: -1, limit: -1)))
+          .when(data: (zaimy) {
         return zaimy.items.isNotEmpty
             ? FavoritesZaimyList(
+                choiceChipSize: widget.choiceChipSize,
                 itemsCount: zaimy.itemsCount,
               )
             : const FavoritesOrComparisonIsEmpty(
@@ -129,25 +137,27 @@ class _LoadFavoritesByProductTypeState
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });
     } else {
-      return ref.watch(favoritesRkoListControllerProvider(
-          IsarPaginationParamsModel(offset: -1, limit: -1))).when(
-          data: (rko) {
-            return rko.items.isNotEmpty
-                ? FavoritesRkoList(
-              itemsCount: rko.itemsCount,
-            )
-                : const FavoritesOrComparisonIsEmpty(
-              error:
-              'У вас пока нет продуктов в избранном по данной категории.',
-            );
-          }, error: (error, _) {
+      return ref
+          .watch(favoritesRkoListControllerProvider(
+              IsarPaginationParamsModel(offset: -1, limit: -1)))
+          .when(data: (rko) {
+        return rko.items.isNotEmpty
+            ? FavoritesRkoList(
+                choiceChipSize: widget.choiceChipSize,
+                itemsCount: rko.itemsCount,
+              )
+            : const FavoritesOrComparisonIsEmpty(
+                error:
+                    'У вас пока нет продуктов в избранном по данной категории.',
+              );
+      }, error: (error, _) {
         return SliverFillRemaining(
           hasScrollBody: false,
           fillOverscroll: true,
@@ -162,9 +172,9 @@ class _LoadFavoritesByProductTypeState
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });

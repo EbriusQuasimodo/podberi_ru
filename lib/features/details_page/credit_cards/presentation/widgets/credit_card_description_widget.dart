@@ -54,7 +54,7 @@ class _CreditCardDescriptionWidgetState
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        margin: const EdgeInsets.only(top: 2, bottom: 72),
+        margin: EdgeInsets.only(top: 2, bottom:MediaQuery.of(context).padding.bottom),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),

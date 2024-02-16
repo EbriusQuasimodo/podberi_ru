@@ -19,7 +19,7 @@ class OnErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (error == NothingFoundException().message) {
       return Container(
-        margin: const EdgeInsets.only(top: 2,bottom: 72),
+        margin: EdgeInsets.only(top: 2,bottom: MediaQuery.of(context).padding.bottom),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: ThemeApp.mainWhite,
@@ -39,7 +39,7 @@ class OnErrorWidget extends StatelessWidget {
           onRefreshButtonTap();
         },
         error: error.toString(),
-        bottomPadding: 72,
+        bottomPadding: MediaQuery.of(context).padding.bottom,
 
       );
     }else if (error.toString() == UnknownServerException().message){
@@ -50,7 +50,7 @@ class OnErrorWidget extends StatelessWidget {
           onRefreshButtonTap();
         },
         error: error.toString(),
-        bottomPadding: 72,
+        bottomPadding: MediaQuery.of(context).padding.bottom,
 
       );
     }else if (error.toString() == PageNotFoundException().message){
@@ -61,7 +61,7 @@ class OnErrorWidget extends StatelessWidget {
           onRefreshButtonTap();
         },
         error: error.toString(),
-        bottomPadding: 72,
+        bottomPadding: MediaQuery.of(context).padding.bottom,
 
       );
     }
@@ -72,7 +72,7 @@ class OnErrorWidget extends StatelessWidget {
         onGoBackButtonTap();
       },
       error: error.toString(),
-      bottomPadding: 72,
+      bottomPadding: MediaQuery.of(context).padding.bottom,
     );
   }
 }

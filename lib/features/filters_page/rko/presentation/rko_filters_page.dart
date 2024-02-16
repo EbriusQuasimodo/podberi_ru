@@ -6,7 +6,6 @@ import 'package:podberi_ru/core/domain/pagination_params_model.dart';
 import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/all_banks_page/presentation/all_banks_controller.dart';
-import 'package:podberi_ru/features/catalog_page/credit_cards/presentation/credit_cards_controller.dart';
 import 'package:podberi_ru/features/catalog_page/rko/presentation/rko_controller.dart';
 import 'package:podberi_ru/features/filters_page/debit_cards/presentation/widgets/show_more_banks_page.dart';
 import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/choice_chip_with_many_choice_item.dart';
@@ -80,6 +79,7 @@ class _RkoFiltersPageState
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: CustomScrollView(
+          physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,

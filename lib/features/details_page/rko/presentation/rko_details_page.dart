@@ -37,6 +37,7 @@ class _RkoDetailsPageState extends ConsumerState<RkoDetailsPage> {
                 widget.basicApiPageSettingsModel)
             .future),
         child: CustomScrollView(
+          physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,

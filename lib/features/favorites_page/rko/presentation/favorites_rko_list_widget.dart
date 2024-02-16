@@ -15,20 +15,20 @@ import 'favorites_rko_controller.dart';
 
 class FavoritesRkoList extends ConsumerStatefulWidget {
   int itemsCount;
+  final Size? choiceChipSize;
 
   ///список - страница всех рко в избранном
   FavoritesRkoList({
     super.key,
     required this.itemsCount,
+    required this.choiceChipSize,
   });
 
   @override
-  ConsumerState<FavoritesRkoList> createState() =>
-      _FavoritesRkoListState();
+  ConsumerState<FavoritesRkoList> createState() => _FavoritesRkoListState();
 }
 
-class _FavoritesRkoListState
-    extends ConsumerState<FavoritesRkoList> {
+class _FavoritesRkoListState extends ConsumerState<FavoritesRkoList> {
   static const pageSize = 10;
   final controller = ScrollController();
 
@@ -57,8 +57,7 @@ class _FavoritesRkoListState
             .future);
         if (mounted) {
           setState(() {
-            favoritesRkoList =
-                ref.watch(favoritesRkoListStateProvider);
+            favoritesRkoList = ref.watch(favoritesRkoListStateProvider);
           });
         }
       } finally {
@@ -71,7 +70,7 @@ class _FavoritesRkoListState
     try {
       loading = true;
       ref.invalidate(rkoDetailsControllerProvider);
-     // ref.invalidate(debitCardsControllerProvider);
+      // ref.invalidate(debitCardsControllerProvider);
       setState(() {
         ref
             .watch(favoritesRkoListStateProvider.notifier)
@@ -84,14 +83,11 @@ class _FavoritesRkoListState
     }
   }
 
-
-
   List<ListRkoModel> favoritesRkoList = [];
 
   @override
   Widget build(BuildContext context) {
-    favoritesRkoList =
-        ref.watch(favoritesRkoListStateProvider);
+    favoritesRkoList = ref.watch(favoritesRkoListStateProvider);
     if (favoritesRkoList.isNotEmpty) {
       return SliverStack(
         insetOnOverlap: true,
@@ -101,7 +97,8 @@ class _FavoritesRkoListState
               hasScrollBody: false,
               fillOverscroll: true,
               child: Container(
-                margin: const EdgeInsets.only(top: 2, bottom: 72),
+                margin: EdgeInsets.only(
+                    top: 2, bottom: MediaQuery.of(context).padding.bottom),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: ThemeApp.mainWhite,
@@ -110,8 +107,9 @@ class _FavoritesRkoListState
             ),
           ),
           SliverContainer(
-            margin: const EdgeInsets.only(
+            margin: EdgeInsets.only(
               top: 2,
+              bottom: MediaQuery.of(context).padding.bottom,
             ),
             background: Container(
               decoration: BoxDecoration(
@@ -126,38 +124,36 @@ class _FavoritesRkoListState
                 ),
                 sliver: SliverToBoxAdapter(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 240,
-                    child: MediaQuery.removePadding(
-                      context: context,
-                      removeBottom: true,
-                      removeTop: true,
-                      child: ListView.builder(
-                          key: const PageStorageKey<String>('favoritesRkoList'),
-                          padding: const EdgeInsets.only(top: 15,bottom: 10),
-                          itemCount: favoritesRkoList.length >=
-                                  widget.itemsCount
-                              ? widget.itemsCount
-                              : favoritesRkoList.length,
-                          controller: controller,
-                          itemBuilder: (context, index) {
-                            return FavoriteRkoWidget(
-
-                              deleteFromFavorites: () {
-                                _deleteFromFavorites(favoritesRkoList[index].id);
-                              },
-                              productInfo: favoritesRkoList[index],
-                              basicApiPageSettingsModel:
-                                  BasicApiPageSettingsModel(
-                                page: 1,
-                                filters: FiltersModel(),
-                                productTypeUrl:
-                                    ref.watch(favoritesProductUrlStateProvider),
-                                pageName: 'Избранное',
-                              ),
-                              productRating: '4.8',
-                            );
-                          }),
-                    ),
+                    height: MediaQuery.of(context).size.height -
+                        (kToolbarHeight +
+                            widget.choiceChipSize!.height +
+                            MediaQuery.of(context).padding.bottom +
+                            7 +
+                            MediaQuery.of(context).padding.top),
+                    child: ListView.builder(
+                        key: const PageStorageKey<String>('favoritesRkoList'),
+                        padding: const EdgeInsets.only(top: 15, bottom: 5),
+                        itemCount: favoritesRkoList.length >= widget.itemsCount
+                            ? widget.itemsCount
+                            : favoritesRkoList.length,
+                        controller: controller,
+                        itemBuilder: (context, index) {
+                          return FavoriteRkoWidget(
+                            deleteFromFavorites: () {
+                              _deleteFromFavorites(favoritesRkoList[index].id);
+                            },
+                            productInfo: favoritesRkoList[index],
+                            basicApiPageSettingsModel:
+                                BasicApiPageSettingsModel(
+                              page: 1,
+                              filters: FiltersModel(),
+                              productTypeUrl:
+                                  ref.watch(favoritesProductUrlStateProvider),
+                              pageName: 'Избранное',
+                            ),
+                            productRating: '4.8',
+                          );
+                        }),
                   ),
                 )),
           ),
@@ -168,7 +164,8 @@ class _FavoritesRkoListState
         hasScrollBody: false,
         fillOverscroll: true,
         child: Container(
-          margin: const EdgeInsets.only(top: 2, bottom: 72),
+          margin: EdgeInsets.only(
+              top: 2, bottom: MediaQuery.of(context).padding.bottom),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: ThemeApp.mainWhite,

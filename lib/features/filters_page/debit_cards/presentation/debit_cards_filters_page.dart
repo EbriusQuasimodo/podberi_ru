@@ -98,6 +98,7 @@ class _DebitCardsFiltersPageState extends ConsumerState<DebitCardsFiltersPage> {
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1)).future),
         child: CustomScrollView(
+          physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,

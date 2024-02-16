@@ -93,6 +93,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
           ref.invalidate(comparisonZaimyListControllerProvider);
         },
         child: CustomScrollView(
+          physics: new ClampingScrollPhysics(),
           slivers: [
             comparisonLength <= 1
                 ? MediaQuery.removePadding(
