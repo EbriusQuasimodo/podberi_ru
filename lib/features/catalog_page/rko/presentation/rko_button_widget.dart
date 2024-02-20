@@ -103,7 +103,7 @@ class _RkoWidgetWithButtonsState
             top: 16,
             right: 86,
             child: Text(
-              widget.productInfo.ratesName,
+              "Счет для бизнеса в ${widget.productInfo.bankDetails?.bankName}",
               maxLines: 3,
               style: const TextStyle(
                   color: ThemeApp.mainWhite,

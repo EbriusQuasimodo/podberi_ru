@@ -1009,15 +1009,15 @@ mixin _$RkoRatesListModel {
   @JsonKey(name: 'price_transfers_ur')
   int get priceTransfersUr => throw _privateConstructorUsedError;
   @JsonKey(name: 'service_1_month')
-  int get service1Month => throw _privateConstructorUsedError;
+  dynamic get service1Month => throw _privateConstructorUsedError;
   @JsonKey(name: 'service_1_year')
-  int get service1Year => throw _privateConstructorUsedError;
+  dynamic get service1Year => throw _privateConstructorUsedError;
   @JsonKey(name: 'service_3_month')
-  int get service3Month => throw _privateConstructorUsedError;
+  dynamic get service3Month => throw _privateConstructorUsedError;
   @JsonKey(name: 'service_6_month')
-  int get service6Month => throw _privateConstructorUsedError;
+  dynamic get service6Month => throw _privateConstructorUsedError;
   @JsonKey(name: 'service_forever')
-  int get serviceForever => throw _privateConstructorUsedError;
+  dynamic get serviceForever => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1045,11 +1045,11 @@ abstract class $RkoRatesListModelCopyWith<$Res> {
       String name,
       @JsonKey(name: 'online_accounting') bool onlineAccounting,
       @JsonKey(name: 'price_transfers_ur') int priceTransfersUr,
-      @JsonKey(name: 'service_1_month') int service1Month,
-      @JsonKey(name: 'service_1_year') int service1Year,
-      @JsonKey(name: 'service_3_month') int service3Month,
-      @JsonKey(name: 'service_6_month') int service6Month,
-      @JsonKey(name: 'service_forever') int serviceForever});
+      @JsonKey(name: 'service_1_month') dynamic service1Month,
+      @JsonKey(name: 'service_1_year') dynamic service1Year,
+      @JsonKey(name: 'service_3_month') dynamic service3Month,
+      @JsonKey(name: 'service_6_month') dynamic service6Month,
+      @JsonKey(name: 'service_forever') dynamic serviceForever});
 
   $RkoRatesDescriptionsModelCopyWith<$Res>? get descriptions;
 }
@@ -1080,11 +1080,11 @@ class _$RkoRatesListModelCopyWithImpl<$Res, $Val extends RkoRatesListModel>
     Object? name = null,
     Object? onlineAccounting = null,
     Object? priceTransfersUr = null,
-    Object? service1Month = null,
-    Object? service1Year = null,
-    Object? service3Month = null,
-    Object? service6Month = null,
-    Object? serviceForever = null,
+    Object? service1Month = freezed,
+    Object? service1Year = freezed,
+    Object? service3Month = freezed,
+    Object? service6Month = freezed,
+    Object? serviceForever = freezed,
   }) {
     return _then(_value.copyWith(
       allConditionsLink: null == allConditionsLink
@@ -1139,26 +1139,26 @@ class _$RkoRatesListModelCopyWithImpl<$Res, $Val extends RkoRatesListModel>
           ? _value.priceTransfersUr
           : priceTransfersUr // ignore: cast_nullable_to_non_nullable
               as int,
-      service1Month: null == service1Month
+      service1Month: freezed == service1Month
           ? _value.service1Month
           : service1Month // ignore: cast_nullable_to_non_nullable
-              as int,
-      service1Year: null == service1Year
+              as dynamic,
+      service1Year: freezed == service1Year
           ? _value.service1Year
           : service1Year // ignore: cast_nullable_to_non_nullable
-              as int,
-      service3Month: null == service3Month
+              as dynamic,
+      service3Month: freezed == service3Month
           ? _value.service3Month
           : service3Month // ignore: cast_nullable_to_non_nullable
-              as int,
-      service6Month: null == service6Month
+              as dynamic,
+      service6Month: freezed == service6Month
           ? _value.service6Month
           : service6Month // ignore: cast_nullable_to_non_nullable
-              as int,
-      serviceForever: null == serviceForever
+              as dynamic,
+      serviceForever: freezed == serviceForever
           ? _value.serviceForever
           : serviceForever // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
     ) as $Val);
   }
 
@@ -1198,11 +1198,11 @@ abstract class _$$RkoRatesListModelImplCopyWith<$Res>
       String name,
       @JsonKey(name: 'online_accounting') bool onlineAccounting,
       @JsonKey(name: 'price_transfers_ur') int priceTransfersUr,
-      @JsonKey(name: 'service_1_month') int service1Month,
-      @JsonKey(name: 'service_1_year') int service1Year,
-      @JsonKey(name: 'service_3_month') int service3Month,
-      @JsonKey(name: 'service_6_month') int service6Month,
-      @JsonKey(name: 'service_forever') int serviceForever});
+      @JsonKey(name: 'service_1_month') dynamic service1Month,
+      @JsonKey(name: 'service_1_year') dynamic service1Year,
+      @JsonKey(name: 'service_3_month') dynamic service3Month,
+      @JsonKey(name: 'service_6_month') dynamic service6Month,
+      @JsonKey(name: 'service_forever') dynamic serviceForever});
 
   @override
   $RkoRatesDescriptionsModelCopyWith<$Res>? get descriptions;
@@ -1232,11 +1232,11 @@ class __$$RkoRatesListModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? onlineAccounting = null,
     Object? priceTransfersUr = null,
-    Object? service1Month = null,
-    Object? service1Year = null,
-    Object? service3Month = null,
-    Object? service6Month = null,
-    Object? serviceForever = null,
+    Object? service1Month = freezed,
+    Object? service1Year = freezed,
+    Object? service3Month = freezed,
+    Object? service6Month = freezed,
+    Object? serviceForever = freezed,
   }) {
     return _then(_$RkoRatesListModelImpl(
       allConditionsLink: null == allConditionsLink
@@ -1291,26 +1291,26 @@ class __$$RkoRatesListModelImplCopyWithImpl<$Res>
           ? _value.priceTransfersUr
           : priceTransfersUr // ignore: cast_nullable_to_non_nullable
               as int,
-      service1Month: null == service1Month
+      service1Month: freezed == service1Month
           ? _value.service1Month
           : service1Month // ignore: cast_nullable_to_non_nullable
-              as int,
-      service1Year: null == service1Year
+              as dynamic,
+      service1Year: freezed == service1Year
           ? _value.service1Year
           : service1Year // ignore: cast_nullable_to_non_nullable
-              as int,
-      service3Month: null == service3Month
+              as dynamic,
+      service3Month: freezed == service3Month
           ? _value.service3Month
           : service3Month // ignore: cast_nullable_to_non_nullable
-              as int,
-      service6Month: null == service6Month
+              as dynamic,
+      service6Month: freezed == service6Month
           ? _value.service6Month
           : service6Month // ignore: cast_nullable_to_non_nullable
-              as int,
-      serviceForever: null == serviceForever
+              as dynamic,
+      serviceForever: freezed == serviceForever
           ? _value.serviceForever
           : serviceForever // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
     ));
   }
 }
@@ -1382,19 +1382,19 @@ class _$RkoRatesListModelImpl implements _RkoRatesListModel {
   final int priceTransfersUr;
   @override
   @JsonKey(name: 'service_1_month')
-  final int service1Month;
+  final dynamic service1Month;
   @override
   @JsonKey(name: 'service_1_year')
-  final int service1Year;
+  final dynamic service1Year;
   @override
   @JsonKey(name: 'service_3_month')
-  final int service3Month;
+  final dynamic service3Month;
   @override
   @JsonKey(name: 'service_6_month')
-  final int service6Month;
+  final dynamic service6Month;
   @override
   @JsonKey(name: 'service_forever')
-  final int serviceForever;
+  final dynamic serviceForever;
 
   @override
   String toString() {
@@ -1429,16 +1429,16 @@ class _$RkoRatesListModelImpl implements _RkoRatesListModel {
                 other.onlineAccounting == onlineAccounting) &&
             (identical(other.priceTransfersUr, priceTransfersUr) ||
                 other.priceTransfersUr == priceTransfersUr) &&
-            (identical(other.service1Month, service1Month) ||
-                other.service1Month == service1Month) &&
-            (identical(other.service1Year, service1Year) ||
-                other.service1Year == service1Year) &&
-            (identical(other.service3Month, service3Month) ||
-                other.service3Month == service3Month) &&
-            (identical(other.service6Month, service6Month) ||
-                other.service6Month == service6Month) &&
-            (identical(other.serviceForever, serviceForever) ||
-                other.serviceForever == serviceForever));
+            const DeepCollectionEquality()
+                .equals(other.service1Month, service1Month) &&
+            const DeepCollectionEquality()
+                .equals(other.service1Year, service1Year) &&
+            const DeepCollectionEquality()
+                .equals(other.service3Month, service3Month) &&
+            const DeepCollectionEquality()
+                .equals(other.service6Month, service6Month) &&
+            const DeepCollectionEquality()
+                .equals(other.serviceForever, serviceForever));
   }
 
   @JsonKey(ignore: true)
@@ -1458,11 +1458,11 @@ class _$RkoRatesListModelImpl implements _RkoRatesListModel {
       name,
       onlineAccounting,
       priceTransfersUr,
-      service1Month,
-      service1Year,
-      service3Month,
-      service6Month,
-      serviceForever);
+      const DeepCollectionEquality().hash(service1Month),
+      const DeepCollectionEquality().hash(service1Year),
+      const DeepCollectionEquality().hash(service3Month),
+      const DeepCollectionEquality().hash(service6Month),
+      const DeepCollectionEquality().hash(serviceForever));
 
   @JsonKey(ignore: true)
   @override
@@ -1495,11 +1495,11 @@ abstract class _RkoRatesListModel implements RkoRatesListModel {
           final String name,
           @JsonKey(name: 'online_accounting') final bool onlineAccounting,
           @JsonKey(name: 'price_transfers_ur') final int priceTransfersUr,
-          @JsonKey(name: 'service_1_month') final int service1Month,
-          @JsonKey(name: 'service_1_year') final int service1Year,
-          @JsonKey(name: 'service_3_month') final int service3Month,
-          @JsonKey(name: 'service_6_month') final int service6Month,
-          @JsonKey(name: 'service_forever') final int serviceForever}) =
+          @JsonKey(name: 'service_1_month') final dynamic service1Month,
+          @JsonKey(name: 'service_1_year') final dynamic service1Year,
+          @JsonKey(name: 'service_3_month') final dynamic service3Month,
+          @JsonKey(name: 'service_6_month') final dynamic service6Month,
+          @JsonKey(name: 'service_forever') final dynamic serviceForever}) =
       _$RkoRatesListModelImpl;
 
   factory _RkoRatesListModel.fromJson(Map<String, dynamic> json) =
@@ -1541,19 +1541,19 @@ abstract class _RkoRatesListModel implements RkoRatesListModel {
   int get priceTransfersUr;
   @override
   @JsonKey(name: 'service_1_month')
-  int get service1Month;
+  dynamic get service1Month;
   @override
   @JsonKey(name: 'service_1_year')
-  int get service1Year;
+  dynamic get service1Year;
   @override
   @JsonKey(name: 'service_3_month')
-  int get service3Month;
+  dynamic get service3Month;
   @override
   @JsonKey(name: 'service_6_month')
-  int get service6Month;
+  dynamic get service6Month;
   @override
   @JsonKey(name: 'service_forever')
-  int get serviceForever;
+  dynamic get serviceForever;
   @override
   @JsonKey(ignore: true)
   _$$RkoRatesListModelImplCopyWith<_$RkoRatesListModelImpl> get copyWith =>
@@ -1571,6 +1571,10 @@ mixin _$RkoRatesDescriptionsModel {
   String get cashWithdrawal => throw _privateConstructorUsedError;
   @JsonKey(name: 'transfer_commission')
   String get transferCommission => throw _privateConstructorUsedError;
+  @JsonKey(name: 'stocks')
+  String get stocks => throw _privateConstructorUsedError;
+  @JsonKey(name: 'deposit_cash')
+  String get depositCash => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1586,7 +1590,9 @@ abstract class $RkoRatesDescriptionsModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'cash_withdrawal') String cashWithdrawal,
-      @JsonKey(name: 'transfer_commission') String transferCommission});
+      @JsonKey(name: 'transfer_commission') String transferCommission,
+      @JsonKey(name: 'stocks') String stocks,
+      @JsonKey(name: 'deposit_cash') String depositCash});
 }
 
 /// @nodoc
@@ -1605,6 +1611,8 @@ class _$RkoRatesDescriptionsModelCopyWithImpl<$Res,
   $Res call({
     Object? cashWithdrawal = null,
     Object? transferCommission = null,
+    Object? stocks = null,
+    Object? depositCash = null,
   }) {
     return _then(_value.copyWith(
       cashWithdrawal: null == cashWithdrawal
@@ -1614,6 +1622,14 @@ class _$RkoRatesDescriptionsModelCopyWithImpl<$Res,
       transferCommission: null == transferCommission
           ? _value.transferCommission
           : transferCommission // ignore: cast_nullable_to_non_nullable
+              as String,
+      stocks: null == stocks
+          ? _value.stocks
+          : stocks // ignore: cast_nullable_to_non_nullable
+              as String,
+      depositCash: null == depositCash
+          ? _value.depositCash
+          : depositCash // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -1630,7 +1646,9 @@ abstract class _$$RkoRatesDescriptionsModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'cash_withdrawal') String cashWithdrawal,
-      @JsonKey(name: 'transfer_commission') String transferCommission});
+      @JsonKey(name: 'transfer_commission') String transferCommission,
+      @JsonKey(name: 'stocks') String stocks,
+      @JsonKey(name: 'deposit_cash') String depositCash});
 }
 
 /// @nodoc
@@ -1648,6 +1666,8 @@ class __$$RkoRatesDescriptionsModelImplCopyWithImpl<$Res>
   $Res call({
     Object? cashWithdrawal = null,
     Object? transferCommission = null,
+    Object? stocks = null,
+    Object? depositCash = null,
   }) {
     return _then(_$RkoRatesDescriptionsModelImpl(
       cashWithdrawal: null == cashWithdrawal
@@ -1658,6 +1678,14 @@ class __$$RkoRatesDescriptionsModelImplCopyWithImpl<$Res>
           ? _value.transferCommission
           : transferCommission // ignore: cast_nullable_to_non_nullable
               as String,
+      stocks: null == stocks
+          ? _value.stocks
+          : stocks // ignore: cast_nullable_to_non_nullable
+              as String,
+      depositCash: null == depositCash
+          ? _value.depositCash
+          : depositCash // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -1667,7 +1695,9 @@ class __$$RkoRatesDescriptionsModelImplCopyWithImpl<$Res>
 class _$RkoRatesDescriptionsModelImpl implements _RkoRatesDescriptionsModel {
   _$RkoRatesDescriptionsModelImpl(
       {@JsonKey(name: 'cash_withdrawal') this.cashWithdrawal = '',
-      @JsonKey(name: 'transfer_commission') this.transferCommission = ''});
+      @JsonKey(name: 'transfer_commission') this.transferCommission = '',
+      @JsonKey(name: 'stocks') this.stocks = '',
+      @JsonKey(name: 'deposit_cash') this.depositCash = ''});
 
   factory _$RkoRatesDescriptionsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RkoRatesDescriptionsModelImplFromJson(json);
@@ -1678,10 +1708,16 @@ class _$RkoRatesDescriptionsModelImpl implements _RkoRatesDescriptionsModel {
   @override
   @JsonKey(name: 'transfer_commission')
   final String transferCommission;
+  @override
+  @JsonKey(name: 'stocks')
+  final String stocks;
+  @override
+  @JsonKey(name: 'deposit_cash')
+  final String depositCash;
 
   @override
   String toString() {
-    return 'RkoRatesDescriptionsModel(cashWithdrawal: $cashWithdrawal, transferCommission: $transferCommission)';
+    return 'RkoRatesDescriptionsModel(cashWithdrawal: $cashWithdrawal, transferCommission: $transferCommission, stocks: $stocks, depositCash: $depositCash)';
   }
 
   @override
@@ -1692,13 +1728,16 @@ class _$RkoRatesDescriptionsModelImpl implements _RkoRatesDescriptionsModel {
             (identical(other.cashWithdrawal, cashWithdrawal) ||
                 other.cashWithdrawal == cashWithdrawal) &&
             (identical(other.transferCommission, transferCommission) ||
-                other.transferCommission == transferCommission));
+                other.transferCommission == transferCommission) &&
+            (identical(other.stocks, stocks) || other.stocks == stocks) &&
+            (identical(other.depositCash, depositCash) ||
+                other.depositCash == depositCash));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, cashWithdrawal, transferCommission);
+  int get hashCode => Object.hash(
+      runtimeType, cashWithdrawal, transferCommission, stocks, depositCash);
 
   @JsonKey(ignore: true)
   @override
@@ -1717,9 +1756,11 @@ class _$RkoRatesDescriptionsModelImpl implements _RkoRatesDescriptionsModel {
 
 abstract class _RkoRatesDescriptionsModel implements RkoRatesDescriptionsModel {
   factory _RkoRatesDescriptionsModel(
-      {@JsonKey(name: 'cash_withdrawal') final String cashWithdrawal,
-      @JsonKey(name: 'transfer_commission')
-      final String transferCommission}) = _$RkoRatesDescriptionsModelImpl;
+          {@JsonKey(name: 'cash_withdrawal') final String cashWithdrawal,
+          @JsonKey(name: 'transfer_commission') final String transferCommission,
+          @JsonKey(name: 'stocks') final String stocks,
+          @JsonKey(name: 'deposit_cash') final String depositCash}) =
+      _$RkoRatesDescriptionsModelImpl;
 
   factory _RkoRatesDescriptionsModel.fromJson(Map<String, dynamic> json) =
       _$RkoRatesDescriptionsModelImpl.fromJson;
@@ -1730,6 +1771,12 @@ abstract class _RkoRatesDescriptionsModel implements RkoRatesDescriptionsModel {
   @override
   @JsonKey(name: 'transfer_commission')
   String get transferCommission;
+  @override
+  @JsonKey(name: 'stocks')
+  String get stocks;
+  @override
+  @JsonKey(name: 'deposit_cash')
+  String get depositCash;
   @override
   @JsonKey(ignore: true)
   _$$RkoRatesDescriptionsModelImplCopyWith<_$RkoRatesDescriptionsModelImpl>

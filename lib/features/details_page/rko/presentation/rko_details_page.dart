@@ -5,10 +5,9 @@ import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/details_page/rko/presentation/widgets/bank_info_widget.dart';
+import 'package:podberi_ru/features/details_page/rko/presentation/widgets/tariffs_rko_widget.dart';
 
 import 'widgets/rko_preview_widget.dart';
-
-
 
 class RkoDetailsPage extends ConsumerStatefulWidget {
   final BasicApiPageSettingsModel basicApiPageSettingsModel;
@@ -21,8 +20,7 @@ class RkoDetailsPage extends ConsumerStatefulWidget {
       required this.detailsInfo});
 
   @override
-  ConsumerState<RkoDetailsPage> createState() =>
-      _RkoDetailsPageState();
+  ConsumerState<RkoDetailsPage> createState() => _RkoDetailsPageState();
 }
 
 class _RkoDetailsPageState extends ConsumerState<RkoDetailsPage> {
@@ -37,7 +35,6 @@ class _RkoDetailsPageState extends ConsumerState<RkoDetailsPage> {
                 widget.basicApiPageSettingsModel)
             .future),
         child: CustomScrollView(
-          physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,
@@ -49,7 +46,10 @@ class _RkoDetailsPageState extends ConsumerState<RkoDetailsPage> {
               basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
               productInfo: widget.detailsInfo,
             ),
-           RkoBankInfoWidget(basicApiPageSettingsModel: widget.basicApiPageSettingsModel,)
+            RkoBankInfoWidget(
+              basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
+            ),
+            TariffsRkoWidget(productInfo: widget.detailsInfo),
 
           ],
         ),

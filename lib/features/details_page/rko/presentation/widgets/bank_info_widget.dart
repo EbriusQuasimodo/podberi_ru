@@ -32,6 +32,7 @@ class RkoBankInfoWidget extends StatelessWidget {
                     color: ThemeApp.grey,
                   ),
                   height: 60,
+                  width: 60,
                   padding: const EdgeInsets.only(
                       top: 10.5, bottom: 11.5, right: 8.63, left: 9.16),
                   child: Image.network(

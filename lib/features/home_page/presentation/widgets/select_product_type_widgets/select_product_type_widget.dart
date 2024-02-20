@@ -77,7 +77,7 @@ class SelectProductTypeWidget extends ConsumerWidget {
             ),
             HomeProductTypeCardWidget(
                 imageAsset: 'assets/icons/micro_liases_icon.svg',
-                productName: 'Микрозаймы',
+                productName: 'Займы',
                 onTap: () {
                   ref.watch(goRouterProvider).push(
                         RouteConstants.catalog,
@@ -85,7 +85,7 @@ class SelectProductTypeWidget extends ConsumerWidget {
                           page: 1,
                           filters: FiltersModel(),
                           productTypeUrl: ProductTypeEnum.zaimy.name,
-                          pageName: 'Микрозаймы',
+                          pageName: 'Займы',
                           whereFrom: AppRoute.homePage.name,
 
                         ),
@@ -96,7 +96,7 @@ class SelectProductTypeWidget extends ConsumerWidget {
             ),
             HomeProductTypeCardWidget(
                 imageAsset: 'assets/icons/for_business_icon.svg',
-                productName: 'РКО',
+                productName: 'Счета для бизнеса',
                 onTap: () {
                   ref.watch(goRouterProvider).push(
                         RouteConstants.catalog,
@@ -104,7 +104,7 @@ class SelectProductTypeWidget extends ConsumerWidget {
                           page: 1,
                           filters: FiltersModel(),
                           productTypeUrl: ProductTypeEnum.rko.name,
-                          pageName: 'РКО',
+                          pageName: 'Счета для бизнеса',
                           whereFrom: AppRoute.homePage.name,
 
                         ),

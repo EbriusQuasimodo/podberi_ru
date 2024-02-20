@@ -84,7 +84,7 @@ class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: CustomScrollView(
-          physics: new ClampingScrollPhysics(),
+         // physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,

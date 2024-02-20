@@ -34,7 +34,7 @@ class _ZaimyDetailsPageState extends ConsumerState<ZaimyDetailsPage> {
                 widget.basicApiPageSettingsModel)
             .future),
         child: CustomScrollView(
-          physics: new ClampingScrollPhysics(),
+         // physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,

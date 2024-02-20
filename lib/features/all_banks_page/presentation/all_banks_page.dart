@@ -21,7 +21,7 @@ class AllBanksPage extends ConsumerWidget {
         color: ThemeApp.mainBlue,
         onRefresh: () => ref.refresh(allBanksControllerProvider(PaginationParamsModel(fetch: 20, page: 1)).future),
         child: CustomScrollView(
-          physics: new ClampingScrollPhysics(),
+          //physics: new ClampingScrollPhysics(),
           slivers: [
             SliverAppBar(
               scrolledUnderElevation: 0,

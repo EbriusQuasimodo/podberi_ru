@@ -42,7 +42,7 @@ class _FavoriteCreditCardWidget
   List<Widget> list() {
     var list = <Widget>[];
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; widget.productInfo!.features.length <=4 ? i<widget.productInfo!.features.length : i<4; i++) {
       list.add(
         Text(
           "${widget.productInfo!.features[i]}",

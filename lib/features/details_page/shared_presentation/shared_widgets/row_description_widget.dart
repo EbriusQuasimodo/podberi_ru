@@ -110,7 +110,7 @@ class RowDescriptionWidget extends StatelessWidget {
          Container(
           height: 2,
           color: ThemeApp.grey,
-          margin: const EdgeInsets.only(top: 12, bottom: 12),
+          margin: const EdgeInsets.only(top: 12, bottom: 12, right: 15, left: 15),
         ),
       ],
     );

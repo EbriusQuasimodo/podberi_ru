@@ -10,6 +10,7 @@ import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/co
 import 'package:podberi_ru/features/comparison_page/credit_cards/presentation/comparison_credit_cards_page.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 import 'package:podberi_ru/features/details_page/credit_cards/presentation/credit_cards_details_controller.dart';
+import 'package:podberi_ru/features/favorites_page/credit_cards/presentation/favorites_credit_cards_controller.dart';
 
 import 'mini_credit_card_widget.dart';
 
@@ -146,6 +147,8 @@ class _CreditCardsComparisonWidgetState
                     ///обновляем контроллер чтобы отобразить новый список сравнения
                     ref.invalidate(comparisonCreditCardsListControllerProvider);
                     ref.invalidate(creditCardsControllerProvider);
+                    ref.invalidate(
+                        favoritesCreditCardsListControllerProvider);
                     ref.invalidate(creditCardsDetailsControllerProvider);
                     ///воспроизводим анимацию при удалении
                     ///анимировать надо оба pfge view если они находятся на одной и той же страницу

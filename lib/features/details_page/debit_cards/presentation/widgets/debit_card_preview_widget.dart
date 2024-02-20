@@ -48,7 +48,7 @@ class _DebitCardPreviewWidgetState
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
+              padding: const EdgeInsets.only(bottom: 40, left: 15, right: 15),
               child: Text(
                 '${widget.basicApiPageSettingsModel.bankDetailsModel?.bankName} ${widget.productInfo.name}',
                 textAlign: TextAlign.center,
@@ -57,7 +57,7 @@ class _DebitCardPreviewWidgetState
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
+              padding: const EdgeInsets.only(bottom: 40, left: 15, right: 15),
               child: Image.network(
                 '${Urls.api.files}/${widget.productInfo.image}',
                 errorBuilder: (BuildContext context, Object exception,
@@ -96,68 +96,71 @@ class _DebitCardPreviewWidgetState
                     ),
                   ),
                 ),
-                Material(
-                  borderRadius: BorderRadius.circular(14),
-                  color: ThemeApp.grey,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () async {
-                      ///добавление или удаление из избранного
-                      FavoritesDebitCardsData favoritesDebitCardsData =
-                          FavoritesDebitCardsData()..id = widget.productInfo.id;
+                Container(height: 50, width: 50,
+                  child: Material(
+                    borderRadius: BorderRadius.circular(14),
+                    color: ThemeApp.grey,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () async {
+                        ///добавление или удаление из избранного
+                        FavoritesDebitCardsData favoritesDebitCardsData =
+                            FavoritesDebitCardsData()..id = widget.productInfo.id;
 
-                      await isar?.writeTxn(() async => await ref
-                              .watch(isarNotifierProvider.notifier)
-                              .isItemDuplicateInFavorites(
-                                  widget.productInfo.id,
-                                  widget.basicApiPageSettingsModel
-                                      .productTypeUrl!)
-                          ? await isar?.favoritesDebitCardsDatas
-                              .filter()
-                              .idEqualTo(widget.productInfo.id)
-                              .deleteAll()
-                          : await isar?.favoritesDebitCardsDatas
-                              .put(favoritesDebitCardsData));
-ref.invalidate(favoritesDebitCardsListControllerProvider);
-                      setState(() {});
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(13),
-                      child: FutureBuilder(
-                          future: ref
-                              .watch(isarNotifierProvider.notifier)
-                              .isItemDuplicateInFavorites(
-                                  widget.productInfo.id,
-                                  widget.basicApiPageSettingsModel
-                                      .productTypeUrl!),
-                          builder: (context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              if (snapshot.data) {
-                                return SvgPicture.asset(
-                                  'assets/icons/favorites_select.svg',
-                                  color: ThemeApp.mainBlue,
-                                  height: 32,
-                                  width: 32,
-                                );
-                              } else {
-                                return SvgPicture.asset(
-                                  'assets/icons/nav_bar_icons/favorites_page.svg',
-                                  color: ThemeApp.backgroundBlack,
-                                  height: 32,
-                                  width: 32,
-                                );
+                        await isar?.writeTxn(() async => await ref
+                                .watch(isarNotifierProvider.notifier)
+                                .isItemDuplicateInFavorites(
+                                    widget.productInfo.id,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!)
+                            ? await isar?.favoritesDebitCardsDatas
+                                .filter()
+                                .idEqualTo(widget.productInfo.id)
+                                .deleteAll()
+                            : await isar?.favoritesDebitCardsDatas
+                                .put(favoritesDebitCardsData));
+                  ref.invalidate(favoritesDebitCardsListControllerProvider);
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: FutureBuilder(
+                            future: ref
+                                .watch(isarNotifierProvider.notifier)
+                                .isItemDuplicateInFavorites(
+                                    widget.productInfo.id,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!),
+                            builder: (context, AsyncSnapshot snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                if (snapshot.data) {
+                                  return SvgPicture.asset(
+                                    'assets/icons/favorites_select.svg',
+                                    color: ThemeApp.mainBlue,
+                                    height: 32,
+                                    width: 32,
+                                  );
+                                } else {
+                                  return SvgPicture.asset(
+                                    'assets/icons/nav_bar_icons/favorites_page.svg',
+                                    color: ThemeApp.backgroundBlack,
+                                    height: 32,
+                                    width: 32,
+                                  );
+                                }
                               }
-                            }
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height - 72,
-                            );
-                          }),
+                              return SizedBox(
+                                height: MediaQuery.of(context).size.height - 72,
+                              );
+                            }),
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 6, right: 15),
+                Container(
+                  height: 50, width: 50,
+                  margin: const EdgeInsets.only(left: 6, right: 15),
                   child: Material(
                     borderRadius: BorderRadius.circular(14),
                     color: ThemeApp.grey,
@@ -186,7 +189,7 @@ ref.invalidate(favoritesDebitCardsListControllerProvider);
                         setState(() {});
                       },
                       child: Padding(
-                          padding: const EdgeInsets.all(13),
+                          padding: const EdgeInsets.all(8),
                           child: FutureBuilder(
                               future: ref
                                   .watch(isarNotifierProvider.notifier)

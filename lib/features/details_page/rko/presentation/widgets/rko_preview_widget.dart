@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:isar/isar.dart';
+import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
@@ -45,12 +46,24 @@ class _RkoPreviewWidgetState
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
+              padding: const EdgeInsets.only(bottom: 40, left: 15, right: 15),
               child: Text(
-                'Расчетный счет в ${widget.basicApiPageSettingsModel.bankDetailsModel?.bankName}',
+                'Счет для бизнеса в  ${widget.basicApiPageSettingsModel.bankDetailsModel?.bankName}',
                 textAlign: TextAlign.center,
                 style:
                     const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 40, left: 15, right: 15),
+              child: Image.network(
+                '${Urls.api.files}/${widget.productInfo.bankDetails?.logo}',
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return SvgPicture.asset(
+                    'assets/icons/photo_not_found.svg',
+                  );
+                },
               ),
             ),
             Row(
@@ -81,63 +94,68 @@ class _RkoPreviewWidgetState
                     ),
                   ),
                 ),
-                Material(
-                  borderRadius: BorderRadius.circular(14),
-                  color: ThemeApp.grey,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () async {
-                      ///добавление или удаление из избранного
-                      FavoritesDebitCardsData favoritesDebitCardsData =
-                          FavoritesDebitCardsData()..id = widget.productInfo.id;
+                Container(
+                  height: 50,
+                  width: 50,
+                  margin: const EdgeInsets.only(right: 15.0),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(14),
+                    color: ThemeApp.grey,
+                    child: InkWell(
+                     borderRadius: BorderRadius.circular(14),
+                      onTap: () async {
+                        ///добавление или удаление из избранного
+                        FavoritesDebitCardsData favoritesDebitCardsData =
+                            FavoritesDebitCardsData()..id = widget.productInfo.id;
 
-                      await isar?.writeTxn(() async => await ref
-                              .watch(isarNotifierProvider.notifier)
-                              .isItemDuplicateInFavorites(
-                                  widget.productInfo.id,
-                                  widget.basicApiPageSettingsModel
-                                      .productTypeUrl!)
-                          ? await isar?.favoritesDebitCardsDatas
-                              .filter()
-                              .idEqualTo(widget.productInfo.id)
-                              .deleteAll()
-                          : await isar?.favoritesDebitCardsDatas
-                              .put(favoritesDebitCardsData));
-                      ref.invalidate(favoritesRkoListControllerProvider);
-                      setState(() {});
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(13),
-                      child: FutureBuilder(
-                          future: ref
-                              .watch(isarNotifierProvider.notifier)
-                              .isItemDuplicateInFavorites(
-                                  widget.productInfo.id,
-                                  widget.basicApiPageSettingsModel
-                                      .productTypeUrl!),
-                          builder: (context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              if (snapshot.data) {
-                                return SvgPicture.asset(
-                                  'assets/icons/favorites_select.svg',
-                                  color: ThemeApp.mainBlue,
-                                  height: 32,
-                                  width: 32,
-                                );
-                              } else {
-                                return SvgPicture.asset(
-                                  'assets/icons/nav_bar_icons/favorites_page.svg',
-                                  color: ThemeApp.backgroundBlack,
-                                  height: 32,
-                                  width: 32,
-                                );
+                        await isar?.writeTxn(() async => await ref
+                                .watch(isarNotifierProvider.notifier)
+                                .isItemDuplicateInFavorites(
+                                    widget.productInfo.id,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!)
+                            ? await isar?.favoritesDebitCardsDatas
+                                .filter()
+                                .idEqualTo(widget.productInfo.id)
+                                .deleteAll()
+                            : await isar?.favoritesDebitCardsDatas
+                                .put(favoritesDebitCardsData));
+                        ref.invalidate(favoritesRkoListControllerProvider);
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: FutureBuilder(
+                            future: ref
+                                .watch(isarNotifierProvider.notifier)
+                                .isItemDuplicateInFavorites(
+                                    widget.productInfo.id,
+                                    widget.basicApiPageSettingsModel
+                                        .productTypeUrl!),
+                            builder: (context, AsyncSnapshot snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                if (snapshot.data) {
+                                  return SvgPicture.asset(
+                                    'assets/icons/favorites_select.svg',
+                                    color: ThemeApp.mainBlue,
+                                    height: 32,
+                                    width: 32,
+                                  );
+                                } else {
+                                  return SvgPicture.asset(
+                                    'assets/icons/nav_bar_icons/favorites_page.svg',
+                                    color: ThemeApp.backgroundBlack,
+                                    height: 32,
+                                    width: 32,
+                                  );
+                                }
                               }
-                            }
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height - 72,
-                            );
-                          }),
+                              return SizedBox(
+                                height: MediaQuery.of(context).size.height - 72,
+                              );
+                            }),
+                      ),
                     ),
                   ),
                 ),

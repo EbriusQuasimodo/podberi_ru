@@ -10,6 +10,7 @@ import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/com
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_page.dart';
 import 'package:podberi_ru/features/comparison_page/shared_presentation/comparison_page_controller.dart';
 import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_controller.dart';
+import 'package:podberi_ru/features/favorites_page/debit_cards/presentation/favorites_debit_cards_controller.dart';
 
 import 'mini_debit_card_widget.dart';
 
@@ -148,6 +149,8 @@ class _DebitCardsComparisonWidgetState
                     ///обновляем контроллер чтобы отобразить новый список сравнения
                     ref.invalidate(comparisonDebitCardsListControllerProvider);
                     ref.invalidate(debitCardsControllerProvider);
+                    ref.invalidate(
+                        favoritesDebitCardsListControllerProvider);
                     ref.invalidate(debitCardsDetailsControllerProvider);
                     ///воспроизводим анимацию при удалении
                     ///анимировать надо оба pfge view если они находятся на одной и той же страницу

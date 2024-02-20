@@ -36,7 +36,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ref.refresh(bestBanksControllerProvider.future);
         },
         child: CustomScrollView(
-          physics: new ClampingScrollPhysics(),
+         // physics: new ClampingScrollPhysics(),
           slivers: [
             ///custom app bar with search widget
             const SliverAppBar(
@@ -51,24 +51,26 @@ class _HomePageState extends ConsumerState<HomePage> {
             ///todo: поиск добавим в след релиз
             //CustomAppBarWithSearch(controller: searchController),
             //const StoriesWidget(),
-            ref.watch(bestOfferControllerProvider).when(
-              data: (bestOffer) {
-                return bestOffer.isNotEmpty
-                    ? BestOfferWidget(
-                        bestOffer: bestOffer,
-                      )
-                    : const SliverToBoxAdapter(child: SizedBox.shrink());
-              },
-              error: (error, _) {
-                return const SliverToBoxAdapter(child: SizedBox.shrink());
-              },
-              loading: () {
-                return const SliverToBoxAdapter(
-                    child: CustomLoadingCardWidget(
-                  bottomPadding: 0,
-                ));
-              },
-            ),
+            ///лучшее предложение
+            ///( временно убрала возможно добавлю в этом релизе возможно в следующей)
+            // ref.watch(bestOfferControllerProvider).when(
+            //   data: (bestOffer) {
+            //     return bestOffer.isNotEmpty
+            //         ? BestOfferWidget(
+            //             bestOffer: bestOffer,
+            //           )
+            //         : const SliverToBoxAdapter(child: SizedBox.shrink());
+            //   },
+            //   error: (error, _) {
+            //     return const SliverToBoxAdapter(child: SizedBox.shrink());
+            //   },
+            //   loading: () {
+            //     return const SliverToBoxAdapter(
+            //         child: CustomLoadingCardWidget(
+            //       bottomPadding: 0,
+            //     ));
+            //   },
+            // ),
 
             const SelectProductTypeWidget(),
 

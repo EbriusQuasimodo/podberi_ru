@@ -76,11 +76,11 @@ class RkoRatesListModel with _$RkoRatesListModel {
     @Default('') String name,
     @Default(false) @JsonKey(name: 'online_accounting') bool onlineAccounting,
     @Default(0) @JsonKey(name: 'price_transfers_ur') int priceTransfersUr,
-    @Default(0) @JsonKey(name: 'service_1_month') int service1Month,
-    @Default(0) @JsonKey(name: 'service_1_year') int service1Year,
-    @Default(0) @JsonKey(name: 'service_3_month') int service3Month,
-    @Default(0) @JsonKey(name: 'service_6_month') int service6Month,
-    @Default(0) @JsonKey(name: 'service_forever') int serviceForever,
+    @Default(0) @JsonKey(name: 'service_1_month') dynamic service1Month,
+    @Default(0) @JsonKey(name: 'service_1_year') dynamic service1Year,
+    @Default(0) @JsonKey(name: 'service_3_month') dynamic service3Month,
+    @Default(0) @JsonKey(name: 'service_6_month') dynamic service6Month,
+    @Default(0) @JsonKey(name: 'service_forever') dynamic serviceForever,
 
   }) = _RkoRatesListModel;
 
@@ -94,6 +94,10 @@ class RkoRatesDescriptionsModel with _$RkoRatesDescriptionsModel {
     @Default('') @JsonKey(name: 'cash_withdrawal') String cashWithdrawal,
     @Default('') @JsonKey(
         name: 'transfer_commission') String transferCommission,
+    @Default('') @JsonKey(
+        name: 'stocks') String stocks,
+    @Default('') @JsonKey(
+        name: 'deposit_cash') String depositCash,
 
   }) = _RkoRatesDescriptionsModel;
 

@@ -194,6 +194,8 @@ class _DebitCardWidgetWithButtonsState
                             : await isar?.comparisonDebitCardsDatas
                                 .put(comparisonDebitCardsData));
                         ref.invalidate(comparisonDebitCardsListControllerProvider);
+                        ref.invalidate(
+                            favoritesDebitCardsListControllerProvider);
                         setState(() {});
                         //widget.onTapComparison();
                       },

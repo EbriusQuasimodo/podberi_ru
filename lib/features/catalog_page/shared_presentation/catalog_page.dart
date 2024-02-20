@@ -41,7 +41,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
           ref.refresh(rkoControllerProvider(widget.basicApiPageSettingsModel));
         },
         child: CustomScrollView(
-          physics: new ClampingScrollPhysics(),
+          //physics: new ClampingScrollPhysics(),
           controller: controller,
           slivers: [
             SliverAppBar(

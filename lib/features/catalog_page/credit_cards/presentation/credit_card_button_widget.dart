@@ -192,6 +192,8 @@ class _CreditCardWidgetWithButtonsState
                                 .put(comparisonCreditCardsData));
                         ref.invalidate(
                             comparisonCreditCardsListControllerProvider);
+                        ref.invalidate(
+                            favoritesCreditCardsListControllerProvider);
                         setState(() {});
                       },
                       child: FutureBuilder(

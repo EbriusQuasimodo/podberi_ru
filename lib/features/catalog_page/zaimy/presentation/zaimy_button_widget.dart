@@ -161,6 +161,8 @@ class _ZaimyWidgetWithButtonsState
                             : await isar?.comparisonZaimyDatas
                             .put(comparisonZaimyData));
                         ref.invalidate(comparisonZaimyListControllerProvider);
+                        ref.invalidate(
+                            favoritesZaimyListControllerProvider);
                         setState(() {});
                       },
                       child: FutureBuilder(

@@ -114,11 +114,11 @@ _$RkoRatesListModelImpl _$$RkoRatesListModelImplFromJson(
       name: json['name'] as String? ?? '',
       onlineAccounting: json['online_accounting'] as bool? ?? false,
       priceTransfersUr: json['price_transfers_ur'] as int? ?? 0,
-      service1Month: json['service_1_month'] as int? ?? 0,
-      service1Year: json['service_1_year'] as int? ?? 0,
-      service3Month: json['service_3_month'] as int? ?? 0,
-      service6Month: json['service_6_month'] as int? ?? 0,
-      serviceForever: json['service_forever'] as int? ?? 0,
+      service1Month: json['service_1_month'] ?? 0,
+      service1Year: json['service_1_year'] ?? 0,
+      service3Month: json['service_3_month'] ?? 0,
+      service6Month: json['service_6_month'] ?? 0,
+      serviceForever: json['service_forever'] ?? 0,
     );
 
 Map<String, dynamic> _$$RkoRatesListModelImplToJson(
@@ -149,6 +149,8 @@ _$RkoRatesDescriptionsModelImpl _$$RkoRatesDescriptionsModelImplFromJson(
     _$RkoRatesDescriptionsModelImpl(
       cashWithdrawal: json['cash_withdrawal'] as String? ?? '',
       transferCommission: json['transfer_commission'] as String? ?? '',
+      stocks: json['stocks'] as String? ?? '',
+      depositCash: json['deposit_cash'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$RkoRatesDescriptionsModelImplToJson(
@@ -156,4 +158,6 @@ Map<String, dynamic> _$$RkoRatesDescriptionsModelImplToJson(
     <String, dynamic>{
       'cash_withdrawal': instance.cashWithdrawal,
       'transfer_commission': instance.transferCommission,
+      'stocks': instance.stocks,
+      'deposit_cash': instance.depositCash,
     };

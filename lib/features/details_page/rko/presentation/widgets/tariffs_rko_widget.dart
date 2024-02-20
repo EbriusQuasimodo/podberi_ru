@@ -1,10 +1,14 @@
+import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
+import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/features/details_page/shared_presentation/shared_widgets/row_description_widget.dart';
+import 'package:podberi_ru/features/details_page/rko/presentation/widgets/rko_tariff_conditions_widget.dart';
+import 'package:podberi_ru/features/web_view_widget.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
-class TariffsRkoWidget extends StatelessWidget {
-  final ListDebitCardsModel productInfo;
+class TariffsRkoWidget extends StatefulWidget {
+  final ListRkoModel productInfo;
 
   const TariffsRkoWidget({
     super.key,
@@ -12,75 +16,133 @@ class TariffsRkoWidget extends StatelessWidget {
   });
 
   @override
+  State<TariffsRkoWidget> createState() => _TariffsRkoWidgetState();
+}
+
+class _TariffsRkoWidgetState extends State<TariffsRkoWidget> {
+  List<ExpandableItem> ratesList() {
+    List<ExpandableItem> list = [];
+    for (int i = 0; i < widget.productInfo.rates!.length; i++) {
+      list.add(ExpandableItem(
+          title: widget.productInfo.rates![i].name,
+          productInfo: widget.productInfo.rates![i]));
+    }
+    return list;
+  }
+
+  int selected = 0;
+
+  @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Container(
-        padding: const EdgeInsets.only(top: 30),
-        margin: const EdgeInsets.only(top: 2),
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: ThemeApp.mainWhite,
-        ),
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-              child: Text(
-                'Тарифы',
-                style: TextStyle(
-                    color: ThemeApp.backgroundBlack,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16),
+    return SliverStack(
+      insetOnOverlap: true,
+      children: [
+        SliverPositioned.fill(
+          child: SliverFillRemaining(
+            hasScrollBody: false,
+            fillOverscroll: true,
+            child: Container(
+              margin: EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: ThemeApp.mainWhite,
               ),
             ),
-            RowDescriptionWidget(
-                isTextWithHtmlTags: false,
-                rowDescription: productInfo.paymentSystem,
-                rowName: 'Платежная система'),
-            const RowDescriptionWidget(
-                isTextWithHtmlTags: false,
-                rowDescription: 'Классическая', rowName: 'Тип карты'),
-            const RowDescriptionWidget(
-                isTextWithHtmlTags: false,
-                rowDescription: 'Рубль, доллар, евро, +27',
-                rowName: 'Валюта карты'),
-            const RowDescriptionWidget(
-                isTextWithHtmlTags: false,
-                rowDescription: '8 лет', rowName: 'Срок действия'),
-            const RowDescriptionWidget(
-                isTextWithHtmlTags: false,
-                rowDescription: '1-2 дня', rowName: 'Доставка'),
-            const RowDescriptionWidget(
-                isTextWithHtmlTags: false,
-                rowDescription: 'Курьером или почтой',
-                rowName: 'Способ доставки'),
-            const RowDescriptionWidget(
-                isTextWithHtmlTags: false,
-                rowDescription: 'Есть, рассчитывается индивидуально',
-                rowName: 'Овердрафт'),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 24),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () {},
-                    child: const Text(
-                      'Показать все',
-                      style: TextStyle(
-                          color: ThemeApp.backgroundBlack,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13),
-                    ),
-                  ),
-                ),
+          ),
+        ),
+        SliverContainer(
+            padding: const EdgeInsets.only(top: 30),
+            margin:  EdgeInsets.only(top: 2, bottom:MediaQuery.of(context).padding.bottom),
+            //width: MediaQuery.of(context).size.width,
+            background: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: ThemeApp.mainWhite,
               ),
             ),
-          ],
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+               [
+                  ExpansionPanelList.radio(
+                    expandedHeaderPadding: EdgeInsets.only(top: 0, bottom: 15),
+                          elevation: 0,
+                          dividerColor: ThemeApp.grey,
+                          expandIconColor: ThemeApp.backgroundBlack,
+                          initialOpenPanelValue: widget.productInfo.rates?[0].name,
+                          children: widget.productInfo.rates!.map<ExpansionPanelRadio>((RkoRatesListModel item) {
+                            return ExpansionPanelRadio(
+                                value: item.name,
+                                canTapOnHeader: true,
+                                backgroundColor: ThemeApp.mainWhite,
+                                headerBuilder: (BuildContext context, bool isExpanded) {
+                                  return ListTile(title: Text(item.name),);
+                                },
+                                body: Column(
+                                  children: [
+
+                                    RkoConditionsWidget(productInfo: widget.productInfo, rkoRatesListModel: item,),
+                                 // Container(color: ThemeApp.grey, height: 2,)
+                                  ],
+                                ));
+                          }).toList(),
+                        ),
+
+                 Padding(
+                   padding: const EdgeInsets.only(right: 15, left: 15,top: 18, bottom: 30),
+                   child: MaterialButton(
+                     height: 50,
+                     onPressed: () {
+                       Navigator.of(context, rootNavigator: true).push(
+                           MaterialPageRoute(builder: (BuildContext context) {
+                             return CustomWebViewPage(
+                               url: widget.productInfo.refLink,
+                             );
+                           }));
+                     },
+                     color: ThemeApp.mainBlue,
+                     shape: RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(14)),
+                     child: const Text(
+                       'Оформить',
+                       style: TextStyle(
+                           color: ThemeApp.mainWhite,
+                           fontWeight: FontWeight.w600,
+                           fontSize: 14),
+                     ),
+                   ),
+                 ),
+                ],
+              ),
+            )
+                  // return ExpansionTile(
+                  //
+                  //   key: Key(index.toString()), //attention
+                  //   initiallyExpanded: index == selected,
+                  //   title: Text(
+                  //     widget.productInfo.rates![index].name,
+                  //   ),
+                  //   children: [
+                  //     Text(widget
+                  //         .productInfo.rates![index].descriptions!.transferCommission)
+                  //   ],
+                  //
+                  // );
+
         ),
-      ),
+      ],
     );
   }
 }
+
+class ExpandableItem {
+  final String title;
+  final RkoRatesListModel productInfo;
+  bool isExpanded;
+
+  ExpandableItem({
+    required this.title,
+    required this.productInfo,
+    this.isExpanded = true,
+  });
+}
+

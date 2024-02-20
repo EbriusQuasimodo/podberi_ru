@@ -83,7 +83,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
     final box = context.findRenderObject() as RenderBox;
     return box.size;
   }
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
@@ -95,7 +95,6 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
           ref.invalidate(favoritesRkoListControllerProvider);
         },
         child: CustomScrollView(
-          physics: new ClampingScrollPhysics(),
           slivers: [
             const SliverAppBar(
               scrolledUnderElevation: 0,

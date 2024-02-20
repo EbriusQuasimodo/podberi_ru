@@ -11,6 +11,7 @@ import 'package:podberi_ru/features/comparison_page/shared_presentation/comparis
 import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_controller.dart';
 import 'package:podberi_ru/features/comparison_page/zaimy/presentation/comparison_zaimy_page.dart';
 import 'package:podberi_ru/features/details_page/zaimy/presentation/zaimy_controller.dart';
+import 'package:podberi_ru/features/favorites_page/zaimy/presentation/favorites_zaimy_controller.dart';
 
 import 'mini_zaimy_widget.dart';
 
@@ -130,6 +131,8 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
 
                     ref.invalidate(comparisonZaimyListControllerProvider);
                     ref.invalidate(zaimyControllerProvider);
+                    ref.invalidate(
+                        favoritesZaimyListControllerProvider);
                     ref.invalidate(zaimyDetailsControllerProvider);
                     controllerFirstPageView.animateToPage(
                         controllerFirstPageView.page == 0.0

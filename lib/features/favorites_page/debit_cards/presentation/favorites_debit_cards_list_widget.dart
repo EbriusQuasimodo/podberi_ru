@@ -8,6 +8,7 @@ import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart'
 import 'package:podberi_ru/core/domain/filters_model.dart';
 import 'package:podberi_ru/core/presentation/favorites_or_comparison_is_empty.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
+import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/comparison_page/debit_cards/presentation/comparison_debit_cards_controller.dart';
 import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_controller.dart';
 import 'package:podberi_ru/features/favorites_page/shared_domain/isar_pagination_params.dart';
@@ -39,13 +40,6 @@ class _FavoritesDebitCardsListState
 
   @override
   void didChangeDependencies() {
-    double padd = kToolbarHeight +
-        widget.choiceChipSize!.height +
-        MediaQuery.of(context).padding.bottom +
-        7 +
-        25;
-    print(padd);
-    print(widget.choiceChipSize);
     controller.addListener(() {
       if (controller.position.pixels >= controller.position.maxScrollExtent &&
           !loading) {
@@ -84,6 +78,7 @@ class _FavoritesDebitCardsListState
       loading = true;
       ref.invalidate(debitCardsDetailsControllerProvider);
       // ref.invalidate(debitCardsControllerProvider);
+
       setState(() {
         ref
             .watch(favoritesDebitCardsListStateProvider.notifier)
@@ -118,9 +113,6 @@ class _FavoritesDebitCardsListState
 
   @override
   Widget build(BuildContext context) {
-    double topPadding = MediaQuery.of(context).padding.top;
-    double bottomPadding = MediaQuery.of(context).padding.bottom;
-
     favoritesDebitCardsList = ref.watch(favoritesDebitCardsListStateProvider);
     if (favoritesDebitCardsList.isNotEmpty) {
       return SliverStack(
@@ -160,15 +152,16 @@ class _FavoritesDebitCardsListState
                         (kToolbarHeight +
                             widget.choiceChipSize!.height +
                             MediaQuery.of(context).padding.bottom +
-                            7 + MediaQuery.of(context).padding.top),
+                            7 +
+                            MediaQuery.of(context).padding.top),
                     child: ListView.builder(
                         key: const PageStorageKey<String>(
                             'favoritesDebitCardsList'),
-                        padding: const EdgeInsets.only(top: 15,bottom: 5),
-                        itemCount: favoritesDebitCardsList.length >=
-                                widget.itemsCount
-                            ? widget.itemsCount
-                            : favoritesDebitCardsList.length,
+                        padding: const EdgeInsets.only(top: 15, bottom: 5),
+                        itemCount:
+                            favoritesDebitCardsList.length >= widget.itemsCount
+                                ? widget.itemsCount
+                                : favoritesDebitCardsList.length,
                         controller: controller,
                         itemBuilder: (context, index) {
                           return FavoriteDebitCardWidget(
@@ -211,9 +204,9 @@ class _FavoritesDebitCardsListState
       );
     } else {
       _loadMore();
+
       return const FavoritesOrComparisonIsEmpty(
-        error: 'У вас пока нет продуктов в избранном по данной категории.',
-      );
+          error: 'У вас пока нет продуктов в избранном по данной категории.');
     }
   }
 }
