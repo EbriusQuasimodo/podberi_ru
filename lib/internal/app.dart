@@ -13,6 +13,7 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouter = ref.watch(goRouterProvider);
     return MaterialApp.router(
+      color: Colors.white,
       title: 'ПодбериРу',
       theme: AppThemeData().themeData(context),
       routerConfig: goRouter,

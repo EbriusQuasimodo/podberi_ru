@@ -1,6 +1,5 @@
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
-import 'package:podberi_ru/core/domain/debit_cards_model/debit_cards_model.dart';
 import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/details_page/rko/presentation/widgets/rko_tariff_conditions_widget.dart';
@@ -35,12 +34,12 @@ class _TariffsRkoWidgetState extends State<TariffsRkoWidget> {
   @override
   Widget build(BuildContext context) {
     return SliverStack(
-      insetOnOverlap: true,
+      //insetOnOverlap: true,
       children: [
         SliverPositioned.fill(
           child: SliverFillRemaining(
             hasScrollBody: false,
-            fillOverscroll: true,
+            fillOverscroll: false,
             child: Container(
               margin: EdgeInsets.only(top: 2, bottom: MediaQuery.of(context).padding.bottom),
               decoration: BoxDecoration(
@@ -64,8 +63,9 @@ class _TariffsRkoWidgetState extends State<TariffsRkoWidget> {
               delegate: SliverChildListDelegate(
                [
                   ExpansionPanelList.radio(
-                    expandedHeaderPadding: EdgeInsets.only(top: 0, bottom: 15),
+                   // expandedHeaderPadding: EdgeInsets.only(top: 0, bottom: 15),
                           elevation: 0,
+                          materialGapSize: 20,
                           dividerColor: ThemeApp.grey,
                           expandIconColor: ThemeApp.backgroundBlack,
                           initialOpenPanelValue: widget.productInfo.rates?[0].name,
@@ -75,7 +75,10 @@ class _TariffsRkoWidgetState extends State<TariffsRkoWidget> {
                                 canTapOnHeader: true,
                                 backgroundColor: ThemeApp.mainWhite,
                                 headerBuilder: (BuildContext context, bool isExpanded) {
-                                  return ListTile(title: Text(item.name),);
+                                  return ListTile(title: Padding(
+                                    padding: const EdgeInsets.only(top: 20.0, bottom: 20),
+                                    child: Text(item.name),
+                                  ),);
                                 },
                                 body: Column(
                                   children: [

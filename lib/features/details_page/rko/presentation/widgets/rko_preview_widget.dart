@@ -6,7 +6,7 @@ import 'package:podberi_ru/core/constants/urls.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/domain/rko_model/rko_model.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
-import 'package:podberi_ru/core/utils/favorites/debit_cards/favorites_debit_cards_data.dart';
+import 'package:podberi_ru/core/utils/favorites/rko/favorites_rko_data.dart';
 import 'package:podberi_ru/core/utils/isar_controller.dart';
 import 'package:podberi_ru/features/details_page/debit_cards/presentation/debit_cards_details_page.dart';
 import 'package:podberi_ru/features/favorites_page/rko/presentation/favorites_rko_controller.dart';
@@ -105,8 +105,8 @@ class _RkoPreviewWidgetState
                      borderRadius: BorderRadius.circular(14),
                       onTap: () async {
                         ///добавление или удаление из избранного
-                        FavoritesDebitCardsData favoritesDebitCardsData =
-                            FavoritesDebitCardsData()..id = widget.productInfo.id;
+                        FavoritesRkoData favoritesRkoData =
+                            FavoritesRkoData()..id = widget.productInfo.id;
 
                         await isar?.writeTxn(() async => await ref
                                 .watch(isarNotifierProvider.notifier)
@@ -114,12 +114,12 @@ class _RkoPreviewWidgetState
                                     widget.productInfo.id,
                                     widget.basicApiPageSettingsModel
                                         .productTypeUrl!)
-                            ? await isar?.favoritesDebitCardsDatas
+                            ? await isar?.favoritesRkoDatas
                                 .filter()
                                 .idEqualTo(widget.productInfo.id)
                                 .deleteAll()
-                            : await isar?.favoritesDebitCardsDatas
-                                .put(favoritesDebitCardsData));
+                            : await isar?.favoritesRkoDatas
+                                .put(favoritesRkoData));
                         ref.invalidate(favoritesRkoListControllerProvider);
                         setState(() {});
                       },
