@@ -6,12 +6,10 @@ import 'widgets/debit_cards_page_view_widgets/debit_cards_page_view_widget.dart'
 
 class ComparisonDebitCardsPage extends ConsumerStatefulWidget {
   final List<ListDebitCardsModel> debitCardsInComparison;
-  final VoidCallback onScrollPageViews;
 
   const ComparisonDebitCardsPage({
     super.key,
     required this.debitCardsInComparison,
-    required this.onScrollPageViews,
   });
 
   @override
@@ -28,16 +26,9 @@ class _ComparisonDebitCardsPageState
       delegate: SliverChildListDelegate(
         [
           DebitCardsPageViewWidget(
-              onScrollPageViews: () {
-                widget.onScrollPageViews();
-              },
+
               debitCardsList: widget.debitCardsInComparison,
-              onDeleteFromComparisonTwo: () {
-              //  setState(() {});
-              },
-              onDeleteFromComparison: () {
-              //  setState(() {});
-              }),
+              ),
           DebitCardsComparisonDataTableWidget(
             debitCardsModel: widget.debitCardsInComparison,
           )

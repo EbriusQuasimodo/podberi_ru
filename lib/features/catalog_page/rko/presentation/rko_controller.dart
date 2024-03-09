@@ -52,7 +52,7 @@ class RkoController extends AutoDisposeFamilyAsyncNotifier<
     ///если сортировка  не пустая
     if (arg.filters.sort != '') {
      if (arg.filters.sort == 'По обслуживанию') {
-        productTypeWithQuery += '&sort\$max_service=1';
+        productTypeWithQuery += '&sort\$rates.service_1_month=1';
       }
     }
     ref.keepAlive();

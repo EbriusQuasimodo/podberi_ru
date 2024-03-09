@@ -26,7 +26,7 @@ class ListZaimyModel with _$ListZaimyModel {
     @Default('') String color,
     @Default(false) bool enable,
     @Default('') String image,
-    @Default(0) @JsonKey(name: 'max_percent') int maxPercent,
+    @Default(0) @JsonKey(name: 'max_percent') dynamic maxPercent,
     @Default(0) @JsonKey(name: 'max_term') int maxTerm,
     @Default(0) @JsonKey(name: 'min_percent') int minPercent,
     @Default(0) @JsonKey(name: 'min_term') int minTerm,

@@ -6,12 +6,10 @@ import 'widgets/zaimy_comparison_widgets/zaimy_page_view_widget.dart';
 
 class ComparisonZaimyPage extends StatefulWidget {
   final List<ListZaimyModel> zaimyInComparison;
-  final VoidCallback onScrollPageViews;
 
   const ComparisonZaimyPage({
     super.key,
     required this.zaimyInComparison,
-    required this.onScrollPageViews,
   });
 
   @override
@@ -25,13 +23,9 @@ class _ComparisonZaimyPageState extends State<ComparisonZaimyPage> {
       delegate: SliverChildListDelegate(
         [
           ZaimyPageViewWidget(
-              onScrollPageViews: () {
-                widget.onScrollPageViews();
-              },
+
               zaimyList: widget.zaimyInComparison,
-              onDeleteFromComparison: () {
-                setState(() {});
-              }),
+              ),
           ZaimyComparisonDataTableWidget(
             zaimyModel: widget.zaimyInComparison,
           )

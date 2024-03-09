@@ -108,11 +108,6 @@ class CustomChoiceChipControllerNotifier extends StateNotifier<String>{
           'credit_cards';
 
           break;
-        case 'РКО':
-          ref.read(comparisonProductUrlStateProvider.notifier).state =
-          'rko';
-
-          break;
         case 'Микрозаймы':
           ref.read(comparisonProductUrlStateProvider.notifier).state =
           'zaimy';

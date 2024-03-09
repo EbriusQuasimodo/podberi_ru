@@ -328,6 +328,7 @@ class _BankProductsListWidgetState
               )
             : CatalogIsEmpty(itemsCount: itemCount);
       }, error: (error, _) {
+            print(_);
         return SliverFillRemaining(
           hasScrollBody: false,
           fillOverscroll: true,

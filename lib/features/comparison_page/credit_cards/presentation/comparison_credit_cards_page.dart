@@ -5,12 +5,10 @@ import 'widgets/credit_cards_page_view_widgets/credit_cards_page_view_widget.dar
 
 class ComparisonCreditCardsPage extends StatefulWidget {
   final List<ListCreditCardsModel> creditCardsInComparison;
-  final VoidCallback onScrollPageViews;
 
   const ComparisonCreditCardsPage({
     super.key,
     required this.creditCardsInComparison,
-    required this.onScrollPageViews,
   });
 
   @override
@@ -26,13 +24,9 @@ class _ComparisonCreditCardsPageState
       delegate: SliverChildListDelegate(
         [
           CreditCardsPageViewWidget(
-              onScrollPageViews: () {
-                widget.onScrollPageViews();
-              },
+
               creditCardsList: widget.creditCardsInComparison,
-              onDeleteFromComparison: () {
-                setState(() {});
-              }),
+             ),
           CreditCardsComparisonDataTableWidget(
             creditCardsModel: widget.creditCardsInComparison,
           )

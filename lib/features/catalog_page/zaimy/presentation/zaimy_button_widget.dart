@@ -91,24 +91,33 @@ class _ZaimyWidgetWithButtonsState
             ),
           ),
           Positioned(
-              right: 16,
-              bottom: 70,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.star,
+            left: 16,
+            bottom: 16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text(
+                "Сумма займа: ${widget.productInfo?.sum} руб.",
+                style: TextStyle(
                     color: ThemeApp.mainWhite,
-                    size: 20,
-                  ),
-                  Text(
-                    widget.productRating,
-                    style: const TextStyle(
-                        color: ThemeApp.mainWhite,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                  )
-                ],
-              )),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500),
+              ),
+                Text(
+                  "Ставка: ${widget.productInfo?.maxPercent} %",
+                  style: TextStyle(
+                      color: ThemeApp.mainWhite,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  "Срок: ${widget.productInfo?.maxTerm} дн.",
+                  style: TextStyle(
+                      color: ThemeApp.mainWhite,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500),
+                ),],
+            ),
+          ),
           Positioned(
             top: 0,
             bottom: 0,
@@ -126,10 +135,7 @@ class _ZaimyWidgetWithButtonsState
                           productTypeUrl:
                           widget.basicApiPageSettingsModel.productTypeUrl,
                           pageName: widget.basicApiPageSettingsModel.pageName,
-                          productId: widget.productInfo?.id,
-                          bankDetailsModel: BankListDetailsModel(
-                              bankName:'',
-                              logo: '')));
+                          productId: widget.productInfo?.id,));
                 },
               ),
             ),

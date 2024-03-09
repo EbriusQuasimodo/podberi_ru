@@ -33,15 +33,27 @@ class RkoWidgetWithButtons extends ConsumerStatefulWidget {
       _RkoWidgetWithButtonsState();
 }
 
-class _RkoWidgetWithButtonsState
-    extends ConsumerState<RkoWidgetWithButtons> {
+class _RkoWidgetWithButtonsState extends ConsumerState<RkoWidgetWithButtons> {
   List<Widget> list() {
     var list = <Widget>[];
-
+    for (int i = 0; i < widget.productInfo.rates!.length; i++) {
+      if (widget.productInfo.rates?[i].main) {
+        list.add(
+          Text(
+            "Обслуживание: ${widget.productInfo.rates?[0].service1Month} руб.",
+            style: TextStyle(
+                color: ThemeApp.mainWhite,
+                fontSize: 13,
+                fontWeight: FontWeight.w500),
+          ),
+        );
+      }
+    }
+    if(widget.productInfo.features.isNotEmpty){
     for (int i = 0;
-        widget.productInfo.features.length <= 4
+        widget.productInfo.features.length <= 3
             ? i < widget.productInfo.features.length
-            : i < 4;
+            : i < 3;
         i++) {
       list.add(
         Text(
@@ -53,7 +65,7 @@ class _RkoWidgetWithButtonsState
               fontWeight: FontWeight.w500),
         ),
       );
-    }
+    }}
 
     return list;
   }
@@ -88,7 +100,7 @@ class _RkoWidgetWithButtonsState
                 color: ThemeApp.mainWhite,
               ),
               child: Image.network(
-                '${Urls.api.files}/${widget.productInfo.bankDetails?.logo}',
+                '${Urls.api.files}/${widget.productInfo.bankDetails?.icon}',
                 errorBuilder: (BuildContext context, Object exception,
                     StackTrace? stackTrace) {
                   return SvgPicture.asset(
@@ -111,35 +123,16 @@ class _RkoWidgetWithButtonsState
                   fontSize: 14),
             ),
           ),
-          widget.productInfo.features.isNotEmpty
-              ? Positioned(
+         Positioned(
                   left: 16,
                   bottom: 16,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: list(),
                   ),
-                )
-              : const SizedBox.shrink(),
-          Positioned(
-              right: 16,
-              bottom: 70,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.star,
-                    color: ThemeApp.mainWhite,
-                    size: 20,
-                  ),
-                  Text(
-                    widget.productRating,
-                    style: const TextStyle(
-                        color: ThemeApp.mainWhite,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                  )
-                ],
-              )),
+                ),
+
+
           Positioned(
             top: 0,
             bottom: 0,
@@ -161,7 +154,7 @@ class _RkoWidgetWithButtonsState
                           bankDetailsModel: BankListDetailsModel(
                               bankName:
                                   widget.productInfo.bankDetails!.bankName,
-                              logo: widget.productInfo.bankDetails!.logo)));
+                              icon: widget.productInfo.bankDetails!.icon)));
                 },
               ),
             ),
@@ -174,22 +167,23 @@ class _RkoWidgetWithButtonsState
               child: InkWell(
                   borderRadius: BorderRadius.circular(12),
                   onTap: () async {
-                    FavoritesRkoData favoritesRkoData =
-                        FavoritesRkoData()
-                          ..id = widget.productInfo.id;
+                    FavoritesRkoData favoritesRkoData = FavoritesRkoData()
+                      ..id = widget.productInfo.id;
                     await isar?.writeTxn(() async => await ref
                             .watch(isarNotifierProvider.notifier)
                             .isItemDuplicateInFavorites(
                                 widget.productInfo.id,
-                                widget.basicApiPageSettingsModel
-                                    .productTypeUrl!)
+                                widget
+                                    .basicApiPageSettingsModel.productTypeUrl!)
                         ? await isar?.favoritesRkoDatas
                             .filter()
                             .idEqualTo(widget.productInfo.id)
                             .deleteAll()
-                        : await isar?.favoritesRkoDatas
-                            .put(favoritesRkoData));
-                    ref.watch(favoritesRkoListStateProvider.notifier).state.clear();
+                        : await isar?.favoritesRkoDatas.put(favoritesRkoData));
+                    ref
+                        .watch(favoritesRkoListStateProvider.notifier)
+                        .state
+                        .clear();
                     ref.invalidate(favoritesRkoListControllerProvider);
 
                     setState(() {});
@@ -197,13 +191,10 @@ class _RkoWidgetWithButtonsState
                   child: FutureBuilder(
                       future: ref
                           .watch(isarNotifierProvider.notifier)
-                          .isItemDuplicateInFavorites(
-                              widget.productInfo!.id,
-                              widget.basicApiPageSettingsModel
-                                  .productTypeUrl!),
+                          .isItemDuplicateInFavorites(widget.productInfo!.id,
+                              widget.basicApiPageSettingsModel.productTypeUrl!),
                       builder: (context, AsyncSnapshot snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.done) {
+                        if (snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.data) {
                             return SvgPicture.asset(
                               'assets/icons/favorites_select.svg',

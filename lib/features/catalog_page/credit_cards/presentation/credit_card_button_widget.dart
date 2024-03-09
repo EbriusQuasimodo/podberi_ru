@@ -38,9 +38,20 @@ class CreditCardWidgetWithButtons extends ConsumerStatefulWidget {
 class _CreditCardWidgetWithButtonsState
     extends ConsumerState<CreditCardWidgetWithButtons> {
   List<Widget> list() {
-    var list = <Widget>[];
+    var list = <Widget>[ Text("Льготный период: ${widget.productInfo?.noPercentPeriod} дн.", style: TextStyle(color: ThemeApp.mainWhite,
+        fontSize: 13,
+        fontWeight: FontWeight.w500),),
+      Text("Лимит: ${widget.productInfo?.creditLimit} руб.",style: TextStyle(color: ThemeApp.mainWhite,
+          fontSize: 13,
+          fontWeight: FontWeight.w500),),
+      Text("Ставка: ${widget.productInfo?.maxPercent} %",style: TextStyle(color: ThemeApp.mainWhite,
+          fontSize: 13,
+          fontWeight: FontWeight.w500),),];
 
-    for (int i = 0; i < 4; i++) {
+    if(widget.productInfo!.features.isNotEmpty){
+    for (int i = 0; widget.productInfo!.features.length <= 1
+        ? i < widget.productInfo!.features.length
+        : i < 1; i++) {
       list.add(
         Text(
           "${widget.productInfo!.features[i]}",
@@ -51,7 +62,7 @@ class _CreditCardWidgetWithButtonsState
               fontWeight: FontWeight.w500),
         ),
       );
-    }
+    }}
 
     return list;
   }
@@ -87,7 +98,7 @@ class _CreditCardWidgetWithButtonsState
                 color: ThemeApp.mainWhite,
               ),
               child: Image.network(
-                '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
+                '${Urls.api.files}/${widget.productInfo?.bankDetails?.icon}',
                 errorBuilder: (BuildContext context, Object exception,
                     StackTrace? stackTrace) {
                   return SvgPicture.asset(
@@ -110,35 +121,15 @@ class _CreditCardWidgetWithButtonsState
                   fontSize: 14),
             ),
           ),
-          widget.productInfo!.features.isNotEmpty
-              ? Positioned(
+          Positioned(
                   left: 16,
                   bottom: 16,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: list(),
                   ),
-                )
-              : const SizedBox.shrink(),
-          Positioned(
-              right: 16,
-              bottom: 70,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.star,
-                    color: ThemeApp.mainWhite,
-                    size: 20,
-                  ),
-                  Text(
-                    widget.productRating,
-                    style: const TextStyle(
-                        color: ThemeApp.mainWhite,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                  )
-                ],
-              )),
+                ),
+
           Positioned(
             top: 0,
             bottom: 0,
@@ -160,7 +151,7 @@ class _CreditCardWidgetWithButtonsState
                           bankDetailsModel: BankListDetailsModel(
                               bankName:
                                   widget.productInfo!.bankDetails!.bankName,
-                              logo: widget.productInfo!.bankDetails!.logo)));
+                              icon: widget.productInfo!.bankDetails!.icon)));
                 },
               ),
             ),

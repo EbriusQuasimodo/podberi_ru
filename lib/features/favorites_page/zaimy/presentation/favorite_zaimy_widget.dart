@@ -129,10 +129,7 @@ class _FavoriteZaimyWidget
                           widget.basicApiPageSettingsModel.productTypeUrl,
                           pageName: widget.basicApiPageSettingsModel.pageName,
                           productId: widget.productInfo?.id,
-                          bankDetailsModel: BankListDetailsModel(
-                              bankName:
-                              "bankName",
-                              logo: '')));
+                         ));
                 },
               ),
             ),

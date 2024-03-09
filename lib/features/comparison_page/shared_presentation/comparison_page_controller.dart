@@ -26,7 +26,7 @@ final comparisonFirstDebitPageNumStateProvider = StateProvider.autoDispose<int>(
   return 0;
 });
 final comparisonSecondDebitPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
-  return 0;
+  return 1;
 });
 
 ///кредитки
@@ -48,36 +48,10 @@ final comparisonFirstCreditPageNumStateProvider = StateProvider.autoDispose<int>
   return 0;
 });
 final comparisonSecondCreditPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
-  return 0;
+  return 1;
 });
 
 final comparisonCreditListLengthStateController = StateProvider.autoDispose<int>((ref) {
-  return 0;
-});
-
-///rko
-final comparisonFirstRkoBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
-  return '';
-});
-final comparisonSecondRkoBankNameStateProvider = StateProvider.autoDispose<String>((ref) {
-  return '';
-});
-
-final comparisonFirstRkoProductNameStateProvider = StateProvider.autoDispose<String>((ref) {
-  return '';
-});
-final comparisonSecondRkoProductNameStateProvider = StateProvider.autoDispose<String>((ref) {
-  return '';
-});
-
-final comparisonRkoListLengthStateController = StateProvider.autoDispose<int>((ref) {
-  return 0;
-});
-
-final comparisonFirstRkoPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
-  return 0;
-});
-final comparisonSecondRkoPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
   return 0;
 });
 
@@ -93,7 +67,7 @@ final comparisonFirstZaimyPageNumStateProvider = StateProvider.autoDispose<int>(
   return 0;
 });
 final comparisonSecondZaimyPageNumStateProvider = StateProvider.autoDispose<int>((ref) {
-  return 0;
+  return 1;
 });
 
 final comparisonZaimyListLengthStateController = StateProvider.autoDispose<int>((ref) {

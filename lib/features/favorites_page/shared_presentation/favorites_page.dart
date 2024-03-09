@@ -71,7 +71,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         redboxSize = getRedBoxSize(key.currentContext!);
       });
@@ -85,6 +85,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
   }
    @override
   Widget build(BuildContext context) {
+    print('dfsdf');
     return Scaffold(
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,

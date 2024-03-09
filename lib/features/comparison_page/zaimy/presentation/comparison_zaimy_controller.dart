@@ -15,8 +15,8 @@ class ComparisonZaimyListController
 
   @override
   FutureOr<ZaimyModel> build() async {
-    int firstPageNum = 0;
-    int secondPageNum = 0;
+    int firstPageNum = ref.read(comparisonFirstZaimyPageNumStateProvider);
+    int secondPageNum = ref.read(comparisonSecondZaimyPageNumStateProvider);
     ref.listen(comparisonFirstZaimyPageNumStateProvider, (previous, next) {
       firstPageNum = next;
     });

@@ -62,18 +62,16 @@ class _CustomChoiceChipState extends ConsumerState<CustomChoiceChip> {
         showCheckmark: false,
         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
         onSelected: (bool value) {
-
-
-            if (value) {
-              if (!widget.selectedCategory.contains(widget.categoryName)) {
-                widget.selectedCategory.clear();
-                widget.selectedCategory.add(widget.categoryName);
-                ref
-                    .read(customChoiceChipControllerProvider.notifier)
-                    .changeCategory(widget.whereFrom, widget.categoryName);
-              }
+          if (value) {
+            if (!widget.selectedCategory.contains(widget.categoryName)) {
+              widget.selectedCategory.clear();
+              widget.selectedCategory.add(widget.categoryName);
+              ref
+                  .read(customChoiceChipControllerProvider.notifier)
+                  .changeCategory(widget.whereFrom, widget.categoryName);
             }
-            widget.onTap();
+          }
+          widget.onTap();
         },
       ),
     );

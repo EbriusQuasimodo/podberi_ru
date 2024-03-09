@@ -30,7 +30,7 @@ class MiniDebitCardWidget extends StatelessWidget {
             padding: const EdgeInsets.only(
                 top: 9, right: 7, left: 7, bottom: 9),
             child: Image.network(
-              '${Urls.api.files}/${debitCard.bankDetails?.logo}',
+              '${Urls.api.files}/${debitCard.bankDetails?.icon}',
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
                 return SvgPicture.asset(

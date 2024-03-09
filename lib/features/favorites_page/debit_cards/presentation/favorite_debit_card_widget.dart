@@ -88,7 +88,7 @@ class _FavoriteDebitCardWidget
                 color: ThemeApp.mainWhite,
               ),
               child: Image.network(
-                '${Urls.api.files}/${widget.productInfo?.bankDetails?.logo}',
+                '${Urls.api.files}/${widget.productInfo?.bankDetails?.icon}',
                 errorBuilder: (BuildContext context,
                     Object exception, StackTrace? stackTrace) {
                   return SvgPicture.asset(
@@ -161,7 +161,7 @@ class _FavoriteDebitCardWidget
                           bankDetailsModel: BankListDetailsModel(
                               bankName:
                               widget.productInfo!.bankDetails!.bankName,
-                              logo: widget.productInfo!.bankDetails!.logo)));
+                              icon: widget.productInfo!.bankDetails!.icon)));
                 },
               ),
             ),

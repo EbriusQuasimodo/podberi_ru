@@ -15,8 +15,8 @@ class ComparisonCreditCardsListController
 
   @override
   FutureOr<CreditCardsModel> build() async {
-    int firstPageNum = 0;
-    int secondPageNum = 0;
+    int firstPageNum = ref.read(comparisonFirstDebitPageNumStateProvider);
+    int secondPageNum = ref.read(comparisonSecondCreditPageNumStateProvider);
     ref.listen(comparisonFirstCreditPageNumStateProvider, (previous, next) {
       firstPageNum = next;
     });

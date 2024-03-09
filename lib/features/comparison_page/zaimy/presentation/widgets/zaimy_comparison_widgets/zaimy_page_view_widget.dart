@@ -17,8 +17,6 @@ import 'mini_zaimy_widget.dart';
 
 class ZaimyPageViewWidget extends ConsumerStatefulWidget {
   final List<ListZaimyModel> zaimyList;
-  final VoidCallback onDeleteFromComparison;
-  final VoidCallback onScrollPageViews;
 
   ///виджет займов в сранении, используется в [ComparisonZaimyPage]
   ///весь функционал полностью копирует кредитки и дебетовки
@@ -26,8 +24,6 @@ class ZaimyPageViewWidget extends ConsumerStatefulWidget {
   const ZaimyPageViewWidget({
     super.key,
     required this.zaimyList,
-    required this.onDeleteFromComparison,
-    required this.onScrollPageViews,
   });
 
   @override
@@ -41,7 +37,7 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
     viewportFraction: 0.9,
   );
   final controllerSecondPageView = PageController(
-    initialPage: 0,
+    initialPage: 1,
     viewportFraction: 0.9,
   );
 
@@ -134,27 +130,42 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                     ref.invalidate(
                         favoritesZaimyListControllerProvider);
                     ref.invalidate(zaimyDetailsControllerProvider);
-                    controllerFirstPageView.animateToPage(
-                        controllerFirstPageView.page == 0.0
-                            ? -1
-                            : controllerFirstPageView.page!.round() - 1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.linear);
-                    if (controllerFirstPageView.page ==
-                            controllerSecondPageView.page ||
-                        controllerSecondPageView.page!.round() + 1 ==
-                            widget.zaimyList.length) {
-                      controllerSecondPageView.animateToPage(
-                          controllerSecondPageView.page == 0.0
-                              ? -1
-                              : controllerSecondPageView.page!.round() - 1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    } else {
-                      controllerSecondPageView.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    }
+                    ref
+                        .read(comparisonFirstZaimyPageNumStateProvider.notifier)
+                        .state = index + 1 ==
+                        widget.zaimyList.length
+                        ? index - 1
+                        : index;
+
+                    ref
+                        .read(
+                        comparisonSecondZaimyPageNumStateProvider.notifier)
+                        .state = currentPageOnSecondPageView + 1 ==
+                        widget.zaimyList.length
+                        ? currentPageOnSecondPageView - 1
+                        : currentPageOnSecondPageView;
+
+                    // controllerFirstPageView.animateToPage(
+                    //     controllerFirstPageView.page == 0.0
+                    //         ? -1
+                    //         : controllerFirstPageView.page!.round() - 1,
+                    //     duration: const Duration(milliseconds: 300),
+                    //     curve: Curves.linear);
+                    // if (controllerFirstPageView.page ==
+                    //         controllerSecondPageView.page ||
+                    //     controllerSecondPageView.page!.round() + 1 ==
+                    //         widget.zaimyList.length) {
+                    //   controllerSecondPageView.animateToPage(
+                    //       controllerSecondPageView.page == 0.0
+                    //           ? -1
+                    //           : controllerSecondPageView.page!.round() - 1,
+                    //       duration: const Duration(milliseconds: 300),
+                    //       curve: Curves.linear);
+                    // } else {
+                    //   controllerSecondPageView.previousPage(
+                    //       duration: const Duration(milliseconds: 300),
+                    //       curve: Curves.linear);
+                    // }
                   },
                 );
               }),
@@ -219,27 +230,42 @@ class _ZaimyComparisonWidgetState extends ConsumerState<ZaimyPageViewWidget> {
                           ref.invalidate(comparisonZaimyListControllerProvider);
                           ref.invalidate(zaimyControllerProvider);
                           ref.invalidate(zaimyDetailsControllerProvider);
-                          controllerSecondPageView.animateToPage(
-                              controllerSecondPageView.page == 0.0
-                                  ? -1
-                                  : controllerSecondPageView.page!.round() - 1,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.linear);
-                          if (controllerFirstPageView.page ==
-                                  controllerSecondPageView.page ||
-                              controllerFirstPageView.page!.round() + 1 ==
-                                  widget.zaimyList.length) {
-                            controllerFirstPageView.animateToPage(
-                                controllerFirstPageView.page == 0.0
-                                    ? -1
-                                    : controllerFirstPageView.page!.round() - 1,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear);
-                          } else {
-                            controllerFirstPageView.previousPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear);
-                          }
+                          ref
+                              .read(comparisonSecondZaimyPageNumStateProvider
+                              .notifier)
+                              .state = index + 1 ==
+                              widget.zaimyList.length
+                              ? index - 1
+                              : index;
+                          ref
+                              .read(comparisonFirstZaimyPageNumStateProvider
+                              .notifier)
+                              .state = currentPageOnFirstPageView + 1 ==
+                              widget.zaimyList.length
+                              ? currentPageOnFirstPageView - 1
+                              : currentPageOnFirstPageView;
+
+                          // controllerSecondPageView.animateToPage(
+                          //     controllerSecondPageView.page == 0.0
+                          //         ? -1
+                          //         : controllerSecondPageView.page!.round() - 1,
+                          //     duration: const Duration(milliseconds: 300),
+                          //     curve: Curves.linear);
+                          // if (controllerFirstPageView.page ==
+                          //         controllerSecondPageView.page ||
+                          //     controllerFirstPageView.page!.round() + 1 ==
+                          //         widget.zaimyList.length) {
+                          //   controllerFirstPageView.animateToPage(
+                          //       controllerFirstPageView.page == 0.0
+                          //           ? -1
+                          //           : controllerFirstPageView.page!.round() - 1,
+                          //       duration: const Duration(milliseconds: 300),
+                          //       curve: Curves.linear);
+                          // } else {
+                          //   controllerFirstPageView.previousPage(
+                          //       duration: const Duration(milliseconds: 300),
+                          //       curve: Curves.linear);
+                          // }
                         },
                       );
                     }),

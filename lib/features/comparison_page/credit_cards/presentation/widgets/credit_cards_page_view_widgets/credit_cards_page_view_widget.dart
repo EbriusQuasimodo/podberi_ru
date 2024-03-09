@@ -16,15 +16,11 @@ import 'mini_credit_card_widget.dart';
 
 class CreditCardsPageViewWidget extends ConsumerStatefulWidget {
   final List<ListCreditCardsModel> creditCardsList;
-  final VoidCallback onDeleteFromComparison;
-  final VoidCallback onScrollPageViews;
 
   ///виджет кредиток в сранении, используется в [ComparisonCreditCardsPage]
   const CreditCardsPageViewWidget({
     super.key,
     required this.creditCardsList,
-    required this.onDeleteFromComparison,
-    required this.onScrollPageViews,
   });
 
   @override
@@ -39,7 +35,7 @@ class _CreditCardsComparisonWidgetState
     viewportFraction: 0.9,
   );
   final controllerSecondPageView = PageController(
-    initialPage: 0,
+    initialPage: 1,
     viewportFraction: 0.9,
   );
 
@@ -150,31 +146,45 @@ class _CreditCardsComparisonWidgetState
                     ref.invalidate(
                         favoritesCreditCardsListControllerProvider);
                     ref.invalidate(creditCardsDetailsControllerProvider);
-                    ///воспроизводим анимацию при удалении
-                    ///анимировать надо оба pfge view если они находятся на одной и той же страницу
-                    ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
-                    ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
-                    controllerFirstPageView.animateToPage(
-                        controllerFirstPageView.page == 0.0
-                            ? -1
-                            : controllerFirstPageView.page!.round() - 1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.linear);
-                    if (controllerFirstPageView.page ==
-                            controllerSecondPageView.page ||
-                        controllerSecondPageView.page!.round() + 1 ==
-                            widget.creditCardsList.length) {
-                      controllerSecondPageView.animateToPage(
-                          controllerSecondPageView.page == 0.0
-                              ? -1
-                              : controllerSecondPageView.page!.round() - 1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    } else {
-                      controllerSecondPageView.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    }
+                    ref
+                        .read(comparisonFirstCreditPageNumStateProvider.notifier)
+                        .state = index + 1 ==
+                        widget.creditCardsList.length
+                        ? index - 1
+                        : index;
+
+                    ref
+                        .read(
+                        comparisonSecondCreditPageNumStateProvider.notifier)
+                        .state = currentPageOnSecondPageView + 1 ==
+                        widget.creditCardsList.length
+                        ? currentPageOnSecondPageView - 1
+                        : currentPageOnSecondPageView;
+                    // ///воспроизводим анимацию при удалении
+                    // ///анимировать надо оба pfge view если они находятся на одной и той же страницу
+                    // ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
+                    // ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
+                    // controllerFirstPageView.animateToPage(
+                    //     controllerFirstPageView.page == 0.0
+                    //         ? -1
+                    //         : controllerFirstPageView.page!.round() - 1,
+                    //     duration: const Duration(milliseconds: 300),
+                    //     curve: Curves.linear);
+                    // if (controllerFirstPageView.page ==
+                    //         controllerSecondPageView.page ||
+                    //     controllerSecondPageView.page!.round() + 1 ==
+                    //         widget.creditCardsList.length) {
+                    //   controllerSecondPageView.animateToPage(
+                    //       controllerSecondPageView.page == 0.0
+                    //           ? -1
+                    //           : controllerSecondPageView.page!.round() - 1,
+                    //       duration: const Duration(milliseconds: 300),
+                    //       curve: Curves.linear);
+                    // } else {
+                    //   controllerSecondPageView.previousPage(
+                    //       duration: const Duration(milliseconds: 300),
+                    //       curve: Curves.linear);
+                    // }
                   },
                 );
               }),
@@ -247,31 +257,46 @@ class _CreditCardsComparisonWidgetState
                               comparisonCreditCardsListControllerProvider);
                           ref.invalidate(creditCardsControllerProvider);
                           ref.invalidate(creditCardsDetailsControllerProvider);
-                          ///воспроизводим анимацию при удалении
-                          ///анимировать надо оба pfge view если они находятся на одной и той же страницу
-                          ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
-                          ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
-                          controllerSecondPageView.animateToPage(
-                              controllerSecondPageView.page == 0.0
-                                  ? -1
-                                  : controllerSecondPageView.page!.round() - 1,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.linear);
-                          if (controllerFirstPageView.page ==
-                                  controllerSecondPageView.page ||
-                              controllerFirstPageView.page!.round() + 1 ==
-                                  widget.creditCardsList.length) {
-                            controllerFirstPageView.animateToPage(
-                                controllerFirstPageView.page == 0.0
-                                    ? -1
-                                    : controllerFirstPageView.page!.round() - 1,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear);
-                          } else {
-                            controllerFirstPageView.previousPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear);
-                          }
+                          ref
+                              .read(comparisonSecondCreditPageNumStateProvider
+                              .notifier)
+                              .state = index + 1 ==
+                              widget.creditCardsList.length
+                              ? index - 1
+                              : index;
+                          ref
+                              .read(comparisonFirstCreditPageNumStateProvider
+                              .notifier)
+                              .state = currentPageOnFirstPageView + 1 ==
+                              widget.creditCardsList.length
+                              ? currentPageOnFirstPageView - 1
+                              : currentPageOnFirstPageView;
+
+                          // ///воспроизводим анимацию при удалении
+                          // ///анимировать надо оба pfge view если они находятся на одной и той же страницу
+                          // ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
+                          // ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
+                          // controllerSecondPageView.animateToPage(
+                          //     controllerSecondPageView.page == 0.0
+                          //         ? -1
+                          //         : controllerSecondPageView.page!.round() - 1,
+                          //     duration: const Duration(milliseconds: 300),
+                          //     curve: Curves.linear);
+                          // if (controllerFirstPageView.page ==
+                          //         controllerSecondPageView.page ||
+                          //     controllerFirstPageView.page!.round() + 1 ==
+                          //         widget.creditCardsList.length) {
+                          //   controllerFirstPageView.animateToPage(
+                          //       controllerFirstPageView.page == 0.0
+                          //           ? -1
+                          //           : controllerFirstPageView.page!.round() - 1,
+                          //       duration: const Duration(milliseconds: 300),
+                          //       curve: Curves.linear);
+                          // } else {
+                          //   controllerFirstPageView.previousPage(
+                          //       duration: const Duration(milliseconds: 300),
+                          //       curve: Curves.linear);
+                          // }
                         },
                       );
                     }),

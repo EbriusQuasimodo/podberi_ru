@@ -112,7 +112,7 @@ class AllBanksListWidget extends ConsumerWidget {
                                   color: ThemeApp.mainWhite,
                                 ),
                                 child: Image.network(
-                                  '${Urls.api.files}/${allBanks.items[indexInPage].logo}',
+                                  '${Urls.api.files}/${allBanks.items[indexInPage].icon}',
                                   errorBuilder: (BuildContext context,
                                       Object exception,
                                       StackTrace? stackTrace) {

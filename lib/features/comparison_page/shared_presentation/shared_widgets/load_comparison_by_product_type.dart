@@ -30,9 +30,7 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
             return debitCardsInComparison.items.isNotEmpty
                 ? ComparisonDebitCardsPage(
               debitCardsInComparison: debitCardsInComparison.items,
-              onScrollPageViews: () {
-                setState(() {});
-              },
+
             )
                 : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в сравнении по данной категории.',);
           }, error: (error, _) {
@@ -50,9 +48,9 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });
@@ -62,9 +60,7 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
             return creditCardsInComparison.items.isNotEmpty
                 ? ComparisonCreditCardsPage(
               creditCardsInComparison: creditCardsInComparison.items,
-              onScrollPageViews: () {
-                setState(() {});
-              },
+
             )
                 : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в сравнении по данной категории.',);
           }, error: (error, _) {
@@ -81,9 +77,9 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });
@@ -93,9 +89,6 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
             return zaimyInComparison.items.isNotEmpty
                 ? ComparisonZaimyPage(
               zaimyInComparison: zaimyInComparison.items,
-              onScrollPageViews: () {
-                setState(() {});
-              },
             )
                 : const FavoritesOrComparisonIsEmpty(error: 'У вас пока нет продуктов в сравнении по данной категории.',);
           }, error: (error, _) {
@@ -112,9 +105,9 @@ class _LoadWidgetByProductTypeState extends ConsumerState<LoadComparisonByProduc
               }),
         );
       }, loading: () {
-        return const SliverFillRemaining(
+        return  SliverFillRemaining(
           child: CustomLoadingCardWidget(
-            bottomPadding: 72,
+            bottomPadding: MediaQuery.of(context).padding.bottom,
           ),
         );
       });

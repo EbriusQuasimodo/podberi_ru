@@ -36,9 +36,12 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
       list.add(CustomChoiceChip(
         whereFrom: 'comparison',
         onTap: () {
-          ref.invalidate(comparisonDebitCardsListControllerProvider);
-          ref.invalidate(comparisonCreditCardsListControllerProvider);
-          ref.invalidate(comparisonZaimyListControllerProvider);
+          ref.read(comparisonDebitCardsListControllerProvider);
+          ref.read(comparisonCreditCardsListControllerProvider);
+          ref.read(comparisonZaimyListControllerProvider);
+          setState(() {
+            comparisonLength=0;
+          });
         },
         categoryName: element,
         selectedCategory: selectedBankProductsFilter,
@@ -78,12 +81,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
           ref.watch(comparisonSecondZaimyBankNameStateController);
       comparisonLength = ref.watch(comparisonZaimyListLengthStateController);
     }
-    if (ref.watch(comparisonProductUrlStateProvider) == 'rko') {
-      firstProductName = ref.watch(comparisonFirstRkoBankNameStateProvider);
-      secondProductName =
-          ref.watch(comparisonSecondRkoBankNameStateProvider);
-      comparisonLength = ref.watch(comparisonRkoListLengthStateController);
-    }
+    print("comparisonLength $comparisonLength");
     return Scaffold(
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,
@@ -124,7 +122,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0)),
                     )),
-            comparisonLength > 1
+            comparisonLength >=2
                 ? SliverAppBar(
                     surfaceTintColor: ThemeApp.mainWhite,
                     titleSpacing: 0,
@@ -137,7 +135,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                             margin: EdgeInsets.only(
                               left: 15,
                               bottom: 15,
-                              right: comparisonLength < 1 ? 15 : 0,
+                              right: comparisonLength <= 1 ? 15 : 0,
                             ),
                             height: 40,
                             padding: const EdgeInsets.symmetric(
@@ -165,7 +163,7 @@ class _ComparisonPageState extends ConsumerState<ComparisonPage> {
                         const SizedBox(
                           width: 6,
                         ),
-                        comparisonLength > 1
+                        comparisonLength >= 2
                             ? Expanded(
                                 child: Container(
                                   margin: const EdgeInsets.only(

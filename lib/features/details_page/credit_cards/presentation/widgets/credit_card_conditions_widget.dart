@@ -75,7 +75,7 @@ class _CreditCardConditionsWidgetState extends State<CreditCardConditionsWidget>
                   padding: const EdgeInsets.only(
                       top: 10.5, bottom: 11.5, right: 8.63, left: 9.16),
                   child: Image.network(
-                    '${Urls.api.files}/${widget.basicApiPageSettingsModel.bankDetailsModel?.logo}',
+                    '${Urls.api.files}/${widget.basicApiPageSettingsModel.bankDetailsModel?.icon}',
 
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {

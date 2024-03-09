@@ -38,12 +38,18 @@ class DebitCardWidgetWithButtons extends ConsumerStatefulWidget {
 class _DebitCardWidgetWithButtonsState
     extends ConsumerState<DebitCardWidgetWithButtons> {
   List<Widget> list() {
-    var list = <Widget>[];
+    var list = <Widget>[Text("Кэшбек: ${widget.productInfo.maxCashBack} (баллы/рубли/мили)", style: TextStyle(color: ThemeApp.mainWhite,
+        fontSize: 13,
+        fontWeight: FontWeight.w500),),
+      Text("Обслуживание: ${widget.productInfo.maxService} руб.",style: TextStyle(color: ThemeApp.mainWhite,
+          fontSize: 13,
+          fontWeight: FontWeight.w500),),];
 
+    if(widget.productInfo.features.isNotEmpty){
     for (int i = 0;
-        widget.productInfo.features.length <= 4
+        widget.productInfo.features.length <= 2
             ? i < widget.productInfo.features.length
-            : i < 4;
+            : i < 2;
         i++) {
       list.add(
         Text(
@@ -55,7 +61,7 @@ class _DebitCardWidgetWithButtonsState
               fontWeight: FontWeight.w500),
         ),
       );
-    }
+    }}
 
     return list;
   }
@@ -90,7 +96,7 @@ class _DebitCardWidgetWithButtonsState
                 color: ThemeApp.mainWhite,
               ),
               child: Image.network(
-                '${Urls.api.files}/${widget.productInfo.bankDetails?.logo}',
+                '${Urls.api.files}/${widget.productInfo.bankDetails?.icon}',
                 errorBuilder: (BuildContext context, Object exception,
                     StackTrace? stackTrace) {
                   return SvgPicture.asset(
@@ -113,35 +119,15 @@ class _DebitCardWidgetWithButtonsState
                   fontSize: 14),
             ),
           ),
-          widget.productInfo.features.isNotEmpty
-              ? Positioned(
+           Positioned(
                   left: 16,
                   bottom: 16,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: list(),
                   ),
-                )
-              : const SizedBox.shrink(),
-          Positioned(
-              right: 16,
-              bottom: 70,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.star,
-                    color: ThemeApp.mainWhite,
-                    size: 20,
-                  ),
-                  Text(
-                    widget.productRating,
-                    style: const TextStyle(
-                        color: ThemeApp.mainWhite,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                  )
-                ],
-              )),
+                ),
+
           Positioned(
             top: 0,
             bottom: 0,
@@ -163,7 +149,7 @@ class _DebitCardWidgetWithButtonsState
                           bankDetailsModel: BankListDetailsModel(
                               bankName:
                                   widget.productInfo.bankDetails!.bankName,
-                              logo: widget.productInfo.bankDetails!.logo)));
+                              icon: widget.productInfo.bankDetails!.icon)));
                 },
               ),
             ),

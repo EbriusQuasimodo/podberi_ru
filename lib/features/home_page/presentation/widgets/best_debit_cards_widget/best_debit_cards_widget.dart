@@ -61,9 +61,9 @@ class BestDebitCardsWidget extends ConsumerWidget {
                                             bankName: debitCards[index]
                                                 .bankDetails
                                                 !.bankName,
-                                            logo: debitCards[index]
+                                            icon: debitCards[index]
                                                 .bankDetails
-                                                !.logo)));
+                                                !.icon)));
                               },
                               productRating: '4.8');
                         }),

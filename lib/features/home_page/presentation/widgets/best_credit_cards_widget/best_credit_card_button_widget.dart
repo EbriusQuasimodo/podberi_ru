@@ -60,9 +60,7 @@ class BestCreditCardButtonWidget extends StatelessWidget {
                 color: ThemeApp.mainWhite,
               ),
               child: Image.network(
-                '${Urls.api.files}/${productInfo.bankDetails?.logo}',
-
-                fit: BoxFit.cover,
+                '${Urls.api.files}/${productInfo.bankDetails?.icon}',
                 errorBuilder: (BuildContext context,
                     Object exception, StackTrace? stackTrace) {
                   return SvgPicture.asset(

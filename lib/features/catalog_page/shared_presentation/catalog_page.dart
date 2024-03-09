@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/product_type_enum.dart';
+import 'package:podberi_ru/core/presentation/custom_loading_card_widget.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/credit_cards/presentation/credit_cards_controller.dart';
@@ -27,7 +29,7 @@ class CatalogPage extends ConsumerStatefulWidget {
 
 class _CatalogPageState extends ConsumerState<CatalogPage> {
   List<String> filters = [];
-  ScrollController controller =ScrollController();
+  ScrollController controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +37,12 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
       body: RefreshIndicator(
         color: ThemeApp.mainBlue,
         onRefresh: () async {
-          ref.refresh(debitCardsControllerProvider(widget.basicApiPageSettingsModel));
-          ref.refresh(creditCardsControllerProvider(widget.basicApiPageSettingsModel));
-          ref.refresh(zaimyControllerProvider(widget.basicApiPageSettingsModel));
+          ref.refresh(
+              debitCardsControllerProvider(widget.basicApiPageSettingsModel));
+          ref.refresh(
+              creditCardsControllerProvider(widget.basicApiPageSettingsModel));
+          ref.refresh(
+              zaimyControllerProvider(widget.basicApiPageSettingsModel));
           ref.refresh(rkoControllerProvider(widget.basicApiPageSettingsModel));
         },
         child: CustomScrollView(
@@ -54,41 +59,46 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                   if (widget.basicApiPageSettingsModel.whereFrom ==
                       AppRoute.homePage.name) {
                     setState(() {
-                      widget.basicApiPageSettingsModel.page =null;
+                      widget.basicApiPageSettingsModel.page = null;
                       widget.basicApiPageSettingsModel.filters.banks?.clear();
-                      widget.basicApiPageSettingsModel.filters.paySystem?.clear();
-                      widget.basicApiPageSettingsModel.filters.features?.clear();
-                      widget.basicApiPageSettingsModel.filters.term=null;
-                      widget.basicApiPageSettingsModel.filters.sum=null;
-                      widget.basicApiPageSettingsModel.filters.creditLimit=null;
-                      widget.basicApiPageSettingsModel.filters.noPercentPeriod=null;
-                      widget.basicApiPageSettingsModel.filters.percents=null;
-                      widget.basicApiPageSettingsModel.filters.cashBack?.clear();
+                      widget.basicApiPageSettingsModel.filters.paySystem
+                          ?.clear();
+                      widget.basicApiPageSettingsModel.filters.features
+                          ?.clear();
+                      widget.basicApiPageSettingsModel.filters.term = null;
+                      widget.basicApiPageSettingsModel.filters.sum = null;
+                      widget.basicApiPageSettingsModel.filters.creditLimit =
+                          null;
+                      widget.basicApiPageSettingsModel.filters.noPercentPeriod =
+                          null;
+                      widget.basicApiPageSettingsModel.filters.percents = null;
+                      widget.basicApiPageSettingsModel.filters.cashBack
+                          ?.clear();
                     });
 
-                    ref
-                        .watch(sortFromHomePageStateProvider
-                        .notifier)
-                        .state ='По умолчанию';
-                  } else if (widget
-                      .basicApiPageSettingsModel.whereFrom ==
+                    ref.watch(sortFromHomePageStateProvider.notifier).state =
+                        'По умолчанию';
+                  } else if (widget.basicApiPageSettingsModel.whereFrom ==
                       AppRoute.selectProductPage.name) {
                     setState(() {
-                      widget.basicApiPageSettingsModel.page =null;
+                      widget.basicApiPageSettingsModel.page = null;
                       widget.basicApiPageSettingsModel.filters.banks?.clear();
-                      widget.basicApiPageSettingsModel.filters.paySystem?.clear();
-                      widget.basicApiPageSettingsModel.filters.features?.clear();
-                      widget.basicApiPageSettingsModel.filters.term=null;
-                      widget.basicApiPageSettingsModel.filters.sum=null;
-                      widget.basicApiPageSettingsModel.filters.creditLimit=null;
-                      widget.basicApiPageSettingsModel.filters.noPercentPeriod=null;
-                      widget.basicApiPageSettingsModel.filters.percents=null;
-                      widget.basicApiPageSettingsModel.filters.cashBack?.clear();
+                      widget.basicApiPageSettingsModel.filters.paySystem
+                          ?.clear();
+                      widget.basicApiPageSettingsModel.filters.features
+                          ?.clear();
+                      widget.basicApiPageSettingsModel.filters.term = null;
+                      widget.basicApiPageSettingsModel.filters.sum = null;
+                      widget.basicApiPageSettingsModel.filters.creditLimit =
+                          null;
+                      widget.basicApiPageSettingsModel.filters.noPercentPeriod =
+                          null;
+                      widget.basicApiPageSettingsModel.filters.percents = null;
+                      widget.basicApiPageSettingsModel.filters.cashBack
+                          ?.clear();
                     });
                     ref
-                        .watch(
-                        sortFromSelectProductPageStateProvider
-                            .notifier)
+                        .watch(sortFromSelectProductPageStateProvider.notifier)
                         .state = 'По умолчанию';
                   }
                   ref.read(goRouterProvider).pop();
@@ -117,16 +127,19 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                         },
                       )
                     : SortAndFilterWidget(
-                  basicApiPageSettingsModel: widget.basicApiPageSettingsModel,
+                        basicApiPageSettingsModel:
+                            widget.basicApiPageSettingsModel,
                         onSortButtonTap: () {
                           showModalBottomSheet(
-                              useRootNavigator:true,
-                              constraints: const BoxConstraints(minWidth: double.infinity,maxHeight: 360),
+                              useRootNavigator: true,
+                              constraints: BoxConstraints(
+                                  minWidth: double.infinity, maxHeight: 360),
                               context: context,
                               builder: (context) {
-                                return LoadSortByProductType(basicApiPageSettingsModel: widget.basicApiPageSettingsModel);
+                                return LoadSortByProductType(
+                                    basicApiPageSettingsModel:
+                                        widget.basicApiPageSettingsModel);
                               });
-
                         },
                         onFiltersButtonTap: () {
                           Navigator.of(context, rootNavigator: true).push(
@@ -136,7 +149,18 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                               basicApiPageSettingsModel:
                                   widget.basicApiPageSettingsModel,
                             );
-                          }));
+                          })).then((value) {
+                            if (value == ProductTypeEnum.debit_cards.name) {
+                              ref.invalidate(debitCardsControllerProvider);
+                            } else if (value ==
+                                ProductTypeEnum.credit_cards.name) {
+                              ref.invalidate(creditCardsControllerProvider);
+                            }else if (value == ProductTypeEnum.zaimy.name){
+                              ref.invalidate(zaimyControllerProvider);
+                            }else{
+                              ref.invalidate(rkoControllerProvider);
+                            }
+                          });
                         },
                       ),
               ),

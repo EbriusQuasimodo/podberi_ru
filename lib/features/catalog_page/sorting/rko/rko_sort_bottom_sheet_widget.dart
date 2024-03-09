@@ -5,6 +5,7 @@ import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
 import 'package:podberi_ru/core/routing/app_routes.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/debit_cards/presentation/debit_cards_controller.dart';
+import 'package:podberi_ru/features/catalog_page/rko/presentation/rko_controller.dart';
 import 'package:podberi_ru/features/catalog_page/sorting/debit_cards/debit_cards_sort_controller.dart';
 
 class RkoSortBottomSheetWidget extends ConsumerStatefulWidget {
@@ -38,7 +39,7 @@ class _RkoSortBottomSheetWidgetState
         padding:
             const EdgeInsets.only(top: 12, left: 15, right: 15, bottom: 65),
         child: CustomScrollView(
-          physics: new ClampingScrollPhysics(),
+          //physics: new ClampingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
               child: Container(
@@ -51,70 +52,73 @@ class _RkoSortBottomSheetWidgetState
                     borderRadius: BorderRadius.circular(100)),
               ),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                childCount: sortDebitCardsVariantsList.length,
-                (context, index) => Container(
-                  height: 60,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: ThemeApp.grey,
-                      borderRadius: BorderRadius.circular(14)),
-                  margin: const EdgeInsets.only(bottom: 6),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(12),
-                      onTap: () {
-                        setState(() {
-                          if (widget.basicApiPageSettingsModel.whereFrom ==
-                              AppRoute.homePage.name) {
-                            ref
-                                .watch(sortFromHomePageStateProvider.notifier)
-                                .state = sortDebitCardsVariantsList[index];
-                          } else if (widget
-                                  .basicApiPageSettingsModel.whereFrom ==
-                              AppRoute.selectProductPage.name) {
-                            ref
-                                .watch(sortFromSelectProductPageStateProvider
-                                    .notifier)
-                                .state = sortDebitCardsVariantsList[index];
-                          }
-                        });
-                        ref.refresh(debitCardsControllerProvider( widget.basicApiPageSettingsModel));
-                      },
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 15, right: 15, top: 15, bottom: 15),
-                              child: Text(
-                                sortDebitCardsVariantsList[index],
-                                style: const TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w500),
+            SliverPadding(
+              padding:  EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom +15),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: sortDebitCardsVariantsList.length,
+                  (context, index) => Container(
+                    height: 60,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: ThemeApp.grey,
+                        borderRadius: BorderRadius.circular(14)),
+                    margin: const EdgeInsets.only(bottom: 6),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(12),
+                        onTap: () {
+                          setState(() {
+                            if (widget.basicApiPageSettingsModel.whereFrom ==
+                                AppRoute.homePage.name) {
+                              ref
+                                  .watch(sortFromHomePageStateProvider.notifier)
+                                  .state = sortDebitCardsVariantsList[index];
+                            } else if (widget
+                                    .basicApiPageSettingsModel.whereFrom ==
+                                AppRoute.selectProductPage.name) {
+                              ref
+                                  .watch(sortFromSelectProductPageStateProvider
+                                      .notifier)
+                                  .state = sortDebitCardsVariantsList[index];
+                            }
+                          });
+                          ref.refresh(rkoControllerProvider( widget.basicApiPageSettingsModel));
+                        },
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 15, bottom: 15),
+                                child: Text(
+                                  sortDebitCardsVariantsList[index],
+                                  style: const TextStyle(
+                                      fontSize: 14, fontWeight: FontWeight.w500),
+                                ),
                               ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: ThemeApp.mainWhite,
-                                  borderRadius: BorderRadius.circular(5)),
-                              padding: const EdgeInsets.all(5),
-                              margin: const EdgeInsets.only(
-                                  right: 15, top: 15, bottom: 15),
-                              child: SvgPicture.asset(
-                                'assets/icons/filer_check_icon.svg',
-                                height: 16,
-                                width: 16,
-                                color: widget.selectedSort ==
-                                        sortDebitCardsVariantsList[index]
-                                    ? ThemeApp.mainBlue
-                                    : Colors.transparent,
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: ThemeApp.mainWhite,
+                                    borderRadius: BorderRadius.circular(5)),
+                                padding: const EdgeInsets.all(5),
+                                margin: const EdgeInsets.only(
+                                    right: 15, top: 15, bottom: 15),
+                                child: SvgPicture.asset(
+                                  'assets/icons/filer_check_icon.svg',
+                                  height: 16,
+                                  width: 16,
+                                  color: widget.selectedSort ==
+                                          sortDebitCardsVariantsList[index]
+                                      ? ThemeApp.mainBlue
+                                      : Colors.transparent,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

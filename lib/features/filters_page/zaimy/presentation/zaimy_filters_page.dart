@@ -2,6 +2,7 @@ import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:podberi_ru/core/domain/basic_api_page_settings_model.dart';
+import 'package:podberi_ru/core/domain/product_type_enum.dart';
 import 'package:podberi_ru/core/styles/theme_app.dart';
 import 'package:podberi_ru/features/catalog_page/zaimy/presentation/zaimy_controller.dart';
 import 'package:podberi_ru/features/filters_page/shared_presentation/shared_widgets/choice_chip_with_many_choice_item.dart';
@@ -94,10 +95,8 @@ class _ZaimyFiltersPageState extends ConsumerState<ZaimyFiltersPage> {
               leading: IconButton(
                   onPressed: () {
                     saveFilters();
-                    Navigator.of(context).pop();
-                    ///костыль благодаря которому обновляется экран займов если выбран фильтр в доп услугах)))
-                    ref.refresh(zaimyControllerProvider(
-                        widget.basicApiPageSettingsModel));
+                    Navigator.of(context).pop(ProductTypeEnum.zaimy.name);
+
                   },
                   icon: const Icon(Icons.arrow_back_ios_new)),
             ),

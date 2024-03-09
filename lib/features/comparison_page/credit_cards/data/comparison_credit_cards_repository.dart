@@ -19,6 +19,7 @@ class ComparisonCreditCardsRepository implements ComparisonCreditCardsRepository
     ///если передали квери только из одного типа продукта
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'credit_cards') {
+      print('dgfdsg');
       List<ListCreditCardsModel> list = [];
       ref.watch(comparisonCreditListLengthStateController.notifier).state = 0;
       ///то возвращаем пустой список чтобы отобразить что продуктов в сравнении нет

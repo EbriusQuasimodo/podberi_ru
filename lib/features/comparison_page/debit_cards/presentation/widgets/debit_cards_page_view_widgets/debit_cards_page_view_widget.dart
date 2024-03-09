@@ -16,17 +16,11 @@ import 'mini_debit_card_widget.dart';
 
 class DebitCardsPageViewWidget extends ConsumerStatefulWidget {
   final List<ListDebitCardsModel> debitCardsList;
-  final VoidCallback onDeleteFromComparison;
-  final VoidCallback onDeleteFromComparisonTwo;
-  final VoidCallback onScrollPageViews;
 
   ///виджет дебетовок в сранении, используется в [ComparisonDebitCardsPage]
   const DebitCardsPageViewWidget({
     super.key,
     required this.debitCardsList,
-    required this.onDeleteFromComparison,
-    required this.onScrollPageViews,
-    required this.onDeleteFromComparisonTwo,
   });
 
   @override
@@ -41,11 +35,11 @@ class _DebitCardsComparisonWidgetState
     viewportFraction: 0.9,
   );
   final controllerSecondPageView = PageController(
-    initialPage: 0,
+    initialPage: 1,
     viewportFraction: 0.9,
   );
 
- int currentPageOnFirstPageView = 0;
+  int currentPageOnFirstPageView = 0;
   int currentPageOnSecondPageView = 0;
 
   @override
@@ -53,7 +47,8 @@ class _DebitCardsComparisonWidgetState
     ///прослушиваем второй page view
     controllerSecondPageView.addListener(() {
       ///меняем номер страницы в провайдере
-      ref.watch(comparisonSecondDebitPageNumStateProvider.notifier).state = controllerSecondPageView.page!.toInt();
+      ref.watch(comparisonSecondDebitPageNumStateProvider.notifier).state =
+          controllerSecondPageView.page!.toInt();
 
       ///меняем имя банка в провайдере в зависимости от текущей страницы
       ref.watch(comparisonSecondDebitBankNameStateProvider.notifier).state =
@@ -61,16 +56,15 @@ class _DebitCardsComparisonWidgetState
               .bankDetails!.bankName;
 
       ///меняем имя банковского продукта в провайдере
-      ref
-              .watch(comparisonSecondDebitProductNameStateProvider.notifier)
-              .state =
+      ref.watch(comparisonSecondDebitProductNameStateProvider.notifier).state =
           widget.debitCardsList[controllerSecondPageView.page!.toInt()].name;
     });
 
     ///прослушиваем первый page view
     controllerFirstPageView.addListener(() {
       ///меняем номер страницы в провайдере
-      ref.watch(comparisonFirstDebitPageNumStateProvider.notifier).state = controllerFirstPageView.page!.toInt();
+      ref.watch(comparisonFirstDebitPageNumStateProvider.notifier).state =
+          controllerFirstPageView.page!.toInt();
 
       ///меняем имя банка в провайдере в зависимости от текущей страницы
       ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =
@@ -80,7 +74,6 @@ class _DebitCardsComparisonWidgetState
       ///меняем имя банковского продукта в провайдере
       ref.watch(comparisonFirstDebitProductNameStateProvider.notifier).state =
           widget.debitCardsList[controllerFirstPageView.page!.toInt()].name;
-
     });
     super.didChangeDependencies();
   }
@@ -96,8 +89,10 @@ class _DebitCardsComparisonWidgetState
 
   @override
   Widget build(BuildContext context) {
-    currentPageOnFirstPageView = ref.watch(comparisonFirstDebitPageNumStateProvider);
-    currentPageOnSecondPageView = ref.watch(comparisonSecondDebitPageNumStateProvider);
+    currentPageOnFirstPageView =
+        ref.watch(comparisonFirstDebitPageNumStateProvider);
+    currentPageOnSecondPageView =
+        ref.watch(comparisonSecondDebitPageNumStateProvider);
     return Container(
       margin: const EdgeInsets.only(top: 2),
       decoration: BoxDecoration(
@@ -149,34 +144,49 @@ class _DebitCardsComparisonWidgetState
                     ///обновляем контроллер чтобы отобразить новый список сравнения
                     ref.invalidate(comparisonDebitCardsListControllerProvider);
                     ref.invalidate(debitCardsControllerProvider);
-                    ref.invalidate(
-                        favoritesDebitCardsListControllerProvider);
+                    ref.invalidate(favoritesDebitCardsListControllerProvider);
                     ref.invalidate(debitCardsDetailsControllerProvider);
-                    ///воспроизводим анимацию при удалении
-                    ///анимировать надо оба pfge view если они находятся на одной и той же страницу
-                    ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
-                    ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
-                    controllerFirstPageView.animateToPage(
-                        controllerFirstPageView.page == 0.0
-                            ? -1
-                            : controllerFirstPageView.page!.round() - 1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.linear);
-                    if (controllerFirstPageView.page ==
-                            controllerSecondPageView.page||
-                        controllerSecondPageView.page!.round() + 1 ==
-                            widget.debitCardsList.length) {
-                      controllerSecondPageView.animateToPage(
-                          controllerSecondPageView.page == 0.0
-                              ? -1
-                              : controllerSecondPageView.page!.round() - 1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    } else {
-                      controllerSecondPageView.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    }
+
+                    ref
+                        .read(comparisonFirstDebitPageNumStateProvider.notifier)
+                        .state = index + 1 ==
+                            widget.debitCardsList.length
+                        ? index - 1
+                        : index;
+
+                    ref
+                        .read(
+                            comparisonSecondDebitPageNumStateProvider.notifier)
+                        .state = currentPageOnSecondPageView + 1 ==
+                            widget.debitCardsList.length
+                        ? currentPageOnSecondPageView - 1
+                        : currentPageOnSecondPageView;
+
+                    // ///воспроизводим анимацию при удалении
+                    // ///анимировать надо оба pfge view если они находятся на одной и той же страницу
+                    // ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
+                    // ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
+                    // controllerFirstPageView.animateToPage(
+                    //     controllerFirstPageView.page == 0.0
+                    //         ? -1
+                    //         : controllerFirstPageView.page!.round() - 1,
+                    //     duration: const Duration(milliseconds: 300),
+                    //     curve: Curves.linear);
+                    // if (controllerFirstPageView.page ==
+                    //         controllerSecondPageView.page||
+                    //     controllerSecondPageView.page!.round() + 1 ==
+                    //         widget.debitCardsList.length) {
+                    //   controllerSecondPageView.animateToPage(
+                    //       controllerSecondPageView.page == 0.0
+                    //           ? -1
+                    //           : controllerSecondPageView.page!.round() - 1,
+                    //       duration: const Duration(milliseconds: 300),
+                    //       curve: Curves.linear);
+                    // } else {
+                    //   controllerSecondPageView.previousPage(
+                    //       duration: const Duration(milliseconds: 300),
+                    //       curve: Curves.linear);
+                    // }
                   },
                 );
               }),
@@ -216,9 +226,10 @@ class _DebitCardsComparisonWidgetState
 
               ///второй page view
               : SizedBox(
-            height: 91,
-                child: PageView(
-                 key: const PageStorageKey<String>('comparisonDebitPageViewSecond'),
+                  height: 91,
+                  child: PageView(
+                    key: const PageStorageKey<String>(
+                        'comparisonDebitPageViewSecond'),
                     controller: controllerSecondPageView,
                     children:
                         List.generate(widget.debitCardsList.length, (index) {
@@ -234,7 +245,8 @@ class _DebitCardsComparisonWidgetState
                                   .watch(isarNotifierProvider.notifier)
                                   .isItemDuplicateInComparison(
                                     widget.debitCardsList[index].id,
-                                    ref.watch(comparisonProductUrlStateProvider),
+                                    ref.watch(
+                                        comparisonProductUrlStateProvider),
                                   )
                               ? await isar?.comparisonDebitCardsDatas
                                   .filter()
@@ -244,39 +256,54 @@ class _DebitCardsComparisonWidgetState
                                   .put(comparisonDebitCardsData));
 
                           ///обновляем контроллер чтобы отобразить новый список сравнения
-                          ref.invalidate(comparisonDebitCardsListControllerProvider);
+                          ref.invalidate(
+                              comparisonDebitCardsListControllerProvider);
                           ref.invalidate(debitCardsControllerProvider);
                           ref.invalidate(debitCardsDetailsControllerProvider);
-                          ///воспроизводим анимацию при удалении
-                          ///анимировать надо оба pfge view если они находятся на одной и той же страницу
-                          ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
-                          ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
-                          controllerSecondPageView.animateToPage(
-                              controllerSecondPageView.page == 0
-                                  ? -1
-                                  : controllerSecondPageView.page!.round() - 1,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.linear);
-                          if (controllerFirstPageView.page ==
-                                  controllerSecondPageView.page||
-                              controllerFirstPageView.page!.round() + 1 ==
-                                  widget.debitCardsList.length) {
-                            controllerFirstPageView.animateToPage(
-                                controllerFirstPageView.page == 0
-                                    ? -1
-                                    : controllerFirstPageView.page!.round() - 1,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear);
-                          } else {
-                            controllerFirstPageView.previousPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear);
-                          }
+                          ref
+                              .read(comparisonSecondDebitPageNumStateProvider
+                                  .notifier)
+                              .state = index + 1 ==
+                                  widget.debitCardsList.length
+                              ? index - 1
+                              : index;
+                          ref
+                              .read(comparisonFirstDebitPageNumStateProvider
+                                  .notifier)
+                              .state = currentPageOnFirstPageView + 1 ==
+                                  widget.debitCardsList.length
+                              ? currentPageOnFirstPageView - 1
+                              : currentPageOnFirstPageView;
+                          // ///воспроизводим анимацию при удалении
+                          // ///анимировать надо оба pfge view если они находятся на одной и той же страницу
+                          // ///если открыта страница 0 то анимируемся на -1 (делает просто небольшой скачок туда-обратно)
+                          // ///иначе от текущей страницы отнимает 1 и делаем плавную анимацию к ней
+                          // controllerSecondPageView.animateToPage(
+                          //     controllerSecondPageView.page == 0
+                          //         ? -1
+                          //         : controllerSecondPageView.page!.round() - 1,
+                          //     duration: const Duration(milliseconds: 300),
+                          //     curve: Curves.linear);
+                          // if (controllerFirstPageView.page ==
+                          //         controllerSecondPageView.page||
+                          //     controllerFirstPageView.page!.round() + 1 ==
+                          //         widget.debitCardsList.length) {
+                          //   controllerFirstPageView.animateToPage(
+                          //       controllerFirstPageView.page == 0
+                          //           ? -1
+                          //           : controllerFirstPageView.page!.round() - 1,
+                          //       duration: const Duration(milliseconds: 300),
+                          //       curve: Curves.linear);
+                          // } else {
+                          //   controllerFirstPageView.previousPage(
+                          //       duration: const Duration(milliseconds: 300),
+                          //       curve: Curves.linear);
+                          // }
                         },
                       );
                     }),
                   ),
-              ),
+                ),
           widget.debitCardsList.length == 1
               ? const SizedBox.shrink()
 

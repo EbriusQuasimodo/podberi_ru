@@ -63,7 +63,7 @@ class MiniBankButtonWidget extends ConsumerWidget {
                   color: ThemeApp.mainWhite,
                 ),
                 child: Image.network(
-                  '${Urls.api.files}/${banksModel.logo}',
+                  '${Urls.api.files}/${banksModel.icon}',
                   height: 51,
                   width: 57,
                   errorBuilder: (BuildContext context, Object exception,

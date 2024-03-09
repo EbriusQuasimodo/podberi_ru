@@ -204,7 +204,7 @@ mixin _$ListZaimyModel {
   bool get enable => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_percent')
-  int get maxPercent => throw _privateConstructorUsedError;
+  dynamic get maxPercent => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_term')
   int get maxTerm => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_percent')
@@ -242,7 +242,7 @@ abstract class $ListZaimyModelCopyWith<$Res> {
       String color,
       bool enable,
       String image,
-      @JsonKey(name: 'max_percent') int maxPercent,
+      @JsonKey(name: 'max_percent') dynamic maxPercent,
       @JsonKey(name: 'max_term') int maxTerm,
       @JsonKey(name: 'min_percent') int minPercent,
       @JsonKey(name: 'min_term') int minTerm,
@@ -275,7 +275,7 @@ class _$ListZaimyModelCopyWithImpl<$Res, $Val extends ListZaimyModel>
     Object? color = null,
     Object? enable = null,
     Object? image = null,
-    Object? maxPercent = null,
+    Object? maxPercent = freezed,
     Object? maxTerm = null,
     Object? minPercent = null,
     Object? minTerm = null,
@@ -313,10 +313,10 @@ class _$ListZaimyModelCopyWithImpl<$Res, $Val extends ListZaimyModel>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      maxPercent: null == maxPercent
+      maxPercent: freezed == maxPercent
           ? _value.maxPercent
           : maxPercent // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       maxTerm: null == maxTerm
           ? _value.maxTerm
           : maxTerm // ignore: cast_nullable_to_non_nullable
@@ -380,7 +380,7 @@ abstract class _$$ListZaimyModelImplCopyWith<$Res>
       String color,
       bool enable,
       String image,
-      @JsonKey(name: 'max_percent') int maxPercent,
+      @JsonKey(name: 'max_percent') dynamic maxPercent,
       @JsonKey(name: 'max_term') int maxTerm,
       @JsonKey(name: 'min_percent') int minPercent,
       @JsonKey(name: 'min_term') int minTerm,
@@ -411,7 +411,7 @@ class __$$ListZaimyModelImplCopyWithImpl<$Res>
     Object? color = null,
     Object? enable = null,
     Object? image = null,
-    Object? maxPercent = null,
+    Object? maxPercent = freezed,
     Object? maxTerm = null,
     Object? minPercent = null,
     Object? minTerm = null,
@@ -449,10 +449,10 @@ class __$$ListZaimyModelImplCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      maxPercent: null == maxPercent
+      maxPercent: freezed == maxPercent
           ? _value.maxPercent
           : maxPercent // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       maxTerm: null == maxTerm
           ? _value.maxTerm
           : maxTerm // ignore: cast_nullable_to_non_nullable
@@ -547,7 +547,7 @@ class _$ListZaimyModelImpl implements _ListZaimyModel {
   final String image;
   @override
   @JsonKey(name: 'max_percent')
-  final int maxPercent;
+  final dynamic maxPercent;
   @override
   @JsonKey(name: 'max_term')
   final int maxTerm;
@@ -599,8 +599,8 @@ class _$ListZaimyModelImpl implements _ListZaimyModel {
             (identical(other.color, color) || other.color == color) &&
             (identical(other.enable, enable) || other.enable == enable) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.maxPercent, maxPercent) ||
-                other.maxPercent == maxPercent) &&
+            const DeepCollectionEquality()
+                .equals(other.maxPercent, maxPercent) &&
             (identical(other.maxTerm, maxTerm) || other.maxTerm == maxTerm) &&
             (identical(other.minPercent, minPercent) ||
                 other.minPercent == minPercent) &&
@@ -627,7 +627,7 @@ class _$ListZaimyModelImpl implements _ListZaimyModel {
       color,
       enable,
       image,
-      maxPercent,
+      const DeepCollectionEquality().hash(maxPercent),
       maxTerm,
       minPercent,
       minTerm,
@@ -663,7 +663,7 @@ abstract class _ListZaimyModel implements ListZaimyModel {
       final String color,
       final bool enable,
       final String image,
-      @JsonKey(name: 'max_percent') final int maxPercent,
+      @JsonKey(name: 'max_percent') final dynamic maxPercent,
       @JsonKey(name: 'max_term') final int maxTerm,
       @JsonKey(name: 'min_percent') final int minPercent,
       @JsonKey(name: 'min_term') final int minTerm,
@@ -695,7 +695,7 @@ abstract class _ListZaimyModel implements ListZaimyModel {
   String get image;
   @override
   @JsonKey(name: 'max_percent')
-  int get maxPercent;
+  dynamic get maxPercent;
   @override
   @JsonKey(name: 'max_term')
   int get maxTerm;

@@ -58,7 +58,7 @@ class BestCreditCardsWidget extends ConsumerWidget {
                                       productId: creditCards[index].id,
                                       bankDetailsModel: BankListDetailsModel(
                                           bankName: creditCards[index].bankDetails!.bankName,
-                                          logo: creditCards[index].bankDetails!.logo)) );
+                                          icon: creditCards[index].bankDetails!.icon)) );
                             },
                             productRating: '4.8');
                       }),

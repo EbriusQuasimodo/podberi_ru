@@ -29,7 +29,7 @@ _$ListZaimyModelImpl _$$ListZaimyModelImplFromJson(Map<String, dynamic> json) =>
       color: json['color'] as String? ?? '',
       enable: json['enable'] as bool? ?? false,
       image: json['image'] as String? ?? '',
-      maxPercent: json['max_percent'] as int? ?? 0,
+      maxPercent: json['max_percent'] ?? 0,
       maxTerm: json['max_term'] as int? ?? 0,
       minPercent: json['min_percent'] as int? ?? 0,
       minTerm: json['min_term'] as int? ?? 0,

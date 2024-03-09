@@ -17,7 +17,7 @@ class ComparisonDebitCardsRepository
   @override
   Future<DebitCardsModel> fetch(
       String arg,int firstPageNum, int secondPageNum, AutoDisposeAsyncNotifierProviderRef ref) async {
-
+print(arg);
     ///если передали квери только из одного типа продукта
     ///(т.е без списка id которые добавлены в сравнение - это на случай если в сравнении пусто)
     if (arg == 'debit_cards') {
@@ -45,6 +45,7 @@ class ComparisonDebitCardsRepository
         ref.watch(comparisonFirstDebitProductNameStateProvider.notifier).state =
             response.items[firstPageNum].name;
       } else {
+        print(secondPageNum);
         ///если в респонсе больше одного продукта
         ///то все провайдеры для каждого pfge view заполняем данными
         ref.watch(comparisonFirstDebitBankNameStateProvider.notifier).state =

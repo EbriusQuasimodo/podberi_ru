@@ -223,9 +223,9 @@ mixin _$ListCreditCardsModel {
   bool get enable => throw _privateConstructorUsedError;
   List<String> get features => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
-  int get issue => throw _privateConstructorUsedError;
+  dynamic get issue => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_age')
-  int get maxAge => throw _privateConstructorUsedError;
+  dynamic get maxAge => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_cashback')
   String get maxCashBack => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_cashback_percent')
@@ -235,7 +235,7 @@ mixin _$ListCreditCardsModel {
   @JsonKey(name: 'max_service')
   int get maxService => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_sms')
-  int get maxSms => throw _privateConstructorUsedError;
+  dynamic get maxSms => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_age')
   int get minAge => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_income')
@@ -291,13 +291,13 @@ abstract class $ListCreditCardsModelCopyWith<$Res> {
       bool enable,
       List<String> features,
       String image,
-      int issue,
-      @JsonKey(name: 'max_age') int maxAge,
+      dynamic issue,
+      @JsonKey(name: 'max_age') dynamic maxAge,
       @JsonKey(name: 'max_cashback') String maxCashBack,
       @JsonKey(name: 'max_cashback_percent') int maxCashbackPercent,
       @JsonKey(name: 'max_percent') double maxPercent,
       @JsonKey(name: 'max_service') int maxService,
-      @JsonKey(name: 'max_sms') int maxSms,
+      @JsonKey(name: 'max_sms') dynamic maxSms,
       @JsonKey(name: 'min_age') int minAge,
       @JsonKey(name: 'min_income') int minIncome,
       @JsonKey(name: 'min_percent') double minPercent,
@@ -348,13 +348,13 @@ class _$ListCreditCardsModelCopyWithImpl<$Res,
     Object? enable = null,
     Object? features = null,
     Object? image = null,
-    Object? issue = null,
-    Object? maxAge = null,
+    Object? issue = freezed,
+    Object? maxAge = freezed,
     Object? maxCashBack = null,
     Object? maxCashbackPercent = null,
     Object? maxPercent = null,
     Object? maxService = null,
-    Object? maxSms = null,
+    Object? maxSms = freezed,
     Object? minAge = null,
     Object? minIncome = null,
     Object? minPercent = null,
@@ -432,14 +432,14 @@ class _$ListCreditCardsModelCopyWithImpl<$Res,
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      issue: null == issue
+      issue: freezed == issue
           ? _value.issue
           : issue // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxAge: null == maxAge
+              as dynamic,
+      maxAge: freezed == maxAge
           ? _value.maxAge
           : maxAge // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       maxCashBack: null == maxCashBack
           ? _value.maxCashBack
           : maxCashBack // ignore: cast_nullable_to_non_nullable
@@ -456,10 +456,10 @@ class _$ListCreditCardsModelCopyWithImpl<$Res,
           ? _value.maxService
           : maxService // ignore: cast_nullable_to_non_nullable
               as int,
-      maxSms: null == maxSms
+      maxSms: freezed == maxSms
           ? _value.maxSms
           : maxSms // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       minAge: null == minAge
           ? _value.minAge
           : minAge // ignore: cast_nullable_to_non_nullable
@@ -586,13 +586,13 @@ abstract class _$$ListCreditCardsModelImplCopyWith<$Res>
       bool enable,
       List<String> features,
       String image,
-      int issue,
-      @JsonKey(name: 'max_age') int maxAge,
+      dynamic issue,
+      @JsonKey(name: 'max_age') dynamic maxAge,
       @JsonKey(name: 'max_cashback') String maxCashBack,
       @JsonKey(name: 'max_cashback_percent') int maxCashbackPercent,
       @JsonKey(name: 'max_percent') double maxPercent,
       @JsonKey(name: 'max_service') int maxService,
-      @JsonKey(name: 'max_sms') int maxSms,
+      @JsonKey(name: 'max_sms') dynamic maxSms,
       @JsonKey(name: 'min_age') int minAge,
       @JsonKey(name: 'min_income') int minIncome,
       @JsonKey(name: 'min_percent') double minPercent,
@@ -643,13 +643,13 @@ class __$$ListCreditCardsModelImplCopyWithImpl<$Res>
     Object? enable = null,
     Object? features = null,
     Object? image = null,
-    Object? issue = null,
-    Object? maxAge = null,
+    Object? issue = freezed,
+    Object? maxAge = freezed,
     Object? maxCashBack = null,
     Object? maxCashbackPercent = null,
     Object? maxPercent = null,
     Object? maxService = null,
-    Object? maxSms = null,
+    Object? maxSms = freezed,
     Object? minAge = null,
     Object? minIncome = null,
     Object? minPercent = null,
@@ -727,14 +727,14 @@ class __$$ListCreditCardsModelImplCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      issue: null == issue
+      issue: freezed == issue
           ? _value.issue
           : issue // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxAge: null == maxAge
+              as dynamic,
+      maxAge: freezed == maxAge
           ? _value.maxAge
           : maxAge // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       maxCashBack: null == maxCashBack
           ? _value.maxCashBack
           : maxCashBack // ignore: cast_nullable_to_non_nullable
@@ -751,10 +751,10 @@ class __$$ListCreditCardsModelImplCopyWithImpl<$Res>
           ? _value.maxService
           : maxService // ignore: cast_nullable_to_non_nullable
               as int,
-      maxSms: null == maxSms
+      maxSms: freezed == maxSms
           ? _value.maxSms
           : maxSms // ignore: cast_nullable_to_non_nullable
-              as int,
+              as dynamic,
       minAge: null == minAge
           ? _value.minAge
           : minAge // ignore: cast_nullable_to_non_nullable
@@ -923,10 +923,10 @@ class _$ListCreditCardsModelImpl implements _ListCreditCardsModel {
   final String image;
   @override
   @JsonKey()
-  final int issue;
+  final dynamic issue;
   @override
   @JsonKey(name: 'max_age')
-  final int maxAge;
+  final dynamic maxAge;
   @override
   @JsonKey(name: 'max_cashback')
   final String maxCashBack;
@@ -941,7 +941,7 @@ class _$ListCreditCardsModelImpl implements _ListCreditCardsModel {
   final int maxService;
   @override
   @JsonKey(name: 'max_sms')
-  final int maxSms;
+  final dynamic maxSms;
   @override
   @JsonKey(name: 'min_age')
   final int minAge;
@@ -1023,8 +1023,8 @@ class _$ListCreditCardsModelImpl implements _ListCreditCardsModel {
             (identical(other.enable, enable) || other.enable == enable) &&
             const DeepCollectionEquality().equals(other._features, _features) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.issue, issue) || other.issue == issue) &&
-            (identical(other.maxAge, maxAge) || other.maxAge == maxAge) &&
+            const DeepCollectionEquality().equals(other.issue, issue) &&
+            const DeepCollectionEquality().equals(other.maxAge, maxAge) &&
             (identical(other.maxCashBack, maxCashBack) ||
                 other.maxCashBack == maxCashBack) &&
             (identical(other.maxCashbackPercent, maxCashbackPercent) ||
@@ -1033,7 +1033,7 @@ class _$ListCreditCardsModelImpl implements _ListCreditCardsModel {
                 other.maxPercent == maxPercent) &&
             (identical(other.maxService, maxService) ||
                 other.maxService == maxService) &&
-            (identical(other.maxSms, maxSms) || other.maxSms == maxSms) &&
+            const DeepCollectionEquality().equals(other.maxSms, maxSms) &&
             (identical(other.minAge, minAge) || other.minAge == minAge) &&
             (identical(other.minIncome, minIncome) ||
                 other.minIncome == minIncome) &&
@@ -1077,13 +1077,13 @@ class _$ListCreditCardsModelImpl implements _ListCreditCardsModel {
         enable,
         const DeepCollectionEquality().hash(_features),
         image,
-        issue,
-        maxAge,
+        const DeepCollectionEquality().hash(issue),
+        const DeepCollectionEquality().hash(maxAge),
         maxCashBack,
         maxCashbackPercent,
         maxPercent,
         maxService,
-        maxSms,
+        const DeepCollectionEquality().hash(maxSms),
         minAge,
         minIncome,
         minPercent,
@@ -1134,13 +1134,13 @@ abstract class _ListCreditCardsModel implements ListCreditCardsModel {
       final bool enable,
       final List<String> features,
       final String image,
-      final int issue,
-      @JsonKey(name: 'max_age') final int maxAge,
+      final dynamic issue,
+      @JsonKey(name: 'max_age') final dynamic maxAge,
       @JsonKey(name: 'max_cashback') final String maxCashBack,
       @JsonKey(name: 'max_cashback_percent') final int maxCashbackPercent,
       @JsonKey(name: 'max_percent') final double maxPercent,
       @JsonKey(name: 'max_service') final int maxService,
-      @JsonKey(name: 'max_sms') final int maxSms,
+      @JsonKey(name: 'max_sms') final dynamic maxSms,
       @JsonKey(name: 'min_age') final int minAge,
       @JsonKey(name: 'min_income') final int minIncome,
       @JsonKey(name: 'min_percent') final double minPercent,
@@ -1200,10 +1200,10 @@ abstract class _ListCreditCardsModel implements ListCreditCardsModel {
   @override
   String get image;
   @override
-  int get issue;
+  dynamic get issue;
   @override
   @JsonKey(name: 'max_age')
-  int get maxAge;
+  dynamic get maxAge;
   @override
   @JsonKey(name: 'max_cashback')
   String get maxCashBack;
@@ -1218,7 +1218,7 @@ abstract class _ListCreditCardsModel implements ListCreditCardsModel {
   int get maxService;
   @override
   @JsonKey(name: 'max_sms')
-  int get maxSms;
+  dynamic get maxSms;
   @override
   @JsonKey(name: 'min_age')
   int get minAge;

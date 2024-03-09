@@ -15,16 +15,17 @@ class ComparisonDebitCardsListController
 
   @override
   FutureOr<DebitCardsModel> build() async {
-    int firstPageNum = 0;
-    int secondPageNum =0;
-    ref.listen(comparisonFirstDebitPageNumStateProvider, (previous, next) {
-
-      firstPageNum = next;
-    });
-    ref.listen(comparisonSecondDebitPageNumStateProvider, (previous, next) {
-
-      secondPageNum = next;
-    });
+    int firstPageNum = ref.read(comparisonFirstDebitPageNumStateProvider);
+    int secondPageNum =ref.read(comparisonSecondDebitPageNumStateProvider);
+    // ref.listen(comparisonFirstDebitPageNumStateProvider, (previous, next) {
+    //
+    //   firstPageNum = next;
+    // });
+    // ref.listen(comparisonSecondDebitPageNumStateProvider, (previous, next) {
+    //
+    //   secondPageNum = next;
+    // });
+    ///todo думаю над тем чтобы удалить то что сверху закоментила
 
     List<ComparisonDebitCardsData> productIdListDebitCards = [];
     productTypeWithQuery = ref.read(comparisonProductUrlStateProvider);
