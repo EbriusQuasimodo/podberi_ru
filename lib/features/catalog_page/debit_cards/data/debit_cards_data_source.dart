@@ -26,7 +26,6 @@ class DebitCardsGetDataSource {
         );
         print(re.realUri);
         switch (re.statusCode) {
-
           case 200:
             return DebitCardsModel.fromJson(re.data);
 
